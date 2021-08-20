@@ -9,3 +9,34 @@ Description: More about what it does (maybe more than one line)
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
+
+
+
+Package: fieldClim
+Title: Calculates Fluxes for Weather Stations
+Version: 0.1.0
+Authors@R: 
+    c(
+    person("David", "Langenohl",
+           role = c("aut"),
+           email = "langenoh@students.uni-marburg.de"),
+    person("Jonas", "Viehweger",
+           role = c("aut", "cre"),
+           email = "jonas.viehweger@rwth-aachen.de"),
+    person("Jörg", "Bendix",
+           role = c("aut"),
+           email = "bendix@geo.uni-marburg.de")
+    )
+Description: Calculates different parameters for weather stations used in micrometeorology (with 2 measurement heights).
+  Can estimate radiation balance, calculates soil heat flux from soil temperature measurements, calculates turbulent fluxes 
+  (Bowen Ratio, Penman, Priestley-Taylor) and much more.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+VignetteBuilder: knitr
+Suggests: 
+    water, knitr, markdown, testthat
+Depends: 
+    R (>= 3.6)
