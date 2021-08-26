@@ -19,8 +19,7 @@ rad_emissivity_air(...)
 
 \item{elev}{Meters above sea level}
 
-\item{p}{OPTIONAL. Air pressure in hPa.
-If not available, will be calculated from elev and air temperature.}
+\item{p}{OPTIONAL. Air pressure in hPa.}
 
 \item{weather_station}{Object of class weather_station.}
 
