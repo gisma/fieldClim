@@ -11,10 +11,10 @@ Authors@R:
            email = "jonas.viehweger@rwth-aachen.de"),
     person("Jörg", "Bendix",
            role = c("aut"),
-           email = "bendix@geo.uni-marburg.de")
+           email = "bendix@geo.uni-marburg.de"),
     person("Fabian", "Mitze",
            role = c("aut"),
-           email = "Mitze@students.uni-marburg.de")
+           email = "Mitze@students.uni-marburg.de"),
     person("Hanna", "Wenzel",
            role = c("aut"),
            email = "wenzel@students.uni-marburg.de")
