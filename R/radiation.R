@@ -21,7 +21,7 @@ rad_emissivity_air.numeric <- function(t, elev, p = NULL, ...){
   if(is.null(p)) p <- pres_p(elev, t)
   svp <- hum_sat_vapor_pres(t)
   t_over <- t*(0.0065*elev)
-  eat <- ((1.24*svp/t)**1/7)*(p/1013.25)
+  eat <- ((1.24*svp/(t+273.15))^(1/7))*(p/1013.25)
   return(eat)
 }
 
