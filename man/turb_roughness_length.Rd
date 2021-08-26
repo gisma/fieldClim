@@ -22,11 +22,11 @@ turb_roughness_length(...)
 \item{weather_station}{Object of class weather_station}
 }
 \value{
-Pressure in hPa.
+roughness length in m.
 }
 \description{
-Calculate the roughness length of an surface on the basis of the obstacle height or the type of the surface
+Calculate the roughness length of a surface on the basis of the obstacle height or the type of the surface.
 Possible surface types are:
-"Wiese", "Acker", "Gruenflaeche", "Strasse", "Landwirtschaft", "Siedlung", "Nadelwald", "Laubwald", "Mischwald", "Stadt"
+"field", "acre", "lawn", "street", "agriculture", "settlement", "coniferous forest", "deciduous forest", "mixed forest", "city"
 You need to specify only one, "type" OR "obs_height".
 }
