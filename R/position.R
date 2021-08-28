@@ -18,7 +18,7 @@ pos_min_dist <- function (...) {
 #' @param ring True, if obstacle is circularly surrounded by the obstacle.
 #' @param obs_radius If ring = T: radius of the ring in m.
 #'
-#' @return
+#' @return Minimal distance between measurement point and obstacle for undisturbed measurement in m.
 #'
 pos_min_dist.numeric <- function(obs_width, obs_height, ring = F, obs_radius = NULL, ...){
   #if climate station is positioned on a clearing:
@@ -40,23 +40,8 @@ pos_min_dist.numeric <- function(obs_width, obs_height, ring = F, obs_radius = N
       min_dist <- 5*(obs_height+obs_width)
     }
   }
+  return(min_dist)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #' Maximum distance between climate station and obstacle.
 #'

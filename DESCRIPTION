@@ -1,6 +1,6 @@
 Package: fieldClimRevised
 Title: Calculates Fluxes for Weather Stations
-Version: 0.1.0
+Version: 1.0.0
 Authors@R: 
     c(
     person("David", "Langenohl",

@@ -12,8 +12,8 @@ rad_emissivity_air <- function (...) {
 
 #' @rdname rad_emissivity_air
 #' @method rad_emissivity_air numeric
-#' @param t Air temperature in degrees C.
-#' @param elev Meters above sea level
+#' @param t Air temperature in °C.
+#' @param elev Meters above sea level in m.
 #' @param p OPTIONAL. Air pressure in hPa.
 #' @export
 #' If not available, will be calculated from elev and air temperature.
@@ -21,7 +21,7 @@ rad_emissivity_air.numeric <- function(t, elev, p = NULL, ...){
   if(is.null(p)) p <- pres_p(elev, t)
   svp <- hum_sat_vapor_pres(t)
   t_over <- t*(0.0065*elev)
-  eat <- ((1.24*svp/t)**1/7)*(p/1013.25)
+  eat <- ((1.24*svp/t_over)**1/7)*(p/1013.25)
   return(eat)
 }
 
@@ -44,8 +44,6 @@ rad_emissivity_air.weather_station <- function(weather_station, height = "lower"
   return(rad_emissivity_air(t, elev, p))
 }
 
-
-
 #' Longwave radiation of the atmosphere
 #'
 #' Calculation of the longwave radiation of the atmosphere.
@@ -60,12 +58,14 @@ rad_lw_in <- function (...) {
 
 #' @rdname rad_lw_in
 #' @method rad_lw_in numeric
-#' @param emissivity_air Emissivity of the atmosphere (factor: 0-1)
-#' @param t Air temperature in degrees C.
+#' @param emissivity_air OPTIONAL. Emissivity of the atmosphere (factor: 0-1)
+#' @param hum relative humidity in %.
+#' @param t Air temperature in °C.
 #' @export
-rad_lw_in.numeric <- function(emissivity_air, t, ...){
+rad_lw_in.numeric <- function(emissivity_air = NULL, hum, t, ...){
   sigma <- 5.670374e-8
-  gs <- emissivity_air*sigma*(t+273.15)**4
+  #gs <- emissivity_air*sigma*(t+273.15)**4
+  gs <- sigma * ((t+273.15)^4)*(0.594 + 0.0416* sqrt(hum_vapor_pres(hum, t)))
   return(gs)
 }
 
@@ -74,12 +74,13 @@ rad_lw_in.numeric <- function(emissivity_air, t, ...){
 #' @export
 #' @param weather_station Object of class weather_station.
 rad_lw_in.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "t2")
-
+  check_availability(weather_station, "t2", "hum2")
+  hum <- weather_station$measurements$hum2
   t <- weather_station$measurements$t2
   emissivity_air <- rad_emissivity_air(weather_station, "upper")
 
-  return(rad_lw_in(emissivity_air, t))
+  return(rad_lw_in(emissivity_air = NULL, hum, t))
+  # hier noch nachfragen, welche Variante benutzt werden soll
 }
 
 
@@ -101,27 +102,31 @@ rad_lw_out <- function (...) {
 
 #' @rdname rad_lw_out
 #' @method rad_lw_out numeric
-#' @param t_surface Surface temperature in degrees C.
-#' @param emissivity_surface Emissivity of surface.
-#' Default is emissivity for short grass.
+#' @param t_surface Surface temperature in °C.
+#' @param surface_type Surface type for which a specific emissivity will be selected.
+#' Default is 'field' as surface type.
 #' @export
-rad_lw_out.numeric <- function(t_surface, emissivity_surface = 0.95, ...){
+rad_lw_out.numeric <- function(t_surface, surface_type = "field", ...){
+  surface_properties <- surface_properties
+  emissivity <- surface_properties[which(surface_properties$surface_type == surface_type),]$emissivity
   sigma <- 5.670374e-8
-  return(emissivity_surface*sigma*(t_surface+273.15)**4)
+  return(emissivity*sigma*(t_surface+273.15)**4)
 }
 
 #' @rdname rad_lw_out
 #' @method rad_lw_out weather_station
 #' @export
 #' @param weather_station Object of class weather_station.
-#' @param emissivity_surface Emissivity of surface.
-#' Default is emissivity for short grass.
-rad_lw_out.weather_station <- function(weather_station, emissivity_surface = 0.95, ...) {
+#' @param surface_type Surface type for which a specific emissivity will be selected.
+#' Default is 'field' as surface type.
+rad_lw_out.weather_station <- function(weather_station, surface_type = "field", ...) {
   check_availability(weather_station, "t_surface")
-
   t <- weather_station$measurements$t_surface
 
-  return(rad_lw_out(t, emissivity_surface))
+  surface_properties <- surface_properties
+  emissivity <- surface_properties[which(surface_properties$surface_type == surface_type),]$emissivity
+
+  return(rad_lw_out(t, emissivity))
 }
 
 
@@ -149,7 +154,7 @@ rad_sw_toa.POSIXt <- function(datetime, lat, lon, ...){
   if(!inherits(datetime, "POSIXt")){
     stop("datetime has to be of class POSIXt.")
   }
-  sol_const <- 1367
+  sol_const <- 1368
   sol_eccentricity <- sol_eccentricity(datetime)
   sol_elevation <- sol_elevation(datetime, lat, lon)
   rad_sw_toa <- sol_const*sol_eccentricity*sin(sol_elevation*(pi/180))
@@ -205,12 +210,10 @@ rad_sw_in.numeric <- function(rad_sw_toa, trans_total, ...){
 #' Default is the visibility on a clear day.
 rad_sw_in.weather_station <- function(weather_station,
                                       trans_total = NULL, oz = 0.35, vis = 30, ...) {
-
   rad_sw_toa <- rad_sw_toa(weather_station)
   if(is.null(trans_total)){
     trans_total <- trans_total(weather_station)
   }
-
   return(rad_sw_in(rad_sw_toa, trans_total))
 }
 
@@ -231,9 +234,11 @@ rad_sw_out <- function (...) {
 #' @rdname rad_sw_out
 #' @method rad_sw_out numeric
 #' @param rad_sw_in Shortwave radiation on the ground onto a horizontal area in W/m^2.
-#' @param albedo Albedo of the surface.
+#' @param surface_type type of surface for which an albedo will be selected.
 #' @export
-rad_sw_out.numeric <- function(rad_sw_in, albedo, ...){
+rad_sw_out.numeric <- function(rad_sw_in, surface_type = "field", ...){
+  surface_properties <- surface_properties
+  albedo <- surface_properties[which(surface_properties$surface_type == surface_type),]$albedo
   rad_sw_out <- rad_sw_in*albedo
   return(rad_sw_out)
 }
@@ -242,11 +247,13 @@ rad_sw_out.numeric <- function(rad_sw_in, albedo, ...){
 #' @method rad_sw_out weather_station
 #' @export
 #' @param weather_station Object of class weather_station.
-rad_sw_out.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "albedo", "sw_in")
-
+#' @param surface_type type of surface for which an albedo will be selected.
+rad_sw_out.weather_station <- function(weather_station, surface_type = "field", ...) {
+  check_availability(weather_station, "sw_in")
   sw_in <- weather_station$measurements$sw_in
-  albedo <- weather_station$location_properties$albedo
+
+  surface_properties <- surface_properties
+  albedo <- surface_properties[which(surface_properties$surface_type == surface_type),]$albedo
 
   return(rad_sw_out(sw_in, albedo))
 }
@@ -268,7 +275,7 @@ rad_sw_radiation_balance <- function (...) {
 #' @rdname rad_sw_radiation_balance
 #' @method rad_sw_radiation_balance numeric
 #' @param rad_sw_ground_horizontal Shortwave radiation on the ground onto a horizontal area in W/m^2.
-#' @param rad_sw_reflected Reflected shortwave ratdiation in W/m^2.
+#' @param rad_sw_reflected Reflected shortwave radiation in W/m^2.
 #' @export
 rad_sw_radiation_balance.numeric <- function(rad_sw_ground_horizontal, rad_sw_reflected, ...){
   rad_sw_radiation_balance <- rad_sw_ground_horizontal-rad_sw_reflected
@@ -386,7 +393,7 @@ rad_bal_total <- function (...) {
 #' @method rad_bal_total numeric
 #' @export
 #' @param rad_sw_radiation_balance Shortwave radiation balance in W/m^2.
-#' @param rad_lw_out Longave surface emissions in W/m^2.
+#' @param rad_lw_out Longwave surface emissions in W/m^2.
 #' @param rad_lw_in Atmospheric radiation in W/m^2.
 rad_bal_total.numeric <- function(rad_sw_radiation_balance,
                                   rad_lw_out,
@@ -426,7 +433,7 @@ rad_lw_in_topo <- function (...) {
 #' @rdname rad_lw_in_topo
 #' @method rad_lw_in_topo numeric
 #' @export
-#' @param rad_lw_out Longave surface emissions in W/m^2.
+#' @param rad_lw_out Longwave surface emissions in W/m^2.
 #' @param rad_lw_in Atmospheric radiation in W/m^2.
 #' @param terr_sky_view Sky view factor from 0-1. (See [fieldClim::terr_sky_view])
 rad_lw_in_topo.numeric <- function(rad_lw_out,

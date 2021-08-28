@@ -4,7 +4,7 @@
 #'
 #' @rdname temp_pot_temp
 #' @param ... Additional parameters passed to later functions.
-#' @return Potential temperature in K.
+#' @return Potential temperature in °C.
 #' @export
 #'
 temp_pot_temp <- function (...) {
@@ -14,11 +14,11 @@ temp_pot_temp <- function (...) {
 #' @rdname temp_pot_temp
 #' @method temp_pot_temp numeric
 #' @param p Pressure in hPa.
-#' @param t Temperature in degrees C.
+#' @param t Temperature in °C.
 temp_pot_temp.numeric <- function(t, p, ...){
-  p0 <- 1013.25    # Standardruck in hPa
-  air_const <- 0.286     # spezifische Gaskonstante / spezifische Wärmekapatität; Wert für Luft
-  pot_temp <- (t+273.15)*(p0/p)**air_const
+  p0 <- 1013.25          # standard air pressure in hPa
+  air_const <- 0.286     # specific gas constant / specific heat capacity
+  pot_temp <- ((t+273.15)*(p0/p)**air_const)-273.15
   return(pot_temp)
 }
 

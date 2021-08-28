@@ -19,9 +19,12 @@ terr_sky_view <- function (...) {
 #' @param valley If the position is in a valley (TRUE) or on a slope (FALSE).
 #' @export
 terr_sky_view.numeric <- function(slope, valley = F, ...) {
-  f <- pi/180                                 # Winkel in Radiant Faktor
-  if(valley) return(cos(slope*f))
-  return((1+cos(slope*f))/2.0)
+  f <- pi/180              # angle in radiant faktor
+  if(valley = TRUE){
+    return(1-cos(slope*f))
+  }else{
+    return((1-cos(slope*f))/2.0)
+  }
 }
 
 #' @rdname terr_sky_view
@@ -33,7 +36,6 @@ terr_sky_view.weather_station <- function (weather_station, ...) {
 
   slope <- weather_station$location_properties$slope
   valley <- weather_station$location_properties$valley
-
 
   return(terr_sky_view(slope, valley))
 }

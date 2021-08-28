@@ -1,3 +1,16 @@
+#' Psychrometric constant gamma
+#'
+#' Calculates the psychrometric constant gamma for Priestley-Taylor calculations.
+#'
+#' @param t temperature in °C.
+#' @param z elevation of measurement in m.
+#' @return psychrometric constant in kPa/°C
+gam <- function (t = 15, z = 270){
+heat_capacity()
+  # 0.001005 is the specific heat capacity of air with constant pressure in MJ/(kg*K)
+  return(0.001005 * (pres_p(z, t)/10) /2.26 * 0.622)
+}
+
 #' Latent Heat Priestley-Taylor Method
 #'
 #' Calculates the latent heat flux using the Priestley-Taylor method. Negative
@@ -15,15 +28,25 @@ latent_priestley_taylor <- function (...) {
 #' @rdname latent_priestley_taylor
 #' @method latent_priestley_taylor numeric
 #' @export
-#' @param t Air temperature in degrees Celsius.
+#' @param t Air temperature in °C.
 #' @param rad_bal Radiation balance in W/m^2.
 #' @param soil_flux Soil flux in W/m^2.
-#' @param coefficient Priestley-Taylor coefficient. Default is for open water.
-latent_priestley_taylor.numeric <- function(t, rad_bal, soil_flux, coefficient = 1.25, ...){
+#' @param surface_type Surface type, for which a Priestley-Taylor coefficient will be selected. Default is for short grass.
+#' @param z elevation of measurement in m.
+latent_priestley_taylor.numeric <- function(t, z, rad_bal, soil_flux, surface_type = "field", ...){
+  priestley_taylor_coefficient <- priestley_taylor_coefficient
+  if(!surface_type %in% priestley_taylor_coefficient$surface_type){
+    values_surface <- paste(priestley_taylor_coefficient$surface_type, collapse = " , ")
+    stop("'surface_type' must be one of the following: ", values_surface)
+  } else if(!is.null(surface_type)){
+    alpt <- priestley_taylor_coefficient[which(priestley_taylor_coefficient$surface_type == surface_type),]$alpha
+  }
+  # muss noch überprüft werden
   sc <- sc(t)
-  lamb <- lamb(t)
-  alpt <- coefficient
-  QE_TP <- alpt*sc*((-1*rad_bal-soil_flux)/sc+lamb)
+  # das hier geht jetzt aber
+  gam <- gam(t, z)
+  #alpt <- coefficient
+  QE_TP <- alpt*sc*(((-1)*rad_bal-soil_flux)/sc+gam)
   return(QE_TP)
 }
 
@@ -38,8 +61,6 @@ latent_priestley_taylor.weather_station <- function(weather_station, ...){
   soil_flux <- weather_station$measurements$soil_flux
   return(latent_priestley_taylor(t1, rad_bal, soil_flux))
 }
-
-
 
 
 #' Latent Heat Penman Method
@@ -95,7 +116,7 @@ latent_penman.POSIXt <- function(datetime,
                                 long=lon,
                                 elev=elev)
 
-  lv <- hum_evap_heat(t)  # Spezifische Verdunstungsw?rme
+  lv <- hum_evap_heat(t)  # Spezifische Verdunstungswaerme
   QE_PM <- lv*(water::hourlyET(WeatherStation, hours=ut, DOY=doy)/3600)*(-1)
   return(QE_PM)
 }
@@ -141,8 +162,8 @@ latent_monin <- function (...) {
 #' @export
 #' @param hum1 Relative humidity at lower height in %.
 #' @param hum2 Relative humidity at upper height in %.
-#' @param t1 Air temperature at lower height in degrees C.
-#' @param t2 Air temperature at upper height in degrees C.
+#' @param t1 Air temperature at lower height in °C.
+#' @param t2 Air temperature at upper height in °C.
 #' @param p1 Pressure at lower height in hPa.
 #' @param p2 Pressure at upper height in hPa.
 #' @param z1 Lower height of measurement in m.
@@ -156,15 +177,16 @@ latent_monin.numeric <- function(hum1, hum2, t1, t2, p1, p2, z1 = 2, z2 = 10,
   moist_gradient <- hum_moisture_gradient(hum1, hum2, t1, t2, p1, p2, z1, z2)
   air_density <- pres_air_density(p1, t1)
   lv <- hum_evap_heat(t1)
-  k <- 0.4
-  s1 <- z2/monin
+  k <- 0.4 # Karman constant
+  s1 <- z2/monin # s1 = variant of the greek letter sigma
+  schmidt <- 1
   busi <- rep(NA, length(grad_rich_no))
   for(i in 1:length(busi)){
     if(is.na(grad_rich_no[i])){busi[i] <- NA}
     else if(grad_rich_no[i] <= 0){busi[i] <- 0.95*(1-(11.6*s1[i]))^-0.5}
     else if(grad_rich_no[i] > 0){busi[i] <- 0.95+(7.8*s1[i])}
   }
-  QL <- -1*((air_density*lv*k*ustar)/busi)*1*moist_gradient
+  QL <- -1*((air_density*lv*k*ustar)/busi)*schmidt*moist_gradient
   return(QL)
 }
 
@@ -207,8 +229,8 @@ latent_bowen <- function (...) {
 #' @rdname latent_bowen
 #' @method latent_bowen numeric
 #' @export
-#' @param t1 Temperature at lower height (e.g. height of anemometer) in degrees C.
-#' @param t2 Temperature at upper height in degrees C.
+#' @param t1 Temperature at lower height (e.g. height of anemometer) in °C.
+#' @param t2 Temperature at upper height in °C.
 #' @param hum1 Relative humidity at lower height (e.g. height of anemometer) in %.
 #' @param hum2 Relative humidity at upper height in %.
 #' @param p1 Air pressure at lower height in hPa.

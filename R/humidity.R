@@ -1,6 +1,6 @@
 #' Saturation vapor pressure
 #'
-#' Calculates the saturation vapor pressure from air temperature using the Magnus
+#' Calculates the saturation vapor pressure from air temperature using the \emph{Magnus}
 #' formula (applicable over water surfaces).
 #'
 #' @param ... Additional parameters passed to later functions.
@@ -39,7 +39,7 @@ hum_sat_vapor_pres.weather_station <- function(weather_station, height = "lower"
 
 #' Vapor pressure
 #'
-#' Calculates vapor pressure from relative humidity and saturation vapor pressure
+#' Calculates vapor pressure from relative humidity and saturation vapor pressure.
 #'
 #' @param ... Additional parameters passed to later functions.
 #' @return Vapor pressure in hPa.
@@ -53,7 +53,7 @@ hum_vapor_pres <- function (...) {
 #' @method hum_vapor_pres numeric
 #' @export
 #' @param hum Relative humidity in %.
-#' @param t Air temperature in degrees C.
+#' @param t Air temperature in °C.
 hum_vapor_pres.numeric <- function(hum, t, ...){
   sat_vapor_pres <- hum_sat_vapor_pres(t)
   return((hum/100)*sat_vapor_pres)
@@ -77,7 +77,7 @@ hum_vapor_pres.weather_station <- function(weather_station, height = "lower", ..
 
 #' Specific humidity
 #'
-#' Calculates specfic humidity from vapor pressure and air pressure.
+#' Calculates specific humidity from vapor pressure and air pressure.
 #'
 #' @param ... Additional parameters passed to later functions.
 #' @return Specific humidity in kg/kg.
@@ -106,17 +106,15 @@ hum_specific.weather_station <- function(weather_station, height, ...) {
   if(!height %in% c("upper", "lower")){
     stop("'height' must be either 'lower' or 'upper'.")
   }
-
   height_num <- which(height == c("lower", "upper"))
   p <- weather_station$measurements[[paste0("p", height_num)]]
   p_vapor <- hum_vapor_pres(weather_station, height)
-
   return(hum_specific(p_vapor, p))
 }
 
 #' Absolute humidity
 #'
-#' Calculates absolute humidity from vapor pressure and temperature.
+#' Calculates absolute humidity from vapor pressure and air temperature.
 #'
 #' @param ... Additional parameters passed to later functions.
 #' @return Absolute humidity in kg/m^3.
@@ -129,9 +127,10 @@ hum_absolute <- function (...) {
 #' @rdname hum_absolute
 #' @method hum_absolute numeric
 #' @export
-#' @param p_vapor Vapor presure in hPa.
-#' @param t_pot Potential air temperature in Kelvin.
+#' @param p_vapor Vapor pressure in hPa.
+#' @param t_pot Potential air temperature in °C
 hum_absolute.numeric <- function(p_vapor, t_pot, ...) {
+  t_pot <- t_pot+273.15
   return((0.21668*p_vapor)/t_pot)
 }
 
@@ -144,19 +143,17 @@ hum_absolute.weather_station <- function(weather_station, height, ...) {
   if(!height %in% c("upper", "lower")){
     stop("'height' must be either 'lower' or 'upper'.")
   }
-
   t_pot <- temp_pot_temp(weather_station, height)
   p_vapor <- hum_vapor_pres(weather_station, height)
-
   return(hum_absolute(p_vapor, t_pot))
 }
 
-#' Enthaly of vaporization
+#' Enthalpy of vaporization
 #'
 #' Calculates heat of evaporation for water from air temperature.
 #'
 #' @param ... Additional parameters passed to later functions.
-#' @return Enthaly of vaporization in J/kg.
+#' @return Enthalpy of vaporization in J/kg.
 #' @export
 #'
 hum_evap_heat <- function (...) {
@@ -166,9 +163,9 @@ hum_evap_heat <- function (...) {
 #' @rdname hum_evap_heat
 #' @method hum_evap_heat numeric
 #' @export
-#' @param t Air temperature in degrees C.
+#' @param t Air temperature in °C.
 hum_evap_heat.numeric <- function(t, ...){
-  return((2.5008-0.002372*t)*10^6)
+  return((2.500827-0.002372*t)*10^6)
 }
 
 #' @rdname hum_evap_heat
@@ -181,10 +178,8 @@ hum_evap_heat.weather_station <- function(weather_station, height = "lower", ...
   if(!height %in% c("upper", "lower")){
     stop("'height' must be either 'lower' or 'upper'.")
   }
-
   height_num <- which(height == c("lower", "upper"))
   t <- weather_station$measurements[[paste0("t", height_num)]]
-
   return(hum_evap_heat(t))
 }
 
@@ -207,15 +202,15 @@ hum_precipitable_water <- function (...) {
 #' @method hum_precipitable_water numeric
 #' @export
 #' @param p Air pressure in hPa.
-#' @param t Air temperature in degrees C.
+#' @param t Air temperature in °C.
 #' @param elev Elevation above sea level in m.
 hum_precipitable_water.numeric <- function(p, t, elev, ...){
-  p0 <- 1013.25                # Pressure Standaratmosphere
-  t <- t+273.15               # degrees C in K
-  cof <- (elev/100) * 0.6       # average moist adiabatic T-gradient, might have to be adjusted
-  t0 <- t + cof
+  p0    <- 1013.25          # Pressure standard atmosphere
+  t     <- t + 273.15       # degrees C in K
+  cof   <- (elev/100) * 0.6 # average moist adiabatic T-gradient, might have to be adjusted
+  t0    <- t + cof
   pw_st <- 0.0000004*exp(0.0538*t0)
-  pw <- pw_st*(p/p0) *(t0/t)**0.5
+  pw    <- pw_st*(p/p0) *(t0/t)**0.5
   return(pw)
 }
 
@@ -229,12 +224,10 @@ hum_precipitable_water.weather_station <- function(weather_station, height = "lo
   if(!height %in% c("upper", "lower")){
     stop("'height' must be either 'lower' or 'upper'.")
   }
-
   height_num <- which(height == c("lower", "upper"))
   t <- weather_station$measurements[[paste0("t", height_num)]]
   p <- weather_station$measurements[[paste0("p", height_num)]]
   elev <- weather_station$location_properties$elevation
-
   return(hum_precipitable_water(p, t, elev))
 }
 

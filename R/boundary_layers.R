@@ -18,7 +18,7 @@ bound_mech_low <- function(dist) {
 #'
 #' @param dist Distance to point of roughness change in m.
 #'
-#' @return Height of boundary layer in m.
+#' @return medium height of boundary layer in m.
 #' @export
 #'
 bound_mech_avg <- function(dist) {
@@ -35,7 +35,7 @@ bound_mech_avg <- function(dist) {
 #' @param temp_change_dist Distance to point of temperature change in m.
 #' @param t_pot_upwind Potential temperature in upwind direction in °C.
 #' @param t_pot Potential temperature at site in °C.
-#' @param lapse_rate Lapse rate in K/m (or degrees C/m)
+#' @param lapse_rate Lapse rate in K/m (or °C/m)
 #'
 #' @return Average height of the thermal boundary layer in m.
 #' @export

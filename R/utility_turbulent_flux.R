@@ -25,10 +25,11 @@ lamb <- function(t){
 #'
 #' @param t Air temperature in degrees C.
 #' @param dpot Difference in potential temperature between the two measurement
-#' heights in degrees Celsius.
+#' heights in °C.
 #' @param dah Difference in absolute humidity (kg/m^3) between the two measurement heights.
 #'
 #' @return Bowen-ratio
+#' @export
 bowen_ratio <- function(t, dpot, dah){
   heat_cap <- heat_capacity(t)
   evap_heat <- hum_evap_heat(t)
@@ -46,6 +47,6 @@ bowen_ratio <- function(t, dpot, dah){
 #' @export
 #'
 heat_capacity <- function(t){
-  ca <- 1005*(1.2754298-0.0047210538*t+1.6463585*10^-5*t)
+  ca <- 1005*(1.2754298-0.0047219538*t+1.6463585*10^-5*t)
   return(ca)
 }
