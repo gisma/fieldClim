@@ -98,8 +98,9 @@ trans_rayleigh <- function (...) {
 #' @export
 #'
 trans_rayleigh.numeric <- function(air_mass_abs, ...){
-  x <- (-0.0903)*air_mass_abs**0.84*(1.+air_mass_abs-air_mass_abs**1.01)
-  return(exp(x))
+  x1 <- (-0.0903) * air_mass_abs^(0.84) * (1.0 + air_mass_abs - air_mass_abs^(1.01))
+  x <- exp(x1)
+  return(x)
 }
 
 #' @rdname trans_rayleigh
@@ -129,13 +130,13 @@ trans_ozone <- function (...) {
 #' @rdname trans_ozone
 #' @method trans_ozone numeric
 #' @param air_mass_rel Relative optical air mass.
-#' @param oz Columnar ozone in cm. Default is average value of 0.35 cm.
+#' @param oz Atmospheric ozone as column in cm. Default is average value of 0.35 cm.
 #' @export
 #'
 trans_ozone.numeric <- function(air_mass_rel, oz = 0.35, ...) {
-  x <- oz*air_mass_rel
-  xx <- 0.1611*x*(1+139.48*x)**-0.3035-0.002715*x*(1+0.044*x+0.0003*x**2)**-1
-  return(1.-xx)
+  x <- oz * air_mass_rel
+  xx <- 1-(0.1611 * x * (1 + 139.48 * x)^(-0.3035) - 0.002715 * x * (1 + 0.044 * x + 0.0003 * x^2)^(-1))
+  return(xx)
 }
 
 #' @rdname trans_ozone
@@ -170,8 +171,8 @@ trans_vapor <- function (...) {
 #'
 trans_vapor.numeric <- function(air_mass_rel, precipitable_water, ...) {
   y <- precipitable_water*air_mass_rel
-  yy <- 2.4959*y*((1+79.034*y)**0.6828+6.385*y)**-1
-  return(1.-yy)
+  yy <- 1 -(2.4959 * y *((1 + 79.034 * y)^(0.6828) + 6.385 * y)^(-1))
+  return(yy)
 }
 
 #' @rdname trans_vapor
@@ -206,11 +207,12 @@ trans_aerosol <- function (...) {
 #' @export
 #'
 trans_aerosol.numeric <- function(air_mass_abs, vis = 30, ...) {
-  tau38 <- 3.6536*vis**-0.7111
-  tau5 <- 2.4087*vis**-0.719
-  tex <- 0.2758*tau38+0.35*tau5
-  x <- (tex**0.873*(-1))*(1.+tex-tex**0.7088)*air_mass_abs**0.9108
-  return(exp(x))
+  tau38 <- 3.6536 * vis^(-0.7111)
+  tau5 <- 2.4087 * vis^(-0.719)
+  tex <- 0.2758 * tau38 + 0.35 * tau5
+  x1 <- (tex^(0.873) * (-1)) * (1.0 + tex - tex^(0.7088)) * air_mass_abs^(0.9108)
+  x <- exp(x1)
+  return(x)
 }
 
 #' @rdname trans_aerosol
@@ -226,7 +228,7 @@ trans_aerosol.weather_station <- function(weather_station, ...){
 
 #' Transmittance due to gas
 #'
-#' Calculates transmittance due to O2 and CO2.
+#' Calculates transmittance due to O$_{2}$ and CO$_{2}$.
 #'
 #' @rdname trans_gas
 #' @param ... Additional parameters passed to later functions.
@@ -243,7 +245,8 @@ trans_gas <- function (...) {
 #' @export
 #'
 trans_gas.numeric <- function(air_mass_abs, ...) {
-  return(exp(-0.0127*air_mass_abs**0.26))
+  trans_ga <- exp((-0.0127) * air_mass_abs^(0.26))
+  return(trans_ga)
 }
 
 #' @rdname trans_gas
@@ -273,9 +276,9 @@ trans_total <- function (...) {
 #' @rdname trans_total
 #' @method trans_total numeric
 #' @param sol_elevation Solar elevation in degrees.
-#' @param t Air temperature in degrees C.
+#' @param t Air temperature in °C.
 #' @param elev Altitude above sea level in m.
-#' @param oz Columnar ozone in cm. Default is average global value.
+#' @param oz Atmospheric ozone as column in cm. Default is average global value.
 #' @param vis Meteorological visibility in km. Default is the visibility on a clear day.
 #' @param p OPTIONAL. Pressure in hPa. Estimated from elev and t if not available.
 #' @export
