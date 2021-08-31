@@ -1,16 +1,3 @@
-#' Psychrometric constant gamma
-#'
-#' Calculates the psychrometric constant gamma for Priestley-Taylor calculations.
-#'
-#' @param t temperature in °C.
-#' @param z elevation of measurement in m.
-#' @return psychrometric constant in kPa/°C
-gam <- function (t = 15, z = 270){
-heat_capacity()
-  # 0.001005 is the specific heat capacity of air with constant pressure in MJ/(kg*K)
-  return(0.001005 * (pres_p(z, t)/10) /2.26 * 0.622)
-}
-
 #' Latent Heat Priestley-Taylor Method
 #'
 #' Calculates the latent heat flux using the Priestley-Taylor method. Negative
@@ -39,14 +26,14 @@ latent_priestley_taylor.numeric <- function(t, z, rad_bal, soil_flux, surface_ty
     values_surface <- paste(priestley_taylor_coefficient$surface_type, collapse = " , ")
     stop("'surface_type' must be one of the following: ", values_surface)
   } else if(!is.null(surface_type)){
-    alpt <- priestley_taylor_coefficient[which(priestley_taylor_coefficient$surface_type == surface_type),]$alpha
+    alpha_pt <- priestley_taylor_coefficient[which(priestley_taylor_coefficient$surface_type == surface_type),]$alpha
   }
   # muss noch überprüft werden
   sc <- sc(t)
   # das hier geht jetzt aber
   gam <- gam(t, z)
   #alpt <- coefficient
-  QE_TP <- alpt*sc*(((-1)*rad_bal-soil_flux)/sc+gam)
+  QE_TP <- alpha_pt*sc*(((-1)*rad_bal-soil_flux)/sc+gam)
   return(QE_TP)
 }
 
