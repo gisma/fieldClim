@@ -28,11 +28,17 @@ latent_priestley_taylor.numeric <- function(t, z, rad_bal, soil_flux, surface_ty
   } else if(!is.null(surface_type)){
     alpha_pt <- priestley_taylor_coefficient[which(priestley_taylor_coefficient$surface_type == surface_type),]$alpha
   }
+
+
+  # das hier muss noch mit Herrn Bendix besprochen werden
   # muss noch überprüft werden
   sc <- sc(t)
-  # das hier geht jetzt aber
-  gam <- gam(t, z)
+  lamb <- lamb(t)
+  #gam <- gam(t, z)
   #alpt <- coefficient
+
+
+
   QE_TP <- alpha_pt*sc*(((-1)*rad_bal-soil_flux)/sc+gam)
   return(QE_TP)
 }
@@ -173,7 +179,7 @@ latent_monin.numeric <- function(hum1, hum2, t1, t2, p1, p2, z1 = 2, z2 = 10,
     else if(grad_rich_no[i] <= 0){busi[i] <- 0.95*(1-(11.6*s1[i]))^-0.5}
     else if(grad_rich_no[i] > 0){busi[i] <- 0.95+(7.8*s1[i])}
   }
-  QL <- -1*((air_density*lv*k*ustar)/busi)*schmidt*moist_gradient
+  QL <- (-1) * air_density * lv * ((k*ustar)/busi) * schmidt * moist_gradient
   return(QL)
 }
 

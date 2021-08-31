@@ -44,7 +44,7 @@ lamb <- function(t){
 #'
 #' Calculates Bowen-ratio.
 #'
-#' @param t Air temperature in degrees C.
+#' @param t Air temperature in °C.
 #' @param dpot Difference in potential temperature between the two measurement
 #' heights in °C.
 #' @param dah Difference in absolute humidity (kg/m^3) between the two measurement heights.
@@ -62,12 +62,12 @@ bowen_ratio <- function(t, dpot, dah){
 #'
 #' Calculates volumetric heat capacity
 #'
-#' @param t Air temperature in degrees C.
+#' @param t Air temperature in °C.
 #'
 #' @return Heat capacity density in J/(K*m^3)
 #' @export
 #'
 heat_capacity <- function(t){
-  ca <- 1005*(1.2754298-0.0047219538*t+1.6463585*10^-5*t)
+  ca <- 1005*(1.2754298 - 0.0047219538 * t + 1.6463585 * 10^(-5) * t)
   return(ca)
 }

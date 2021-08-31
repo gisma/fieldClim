@@ -265,7 +265,7 @@ hum_moisture_gradient.numeric <- function(hum1, hum2, t1, t2, p1, p2, z1 = 2, z2
   # specific humidity
   sh1 <- hum_specific(vp1, p1)
   sh2 <- hum_specific(vp2, p2)
-  return((sh2-sh1) / log(z2-z1))
+  return((sh2-sh1) / (z2-z1))
 }
 
 #' @rdname hum_moisture_gradient

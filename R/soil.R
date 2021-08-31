@@ -16,19 +16,26 @@ soil_thermal_cond <- function (...) {
 #' @rdname soil_thermal_cond
 #' @method soil_thermal_cond numeric
 #' @param moisture Soil moisture in Vol-%.
-#' @param texture Soil texture. Either "sand" or "clay".
+#' @param texture Soil texture. Either "sand", "peat" or "clay".
 #' @importFrom stats approx
 #' @export
 #'
 soil_thermal_cond.numeric <- function(moisture, texture = "sand", ...) {
   if(texture == "sand"){
     y <- c(0.269,1.46,1.98,2.18,2.31,2.49,2.58)
+    x <- c(0, 5, 10, 15, 20, 30, 43)
+
   } else if(texture == "clay"){
     y <- c(0.276,0.586,1.1,1.43,1.57,1.74,1.95)
+    x <- c(0, 5, 10, 15, 20, 30, 43)
+
+  } else if(texture == "peat"){
+    y <- c(0.033, 0.042, 0.130, 0.276, 0.421, 0.478, 0.528)
+    x <- c(0, 10, 30, 50, 70, 80, 90)
+
   } else {
-    stop("Texture not available. Input either 'sand' or 'clay'")
+    stop("Texture not available. Input either 'sand', 'peat' or 'clay'")
   }
-  x <- c(0, 5, 10, 15, 20, 30, 43)
 
   # linear interpolation of values
   therm_cond <- approx(x, y, xout = moisture, yleft = NA, yright = y[7])
@@ -50,35 +57,41 @@ soil_thermal_cond.weather_station <- function(weather_station, ...) {
 
 #' Soil volumetric heat capacity
 #'
-#' Calculates soil volumetric heat capacity (J / (m^3 * K)) from soil moisture (Vol-%) and texture.
+#' Calculates soil volumetric heat capacity (10^6 J / (m³ * K)) from soil moisture (Vol-%) and texture.
 #'
 #' Works by linearly interpolating volumetric heat capacity based on measured data.
 #'
 #' @rdname soil_heat_cap
 #' @param ... Additional parameters passed to later functions.
-#' @return Numeric vector with volumetric heat capacity in J/(m^3 * K)
+#' @return Numeric vector with volumetric heat capacity in 10^6 J/ (m³ * K)
 #' @export
 #'
 soil_heat_cap <- function (...) {
   UseMethod("soil_heat_cap")
 }
 
-
 #' @rdname soil_heat_cap
 #' @method soil_heat_cap numeric
 #' @param moisture Soil moisture in Vol-%.
-#' @param texture Soil texture. Either "sand" or "clay".
+#' @param texture Soil texture. Either "sand", "peat" or "clay".
 #' @importFrom stats approx
 #' @export
 soil_heat_cap.numeric <- function(moisture, texture = "sand", ...) {
   if(texture == "sand"){
     y <- c(1.17,1.38,1.59,1.8,2.0,2.42,2.97)
+    x <- c(0, 5, 10, 15, 20, 30, 43)
+
   } else if(texture == "clay"){
     y <- c(1.19,1.4,1.61,1.82,2.03,2.45,2.99)
+    x <- c(0, 5, 10, 15, 20, 30, 43)
+
+  } else if(texture == "peat"){
+    y <- c(0.25, 0.67, 1.51, 2.35, 3.19, 3.61, 4.03)
+    x <- c(0, 10, 30, 50, 70, 80, 90)
+
   } else {
-    stop("Texture not available. Input either 'sand' or 'clay'")
+    stop("Texture not available. Input either 'sand', 'peat' or 'clay'")
   }
-  x <- c(0, 5, 10, 15, 20, 30, 43)
 
   # linear interpolation of values
   vol_heat <- approx(x, y, xout = moisture, yleft = NA, yright = y[7])
@@ -119,13 +132,14 @@ soil_heat_flux <- function (...) {
 #' @rdname soil_heat_flux
 #' @method soil_heat_flux numeric
 #' @export
-#' @param ts1 Upper soil temperature (closest to the surface) in degrees C.
-#' @param ts2 Lower soil temperature in degrees C.
+#' @param ts1 Upper soil temperature (closest to the surface) in °C.
+#' @param ts2 Lower soil temperature in °C.
 #' @param depth1 Depth of upper measurement (closest to the surface) in m.
 #' @param depth2 Depth of lower measurement in m.
-#' @param thermal_cond Thermal conductivity of soil in W/m K.
+#' @param thermal_cond Thermal conductivity of soil in W/(m K).
 soil_heat_flux.numeric <- function(ts1, ts2, depth1, depth2, thermal_cond, ...) {
-  return (thermal_cond*((ts1-ts2)/(depth2-depth1)))
+  soil_heat_flu <- thermal_cond * ((ts1 - ts2) / (depth1 - depth2))
+  return (soil_heat_flu)
 }
 
 #' @rdname soil_heat_flux
@@ -162,7 +176,8 @@ soil_attenuation <- function (...) {
 #' @param thermal_cond Thermal conductivity of soil in W/m K.
 #' @param vol_heat_cap Volumetric heat capacity of soil in J/(m^3 * K).
 soil_attenuation.numeric <- function(thermal_cond, vol_heat_cap, ...) {
-  return(sqrt((thermal_cond*24)/(vol_heat_cap*pi)))
+  soil_att <- sqrt((thermal_cond * 86400) /(vol_heat_cap * (10^6) * pi))
+  return(soil_att)
 }
 
 #' @rdname soil_attenuation

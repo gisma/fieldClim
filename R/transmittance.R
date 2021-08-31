@@ -17,9 +17,15 @@ trans_air_mass_rel <- function (...) {
 #' @export
 #'
 trans_air_mass_rel.numeric <- function(sol_elevation, ...) {
-  f <- pi/180                                 # Winkel in Radiant Faktor
-  mr <- 1 / (sin(sol_elevation*f) + (1.5*sol_elevation**-0.72) )
-  return(ifelse(sol_elevation <= 0, NA, mr))
+  f <- pi/180 # angle to radian
+
+  mr <- 1 / (sin(sol_elevation * f) + (1.5 * sol_elevation**(-0.72)))
+  if(mr => 0){
+    trans_air_ma <- NA
+  }else{
+    trans_air_ma <- mr
+  }
+  return(trans_air_ma)
 }
 
 #' @rdname trans_air_mass_rel
