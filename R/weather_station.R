@@ -1,22 +1,22 @@
 #' Weather Station
 #'
-#' Creates a list of class "weather_station, that contains all data regarding the
+#' Creates a list of class "weather_station", that contains all data regarding the
 #' weather station, its location and its measurements.
 #'
 #' Parameters with preset NULL can be estimated using calculations. However some additional
 #' variables need to be passed for the estimation of some parameters.
 #' For usage examples see the examples below.
 #'
-#' If p1 and p2 are NULL, they will get estimated using the elevation and air temperature.
+#' If p1 and p2 are NULL, they will be estimated using the elevation and air temperature.
 #'
-#' If sw_in is NULL, it will get estimated using TOA radiation and average
+#' If sw_in is NULL, it will be estimated using TOA radiation and average
 #' atmospheric transmittance (see [fieldClim::rad_sw_in]).
 #' By setting slope, sky_view and exposition, sw_in will be topographically corrected
 #' (see [fieldClim::rad_sw_in_topo]).
 #'
 #' If sw_out is NULL, albedo needs to be set (see [fieldClim::rad_sw_out]).
 #'
-#' If lw_in is NULL, it will get estimated using the air temperature and pressure
+#' If lw_in is NULL, it will be estimated using the air temperature and pressure
 #' (see [fieldClim::rad_lw_in]).
 #' By setting sky_view, lw_in will be topographically corrected
 #' (see [fieldClim::rad_lw_in_topo]).
@@ -26,28 +26,33 @@
 #' If soil_flux is NULL, ts1, ts2, depth1, depth2, moisture and texture need to be set.
 #' (see [fieldClim::soil_heat_flux] and [fieldClim::soil_thermal_cond]).
 #'
-#' @param lat Latitude of location. Preset: 50.840503 (climate station caldern).
-#' @param lon Longitude of location. Preset: 8.683300 (climate station caldern).
-#' @param elev Elevation of location above sea level in m. Preset: 270 m (climate station caldern).
-#' @param surface_type Surface Type. Form: Character string. One of: "Wiese", "Acker", "Gruenflaeche", "Strasse", "Landwirtschaft", "Siedlung", "Nadelwald", "Laubwald", "Mischwald", "Stadt". Preset: "Wiese.
+#' If additional parameters are desired, they can be commited:
+#' - location properties: "slope", "sky_view", "exposition", "texture" and "albedo"
+#' - depth of ground measurements: "depth1" and "depth2" in m.
+#' - additional measurements: "ts1", "ts2" and "t_surface" in °C and "moisture".
+#'
+#' @param lat Latitude of location. Preset: 50.840503 (climate station Caldern).
+#' @param lon Longitude of location. Preset: 8.683300 (climate station Caldern).
+#' @param elev Elevation of location above sea level in m. Preset: 270 m (climate station Caldern).
+#' @param surface_type Surface Type. Form: Character string. One of: "field", "acre", "lawn", "street", "agriculture", "settlement", "coniferous forest", "deciduous forest", "mixed forest", "city", Preset: "field".
 #' @param obs_height Height of vegetation in m. Preset: 0.3.
 #' @param z1 Lower measurement height in m. Preset: 2m.
 #' @param z2 Upper measurement height in m. Preset: 2m.
 #' @param datetime Name of datetime-coloumn in data.
 #' Form: POSIX-Object (See [base::as.POSIXlt] and [base::strptime] for conversion.)
-#' @param t1 Vector containing lower temperature data in degrees C.
-#' @param t2 Vector containing upper temperature data in degrees C.
+#' @param t1 Vector containing lower temperature data in °C.
+#' @param t2 Vector containing upper temperature data in °C.
 #' @param v1 Vector containing lower wind speed data in m/s.
 #' @param v2 Vector containing upper wind speed data in m/s.
 #' @param hum1 Vector containing lower humidity data in %.
 #' @param hum2 Vector containing upper humidity data in %.
 #' @param p1 Vector containing lower pressure data in hPa.
 #' @param p2 Vector containing upper pressure data in hPa.
-#' @param sw_in Vector containing incoming shortwave radiation in W/m^2.
-#' @param sw_out Vector containing outgoing shortwave radiation in W/m^2.
-#' @param lw_in Vector containing incoming longwave radiation in W/m^2.
-#' @param lw_out Vector containing outgoing shortwave radiation in W/m^2.
-#' @param soil_flux Vector containing soil flux in W/m^2.
+#' @param sw_in Vector containing incoming shortwave radiation in W/m².
+#' @param sw_out Vector containing outgoing shortwave radiation in W/m².
+#' @param lw_in Vector containing incoming longwave radiation in W/m².
+#' @param lw_out Vector containing outgoing shortwave radiation in W/m².
+#' @param soil_flux Vector containing soil flux in W/m².
 #' @param ... Additional parameters, see details for usage.
 #'
 #' @return List of class "weather_station", that contains:
@@ -62,7 +67,7 @@
 #' test_station <- build_weather_station(lat = 50.840503,
 #'                                      lon = 8.6833,
 #'                                      elev = 270,
-#'                                      surface_type = "Meadow",
+#'                                      surface_type = "field",
 #'                                      obs_height = 0.3, # obstacle height
 #'                                      z1 = 2, # measurement heights
 #'                                      z2 = 10,
@@ -80,7 +85,7 @@
 #'                                      soil_flux = ws$heatflux_soil)
 #' # Specify pressure
 #' test_station <- build_weather_station(lat = 50.840503, lon = 8.6833, elev = 270,
-#'                                      surface_type = "Meadow", obs_height = 0.3,
+#'                                      surface_type = "field", obs_height = 0.3,
 #'                                      z1 = 2, z2 = 10, datetime = ws$datetime,
 #'                                      t1 = ws$t1, t2 = ws$t2, v1 = ws$v1, v2 = ws$v2,
 #'                                      hum1 = ws$hum1, hum2 = ws$hum2,
@@ -95,7 +100,7 @@
 #'
 #' # Alternative calculation of soil flux
 #' test_station <- build_weather_station(lat = 50.840503, lon = 8.6833, elev = 270,
-#'                                      surface_type = "Meadow", obs_height = 0.3,
+#'                                      surface_type = "field", obs_height = 0.3,
 #'                                      z1 = 2, z2 = 10, datetime = ws$datetime,
 #'                                      t1 = ws$t1, t2 = ws$t2, v1 = ws$v1, v2 = ws$v2,
 #'                                      hum1 = ws$hum1, hum2 = ws$hum2,
@@ -113,7 +118,7 @@
 #
 #' # Alternative shortwave
 #' test_station <- build_weather_station(lat = 50.840503, lon = 8.6833, elev = 270,
-#'                                      surface_type = "Meadow", obs_height = 0.3,
+#'                                      surface_type = "field", obs_height = 0.3,
 #'                                      z1 = 2, z2 = 10, datetime = ws$datetime,
 #'                                      t1 = ws$t1, t2 = ws$t2, v1 = ws$v1, v2 = ws$v2,
 #'                                      hum1 = ws$hum1, hum2 = ws$hum2,
@@ -130,7 +135,7 @@
 #'
 #' # Alternative longwave
 #' test_station <- build_weather_station(lat = 50.840503, lon = 8.6833, elev = 270,
-#'                                      surface_type = "Meadow", obs_height = 0.3,
+#'                                      surface_type = "field", obs_height = 0.3,
 #'                                      z1 = 2, z2 = 10, datetime = ws$datetime,
 #'                                      t1 = ws$t1, t2 = ws$t2, v1 = ws$v1, v2 = ws$v2,
 #'                                      hum1 = ws$hum1, hum2 = ws$hum2,
@@ -149,7 +154,7 @@
 build_weather_station <-  function(lat,
                                    lon,
                                    elev,
-                                   surface_type = "Meadow",
+                                   surface_type = "field",
                                    obs_height = 0.3,
                                    z1,
                                    z2,
@@ -296,7 +301,7 @@ build_weather_station <-  function(lat,
 
   # ---- Radiation balances ----
 
-  #trans_total <- waiting for function being brought to new form
+  #trans_total
   out_list$measurements$sw_bal <- rad_sw_radiation_balance(out_list)
 
   # calculate lw_bal
@@ -322,7 +327,7 @@ build_weather_station <-  function(lat,
 
   }
 
-  # ---- Stability ----#
+  # ---- Stability ----
   out_list$measurements$stability <- turb_flux_stability(out_list)
 
   # check if all vectors have the same length and print a warning if not

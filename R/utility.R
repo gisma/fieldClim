@@ -12,10 +12,10 @@ check_availability <- function(weather_station, ...){
   unlisted <- names(c(weather_station[[1]], weather_station[[2]], weather_station[[3]]))
   parameters <- as.character(unlist(list(...)))
   empty <- parameters[!parameters %in% unlisted]
-  if(length(empty)>1){
+  if(length(empty) > 1){
     stop(paste(empty, collapse = ", "), " are not available in the weather_station object.\n",
          "Please set the needed parameters.")
-  } else if(length(empty)>0){
+  } else if(length(empty) > 0){
     stop(paste(empty, collapse = ", "), " is not available in the weather_station object.\n",
          "Please set the needed parameter.")
   }
@@ -79,8 +79,15 @@ as.data.frame.weather_station <- function(x, ...,
   out <- as.data.frame(x$measurements)
 
   # Define important columns
-  important <- c("datetime", "t1", "t2", "v1", "v2", "p1", "p2", "hum1", "hum2", "soil_flux",
-                 "sw_in", "sw_out", "lw_in", "lw_out", "sw_bal", "lw_bal", "rad_bal", "stability",
+  important <- c("datetime",
+                 "t1", "t2",
+                 "v1", "v2",
+                 "p1", "p2",
+                 "hum1", "hum2",
+                 "soil_flux",
+                 "sw_in", "sw_out",
+                 "lw_in", "lw_out",
+                 "sw_bal", "lw_bal","rad_bal", "stability",
                  "sensible_priestley_taylor", "latent_priestley_taylor",
                  "sensible_bowen", "latent_bowen",
                  "sensible_monin", "latent_monin",

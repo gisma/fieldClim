@@ -1,7 +1,8 @@
 #' Monin-Obhukov-Length
 #'
 #' Calculation of the Monin-Obhukov-Length.
-#' Stability of atmosphere needs to be given as one of "stabil", "neutral" or "unstabil".
+#' The calculation depends on the stability of the atmosphere.
+#' This value will be taken from the Gradient-Richardson-Number.
 #'
 #' @rdname turb_flux_monin
 #' @param ... Additional parameters passed to later functions.
@@ -20,8 +21,8 @@ turb_flux_monin <- function (...) {
 #' @param z0 Roughness length in m.
 #' @param v1 Windspeed at lower height (e.g. height of anemometer) in m/s.
 #' @param v2 Windspeed at upper height in m/s.
-#' @param t1 Temperature at lower height (e.g. height of anemometer) in degrees C.
-#' @param t2 Temperature at upper height in degrees C.
+#' @param t1 Temperature at lower height (e.g. height of anemometer) in °C.
+#' @param t2 Temperature at upper height in °C.
 #' @export
 turb_flux_monin.numeric <- function(grad_rich_no, z1 = 2, z2 = 10, z0, v1, v2, t1, t2, ...){
   ustar <- turb_ustar(v1,z1,z0)
@@ -29,16 +30,20 @@ turb_flux_monin.numeric <- function(grad_rich_no, z1 = 2, z2 = 10, z0, v1, v2, t
   for(i in 1:length(grad_rich_no)){
     if(is.na(grad_rich_no[i])){
       monin[i] <- NA
+
+    # hier noch mit Bendix abklären (Welcher Grenzwert?)
     } else if(ustar[i] < 0.2){
       monin[i] <- NA
-    } else if(grad_rich_no[i] <= -0.05){
-      monin[i] <- (z1*(t1[i]+273.15)*(((v2[i]-v1[i])/(z2-z1))**2))/(9.81*(t2[i]-t1[i])/(z2-z1))
 
-    } else if(grad_rich_no[i] > -0.05 && grad_rich_no[i] < 0.05){
-      monin[i] <- 0.75*(z1*(t1[i]+273.15)*(((v2[i]-v1[i])/(z2-z1))**2))/(9.81*(t2[i]-t1[i])/(z2-z1))
+    # Wertebereich noch mit Herrn Bendix abklären
+    } else if(grad_rich_no[i] <= -0.2){
+      monin[i] <- (z1 * (t1[i] + 273.15) * (((v2[i] - v1[i]) / (z2 - z1))^2)) / (9.81 * (t2[i] - t1[i]) / (z2 - z1))
 
-    } else if(grad_rich_no[i] >= 0.05){
-      monin[i] <- 4.7*ustar[i]*log(z1/z0)*(z1-z0)/(v1[i]*0.4)
+    } else if(grad_rich_no[i] > -0.2 && grad_rich_no[i] < 0.2){
+      monin[i] <- 0.75 * (z1 * (t1[i] + 273.15) * (((v2[i] - v1[i]) / (z2 - z1))^2)) / (9.81 * (t2[i] - t1[i]) / (z2 - z1))
+
+    } else if(grad_rich_no[i] >= 0.2){
+      monin[i] <- 4.7 * ustar[i] * log(z1 / z0) * (z1 - z0) / (v1[i] * 0.4)
     }
   }
 
@@ -66,8 +71,6 @@ turb_flux_monin.weather_station <- function(weather_station, ...){
   return(turb_flux_monin(grad_rich_no, z1, z2, z0, v1, v2, t1, t2))
 }
 
-
-
 #' Gradient-Richardson-Number
 #'
 #' Calculation of the Gradient-Richardson-Number. The number represents the
@@ -85,7 +88,7 @@ turb_flux_grad_rich_no <- function (...) {
 
 #' @rdname turb_flux_grad_rich_no
 #' @method turb_flux_grad_rich_no numeric
-#' @param t1 Temperature at lower height (e.g. height of anemometer) in degrees C.
+#' @param t1 Temperature at lower height (e.g. height of anemometer) in °C.
 #' @param t2 Temperature at upper height in degrees C.
 #' @param z1 Lower height of measurement (e.g. height of anemometer) in m.
 #' @param z2 Upper height of measurement in m.
@@ -97,7 +100,7 @@ turb_flux_grad_rich_no <- function (...) {
 turb_flux_grad_rich_no.numeric <- function(t1, t2, z1 = 2, z2 = 10, v1, v2, p1, p2, ...){
   pot_temp1 <- temp_pot_temp(t1, p1)
   pot_temp2 <- temp_pot_temp(t2, p2)
-  grad_rich_no <- (9.81/pot_temp1)*((pot_temp2-pot_temp1)/(z2-z1))*(((v2-v1)/(z2-z1))**(-2))
+  grad_rich_no <- (9.81 / pot_temp1) * ((pot_temp2 - pot_temp1) / (z2 - z1)) * (((v2 - v1) / (z2 - z1))^(-2))
   grad_rich_no <- ifelse(is.nan(grad_rich_no), 0, grad_rich_no)
   return(grad_rich_no)
 }
@@ -118,8 +121,6 @@ turb_flux_grad_rich_no.weather_station <- function(weather_station, ...){
   p2 <- weather_station$measurements$p2
   return(turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, p1, p2))
 }
-
-
 
 #' Stability
 #'
@@ -142,9 +143,11 @@ turb_flux_stability.numeric <- function(grad_rich_no, ...){
   stability <- rep(NA, length(grad_rich_no))
   for(i in 1:length(grad_rich_no)){
     if(is.na(grad_rich_no[i])){stability[i] <- NA}
-    else if(grad_rich_no[i] <= -0.05){stability[i] <- "unstable"}
-    else if(grad_rich_no[i] > -0.05 && grad_rich_no[i] < 0.05){stability[i] <- "neutral"}
-    else if(grad_rich_no[i] >= 0.05){stability[i] <- "stable"}
+
+    # Rücksprache mit Bendix (Grenzwert 0.05 oder 0.2)
+    else if(grad_rich_no[i] <= -0.2) {stability[i] <- "unstable"}
+    else if(grad_rich_no[i]  > -0.2 && grad_rich_no[i] < 0.2) {stability[i] <- "neutral"}
+    else if(grad_rich_no[i] >= 0.2) {stability[i] <- "stable"}
   }
   return(stability)
 }
@@ -184,12 +187,16 @@ turb_flux_ex_quotient_temp.numeric <- function(grad_rich_no, ustar, monin, z, ai
   for(i in 1:length(grad_rich_no)){
     if(is.na(grad_rich_no[i])){
       ex[i] <- NA
-    } else if(grad_rich_no[i] <= -0.05){
-      ex[i] <- (0.4*ustar[i]*z/(0.74*(1-9*z/monin[i])**(-0.5)))*air_density[i]
-    } else if(grad_rich_no[i] > -0.05 && grad_rich_no[i] < 0.05){
-      ex[i] <- (0.4*ustar[i]*z/(0.74+4.7*z/monin[i]))*air_density[i]
-    } else if(grad_rich_no[i] >= 0.05){
+
+    # Rücksprache mit Bendix (Grenzwert 0.05 oder 0.2, 1-9 eher 1.9)
+    } else if(grad_rich_no[i] <= -0.2){
+      ex[i] <- (0.4 * ustar[i] * z / (0.74 * (1 - 9 * z / monin[i])^(-0.5))) * air_density[i]
+    } else if(grad_rich_no[i] > -0.2 && grad_rich_no[i] < 0.2){
+      #ex[i] <- (0.4 * ustar[i] * z / (0.74 + 4.7 * z / monin[i])) * air_density[i]
       ex[i] <- NA
+    } else if(grad_rich_no[i] >= 0.2){
+      #ex[i] <- NA
+      ex[i] <- (0.4 * ustar[i] * z / (0.74 + 4.7 * z / monin[i])) * air_density[i]
     }
   }
   return(ex)
@@ -245,12 +252,16 @@ turb_flux_ex_quotient_imp.numeric <- function(grad_rich_no, ustar, monin, z, air
   for(i in 1:length(grad_rich_no)){
     if(is.na(grad_rich_no[i])){
       ex[i] <- NA
-    } else if(grad_rich_no[i] <= -0.05){
-      ex[i] <- (0.4*ustar[i]*z/((1.15*z/monin[i])**(-0.25)))*air_density[i]
-    } else if(grad_rich_no[i] > -0.05 && grad_rich_no[i] < 0.05){
-      ex[i] <- (0.4*ustar[i]*monin[i]/4.7)*air_density[i]
-    } else if(grad_rich_no[i] >= 0.05){
-      ex[i] <- (0.4*ustar[i]*z)*air_density[i]
+
+    # Rücksprache mit Bendix (Werte 1.15 im Buch steht 1-15)
+    } else if(grad_rich_no[i] <= -0.2){
+      ex[i] <- (0.4 * ustar[i] * z / ((1.15 * z / monin[i])^(-0.25))) * air_density[i]
+
+    } else if(grad_rich_no[i] > -0.2 && grad_rich_no[i] < 0.2){
+      ex[i] <- (0.4 * ustar[i] * z) * air_density[i]
+
+    } else if(grad_rich_no[i] >= 0.2){
+      ex[i] <- (0.4 * ustar[i] * monin[i] / 4.7) * air_density[i]
     }
   }
   return(ex)
@@ -302,7 +313,7 @@ turb_flux_imp_exchange <- function (...) {
 #' @param z2 Upper height of measurement in m.
 #' @export
 turb_flux_imp_exchange.numeric <- function(ex_quotient, v1, v2, z1 = 2, z2 = 10, ...){
-  ia <- ex_quotient*(v2-v1)/(z2-z1)
+  ia <- ex_quotient * (v2 - v1) / (z2 - z1)
   return(ia)
 }
 
@@ -332,14 +343,14 @@ turb_flux_imp_exchange.weather_station <- function(weather_station, height = "lo
 #' @return Object of class weather_station
 #' @export
 turb_flux_calc <- function(weather_station){
-  stability <- turb_flux_stability(weather_station)
-  sensible_pt <- sensible_priestley_taylor(weather_station)
-  latent_pt <- latent_priestley_taylor(weather_station)
+  stability    <- turb_flux_stability(weather_station)
+  sensible_pt  <- sensible_priestley_taylor(weather_station)
+  latent_pt    <- latent_priestley_taylor(weather_station)
   sensible_bow <- sensible_bowen(weather_station)
-  latent_bow <- latent_bowen(weather_station)
+  latent_bow   <- latent_bowen(weather_station)
   sensible_mon <- sensible_monin(weather_station)
-  latent_mon <- latent_monin(weather_station)
-  latent_pen <- latent_penman(weather_station)
+  latent_mon   <- latent_monin(weather_station)
+  latent_pen   <- latent_penman(weather_station)
 
   weather_station$measurements$stability <- stability
   weather_station$measurements$sensible_priestley_taylor <- sensible_pt

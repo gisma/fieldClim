@@ -27,6 +27,7 @@ turb_roughness_length.default <- function(surface_type = NULL, obs_height = NULL
     z0 <- surface_properties[which(surface_properties$surface_type==surface_type),]$roughness_length
   } else {
     z0 <- NA
+    print("The input is not valid. Please check the input values.")
   }
   return(z0)
 }
@@ -63,9 +64,16 @@ turb_displacement <- function (...) {
 #' @rdname turb_displacement
 #' @method turb_displacement numeric
 #' @param obs_height Height of vegetation in m.
+#' @param surroundings choose either 'vegetation' or 'city'.
 #' @export
-turb_displacement.numeric <- function(obs_height, ...){
-  d0 <- (2/3)*obs_height      # for Vegetation only
+turb_displacement.numeric <- function(obs_height, surroundings = "vegetation", ...){
+  if(surroundings == "vegetation"){
+    d0 <- (2/3) * obs_height  # for vegetation
+  }else if (surroundings == "city"){
+    d0 <- 0.8 * obs_height  # for dense housing
+  }else{
+    stop("Please set 'surroundings' to either 'vegetation' or 'city'.")
+  }
   return(d0)
 }
 
@@ -73,10 +81,10 @@ turb_displacement.numeric <- function(obs_height, ...){
 #' @method turb_displacement weather_station
 #' @param weather_station Object of class weather_station
 #' @export
-turb_displacement.weather_station <- function(weather_station, ...){
+turb_displacement.weather_station <- function(weather_station, surroundings = "vegetation", ...){
   check_availability(weather_station, "obs_height")
   obs_height <- weather_station$location_properties$obs_height
-  return(turb_displacement(obs_height))
+  return(turb_displacement(obs_height, surroundings))
 }
 
 
@@ -100,7 +108,13 @@ turb_ustar <- function (...) {
 #' @param z0 Roughness length in m.
 #' @export
 turb_ustar.numeric <- function(v, z, z0, ...){
-  ustar <- (v*0.4)/log(z/z0)
+  ustar <- (v * 0.4) / log(z / z0)
+
+  if(ustar == Inf){
+    print("ustar value is infinity and will be set to NA.")
+    ustar = NA
+  }
+
   return(ustar)
 }
 
