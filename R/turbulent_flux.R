@@ -31,7 +31,7 @@ turb_flux_monin.numeric <- function(grad_rich_no, z1 = 2, z2 = 10, z0, v1, v2, t
     if(is.na(grad_rich_no[i])){
       monin[i] <- NA
 
-    # hier noch mit Bendix abklären (Welcher Grenzwert?)
+    # hier noch mit Bendix abklären (Welcher Grenzwert?) keine mehr notwendig geklärt
     } else if(ustar[i] < 0.2){
       monin[i] <- NA
 
