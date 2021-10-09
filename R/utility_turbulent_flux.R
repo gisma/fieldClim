@@ -36,7 +36,7 @@ gam <- function(t){
 #' @param t Air temperature in °C.
 #' @param dpot Difference in potential temperature between the two measurement
 #' heights in °C.
-#' @param dah Difference in absolute humidity (kg/m^3) between the two measurement heights.
+#' @param dah Difference in absolute humidity (kg/m³) between the two measurement heights.
 #'
 #' @return Bowen-ratio
 #' @export
@@ -53,7 +53,7 @@ bowen_ratio <- function(t, dpot, dah){
 #'
 #' @param t Air temperature in °C.
 #'
-#' @return Heat capacity density in J/(K*m^3)
+#' @return Heat capacity density in J/(K*m³)
 #' @export
 #'
 heat_capacity <- function(t){
