@@ -72,9 +72,9 @@ sol_angles.POSIXt <- function(datetime, lat, lon, ...){
 
   # decimal hour
   lt <- as.POSIXlt(datetime)
-  ut <- lt$hour + lt$min/60 + lt$sec/3600
+  ut <- lt$hour + lt$min / 60 + lt$sec / 3600
 
-  f <- pi/180   # angle to radian
+  f <- pi / 180   # angle to radian
 
   # conversion latitude to degrees
   gbr <- lat*f

@@ -60,7 +60,7 @@ trans_air_mass_abs <- function (...) {
 #'
 trans_air_mass_abs.numeric <- function(air_mass_rel, p, ...){
   p0 <- 1013.25
-  air_mass_abs <- air_mass_rel*(p/p0)
+  air_mass_abs <- air_mass_rel * (p / p0)
   return (air_mass_abs)
 }
 

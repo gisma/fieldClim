@@ -122,7 +122,7 @@ soil_heat_cap.weather_station <- function(weather_station, ...) {
 #'
 #' @rdname soil_heat_flux
 #' @param ... Additional parameters passed to later functions.
-#' @return Soil heat flux in W*m^-2.
+#' @return Soil heat flux in W * m^-2.
 #' @export
 #'
 soil_heat_flux <- function (...) {
@@ -174,7 +174,7 @@ soil_attenuation <- function (...) {
 #' @method soil_attenuation numeric
 #' @export
 #' @param thermal_cond Thermal conductivity of soil in W/m K.
-#' @param vol_heat_cap Volumetric heat capacity of soil in J/(m^3 * K).
+#' @param vol_heat_cap Volumetric heat capacity of soil in J/(m³ * K).
 soil_attenuation.numeric <- function(thermal_cond, vol_heat_cap, ...) {
   soil_att <- sqrt((thermal_cond * 86400) /(vol_heat_cap * (10^6) * pi))
   return(soil_att)

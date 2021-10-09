@@ -14,11 +14,11 @@ hum_sat_vapor_pres <- function (...) {
 #' @rdname hum_sat_vapor_pres
 #' @method hum_sat_vapor_pres numeric
 #' @export
-#' @param t Air temperature in degrees C.
+#' @param t Air temperature in °C.
 hum_sat_vapor_pres.numeric <- function(t, ...) {
   a <- 7.5
   b <- 235
-  return(6.1078*10**((a*t)/(b+t)))
+  return(6.1078 * 10**((a * t) / (b + t)))
 }
 
 #' @rdname hum_sat_vapor_pres
@@ -117,7 +117,7 @@ hum_specific.weather_station <- function(weather_station, height, ...) {
 #' Calculates absolute humidity from vapor pressure and air temperature.
 #'
 #' @param ... Additional parameters passed to later functions.
-#' @return Absolute humidity in kg/m^3.
+#' @return Absolute humidity in kg/m³.
 #' @export
 #'
 hum_absolute <- function (...) {
@@ -130,8 +130,8 @@ hum_absolute <- function (...) {
 #' @param p_vapor Vapor pressure in hPa.
 #' @param t_pot Potential air temperature in °C
 hum_absolute.numeric <- function(p_vapor, t_pot, ...) {
-  t_pot <- t_pot+273.15
-  return((0.21668*p_vapor)/t_pot)
+  t_pot <- t_pot + 273.15
+  return((0.21668 * p_vapor) / t_pot)
 }
 
 #' @rdname hum_absolute
@@ -165,7 +165,7 @@ hum_evap_heat <- function (...) {
 #' @export
 #' @param t Air temperature in °C.
 hum_evap_heat.numeric <- function(t, ...){
-  return((2.500827-0.002372*t)*10^6)
+  return((2.500827 - 0.002372 * t) * 10^6)
 }
 
 #' @rdname hum_evap_heat
@@ -206,11 +206,11 @@ hum_precipitable_water <- function (...) {
 #' @param elev Elevation above sea level in m.
 hum_precipitable_water.numeric <- function(p, t, elev, ...){
   p0    <- 1013.25          # Pressure standard atmosphere
-  t     <- t + 273.15       # degrees C in K
-  cof   <- (elev/100) * 0.6 # average moist adiabatic T-gradient, might have to be adjusted
+  t     <- t + 273.15       # °C in K
+  cof   <- (elev / 100) * 0.6 # average moist adiabatic T-gradient, might have to be adjusted
   t0    <- t + cof
-  pw_st <- 0.0000004*exp(0.0538*t0)
-  pw    <- pw_st*(p/p0) *(t0/t)**0.5
+  pw_st <- 0.0000004 * exp(0.0538 * t0)
+  pw    <- pw_st * (p / p0) * (t0 / t)**0.5
   return(pw)
 }
 
@@ -249,8 +249,8 @@ hum_moisture_gradient <- function (...) {
 #' @export
 #' @param hum1 Relative humidity at lower height in %.
 #' @param hum2 Relative humidity at upper height in %.
-#' @param t1 Air temperature at lower height in degrees C.
-#' @param t2 Air temperature at upper height in degrees C.
+#' @param t1 Air temperature at lower height in °C.
+#' @param t2 Air temperature at upper height in °C.
 #' @param p1 Air pressure at lower height in hPa.
 #' @param p2 Air pressure at lower height in hPa.
 #' @param z1 Lower measurement height in m.

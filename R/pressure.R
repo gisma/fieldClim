@@ -41,7 +41,7 @@ pres_p.numeric <- function(elev, t, ...){
   p0 <- 1013.25    # standard pressure in hPa
   g <- 9.81        # gravity acceleration
   rl <- 287.05     # specific gas constant
-  p <- p0 * exp(- (g*elev)/ (rl*t))
+  p <- p0 * exp(- (g * elev) / (rl * t))
   return(p)
 }
 
@@ -52,7 +52,7 @@ pres_p.numeric <- function(elev, t, ...){
 #'
 #' @rdname pres_air_density
 #' @param ... Additional parameters passed to later functions.
-#' @return Air density in kg/m^3.
+#' @return Air density in kg/m³.
 #' @export
 #'
 pres_air_density <- function (...) {
@@ -86,6 +86,6 @@ pres_air_density.weather_station <- function(weather_station, height = "lower", 
 #' @export
 #'
 pres_air_density.numeric <- function(p, t, ...){
-  ad <- (p*100)/(287.05*(t+273.15))
+  ad <- (p * 100) / (287.05 * (t + 273.15))
   return(ad)
 }

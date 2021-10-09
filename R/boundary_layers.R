@@ -8,7 +8,7 @@
 #' @export
 #'
 bound_mech_low <- function(dist) {
-  mib <- 0.3*sqrt(dist)
+  mib <- 0.3 * sqrt(dist)
   return(mib)
 }
 
@@ -22,7 +22,7 @@ bound_mech_low <- function(dist) {
 #' @export
 #'
 bound_mech_avg <- function(dist) {
-  mib <- 0.43*dist**0.5
+  mib <- 0.43 * dist**0.5
   return(mib)
 }
 
