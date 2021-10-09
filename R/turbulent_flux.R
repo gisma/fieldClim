@@ -237,7 +237,7 @@ turb_flux_ex_quotient_imp <- function (...) {
 #' @param ustar Friction velocity in m/s.
 #' @param monin Monin-Obhukov-Length in m.
 #' @param z Observation height in m.
-#' @param air_density Air density in kg/m^3.
+#' @param air_density Air density in kg/m³.
 #' @export
 turb_flux_ex_quotient_imp.numeric <- function(grad_rich_no, ustar, monin, z, air_density, ...){
   ex <- rep(NA, length(grad_rich_no))
@@ -288,7 +288,7 @@ turb_flux_ex_quotient_imp.weather_station <- function(weather_station, height = 
 #'
 #' @rdname turb_flux_imp_exchange
 #' @param ... Additional parameters passed to later functions.
-#' @return Turbulent impulse exchange in kg/(m*s^2).
+#' @return Turbulent impulse exchange in kg/(m*s²).
 #' @export
 #'
 turb_flux_imp_exchange <- function (...) {

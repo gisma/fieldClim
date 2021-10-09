@@ -22,7 +22,7 @@ turb_roughness_length <- function (...) {
 turb_roughness_length.default <- function(surface_type = NULL, obs_height = NULL, ...){
   surface_properties <- surface_properties
   if(!is.null(obs_height)){
-    z0 <- obs_height*0.1
+    z0 <- obs_height * 0.1
   } else if(!is.null(surface_type)) {
     z0 <- surface_properties[which(surface_properties$surface_type==surface_type),]$roughness_length
   } else {
@@ -68,7 +68,7 @@ turb_displacement <- function (...) {
 #' @export
 turb_displacement.numeric <- function(obs_height, surroundings = "vegetation", ...){
   if(surroundings == "vegetation"){
-    d0 <- (2/3) * obs_height  # for vegetation
+    d0 <- ( 2 / 3 ) * obs_height  # for vegetation
   }else if (surroundings == "city"){
     d0 <- 0.8 * obs_height  # for dense housing
   }else{
