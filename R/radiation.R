@@ -51,7 +51,7 @@ rad_emissivity_air.weather_station <- function(weather_station, height = "lower"
 #' Calculation of the longwave radiation of the atmosphere.
 #'
 #' @param ... Additional parameters passed to later functions.
-#' @return Atmospheric radiation in W/m^2.
+#' @return Atmospheric radiation in W/m².
 #' @export
 #'
 rad_lw_in <- function (...) {
@@ -65,9 +65,8 @@ rad_lw_in <- function (...) {
 #' @param t Air temperature in °C.
 #' @export
 rad_lw_in.numeric <- function(emissivity_air = NULL, hum, t, ...){
-  sigma <- 5.670374e-8
-  #gs <- emissivity_air*sigma*(t+273.15)**4 # das ist ja die spezifische Ausstrahlung eines Körpers Bendix
-  gs <- sigma * ((t+273.15)^4)*(0.594 + 0.0416* sqrt(hum_vapor_pres(hum, t)))
+  sigma <- 5.6697e-8
+  gs <- sigma * ((t + 273.15)^4) * (0.594 + 0.0416 * sqrt(hum_vapor_pres(hum, t)))
   return(gs)
 }
 

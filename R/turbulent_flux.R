@@ -31,18 +31,13 @@ turb_flux_monin.numeric <- function(grad_rich_no, z1 = 2, z2 = 10, z0, v1, v2, t
     if(is.na(grad_rich_no[i])){
       monin[i] <- NA
 
-    # hier noch mit Bendix abklären (Welcher Grenzwert?) keine mehr notwendig geklärt
-    } else if(ustar[i] < 0.2){
-      monin[i] <- NA
-
-    # Wertebereich noch mit Herrn Bendix abklären
-    } else if(grad_rich_no[i] <= -0.2){
+    } else if(grad_rich_no[i] <= -0.005){
       monin[i] <- (z1 * (t1[i] + 273.15) * (((v2[i] - v1[i]) / (z2 - z1))^2)) / (9.81 * (t2[i] - t1[i]) / (z2 - z1))
 
-    } else if(grad_rich_no[i] > -0.2 && grad_rich_no[i] < 0.2){
+    } else if(grad_rich_no[i] > -0.005 && grad_rich_no[i] < 0.005){
       monin[i] <- 0.75 * (z1 * (t1[i] + 273.15) * (((v2[i] - v1[i]) / (z2 - z1))^2)) / (9.81 * (t2[i] - t1[i]) / (z2 - z1))
 
-    } else if(grad_rich_no[i] >= 0.2){
+    } else if(grad_rich_no[i] >= 0.005){
       monin[i] <- 4.7 * ustar[i] * log(z1 / z0) * (z1 - z0) / (v1[i] * 0.4)
     }
   }
@@ -143,11 +138,9 @@ turb_flux_stability.numeric <- function(grad_rich_no, ...){
   stability <- rep(NA, length(grad_rich_no))
   for(i in 1:length(grad_rich_no)){
     if(is.na(grad_rich_no[i])){stability[i] <- NA}
-
-    # Rücksprache mit Bendix (Grenzwert 0.05 oder 0.2)
-    else if(grad_rich_no[i] <= -0.2) {stability[i] <- "unstable"}
-    else if(grad_rich_no[i]  > -0.2 && grad_rich_no[i] < 0.2) {stability[i] <- "neutral"}
-    else if(grad_rich_no[i] >= 0.2) {stability[i] <- "stable"}
+    else if(grad_rich_no[i] <= -0.005) {stability[i] <- "unstable"}
+    else if(grad_rich_no[i]  > -0.005 && grad_rich_no[i] < 0.005) {stability[i] <- "neutral"}
+    else if(grad_rich_no[i] >= 0.005) {stability[i] <- "stable"}
   }
   return(stability)
 }
@@ -180,7 +173,7 @@ turb_flux_ex_quotient_temp <- function (...) {
 #' @param ustar Friction velocity in m/s.
 #' @param monin Monin-Obhukov-Length in m.
 #' @param z Height in m.
-#' @param air_density Air density in kg/m^3.
+#' @param air_density Air density in kg/m³.
 #' @export
 turb_flux_ex_quotient_temp.numeric <- function(grad_rich_no, ustar, monin, z, air_density, ...){
   ex <- rep(NA, length(grad_rich_no))
@@ -188,14 +181,13 @@ turb_flux_ex_quotient_temp.numeric <- function(grad_rich_no, ustar, monin, z, ai
     if(is.na(grad_rich_no[i])){
       ex[i] <- NA
 
-    # Rücksprache mit Bendix (Grenzwert 0.05 oder 0.2, 1-9 eher 1.9)
-    } else if(grad_rich_no[i] <= -0.2){
+    } else if(grad_rich_no[i] <= -0.005){
       ex[i] <- (0.4 * ustar[i] * z / (0.74 * (1 - 9 * z / monin[i])^(-0.5))) * air_density[i]
-    } else if(grad_rich_no[i] > -0.2 && grad_rich_no[i] < 0.2){
-      #ex[i] <- (0.4 * ustar[i] * z / (0.74 + 4.7 * z / monin[i])) * air_density[i]
-      ex[i] <- NA
-    } else if(grad_rich_no[i] >= 0.2){
-      #ex[i] <- NA
+
+    } else if(grad_rich_no[i] > -0.005 && grad_rich_no[i] < 0.005){
+      ex[i] <- 0.4 * ustar[i] * z
+
+    } else if(grad_rich_no[i] >= 0.005){
       ex[i] <- (0.4 * ustar[i] * z / (0.74 + 4.7 * z / monin[i])) * air_density[i]
     }
   }
@@ -253,14 +245,13 @@ turb_flux_ex_quotient_imp.numeric <- function(grad_rich_no, ustar, monin, z, air
     if(is.na(grad_rich_no[i])){
       ex[i] <- NA
 
-    # Rücksprache mit Bendix (Werte 1.15 im Buch steht 1-15)
-    } else if(grad_rich_no[i] <= -0.2){
-      ex[i] <- (0.4 * ustar[i] * z / ((1.15 * z / monin[i])^(-0.25))) * air_density[i]
+    } else if(grad_rich_no[i] <= -0.005){
+      ex[i] <- (0.4 * ustar[i] * z / ((1 - 15 * z / monin[i])^(-0.25))) * air_density[i]
 
-    } else if(grad_rich_no[i] > -0.2 && grad_rich_no[i] < 0.2){
+    } else if(grad_rich_no[i] > -0.005 && grad_rich_no[i] < 0.005){
       ex[i] <- (0.4 * ustar[i] * z) * air_density[i]
 
-    } else if(grad_rich_no[i] >= 0.2){
+    } else if(grad_rich_no[i] >= 0.005){
       ex[i] <- (0.4 * ustar[i] * monin[i] / 4.7) * air_density[i]
     }
   }
