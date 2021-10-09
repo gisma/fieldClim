@@ -8,7 +8,7 @@ dist = 15
 min_dist = 145
 
 test_that("pos_min_dist", {
-  expect_equal(pos_min_dist(obs_width, obs_height, ring = F, obs_radius), 145, tolerance = 1e0)
+  expect_equal(pos_min_dist(obs_width, obs_height, ring = FALSE, obs_radius), expected = 145, tolerance = 1e0)
 })
 
 test_that("pos_max_dist", {

@@ -20,7 +20,7 @@ trans_air_mass_rel.numeric <- function(sol_elevation, ...) {
   f <- pi/180 # angle to radian
 
   mr <- 1 / (sin(sol_elevation * f) + (1.5 * sol_elevation**(-0.72)))
-  if(mr => 0){
+  if(mr >= 0){
     trans_air_ma <- NA
   }else{
     trans_air_ma <- mr
