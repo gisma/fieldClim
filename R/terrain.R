@@ -20,7 +20,7 @@ terr_sky_view <- function (...) {
 #' @export
 terr_sky_view.numeric <- function(slope, valley = F, ...) {
   f <- pi/180              # angle in radiant faktor
-  if(valley = TRUE){
+  if(valley == TRUE){
     return(1 - cos(slope * f))
   }else{
     return((1 - cos(slope * f)) / 2.0)
