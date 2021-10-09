@@ -30,7 +30,7 @@ turb_flux_imp_exchange(...)
 \item{height}{Height of measurement. Either "upper" or "lower".}
 }
 \value{
-Turbulent impulse exchange in kg/(m*s^2).
+Turbulent impulse exchange in kg/(m*s²).
 }
 \description{
 Calculation of the turbulent impulse exchange.

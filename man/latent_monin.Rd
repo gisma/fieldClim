@@ -32,9 +32,9 @@ latent_monin(...)
 
 \item{hum2}{Relative humidity at upper height in \%.}
 
-\item{t1}{Air temperature at lower height in degrees C.}
+\item{t1}{Air temperature at lower height in °C.}
 
-\item{t2}{Air temperature at upper height in degrees C.}
+\item{t2}{Air temperature at upper height in °C.}
 
 \item{p1}{Pressure at lower height in hPa.}
 
@@ -53,7 +53,7 @@ latent_monin(...)
 \item{weather_station}{Object of class weather_station}
 }
 \value{
-Latent heat flux in W/m^2.
+Latent heat flux in W/m².
 }
 \description{
 Calculates the latent heat flux using the Monin-Obukhov length. Negative

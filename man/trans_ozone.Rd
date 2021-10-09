@@ -17,7 +17,7 @@ trans_ozone(...)
 
 \item{air_mass_rel}{Relative optical air mass.}
 
-\item{oz}{Columnar ozone in cm. Default is average value of 0.35 cm.}
+\item{oz}{Atmospheric ozone as column in cm. Default is average value of 0.35 cm.}
 
 \item{weather_station}{Object of class weather_station}
 }

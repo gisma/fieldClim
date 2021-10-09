@@ -8,25 +8,27 @@
 \usage{
 latent_priestley_taylor(...)
 
-\method{latent_priestley_taylor}{numeric}(t, rad_bal, soil_flux, coefficient = 1.25, ...)
+\method{latent_priestley_taylor}{numeric}(t, z, rad_bal, soil_flux, surface_type = "field", ...)
 
 \method{latent_priestley_taylor}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{t}{Air temperature in degrees Celsius.}
+\item{t}{Air temperature in °C.}
 
-\item{rad_bal}{Radiation balance in W/m^2.}
+\item{z}{elevation of measurement in m.}
 
-\item{soil_flux}{Soil flux in W/m^2.}
+\item{rad_bal}{Radiation balance in W/m².}
 
-\item{coefficient}{Priestley-Taylor coefficient. Default is for open water.}
+\item{soil_flux}{Soil flux in W/m².}
+
+\item{surface_type}{Surface type, for which a Priestley-Taylor coefficient will be selected. Default is for short grass.}
 
 \item{weather_station}{Object of class weather_station}
 }
 \value{
-Latent heat flux in W/m^2.
+Latent heat flux in W/m².
 }
 \description{
 Calculates the latent heat flux using the Priestley-Taylor method. Negative

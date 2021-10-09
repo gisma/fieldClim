@@ -17,11 +17,11 @@ trans_total(...)
 
 \item{sol_elevation}{Solar elevation in degrees.}
 
-\item{t}{Air temperature in degrees C.}
+\item{t}{Air temperature in °C.}
 
 \item{elev}{Altitude above sea level in m.}
 
-\item{oz}{Columnar ozone in cm. Default is average global value.}
+\item{oz}{Atmospheric ozone as column in cm. Default is average global value.}
 
 \item{vis}{Meteorological visibility in km. Default is the visibility on a clear day.}
 

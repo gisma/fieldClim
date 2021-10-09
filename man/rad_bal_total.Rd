@@ -17,7 +17,7 @@ rad_bal_total(...)
 
 \item{rad_sw_radiation_balance}{Shortwave radiation balance in W/m^2.}
 
-\item{rad_lw_out}{Longave surface emissions in W/m^2.}
+\item{rad_lw_out}{Longwave surface emissions in W/m^2.}
 
 \item{rad_lw_in}{Atmospheric radiation in W/m^2.}
 

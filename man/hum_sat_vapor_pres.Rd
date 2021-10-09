@@ -15,7 +15,7 @@ hum_sat_vapor_pres(...)
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{t}{Air temperature in degrees C.}
+\item{t}{Air temperature in °C.}
 
 \item{weather_station}{Object of class weather_station.}
 
@@ -25,6 +25,6 @@ hum_sat_vapor_pres(...)
 Saturation vapor pressure in hPa.
 }
 \description{
-Calculates the saturation vapor pressure from air temperature using the Magnus
+Calculates the saturation vapor pressure from air temperature using the \emph{Magnus}
 formula (applicable over water surfaces).
 }

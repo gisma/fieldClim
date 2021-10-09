@@ -8,16 +8,16 @@
 \usage{
 rad_sw_out(...)
 
-\method{rad_sw_out}{numeric}(rad_sw_in, albedo, ...)
+\method{rad_sw_out}{numeric}(rad_sw_in, surface_type = "field", ...)
 
-\method{rad_sw_out}{weather_station}(weather_station, ...)
+\method{rad_sw_out}{weather_station}(weather_station, surface_type = "field", ...)
 }
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
 \item{rad_sw_in}{Shortwave radiation on the ground onto a horizontal area in W/m^2.}
 
-\item{albedo}{Albedo of the surface.}
+\item{surface_type}{type of surface for which an albedo will be selected.}
 
 \item{weather_station}{Object of class weather_station.}
 }

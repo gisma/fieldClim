@@ -15,9 +15,9 @@ rad_emissivity_air(...)
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{t}{Air temperature in degrees C.}
+\item{t}{Air temperature in °C.}
 
-\item{elev}{Meters above sea level}
+\item{elev}{Meters above sea level in m.}
 
 \item{p}{OPTIONAL. Air pressure in hPa.}
 

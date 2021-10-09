@@ -17,7 +17,7 @@ hum_precipitable_water(...)
 
 \item{p}{Air pressure in hPa.}
 
-\item{t}{Air temperature in degrees C.}
+\item{t}{Air temperature in °C.}
 
 \item{elev}{Elevation above sea level in m.}
 

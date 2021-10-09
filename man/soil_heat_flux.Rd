@@ -15,20 +15,20 @@ soil_heat_flux(...)
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{ts1}{Upper soil temperature (closest to the surface) in degrees C.}
+\item{ts1}{Upper soil temperature (closest to the surface) in °C.}
 
-\item{ts2}{Lower soil temperature in degrees C.}
+\item{ts2}{Lower soil temperature in °C.}
 
 \item{depth1}{Depth of upper measurement (closest to the surface) in m.}
 
 \item{depth2}{Depth of lower measurement in m.}
 
-\item{thermal_cond}{Thermal conductivity of soil in W/m K.}
+\item{thermal_cond}{Thermal conductivity of soil in W/(m K).}
 
 \item{weather_station}{Object of class weather_station.}
 }
 \value{
-Soil heat flux in W*m^-2.
+Soil heat flux in W * m^-2.
 }
 \description{
 Calculates soil heat flux from measurements in two different

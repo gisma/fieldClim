@@ -20,13 +20,13 @@ See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:strptime]{base::strp
 
 \item{v}{Wind velocity in m/s.}
 
-\item{t}{Temperature in degrees C}
+\item{t}{Temperature in °C}
 
 \item{hum}{Relative humidity in \%.}
 
 \item{z}{Height of measurement for t, v in m.}
 
-\item{rad_bal}{Radiation balance in W/m^2.}
+\item{rad_bal}{Radiation balance in W/m².}
 
 \item{elev}{Elevation above sea level in m.}
 
@@ -37,7 +37,7 @@ See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:strptime]{base::strp
 \item{weather_station}{Object of class weather_station}
 }
 \value{
-Latent heat flux in W/m^2.
+Latent heat flux in W/m².
 }
 \description{
 Calculates the latent heat flux using the Penman-Monteith equation. Negative

@@ -2,16 +2,18 @@
 % Please edit documentation in R/utility_turbulent_flux.R
 \name{sc}
 \alias{sc}
-\title{sc PT coefficient (???)}
+\title{sc PT coefficient}
 \usage{
 sc(t)
 }
 \arguments{
-\item{t}{Air temperature in degrees C.}
+\item{t}{Air temperature in °C.}
 }
 \value{
-sc
+sc coefficient for Priestley-Taylor calculations.
 }
 \description{
-sc PT coefficient (???)
+Calculates sc for latent and sensible Priestley-Taylor-Method.
+sc is the gradient of Clausius-Clapeyron equation.
+This function is a polynomial fit for the table 6 in Foken (2013), p.48.
 }

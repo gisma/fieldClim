@@ -23,5 +23,5 @@ trans_gas(...)
 Transmittance due to gas (0-1)
 }
 \description{
-Calculates transmittance due to O2 and CO2.
+Calculates transmittance due to O$\emph{{2}$ and CO$}{2}$.
 }

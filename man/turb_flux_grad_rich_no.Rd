@@ -15,7 +15,7 @@ turb_flux_grad_rich_no(...)
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{t1}{Temperature at lower height (e.g. height of anemometer) in degrees C.}
+\item{t1}{Temperature at lower height (e.g. height of anemometer) in °C.}
 
 \item{t2}{Temperature at upper height in degrees C.}
 

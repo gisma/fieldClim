@@ -17,7 +17,7 @@ rad_sw_radiation_balance(...)
 
 \item{rad_sw_ground_horizontal}{Shortwave radiation on the ground onto a horizontal area in W/m^2.}
 
-\item{rad_sw_reflected}{Reflected shortwave ratdiation in W/m^2.}
+\item{rad_sw_reflected}{Reflected shortwave radiation in W/m^2.}
 
 \item{weather_station}{Object of class weather_station.}
 }

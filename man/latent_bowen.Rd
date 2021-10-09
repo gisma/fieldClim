@@ -27,9 +27,9 @@ latent_bowen(...)
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{t1}{Temperature at lower height (e.g. height of anemometer) in degrees C.}
+\item{t1}{Temperature at lower height (e.g. height of anemometer) in °C.}
 
-\item{t2}{Temperature at upper height in degrees C.}
+\item{t2}{Temperature at upper height in °C.}
 
 \item{hum1}{Relative humidity at lower height (e.g. height of anemometer) in \%.}
 
@@ -43,17 +43,19 @@ latent_bowen(...)
 
 \item{z2}{Upper height of measurement in m.}
 
-\item{rad_bal}{Radiation balance in W/m^2.}
+\item{rad_bal}{Radiation balance in W/m².}
 
-\item{soil_flux}{Soil flux in W/m^2.}
+\item{soil_flux}{Soil flux in W/m².}
 
 \item{weather_station}{Object of class weather_station}
 }
 \value{
-Latent heat flux in W/m^2
+Latent heat flux in W/m².
 }
 \description{
 Calculates the latent heat flux using the Bowen Method. Negative
 flux signifies flux away from the surface, positive values signify flux
 towards the surface.
+Values above 600 W/m² and below -600 W/m² will be recognized
+as measurement mistakes and smoothed respectively.
 }

@@ -17,11 +17,11 @@ pres_p(...)
 
 \item{weather_station}{Object of class weather_station}
 
-\item{height}{lower or upper}
+\item{height}{'lower' or 'upper'}
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{t}{Temperature in degrees C.}
+\item{t}{Temperature in °C.}
 }
 \value{
 Pressure in hPa.

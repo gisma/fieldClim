@@ -27,5 +27,5 @@ hum_specific(...)
 Specific humidity in kg/kg.
 }
 \description{
-Calculates specfic humidity from vapor pressure and air pressure.
+Calculates specific humidity from vapor pressure and air pressure.
 }

@@ -21,10 +21,10 @@ pres_air_density(...)
 
 \item{p}{Pressure in hPa.}
 
-\item{t}{Temperature in degrees C.}
+\item{t}{Temperature in °C.}
 }
 \value{
-Air density in kg/m^3.
+Air density in kg/m³.
 }
 \description{
 Calculation of the air density.

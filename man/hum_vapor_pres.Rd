@@ -17,7 +17,7 @@ hum_vapor_pres(...)
 
 \item{hum}{Relative humidity in \%.}
 
-\item{t}{Air temperature in degrees C.}
+\item{t}{Air temperature in °C.}
 
 \item{weather_station}{Object of class weather_station.}
 
@@ -27,5 +27,5 @@ hum_vapor_pres(...)
 Vapor pressure in hPa.
 }
 \description{
-Calculates vapor pressure from relative humidity and saturation vapor pressure
+Calculates vapor pressure from relative humidity and saturation vapor pressure.
 }

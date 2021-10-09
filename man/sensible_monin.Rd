@@ -26,9 +26,9 @@ sensible_monin(...)
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{t1}{Air temperature at lower height in degrees C.}
+\item{t1}{Air temperature at lower height in °C.}
 
-\item{t2}{Air temperature at upper height in degrees C.}
+\item{t2}{Air temperature at upper height in °C.}
 
 \item{p1}{Pressure at lower height in hPa.}
 

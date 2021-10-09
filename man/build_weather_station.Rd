@@ -8,7 +8,7 @@ build_weather_station(
   lat,
   lon,
   elev,
-  surface_type = "Meadow",
+  surface_type = "field",
   obs_height = 0.3,
   z1,
   z2,
@@ -30,13 +30,13 @@ build_weather_station(
 )
 }
 \arguments{
-\item{lat}{Latitude of location. Preset: 50.840503 (climate station caldern).}
+\item{lat}{Latitude of location. Preset: 50.840503 (climate station Caldern).}
 
-\item{lon}{Longitude of location. Preset: 8.683300 (climate station caldern).}
+\item{lon}{Longitude of location. Preset: 8.683300 (climate station Caldern).}
 
-\item{elev}{Elevation of location above sea level in m. Preset: 270 m (climate station caldern).}
+\item{elev}{Elevation of location above sea level in m. Preset: 270 m (climate station Caldern).}
 
-\item{surface_type}{Surface Type. Form: Character string. One of: "Wiese", "Acker", "Gruenflaeche", "Strasse", "Landwirtschaft", "Siedlung", "Nadelwald", "Laubwald", "Mischwald", "Stadt". Preset: "Wiese.}
+\item{surface_type}{Surface Type. Form: Character string. One of: "field", "acre", "lawn", "street", "agriculture", "settlement", "coniferous forest", "deciduous forest", "mixed forest", "city", Preset: "field".}
 
 \item{obs_height}{Height of vegetation in m. Preset: 0.3.}
 
@@ -47,9 +47,9 @@ build_weather_station(
 \item{datetime}{Name of datetime-coloumn in data.
 Form: POSIX-Object (See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:strptime]{base::strptime} for conversion.)}
 
-\item{t1}{Vector containing lower temperature data in degrees C.}
+\item{t1}{Vector containing lower temperature data in °C.}
 
-\item{t2}{Vector containing upper temperature data in degrees C.}
+\item{t2}{Vector containing upper temperature data in °C.}
 
 \item{v1}{Vector containing lower wind speed data in m/s.}
 
@@ -63,15 +63,15 @@ Form: POSIX-Object (See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:
 
 \item{p2}{Vector containing upper pressure data in hPa.}
 
-\item{sw_in}{Vector containing incoming shortwave radiation in W/m^2.}
+\item{sw_in}{Vector containing incoming shortwave radiation in W/m².}
 
-\item{sw_out}{Vector containing outgoing shortwave radiation in W/m^2.}
+\item{sw_out}{Vector containing outgoing shortwave radiation in W/m².}
 
-\item{lw_in}{Vector containing incoming longwave radiation in W/m^2.}
+\item{lw_in}{Vector containing incoming longwave radiation in W/m².}
 
-\item{lw_out}{Vector containing outgoing shortwave radiation in W/m^2.}
+\item{lw_out}{Vector containing outgoing shortwave radiation in W/m².}
 
-\item{soil_flux}{Vector containing soil flux in W/m^2.}
+\item{soil_flux}{Vector containing soil flux in W/m².}
 
 \item{...}{Additional parameters, see details for usage.}
 }
@@ -84,7 +84,7 @@ List of class "weather_station", that contains:
 }
 }
 \description{
-Creates a list of class "weather_station, that contains all data regarding the
+Creates a list of class "weather_station", that contains all data regarding the
 weather station, its location and its measurements.
 }
 \details{
@@ -92,24 +92,31 @@ Parameters with preset NULL can be estimated using calculations. However some ad
 variables need to be passed for the estimation of some parameters.
 For usage examples see the examples below.
 
-If p1 and p2 are NULL, they will get estimated using the elevation and air temperature.
+If p1 and p2 are NULL, they will be estimated using the elevation and air temperature.
 
-If sw_in is NULL, it will get estimated using TOA radiation and average
-atmospheric transmittance (see \link[fieldClim:rad_sw_in]{fieldClim::rad_sw_in}).
+If sw_in is NULL, it will be estimated using TOA radiation and average
+atmospheric transmittance (see \link{rad_sw_in}).
 By setting slope, sky_view and exposition, sw_in will be topographically corrected
-(see \link[fieldClim:rad_sw_in_topo]{fieldClim::rad_sw_in_topo}).
+(see \link{rad_sw_in_topo}).
 
-If sw_out is NULL, albedo needs to be set (see \link[fieldClim:rad_sw_out]{fieldClim::rad_sw_out}).
+If sw_out is NULL, albedo needs to be set (see \link{rad_sw_out}).
 
-If lw_in is NULL, it will get estimated using the air temperature and pressure
-(see \link[fieldClim:rad_lw_in]{fieldClim::rad_lw_in}).
+If lw_in is NULL, it will be estimated using the air temperature and pressure
+(see \link{rad_lw_in}).
 By setting sky_view, lw_in will be topographically corrected
-(see \link[fieldClim:rad_lw_in_topo]{fieldClim::rad_lw_in_topo}).
+(see \link{rad_lw_in_topo}).
 
-If lw_out is NULL, t_surface needs to be set (see \link[fieldClim:rad_lw_out]{fieldClim::rad_lw_out}).
+If lw_out is NULL, t_surface needs to be set (see \link{rad_lw_out}).
 
 If soil_flux is NULL, ts1, ts2, depth1, depth2, moisture and texture need to be set.
-(see \link[fieldClim:soil_heat_flux]{fieldClim::soil_heat_flux} and \link[fieldClim:soil_thermal_cond]{fieldClim::soil_thermal_cond}).
+(see \link{soil_heat_flux} and \link{soil_thermal_cond}).
+
+If additional parameters are desired, they can be commited:
+\itemize{
+\item location properties: "slope", "sky_view", "exposition", "texture" and "albedo"
+\item depth of ground measurements: "depth1" and "depth2" in m.
+\item additional measurements: "ts1", "ts2" and "t_surface" in °C and "moisture".
+}
 }
 \examples{
 \dontrun{
@@ -117,7 +124,7 @@ If soil_flux is NULL, ts1, ts2, depth1, depth2, moisture and texture need to be 
 test_station <- build_weather_station(lat = 50.840503,
                                      lon = 8.6833,
                                      elev = 270,
-                                     surface_type = "Meadow",
+                                     surface_type = "field",
                                      obs_height = 0.3, # obstacle height
                                      z1 = 2, # measurement heights
                                      z2 = 10,
@@ -135,7 +142,7 @@ test_station <- build_weather_station(lat = 50.840503,
                                      soil_flux = ws$heatflux_soil)
 # Specify pressure
 test_station <- build_weather_station(lat = 50.840503, lon = 8.6833, elev = 270,
-                                     surface_type = "Meadow", obs_height = 0.3,
+                                     surface_type = "field", obs_height = 0.3,
                                      z1 = 2, z2 = 10, datetime = ws$datetime,
                                      t1 = ws$t1, t2 = ws$t2, v1 = ws$v1, v2 = ws$v2,
                                      hum1 = ws$hum1, hum2 = ws$hum2,
@@ -150,7 +157,7 @@ test_station <- build_weather_station(lat = 50.840503, lon = 8.6833, elev = 270,
 
 # Alternative calculation of soil flux
 test_station <- build_weather_station(lat = 50.840503, lon = 8.6833, elev = 270,
-                                     surface_type = "Meadow", obs_height = 0.3,
+                                     surface_type = "field", obs_height = 0.3,
                                      z1 = 2, z2 = 10, datetime = ws$datetime,
                                      t1 = ws$t1, t2 = ws$t2, v1 = ws$v1, v2 = ws$v2,
                                      hum1 = ws$hum1, hum2 = ws$hum2,
@@ -167,7 +174,7 @@ test_station <- build_weather_station(lat = 50.840503, lon = 8.6833, elev = 270,
                                      texture = "clay")
 # Alternative shortwave
 test_station <- build_weather_station(lat = 50.840503, lon = 8.6833, elev = 270,
-                                     surface_type = "Meadow", obs_height = 0.3,
+                                     surface_type = "field", obs_height = 0.3,
                                      z1 = 2, z2 = 10, datetime = ws$datetime,
                                      t1 = ws$t1, t2 = ws$t2, v1 = ws$v1, v2 = ws$v2,
                                      hum1 = ws$hum1, hum2 = ws$hum2,
@@ -184,7 +191,7 @@ test_station <- build_weather_station(lat = 50.840503, lon = 8.6833, elev = 270,
 
 # Alternative longwave
 test_station <- build_weather_station(lat = 50.840503, lon = 8.6833, elev = 270,
-                                     surface_type = "Meadow", obs_height = 0.3,
+                                     surface_type = "field", obs_height = 0.3,
                                      z1 = 2, z2 = 10, datetime = ws$datetime,
                                      t1 = ws$t1, t2 = ws$t2, v1 = ws$v1, v2 = ws$v2,
                                      hum1 = ws$hum1, hum2 = ws$hum2,

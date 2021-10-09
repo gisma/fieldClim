@@ -17,7 +17,7 @@ soil_thermal_cond(...)
 
 \item{moisture}{Soil moisture in Vol-\%.}
 
-\item{texture}{Soil texture. Either "sand" or "clay".}
+\item{texture}{Soil texture. Either "sand", "peat" or "clay".}
 
 \item{weather_station}{Object of class weather_station.}
 }

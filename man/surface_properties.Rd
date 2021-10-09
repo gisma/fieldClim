@@ -3,19 +3,19 @@
 \docType{data}
 \name{surface_properties}
 \alias{surface_properties}
-\title{Emissivity and roughness lenght for different surfaces.}
+\title{Emissivity and roughness length for different surfaces.}
 \format{
-A data frame with 10 rows and 3 variables:
+A data frame with 12 rows and 3 variables:
 \describe{
-\item{surface_type}{Type of surface}
+\item{surface_type}{Type of surface as character}
 \item{emissivity}{Emissivity of the chosen surface}
-\item{roughness_length}{Rougness lenght of surface in }
+\item{roughness_length}{Roughness length of surface in m}
 }
 }
 \usage{
 surface_properties
 }
 \description{
-A dataset containing values for emissivity and roughness length for different types of surface
+A dataset containing values for emissivity and roughness length for different surface types.
 }
 \keyword{datasets}

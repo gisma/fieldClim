@@ -4,7 +4,7 @@
 \alias{hum_evap_heat}
 \alias{hum_evap_heat.numeric}
 \alias{hum_evap_heat.weather_station}
-\title{Enthaly of vaporization}
+\title{Enthalpy of vaporization}
 \usage{
 hum_evap_heat(...)
 
@@ -15,14 +15,14 @@ hum_evap_heat(...)
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{t}{Air temperature in degrees C.}
+\item{t}{Air temperature in °C.}
 
 \item{weather_station}{Object of class weather_station.}
 
 \item{height}{Height of measurement. "lower" or "upper".}
 }
 \value{
-Enthaly of vaporization in J/kg.
+Enthalpy of vaporization in J/kg.
 }
 \description{
 Calculates heat of evaporation for water from air temperature.

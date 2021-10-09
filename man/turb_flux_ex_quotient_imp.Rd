@@ -23,7 +23,7 @@ turb_flux_ex_quotient_imp(...)
 
 \item{z}{Observation height in m.}
 
-\item{air_density}{Air density in kg/m^3.}
+\item{air_density}{Air density in kg/m³.}
 
 \item{weather_station}{Object of class weather_station}
 

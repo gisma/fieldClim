@@ -3,7 +3,7 @@
 \docType{data}
 \name{weather_station_example_data}
 \alias{weather_station_example_data}
-\title{Example data of a weather station located in Caldern, Hessen, Germany.}
+\title{Example data of a weather station.}
 \format{
 A data frame with 288 rows and 20 variables:
 \describe{
@@ -22,7 +22,7 @@ A data frame with 288 rows and 20 variables:
 \item{rad_bal}{Total radiation balance in W/m^2.}
 \item{water_vol_soil}{Moisture of ground in \%.}
 \item{t_surface}{Surface temperature in °C.}
-\item{ts1}{Temperature Soil, 30 cm depth.}
+\item{ts1}{Temperature soil, 30 cm depth.}
 \item{heatflux_soil}{Soil heat flux in W/m^2.}
 \item{v1}{Wind velocity in m/s at 2m height (lower level).}
 \item{v2}{Wind velocity in m/s at 10m height (upper level).}
@@ -38,12 +38,12 @@ weather_station_example_data
 }
 \description{
 A dataset containing different weather station measurements over the course of one day (2018-07-28).
-The weather station is located near Caldern, Hessen, Germany.
+The weather station is located near Caldern, Hesse, Germany.
 Latitude: 50.840503
 Longitude: 8.683300
 Meters above sea level (elevation): 270
 Heights of measurements: 2m (lower level) & 10m (upper level)
-Surface type: "Wiese"
+Surface type: "field"
 Ground texture: "clay"
 }
 \keyword{datasets}

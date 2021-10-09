@@ -19,9 +19,9 @@ hum_moisture_gradient(...)
 
 \item{hum2}{Relative humidity at upper height in \%.}
 
-\item{t1}{Air temperature at lower height in degrees C.}
+\item{t1}{Air temperature at lower height in °C.}
 
-\item{t2}{Air temperature at upper height in degrees C.}
+\item{t2}{Air temperature at upper height in °C.}
 
 \item{p1}{Air pressure at lower height in hPa.}
 

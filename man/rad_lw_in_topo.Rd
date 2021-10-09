@@ -15,11 +15,11 @@ rad_lw_in_topo(...)
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{rad_lw_out}{Longave surface emissions in W/m^2.}
+\item{rad_lw_out}{Longwave surface emissions in W/m^2.}
 
 \item{rad_lw_in}{Atmospheric radiation in W/m^2.}
 
-\item{terr_sky_view}{Sky view factor from 0-1. (See \link[fieldClim:terr_sky_view]{fieldClim::terr_sky_view})}
+\item{terr_sky_view}{Sky view factor from 0-1. (See \link{terr_sky_view})}
 
 \item{weather_station}{Object of class weather_station.}
 }

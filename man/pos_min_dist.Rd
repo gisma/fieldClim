@@ -18,12 +18,12 @@ pos_min_dist(...)
 
 \item{ring}{True, if obstacle is circularly surrounded by the obstacle.}
 
-\item{obs_radius}{If ring = T: radius of the ring in m.}
+\item{obs_radius}{If ring == T: radius of the ring in m.}
 }
 \value{
 Minimum distance in m.
 
-
+Minimal distance between measurement point and obstacle for undisturbed measurement in m.
 }
 \description{
 Calculate the needed minimum distance between climate station and obstacle (e.g. forest), to ensure independence of measurements.

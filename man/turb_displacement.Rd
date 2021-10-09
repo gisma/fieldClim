@@ -8,14 +8,16 @@
 \usage{
 turb_displacement(...)
 
-\method{turb_displacement}{numeric}(obs_height, ...)
+\method{turb_displacement}{numeric}(obs_height, surroundings = "vegetation", ...)
 
-\method{turb_displacement}{weather_station}(weather_station, ...)
+\method{turb_displacement}{weather_station}(weather_station, surroundings = "vegetation", ...)
 }
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
 \item{obs_height}{Height of vegetation in m.}
+
+\item{surroundings}{choose either 'vegetation' or 'city'.}
 
 \item{weather_station}{Object of class weather_station}
 }

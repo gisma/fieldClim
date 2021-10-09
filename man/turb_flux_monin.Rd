@@ -27,9 +27,9 @@ turb_flux_monin(...)
 
 \item{v2}{Windspeed at upper height in m/s.}
 
-\item{t1}{Temperature at lower height (e.g. height of anemometer) in degrees C.}
+\item{t1}{Temperature at lower height (e.g. height of anemometer) in °C.}
 
-\item{t2}{Temperature at upper height in degrees C.}
+\item{t2}{Temperature at upper height in °C.}
 
 \item{weather_station}{Object of class weather_station}
 }
@@ -38,5 +38,6 @@ Monin-Obhukov-Length in m.
 }
 \description{
 Calculation of the Monin-Obhukov-Length.
-Stability of atmosphere needs to be given as one of "stabil", "neutral" or "unstabil".
+The calculation depends on the stability of the atmosphere.
+This value will be taken from the Gradient-Richardson-Number.
 }

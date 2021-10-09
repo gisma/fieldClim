@@ -15,17 +15,17 @@ hum_absolute(...)
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{p_vapor}{Vapor presure in hPa.}
+\item{p_vapor}{Vapor pressure in hPa.}
 
-\item{t_pot}{Potential air temperature in Kelvin.}
+\item{t_pot}{Potential air temperature in °C}
 
 \item{weather_station}{Object of class weather_station.}
 
 \item{height}{Height of measurement. "lower" or "upper".}
 }
 \value{
-Absolute humidity in kg/m^3.
+Absolute humidity in kg/m³.
 }
 \description{
-Calculates absolute humidity from vapor pressure and temperature.
+Calculates absolute humidity from vapor pressure and air temperature.
 }

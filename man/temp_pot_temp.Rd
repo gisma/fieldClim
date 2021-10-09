@@ -15,7 +15,7 @@ temp_pot_temp(...)
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{t}{Temperature in degrees C.}
+\item{t}{Temperature in °C.}
 
 \item{p}{Pressure in hPa.}
 
@@ -24,7 +24,7 @@ temp_pot_temp(...)
 \item{height}{Height of measurement, either "upper" or "lower".}
 }
 \value{
-Potential temperature in K.
+Potential temperature in °C.
 }
 \description{
 Calculation of the potential air temperature.

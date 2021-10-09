@@ -10,7 +10,7 @@ bound_mech_avg(dist)
 \item{dist}{Distance to point of roughness change in m.}
 }
 \value{
-Height of boundary layer in m.
+medium height of boundary layer in m.
 }
 \description{
 Calculation of the average height of the mechanical internal boundary layer.

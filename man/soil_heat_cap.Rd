@@ -17,15 +17,15 @@ soil_heat_cap(...)
 
 \item{moisture}{Soil moisture in Vol-\%.}
 
-\item{texture}{Soil texture. Either "sand" or "clay".}
+\item{texture}{Soil texture. Either "sand", "peat" or "clay".}
 
 \item{weather_station}{Object of class weather_station.}
 }
 \value{
-Numeric vector with volumetric heat capacity in J/(m^3 * K)
+Numeric vector with volumetric heat capacity in 10^6 J/ (m³ * K)
 }
 \description{
-Calculates soil volumetric heat capacity (J / (m^3 * K)) from soil moisture (Vol-\%) and texture.
+Calculates soil volumetric heat capacity (10^6 J / (m³ * K)) from soil moisture (Vol-\%) and texture.
 }
 \details{
 Works by linearly interpolating volumetric heat capacity based on measured data.

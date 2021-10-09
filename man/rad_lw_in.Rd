@@ -8,21 +8,23 @@
 \usage{
 rad_lw_in(...)
 
-\method{rad_lw_in}{numeric}(emissivity_air, t, ...)
+\method{rad_lw_in}{numeric}(emissivity_air = NULL, hum, t, ...)
 
 \method{rad_lw_in}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{emissivity_air}{Emissivity of the atmosphere (factor: 0-1)}
+\item{emissivity_air}{OPTIONAL. Emissivity of the atmosphere (factor: 0-1)}
 
-\item{t}{Air temperature in degrees C.}
+\item{hum}{relative humidity in \%.}
+
+\item{t}{Air temperature in °C.}
 
 \item{weather_station}{Object of class weather_station.}
 }
 \value{
-Atmospheric radiation in W/m^2.
+Atmospheric radiation in W/m².
 }
 \description{
 Calculation of the longwave radiation of the atmosphere.

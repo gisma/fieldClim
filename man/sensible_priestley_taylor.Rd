@@ -8,20 +8,20 @@
 \usage{
 sensible_priestley_taylor(...)
 
-\method{sensible_priestley_taylor}{numeric}(t, rad_bal, soil_flux, coefficient = 1.25, ...)
+\method{sensible_priestley_taylor}{numeric}(t, rad_bal, soil_flux, surface_type = "field", ...)
 
 \method{sensible_priestley_taylor}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{t}{Air temperature in degrees C.}
+\item{t}{Air temperature in °C.}
 
 \item{rad_bal}{Radiation balance in W/m^2.}
 
 \item{soil_flux}{Soil flux in W/m^2.}
 
-\item{coefficient}{Priestley-Taylor coefficient. Default is for open water.}
+\item{surface_type}{Surface type, for which a Priestley-Taylor coefficient will be selected. Default is for short grass.}
 
 \item{weather_station}{Object of class weather_station}
 }
