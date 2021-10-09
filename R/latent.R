@@ -164,8 +164,8 @@ latent_monin.numeric <- function(hum1, hum2, t1, t2, p1, p2, z1 = 2, z2 = 10,
   moist_gradient <- hum_moisture_gradient(hum1, hum2, t1, t2, p1, p2, z1, z2)
   air_density <- pres_air_density(p1, t1)
   lv <- hum_evap_heat(t1)
-  k <- 0.4 # Karman constant
-  s1 <- z2/monin # s1 = variant of the greek letter sigma
+  k <- 0.4         # Karman constant
+  s1 <- z2 / monin # s1 = variant of the greek letter sigma
   schmidt <- 1
   busi <- rep(NA, length(grad_rich_no))
   for(i in 1:length(busi)){

@@ -2,6 +2,7 @@ context("Radiation")
 
 # Test data
 t <- 20.8
+hum1 <- 89     # Relative Humidity Hoehe 1
 st <- 15 #surface temp
 p <- 1000
 elev <- 200
@@ -22,11 +23,12 @@ test_that("rad_emissivity_air", {
 })
 
 test_that("rad_lw_out", {
-  expect_equal(rad_lw_out(st, em), 371.3726, tolerance = 1e-5)
+  expect_equal(rad_lw_out(t_surface = st), 371.3726, tolerance = 1e-5)
 })
 
 test_that("rad_lw_in", {
-  expect_equal(rad_lw_in(0.2090643, t), 88.50861, tolerance = 1e-4)
+  #expect_equal(rad_lw_in(0.2090643, t), 88.50861, tolerance = 1e-4)
+  expect_equal(rad_lw_in(hum = hum1, t = t), 88.50861, tolerance = 1e-4)
 })
 
 test_that("rad_sw_toa", {

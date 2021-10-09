@@ -131,7 +131,7 @@ hum_absolute <- function (...) {
 #' @param t_pot Potential air temperature in °C
 hum_absolute.numeric <- function(p_vapor, t_pot, ...) {
   t_pot <- t_pot + 273.15
-  return((0.21668 * p_vapor) / t_pot)
+  return((0.21667 * p_vapor) / t_pot)
 }
 
 #' @rdname hum_absolute

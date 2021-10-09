@@ -3,7 +3,8 @@ context("Humidity")
 # Input Values
 t1 <- 22
 t2 <- 21
-t_pot <- 296.2632
+#t_pot <- 296.2632
+t_pot <- 23.1132
 hum1 <- 89
 hum2 <- 88
 z1 <- 2
@@ -37,8 +38,6 @@ test_that("hum_precipitable_water", {
 })
 
 test_that("hum_moisture_gradient", {
-  expect_equal(hum_moisture_gradient(hum1, hum2,
-                                     t1, t2,
-                                     p1, p2,
-                                     z1, z2), -0.0005018968, tolerance = 1e-6)
+  expect_equal(hum_moisture_gradient(hum1, hum2, t1, t2, p1, p2, z1, z2),
+               -0.0005018968, tolerance = 1e-6)
 })

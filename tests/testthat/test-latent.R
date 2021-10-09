@@ -41,7 +41,8 @@ rad_bal <- 400
 soil_flux <- -40
 
 test_that("latent_priestley_taylor", {
-  expect_equal(latent_priestley_taylor(t, rad_bal, soil_flux), -450, tolerance = 1e-3)
+  expect_equal(latent_priestley_taylor(t = t, z = z1, rad_bal = rad_bal, soil_flux = soil_flux),
+               -450, tolerance = 1e-3)
 })
 
 # Penman test data

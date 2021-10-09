@@ -111,7 +111,8 @@ rad_lw_out.numeric <- function(t_surface, surface_type = "field", ...){
   surface_properties <- surface_properties
   emissivity <- surface_properties[which(surface_properties$surface_type == surface_type),]$emissivity
   sigma <- 5.670374e-8
-  return(emissivity*sigma*(t_surface+273.15)**4)
+  radout <- emissivity*sigma*(t_surface+273.15)**4
+  return(radout)
 }
 
 #' @rdname rad_lw_out

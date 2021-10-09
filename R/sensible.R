@@ -5,7 +5,7 @@
 #' towards the surface.
 #'
 #' @param ... Additional parameters passed to later functions.
-#' @return Sensible heat flux in W/m^2.
+#' @return Sensible heat flux in W/m².
 #' @export
 #'
 sensible_priestley_taylor <- function (...) {
@@ -16,12 +16,12 @@ sensible_priestley_taylor <- function (...) {
 #' @method sensible_priestley_taylor numeric
 #' @export
 #' @param t Air temperature in °C.
-#' @param rad_bal Radiation balance in W/m^2.
-#' @param soil_flux Soil flux in W/m^2.
+#' @param rad_bal Radiation balance in W/m².
+#' @param soil_flux Soil flux in W/m².
 #' @param surface_type Surface type, for which a Priestley-Taylor coefficient will be selected. Default is for short grass.
 sensible_priestley_taylor.numeric <- function(t, rad_bal, soil_flux, surface_type = "field", ...){
   sc <- sc(t)
-  lamb <- lamb(t)
+  gam <- gam(t)
 
   priestley_taylor_coefficient <- priestley_taylor_coefficient
   if(!surface_type %in% priestley_taylor_coefficient$surface_type){
@@ -31,8 +31,8 @@ sensible_priestley_taylor.numeric <- function(t, rad_bal, soil_flux, surface_typ
     alpha_pt <- priestley_taylor_coefficient[which(priestley_taylor_coefficient$surface_type == surface_type),]$alpha
   }
 
-  alpt <- coefficient
-  QH_TP <- ((1-alpt)*sc+lamb)*(-1*rad_bal-soil_flux)/(sc+lamb)
+  # alpha_pt <- coefficient
+  QH_TP <- ((1 - alpha_pt) * sc + gam) * (-1 * rad_bal - soil_flux) / (sc + gam)
   return(QH_TP)
 }
 
