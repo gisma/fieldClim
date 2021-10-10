@@ -2,8 +2,8 @@ context("Radiation")
 
 # Test data
 t <- 20.8
-hum1 <- 89     # Relative Humidity Hoehe 1
-st <- 15 #surface temp
+hum1 <- 89
+st <- 15 # surface temperature
 p <- 1000
 elev <- 200
 datetime <- as.POSIXlt("2018-9-29 11:12:00", tz = "CET")

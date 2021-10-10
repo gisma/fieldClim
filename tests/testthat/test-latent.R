@@ -1,18 +1,19 @@
 context("Latent")
 
-hum1 <- 89     # Relative Humidity Hoehe 1
-hum2 <- 88     # Relative Humidity Hoehe 2
-p0 <- 1013.25  # Referenzdruck Meeresniveau in hPa
-p <- 1000      # Gemessener Druck in hPa
-t1 <- 22        # Lufttemperatur auf 2 m
-t2<- 21        # Lufttemperatur auf 10 m
-z1 <- 2        # Erste Messhoehe Meter
-z2 <- 10       # 2te MEsshoehe
-v1 <- 1        # m/Sec Windgeschwindigkeit Hoehe 1
-v2 <- 2.3      # m/Sec Windgeschwindigkeit Hoehe 2
-ludi <- 1.225  # Luftdiche Meeresniveau kg/m?
-rad_bal <- 400      # STrahlungsbilanz W/m?
-soil_flux <- 40       # Bodenw?rmestrom W/m?
+# test data
+hum1 <- 89
+hum2 <- 88
+p0 <- 1013.25
+p <- 1000
+t1 <- 22
+t2<- 21
+z1 <- 2
+z2 <- 10
+v1 <- 1
+v2 <- 2.3
+ludi <- 1.225  # air density
+rad_bal <- 400
+soil_flux <- 40
 
 test_that("latent_bowen", {
   expect_equal(latent_bowen(t1 = t1, t2 = t2,

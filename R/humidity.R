@@ -18,7 +18,7 @@ hum_sat_vapor_pres <- function (...) {
 hum_sat_vapor_pres.numeric <- function(t, ...) {
   a <- 7.5
   b <- 235
-  return(6.1078 * 10**((a * t) / (b + t)))
+  return(6.1078 * (10**((a * t) / (b + t))))
 }
 
 #' @rdname hum_sat_vapor_pres
