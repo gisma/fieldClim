@@ -17,15 +17,17 @@ trans_air_mass_rel <- function (...) {
 #' @export
 #'
 trans_air_mass_rel.numeric <- function(sol_elevation, ...) {
-  f <- pi/180 # angle to radian
 
-  mr <- 1 / (sin(sol_elevation * f) + (1.5 * sol_elevation**(-0.72)))
-  if(mr >= 0){
-    trans_air_ma <- NA
-  }else{
-    trans_air_ma <- mr
-  }
-  return(trans_air_ma)
+  #mr <- 1 / (sin(sol_elevation * f) + (1.5 * sol_elevation**(-0.72)))
+  mr <- 1 / (sin(pi/180*sol_elevation) + (1.5 * sol_elevation**(-0.72)))
+
+  # if(mr >= 0){
+  #   trans_air_ma <- NA
+  # }else{
+  #   trans_air_ma <- mr
+  # }
+  #return(trans_air_ma)
+  return(mr)
 }
 
 #' @rdname trans_air_mass_rel
@@ -283,8 +285,9 @@ trans_total <- function (...) {
 #' @param p OPTIONAL. Pressure in hPa. Estimated from elev and t if not available.
 #' @export
 #'
-trans_total.numeric <- function(sol_elevation, t, elev,
-                        oz = 0.35, vis = 30, p = NULL, ...){
+trans_total.numeric <- function(sol_elevation, t, elev, oz = 0.35, vis = 30,
+                                p = NULL, ...){
+
   if(is.null(p)) p <- pres_p(elev, t)
   pw <- hum_precipitable_water(p, t, elev)
   mr <- trans_air_mass_rel(sol_elevation)
@@ -294,7 +297,7 @@ trans_total.numeric <- function(sol_elevation, t, elev,
                             vapor = trans_vapor(mr, pw),
                             aerosol = trans_aerosol(ma, vis),
                             gas = trans_gas(ma))
-  trans_total$total <- apply(trans_total, 1, prod)
+  trans_total$total <- apply(trans_total, 1, FUN = prod)
   return(trans_total$total)
 }
 
