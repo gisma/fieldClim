@@ -1,13 +1,14 @@
 context("Soil functions")
 
-# Testing Data
-
-s_Moist <- 13           # Bodenfeuchte in Volumenprozent
-s_flag <- 3             # 1 = Sand, 2 = Ton, 3 = Schluff
-z1 <- 0.1               # Bodentemperatur Messtiefe 1 in m
-z2 <- 0.5               # Bodentemperatur Messtiefe 2 in m
-t1 <- 15                # Bodentemperatur auf NIveau z1 in ?C
-t2 <- 10                # Bodentemperatur auf Niveau z2 in ?C
+# test data
+s_Moist <- 13           # soil moisture in volume percent
+s_flag <- 3             # 1 = sand, 2 = clay, 3 = silt
+z1 <- 0.1               # soil temperature in 1 m
+z2 <- 0.5               # soil temperature in 2 m
+t1 <- 15                # temperature on z1 in °C
+t2 <- 10                # temperature on z2 in °C
+thermal_cond <- 1.699
+vol_heat_cap <- 1.726
 
 # values for linear interpolation:
 sand_cond <- c(0.269,1.46,1.98,2.18,2.31,2.49,2.58)
@@ -35,10 +36,14 @@ test_that("soil_heat_cap", {
 })
 
 test_that("soil_heat_flux", {
-  expect_equal(soil_heat_flux(t1, t2, z1, z2, thermal_cond = 1.699), 21.2375)
+  expect_equal(soil_heat_flux(ts1 = z1, ts2 = z2, depth1 = 1, depth = 2, thermal_cond = thermal_cond),
+               0.6796, tolerance = 1e-3)
 })
+# old value: 1.2375
 
 test_that("soil_attenuation", {
-  expect_equal(soil_attenuation(thermal_cond = 1.699, vol_heat_cap = 1.726),
-               2.74225, tolerance = 1e-3)
+  expect_equal(soil_attenuation(thermal_cond = thermal_cond, vol_heat_cap = vol_heat_cap),
+               0.1645349747, tolerance = 1e-3)
 })
+# old value: 2.74225
+

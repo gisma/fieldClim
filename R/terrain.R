@@ -19,11 +19,10 @@ terr_sky_view <- function (...) {
 #' @param valley If the position is in a valley (TRUE) or on a slope (FALSE).
 #' @export
 terr_sky_view.numeric <- function(slope, valley = F, ...) {
-  f <- pi/180              # angle in radiant faktor
   if(valley == TRUE){
-    return(1 - cos(slope * f))
+    return(1 - cos(slope * pi / 180))
   }else{
-    return((1 - cos(slope * f)) / 2.0)
+    return((1 - cos(slope * pi / 180)) / 2.0)
   }
 }
 
