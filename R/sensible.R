@@ -79,20 +79,25 @@ sensible_monin <- function (...) {
 sensible_monin.numeric <- function(t1, t2, p1, p2, z1 = 2, z2 = 10,
                            monin, ustar, grad_rich_no, ...) {
   cp <- 1004.834
-  k <- 0.4
-  s1 <- z2/monin
+  k  <- 0.4
+  s1 <- z2 / monin
 
   # temperature gradient
-  t_gradient <- (temp_pot_temp(t2, p2)-temp_pot_temp(t1, p1)) / log(z2-z1)
+  t_gradient <- (temp_pot_temp(t2, p2) - temp_pot_temp(t1, p1)) / log(z2-z1)
 
   air_density <- pres_air_density(p1, t1)
   busi <- rep(NA, length(grad_rich_no))
   for(i in 1:length(busi)){
-    if(is.na(grad_rich_no[i]))   {busi[i] <- NA}
-    else if(grad_rich_no[i] <= 0){busi[i] <- 0.74 * (1 - 9 * s1[i])^(-0.5)}
-    else if(grad_rich_no[i] >  0){busi[i] <- 0.74 + 4.7 * s1[i]}
+    if(is.na(grad_rich_no[i])){
+      busi[i] <- NA
+    }
+    else if(grad_rich_no[i] <= 0){
+      busi[i] <- 0.74 * (1 - 9 * s1[i])^(-0.5)
+    }
+    else if(grad_rich_no[i] >  0){
+      busi[i] <- 0.74 + 4.7 * s1[i]
+    }
   }
-  # hier noch mit Herrn Bendix drüberschauen (z2 oder z1?) geklärt, z2 ok (z2 ungestörter)
   QH <- (-1) * air_density * cp * (k * ustar * z2 / busi) * t_gradient
   return(QH)
 }

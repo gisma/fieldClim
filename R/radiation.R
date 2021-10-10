@@ -81,7 +81,6 @@ rad_lw_in.weather_station <- function(weather_station, ...) {
   emissivity_air <- rad_emissivity_air(weather_station, "upper")
 
   return(rad_lw_in(emissivity_air = NULL, hum, t))
-  # hier noch nachfragen, welche Variante benutzt werden soll
 }
 
 
@@ -94,7 +93,7 @@ rad_lw_in.weather_station <- function(weather_station, ...) {
 #' instead of the surface temperature.
 #'
 #' @param ... Additional parameters passed to later functions.
-#' @return Emissions in W/m^2.
+#' @return Emissions in W/m².
 #' @export
 #'
 rad_lw_out <- function (...) {
@@ -138,7 +137,7 @@ rad_lw_out.weather_station <- function(weather_station, surface_type = "field", 
 #' Calculation of the shortwave radiation at the top of the atmosphere.
 #'
 #' @param ... Additional parameters passed to later functions.
-#' @return Shortwave radiation at top of atmosphere in W/m^2.
+#' @return Shortwave radiation at top of atmosphere in W/m².
 #' @export
 #'
 rad_sw_toa <- function (...) {
@@ -184,7 +183,7 @@ rad_sw_toa.weather_station <- function(weather_station, ...) {
 #' Calculation of the shortwave radiation onto a horizontal area on the ground.
 #'
 #' @param ... Additional parameters passed to later functions.
-#' @return Shortwave radiation on the ground onto a horizontal area in W/m^2.
+#' @return Shortwave radiation on the ground onto a horizontal area in W/m².
 #' @export
 #'
 rad_sw_in <- function (...) {
@@ -193,7 +192,7 @@ rad_sw_in <- function (...) {
 
 #' @rdname rad_sw_in
 #' @method rad_sw_in numeric
-#' @param rad_sw_toa Shortwave radiation at top of atmosphere in W/m^2.
+#' @param rad_sw_toa Shortwave radiation at top of atmosphere in W/m².
 #' @param trans_total Total transmittance of the atmosphere (0-1).
 #' @export
 rad_sw_in.numeric <- function(rad_sw_toa, trans_total, ...){
@@ -226,7 +225,7 @@ rad_sw_in.weather_station <- function(weather_station,
 #' Calculation of the reflected shortwave radiation.
 #'
 #' @param ... Additional parameters passed to later functions.
-#' @return Reflected shortwave radiation in W/m^2.
+#' @return Reflected shortwave radiation in W/m².
 #' @export
 #'
 rad_sw_out <- function (...) {
@@ -235,7 +234,7 @@ rad_sw_out <- function (...) {
 
 #' @rdname rad_sw_out
 #' @method rad_sw_out numeric
-#' @param rad_sw_in Shortwave radiation on the ground onto a horizontal area in W/m^2.
+#' @param rad_sw_in Shortwave radiation on the ground onto a horizontal area in W/m².
 #' @param surface_type type of surface for which an albedo will be selected.
 #' @export
 rad_sw_out.numeric <- function(rad_sw_in, surface_type = "field", ...){
@@ -267,7 +266,7 @@ rad_sw_out.weather_station <- function(weather_station, surface_type = "field", 
 #' Calculation of the shortwave radiation balance.
 #'
 #' @param ... Additional parameters passed to later functions.
-#' @return Shortwave radiation balance in W/m^2.
+#' @return Shortwave radiation balance in W/m².
 #' @export
 #'
 rad_sw_radiation_balance <- function (...) {
@@ -277,7 +276,7 @@ rad_sw_radiation_balance <- function (...) {
 #' @rdname rad_sw_radiation_balance
 #' @method rad_sw_radiation_balance numeric
 #' @param rad_sw_ground_horizontal Shortwave radiation on the ground onto a horizontal area in W/m^2.
-#' @param rad_sw_reflected Reflected shortwave radiation in W/m^2.
+#' @param rad_sw_reflected Reflected shortwave radiation in W/m².
 #' @export
 rad_sw_radiation_balance.numeric <- function(rad_sw_ground_horizontal, rad_sw_reflected, ...){
   rad_sw_radiation_balance <- rad_sw_ground_horizontal-rad_sw_reflected
@@ -303,7 +302,7 @@ rad_sw_radiation_balance.weather_station <- function(weather_station, ...) {
 #' Calculate shortwave radiation balance in dependency of topography.
 #'
 #' @param ... Additional parameters passed to later functions.
-#' @return Shortwave radiation balance in dependency of topography in W/m^2.
+#' @return Shortwave radiation balance in dependency of topography in W/m².
 #' @export
 #'
 rad_sw_in_topo <- function (...) {
@@ -384,7 +383,7 @@ rad_sw_in_topo.weather_station <- function(weather_station, trans_total = 0.8, .
 #' Calculate total radiation balance.
 #'
 #' @param ... Additional parameters passed to later functions.
-#' @return Total radiation balance in W/m^2.
+#' @return Total radiation balance in W/m².
 #' @export
 #'
 rad_bal_total <- function (...) {
@@ -394,9 +393,9 @@ rad_bal_total <- function (...) {
 #' @rdname rad_bal_total
 #' @method rad_bal_total numeric
 #' @export
-#' @param rad_sw_radiation_balance Shortwave radiation balance in W/m^2.
-#' @param rad_lw_out Longwave surface emissions in W/m^2.
-#' @param rad_lw_in Atmospheric radiation in W/m^2.
+#' @param rad_sw_radiation_balance Shortwave radiation balance in W/m².
+#' @param rad_lw_out Longwave surface emissions in W/m².
+#' @param rad_lw_in Atmospheric radiation in W/m².
 rad_bal_total.numeric <- function(rad_sw_radiation_balance,
                                   rad_lw_out,
                                   rad_lw_in, ...){
@@ -425,7 +424,7 @@ rad_bal_total.weather_station <- function(weather_station, ...) {
 #' Corrects the incoming longwave radiation using the sky view factor.
 #'
 #' @param ... Additional parameters passed to later functions.
-#' @return Incoming longwave radiation with topography in W/m^2.
+#' @return Incoming longwave radiation with topography in W/m².
 #' @export
 #'
 rad_lw_in_topo <- function (...) {
@@ -435,8 +434,8 @@ rad_lw_in_topo <- function (...) {
 #' @rdname rad_lw_in_topo
 #' @method rad_lw_in_topo numeric
 #' @export
-#' @param rad_lw_out Longwave surface emissions in W/m^2.
-#' @param rad_lw_in Atmospheric radiation in W/m^2.
+#' @param rad_lw_out Longwave surface emissions in W/m².
+#' @param rad_lw_in Atmospheric radiation in W/m².
 #' @param terr_sky_view Sky view factor from 0-1. (See [fieldClim::terr_sky_view])
 rad_lw_in_topo.numeric <- function(rad_lw_out,
                                    rad_lw_in,

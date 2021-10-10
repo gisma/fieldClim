@@ -6,7 +6,7 @@ hum2 <- 88
 p0 <- 1013.25
 p <- 1000
 t1 <- 22
-t2<- 21
+t2 <- 21
 z1 <- 2
 z2 <- 10
 v1 <- 1
@@ -17,13 +17,15 @@ soil_flux <- 40
 
 test_that("latent_bowen", {
   expect_equal(latent_bowen(t1 = t1, t2 = t2,
-                              hum1 = hum1, hum2 = hum2,
-                              p1 = p, p2 = p,
-                              z1 = z1, z2 = z2,
-                              rad_bal = rad_bal, soil_flux = soil_flux),
+                            hum1 = hum1, hum2 = hum2,
+                            p1 = p, p2 = p,
+                            z1 = z1, z2 = z2,
+                            rad_bal = rad_bal,
+                            soil_flux = soil_flux),
                -311.6535, tolerance = 1e-3)
 })
 
+# monin test data
 grad_rich_no <- -0.1573365
 monin <- -63.55804
 ustar <- 0.5867643
@@ -32,22 +34,17 @@ test_that("latent_monin", {
   expect_equal(latent_monin(hum1, hum2, t1, t2,
                             p1 = p, p2 = p, z1, z2,
                             monin, ustar, grad_rich_no),
-               602.4048, tolerance = 1e-3)
+               156.56204, tolerance = 1e-3)
 })
 
-# Priestley taylor test data
-
-t <- 22  # Temperatur
-rad_bal <- 400
-soil_flux <- -40
-
 test_that("latent_priestley_taylor", {
-  expect_equal(latent_priestley_taylor(t = t, z = z1, rad_bal = rad_bal, soil_flux = soil_flux),
-               -450, tolerance = 1e-3)
+  expect_equal(latent_priestley_taylor(t = t1, z = z1,
+                                       rad_bal = rad_bal,
+                                       soil_flux = soil_flux),
+               -492.8, tolerance = 1e-1)
 })
 
 # Penman test data
-
 v <- 4.72
 hum <- 59
 t <- 22.0
