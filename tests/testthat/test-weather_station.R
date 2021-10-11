@@ -2,7 +2,7 @@
 # lat = 50.84050277777778 #weather station caldern
 # lon = 8.683303333333333 #weather station caldern
 # elev = 270 #weather station caldern
-# surface_type = "Wiese"  #weather station caldern
+# surface_type = "field"  #weather station caldern
 # obs_height = 0.3
 # texture = "clay" #needed when soil_flux unknown
 # valley = F

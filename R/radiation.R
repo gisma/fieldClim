@@ -59,11 +59,10 @@ rad_lw_in <- function (...) {
 
 #' @rdname rad_lw_in
 #' @method rad_lw_in numeric
-#' @param emissivity_air OPTIONAL. Emissivity of the atmosphere (factor: 0-1)
 #' @param hum relative humidity in %.
 #' @param t Air temperature in °C.
 #' @export
-rad_lw_in.numeric <- function(emissivity_air = NULL, hum, t, ...){
+rad_lw_in.numeric <- function(hum, t, ...){
   sigma <- 5.6697e-8
   gs <- sigma * ((t + 273.15)^4) * (0.594 + 0.0416 * sqrt(hum_vapor_pres(hum, t)))
   return(gs)

@@ -37,7 +37,7 @@ colnames(Filter(Negate(is.numeric), ws))
 test_station <- build_weather_station(lat = 50.840503,
                                       lon = 8.6833,
                                       elev = 270,
-                                      surface_type = "Meadow",
+                                      surface_type = "field",
                                       obs_height = 0.3, # obstacle height
                                       z1 = 2, # measurement heights
                                       z2 = 10,
@@ -62,7 +62,7 @@ class(test_station)
 test_station <- build_weather_station(lat = 50.840503,
                                       lon = 8.6833,
                                       elev = 270,
-                                      surface_type = "Meadow",
+                                      surface_type = "field",
                                       obs_height = 0.3,
                                       z1 = 2,
                                       z2 = 10,
@@ -87,7 +87,7 @@ test_station <- build_weather_station(lat = 50.840503,
 test_station <- build_weather_station(lat = 50.840503,
                                       lon = 8.6833,
                                       elev = 270,
-                                      surface_type = "Meadow",
+                                      surface_type = "field",
                                       obs_height = 0.3,
                                       z1 = 2,
                                       z2 = 10,
@@ -115,7 +115,7 @@ test_station <- build_weather_station(lat = 50.840503,
 test_station <- build_weather_station(lat = 50.840503,
                                       lon = 8.6833,
                                       elev = 270,
-                                      surface_type = "Meadow",
+                                      surface_type = "field",
                                       obs_height = 0.3,
                                       z1 = 2,
                                       z2 = 10,
@@ -130,7 +130,6 @@ test_station <- build_weather_station(lat = 50.840503,
                                       lw_out = ws$rad_lw_out,
                                       soil_flux = ws$heatflux_soil,
                                       # Alternative shortwave radiation:
-                                      albedo = 0.3,
                                       # Topographic correction
                                       slope = 10, # In degrees
                                       exposition = 20, # North = 0, South = 180
@@ -142,7 +141,7 @@ test_station <- build_weather_station(lat = 50.840503,
 test_station <- build_weather_station(lat = 50.840503,
                                       lon = 8.6833,
                                       elev = 270,
-                                      surface_type = "Meadow",
+                                      surface_type = "field",
                                       obs_height = 0.3,
                                       z1 = 2,
                                       z2 = 10,
@@ -166,13 +165,13 @@ test_station <- build_weather_station(lat = 50.840503,
 
 
 ## -----------------------------------------------------------------------------
-grad_rich_manual <- turb_flux_grad_rich_no(t1 = ws$t1, 
-                                           t2 = ws$t2, 
-                                           z1 = 2, 
-                                           z2 = 10, 
-                                           v1 = ws$v1, 
-                                           v2 = ws$v2, 
-                                           p1 = pres_p(270+2, ws$t1), 
+grad_rich_manual <- turb_flux_grad_rich_no(t1 = ws$t1,
+                                           t2 = ws$t2,
+                                           z1 = 2,
+                                           z2 = 10,
+                                           v1 = ws$v1,
+                                           v2 = ws$v2,
+                                           p1 = pres_p(270+2, ws$t1),
                                            p2 = pres_p(270+10, ws$t2))
 
 head(grad_rich_manual)

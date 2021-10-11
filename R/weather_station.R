@@ -14,9 +14,9 @@
 #' By setting slope, sky_view and exposition, sw_in will be topographically corrected
 #' (see [fieldClim::rad_sw_in_topo]).
 #'
-#' If sw_out is NULL, albedo needs to be set (see [fieldClim::rad_sw_out]).
+#' If sw_out is NULL, sw_in and surface_type need to be set (see [fieldClim::rad_sw_out]).
 #'
-#' If lw_in is NULL, it will be estimated using the air temperature and pressure
+#' If lw_in is NULL, it will be estimated using the air temperature and relative humidity
 #' (see [fieldClim::rad_lw_in]).
 #' By setting sky_view, lw_in will be topographically corrected
 #' (see [fieldClim::rad_lw_in_topo]).
@@ -27,7 +27,7 @@
 #' (see [fieldClim::soil_heat_flux] and [fieldClim::soil_thermal_cond]).
 #'
 #' If additional parameters are desired, they can be commited:
-#' - location properties: "slope", "sky_view", "exposition", "texture" and "albedo"
+#' - location properties: "slope", "sky_view", "exposition" and "texture"
 #' - depth of ground measurements: "depth1" and "depth2" in m.
 #' - additional measurements: "ts1", "ts2" and "t_surface" in °C and "moisture".
 #'
@@ -126,7 +126,6 @@
 #'                                      lw_out = ws$rad_lw_out,
 #'                                      soil_flux = ws$heatflux_soil,
 #'                                      # Alternative shortwave radiation:
-#'                                      albedo = 0.3,
 #'                                      # Topographic correction
 #'                                      slope = 10, # In degrees
 #'                                      exposition = 20, # North = 0, South = 180
@@ -199,7 +198,7 @@ build_weather_station <-  function(lat,
 
 
   # Additional parameters
-  add_location <- c("slope", "sky_view", "exposition", "texture", "albedo")
+  add_location <- c("slope", "sky_view", "exposition", "texture")
   add_heights <- c("depth1", "depth2")
   add_measurements <- c("ts1", "ts2", "moisture", "t_surface")
 
@@ -264,11 +263,13 @@ build_weather_station <-  function(lat,
 
   if(is.null(sw_out)){
 
-    if(!exists("albedo", inherits = F)){
-      stop("If sw_out is NULL, 'albedo' needs to be passed to build_weather_station.")
+    if(!exists("sw_in", inherits = F)){
+      stop("If sw_out is NULL, 'sw_in' needs to be passed or calculated to build_weather_station.")
     }
 
-    out_list$measurements$sw_out <- rad_sw_out(out_list) # You could specify transmittance here
+    #out_list$measurements$sw_out <- rad_sw_out(out_list) # You could specify transmittance here
+    out_list$measurements$sw_out <- rad_sw_out(ws$measurements$sw_in, ws$location_properties$surface_type)
+
   }
 
   if(sw_in_status
@@ -282,7 +283,7 @@ build_weather_station <-  function(lat,
   # ---- Longwave ----
   lw_in_status <- is.null(lw_in)
   if(lw_in_status){
-    out_list$measurements$lw_in <- rad_lw_in(out_list)
+    out_list$measurements$lw_in <- rad_lw_in(out_list$measurements$hum1, outlist$measurements$t1)
   }
 
   if(is.null(lw_out)){
@@ -322,8 +323,18 @@ build_weather_station <-  function(lat,
       stop("If soil_flux is NULL, 'texture', 'depth1', 'depth2', 'ts1', 'ts2' and 'moisture'",
            "need to be passed to build weather_station.")
     }
-
-    out_list$measurements$soil_flux <- soil_heat_flux(out_list)
+        # ts1, ts2, depth1, depth2, thermal_cond
+    #out_list$measurements$soil_flux <- soil_heat_flux(out_list)
+    # out_list$measurements$soil_flux <- soil_heat_flux(out_list$add_measurements$ts1,
+    #                                                   out_list$add_measurements$ts2,
+    #                                                   out_list$add_heights$depth1,
+    #                                                   out_list$add_heights$depth2,
+    #                                                   soil_thermal_cond(out_list$add_measurements$moisture))
+    out_list$measurements$soil_flux <- soil_heat_flux(ts1,
+                                                      ts2,
+                                                      depth1,
+                                                      depth2,
+                                                      soil_thermal_cond(moisture, texture))
 
   }
 

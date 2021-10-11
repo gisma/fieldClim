@@ -99,9 +99,9 @@ atmospheric transmittance (see \link{rad_sw_in}).
 By setting slope, sky_view and exposition, sw_in will be topographically corrected
 (see \link{rad_sw_in_topo}).
 
-If sw_out is NULL, albedo needs to be set (see \link{rad_sw_out}).
+If sw_out is NULL, sw_in and surface_type need to be set (see \link{rad_sw_out}).
 
-If lw_in is NULL, it will be estimated using the air temperature and pressure
+If lw_in is NULL, it will be estimated using the air temperature and relative humidity
 (see \link{rad_lw_in}).
 By setting sky_view, lw_in will be topographically corrected
 (see \link{rad_lw_in_topo}).
@@ -113,7 +113,7 @@ If soil_flux is NULL, ts1, ts2, depth1, depth2, moisture and texture need to be 
 
 If additional parameters are desired, they can be commited:
 \itemize{
-\item location properties: "slope", "sky_view", "exposition", "texture" and "albedo"
+\item location properties: "slope", "sky_view", "exposition" and "texture"
 \item depth of ground measurements: "depth1" and "depth2" in m.
 \item additional measurements: "ts1", "ts2" and "t_surface" in °C and "moisture".
 }
@@ -182,7 +182,6 @@ test_station <- build_weather_station(lat = 50.840503, lon = 8.6833, elev = 270,
                                      lw_out = ws$rad_lw_out,
                                      soil_flux = ws$heatflux_soil,
                                      # Alternative shortwave radiation:
-                                     albedo = 0.3,
                                      # Topographic correction
                                      slope = 10, # In degrees
                                      exposition = 20, # North = 0, South = 180

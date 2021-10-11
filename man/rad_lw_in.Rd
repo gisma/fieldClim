@@ -8,14 +8,12 @@
 \usage{
 rad_lw_in(...)
 
-\method{rad_lw_in}{numeric}(emissivity_air = NULL, hum, t, ...)
+\method{rad_lw_in}{numeric}(hum, t, ...)
 
 \method{rad_lw_in}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
-
-\item{emissivity_air}{OPTIONAL. Emissivity of the atmosphere (factor: 0-1)}
 
 \item{hum}{relative humidity in \%.}
 
