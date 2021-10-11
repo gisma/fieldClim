@@ -17,16 +17,16 @@ sensible_priestley_taylor(...)
 
 \item{t}{Air temperature in °C.}
 
-\item{rad_bal}{Radiation balance in W/m^2.}
+\item{rad_bal}{Radiation balance in W/m².}
 
-\item{soil_flux}{Soil flux in W/m^2.}
+\item{soil_flux}{Soil flux in W/m².}
 
 \item{surface_type}{Surface type, for which a Priestley-Taylor coefficient will be selected. Default is for short grass.}
 
 \item{weather_station}{Object of class weather_station}
 }
 \value{
-Sensible heat flux in W/m^2.
+Sensible heat flux in W/m².
 }
 \description{
 Calculates the Sensible heat flux using the Priestley-Taylor method. Negative

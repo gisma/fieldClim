@@ -15,7 +15,7 @@ rad_sw_in(...)
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{rad_sw_toa}{Shortwave radiation at top of atmosphere in W/m^2.}
+\item{rad_sw_toa}{Shortwave radiation at top of atmosphere in W/m².}
 
 \item{trans_total}{Total transmittance of the atmosphere.}
 
@@ -28,7 +28,7 @@ Default is average global value.}
 Default is the visibility on a clear day.}
 }
 \value{
-Shortwave radiation on the ground onto a horizontal area in W/m^2.
+Shortwave radiation on the ground onto a horizontal area in W/m².
 }
 \description{
 Calculation of the shortwave radiation onto a horizontal area on the ground.

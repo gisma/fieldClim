@@ -17,8 +17,6 @@ trans_air_mass_rel <- function (...) {
 #' @export
 #'
 trans_air_mass_rel.numeric <- function(sol_elevation, ...) {
-
-  #mr <- 1 / (sin(sol_elevation * f) + (1.5 * sol_elevation**(-0.72)))
   mr <- 1 / (sin(pi/180*sol_elevation) + (1.5 * sol_elevation**(-0.72)))
 
   # if(mr >= 0){

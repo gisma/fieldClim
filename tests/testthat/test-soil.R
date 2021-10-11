@@ -3,8 +3,8 @@ context("Soil functions")
 # test data
 s_Moist <- 13           # soil moisture in volume percent
 s_flag <- 3             # 1 = sand, 2 = clay, 3 = silt
-z1 <- 0.1               # soil temperature in 1 m
-z2 <- 0.5               # soil temperature in 2 m
+z1 <- 0.1               # soil temperature in 1 m depth
+z2 <- 0.5               # soil temperature in 2 m depth
 t1 <- 15                # temperature on z1 in °C
 t2 <- 10                # temperature on z2 in °C
 thermal_cond <- 1.699
@@ -39,11 +39,9 @@ test_that("soil_heat_flux", {
   expect_equal(soil_heat_flux(ts1 = z1, ts2 = z2, depth1 = 1, depth = 2, thermal_cond = thermal_cond),
                0.6796, tolerance = 1e-3)
 })
-# old value: 1.2375
 
 test_that("soil_attenuation", {
   expect_equal(soil_attenuation(thermal_cond = thermal_cond, vol_heat_cap = vol_heat_cap),
                0.1645349747, tolerance = 1e-3)
 })
-# old value: 2.74225
 

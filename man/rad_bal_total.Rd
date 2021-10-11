@@ -15,16 +15,16 @@ rad_bal_total(...)
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{rad_sw_radiation_balance}{Shortwave radiation balance in W/m^2.}
+\item{rad_sw_radiation_balance}{Shortwave radiation balance in W/m².}
 
-\item{rad_lw_out}{Longwave surface emissions in W/m^2.}
+\item{rad_lw_out}{Longwave surface emissions in W/m².}
 
-\item{rad_lw_in}{Atmospheric radiation in W/m^2.}
+\item{rad_lw_in}{Atmospheric radiation in W/m².}
 
 \item{weather_station}{Object of class weather_station.}
 }
 \value{
-Total radiation balance in W/m^2.
+Total radiation balance in W/m².
 }
 \description{
 Calculate total radiation balance.

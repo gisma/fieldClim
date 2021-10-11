@@ -25,7 +25,7 @@ See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}} and \link[base:strptime]{b
 \item{weather_station}{Object of class weather_station.}
 }
 \value{
-Shortwave radiation at top of atmosphere in W/m^2.
+Shortwave radiation at top of atmosphere in W/m².
 }
 \description{
 Calculation of the shortwave radiation at the top of the atmosphere.

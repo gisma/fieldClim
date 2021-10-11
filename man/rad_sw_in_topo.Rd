@@ -45,7 +45,7 @@ Default is average atmospheric transmittance.}
 \item{weather_station}{Object of class weather_station.}
 }
 \value{
-Shortwave radiation balance in dependency of topography in W/m^2.
+Shortwave radiation balance in dependency of topography in W/m².
 }
 \description{
 Calculate shortwave radiation balance in dependency of topography.

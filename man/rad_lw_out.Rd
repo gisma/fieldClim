@@ -23,7 +23,7 @@ Default is 'field' as surface type.}
 \item{weather_station}{Object of class weather_station.}
 }
 \value{
-Emissions in W/m^2.
+Emissions in W/m².
 }
 \description{
 Calculates emissions of a surface.

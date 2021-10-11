@@ -31,7 +31,6 @@ sensible_priestley_taylor.numeric <- function(t, rad_bal, soil_flux, surface_typ
     alpha_pt <- priestley_taylor_coefficient[which(priestley_taylor_coefficient$surface_type == surface_type),]$alpha
   }
 
-  # alpha_pt <- coefficient
   QH_TP <- ((1 - alpha_pt) * sc + gam) * (-1 * rad_bal - soil_flux) / (sc + gam)
   return(QH_TP)
 }

@@ -36,5 +36,6 @@ test_that("sensible_monin", {
 })
 
 test_that("sensible_priestley_taylor", {
-  expect_equal(sensible_priestley_taylor(t = t1, rad_bal, soil_flux), -35.11673, tolerance = 1e-3)
+  expect_equal(sensible_priestley_taylor(t = t1, rad_bal, soil_flux),
+               -84.21671594, tolerance = 1e-3)
 })

@@ -15,16 +15,16 @@ rad_lw_in_topo(...)
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{rad_lw_out}{Longwave surface emissions in W/m^2.}
+\item{rad_lw_out}{Longwave surface emissions in W/m².}
 
-\item{rad_lw_in}{Atmospheric radiation in W/m^2.}
+\item{rad_lw_in}{Atmospheric radiation in W/m².}
 
 \item{terr_sky_view}{Sky view factor from 0-1. (See \link{terr_sky_view})}
 
 \item{weather_station}{Object of class weather_station.}
 }
 \value{
-Incoming longwave radiation with topography in W/m^2.
+Incoming longwave radiation with topography in W/m².
 }
 \description{
 Corrects the incoming longwave radiation using the sky view factor.

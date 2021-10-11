@@ -1,11 +1,10 @@
 context("transmittance")
 
-################# Notwendige Eingaben Atmosph?re
-
+# test data
 p <- 1000   # Air pressure in hPa
 oz <- 0.35  # average ozon columnar values 0.35 cm
 t <- 20.8   # temperature in °C
-vis <- 40   # horizontal visiblity range in km
+vis <- 40   # horizontal visibility range in km
 elev  <- 200   # terrain height in m
 air_mass_rel = 1.402452
 sol_elevation = 36.98267
