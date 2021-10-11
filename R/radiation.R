@@ -16,7 +16,6 @@ rad_emissivity_air <- function (...) {
 #' @param elev Meters above sea level in m.
 #' @param p OPTIONAL. Air pressure in hPa.
 #' @export
-#' If not available, will be calculated from elev and air temperature.
 rad_emissivity_air.numeric <- function(t, elev, p = NULL, ...){
   if(is.null(p)) p <- pres_p(elev, t)
   svp <- hum_sat_vapor_pres(t)
