@@ -247,11 +247,11 @@ latent_bowen.numeric <- function(t1, t2, hum1, hum2, p1, p2, z1 = 2, z2 = 10,
 
   # values of latent bowen will be checked whether they exceed the valid data range.
   if (out > 600) {
-    warning("There are values above 600 W/m²!")
+    warning("There are values above 600 W/m^2!")
     out[out > 600] <- 600
   }
   if(out < -600){
-    warning("There are values below -600 W/m²!")
+    warning("There are values below -600 W/m^2!")
     out[out < -600] <- -600
   }
   return(out)
