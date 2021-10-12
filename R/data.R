@@ -22,7 +22,6 @@
 #'   \item{rad_lw_out}{Outgoing longwave radiation in W/m^2.}
 #'   \item{rad_sw_bal}{Shortwave radiation balance in W/m^2.}
 #'   \item{rad_lw_bal}{Longwave radiation balance in W/m^2.}
-#'   \item{albedo}{Albedo of ground.}
 #'   \item{rad_bal}{Total radiation balance in W/m^2.}
 #'   \item{water_vol_soil}{Moisture of ground in %.}
 #'   \item{t_surface}{Surface temperature in °C.}
@@ -40,11 +39,12 @@
 #'
 #' A dataset containing values for emissivity and roughness length for different surface types.
 #'
-#' @format A data frame with 12 rows and 3 variables:
+#' @format A data frame with 12 rows and 4 variables:
 #' \describe{
 #'   \item{surface_type}{Type of surface as character}
 #'   \item{emissivity}{Emissivity of the chosen surface}
 #'   \item{roughness_length}{Roughness length of surface in m}
+#'   \item{albedo}{Albedo of the certain surface type as decimal number}
 #' }
 "surface_properties"
 
