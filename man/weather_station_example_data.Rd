@@ -18,7 +18,6 @@ A data frame with 288 rows and 20 variables:
 \item{rad_lw_out}{Outgoing longwave radiation in W/m^2.}
 \item{rad_sw_bal}{Shortwave radiation balance in W/m^2.}
 \item{rad_lw_bal}{Longwave radiation balance in W/m^2.}
-\item{albedo}{Albedo of ground.}
 \item{rad_bal}{Total radiation balance in W/m^2.}
 \item{water_vol_soil}{Moisture of ground in \%.}
 \item{t_surface}{Surface temperature in °C.}
