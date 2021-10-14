@@ -234,6 +234,7 @@ rad_sw_out <- function (...) {
 #' @method rad_sw_out numeric
 #' @param rad_sw_in Shortwave radiation on the ground onto a horizontal area in W/m².
 #' @param surface_type type of surface for which an albedo will be selected.
+#' @param albedo if albedo measurements are performed, values in decimal can be inserted here.
 #' @export
 rad_sw_out.numeric <- function(rad_sw_in, surface_type = "field", albedo = NULL, ...){
   if (albedo ! NULL){
@@ -250,13 +251,22 @@ rad_sw_out.numeric <- function(rad_sw_in, surface_type = "field", albedo = NULL,
 #' @export
 #' @param weather_station Object of class weather_station.
 #' @param surface_type type of surface for which an albedo will be selected.
-rad_sw_out.weather_station <- function(weather_station, surface_type = "field", ...) {
+#' @param albedo if albedo measurements are performed, values in decimal can be inserted here
+rad_sw_out.weather_station <- function(weather_station, surface_type = "field", albedo = NULL, ...) {
   check_availability(weather_station, "sw_in")
   sw_in <- weather_station$measurements$sw_in
 
-  surface_properties <- surface_properties
-  albedo <- surface_properties[which(surface_properties$surface_type == surface_type),]$albedo
+  if (albedo ! NULL){
+    albdeo = albedo
 
+    if (albedo > 1 | albedo < 0){
+      warning("The values of the albedo are out of the valid range (0-1). \nPlease check again.")
+    }
+
+  } else {
+    surface_properties <- surface_properties
+    albedo <- surface_properties[which(surface_properties$surface_type == surface_type),]$albedo
+  }
   return(rad_sw_out(sw_in, albedo))
 }
 
