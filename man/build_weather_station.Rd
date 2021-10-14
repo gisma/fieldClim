@@ -99,7 +99,7 @@ atmospheric transmittance (see \link{rad_sw_in}).
 By setting slope, sky_view and exposition, sw_in will be topographically corrected
 (see \link{rad_sw_in_topo}).
 
-If sw_out is NULL, sw_in and surface_type need to be set (see \link{rad_sw_out}).
+If sw_out is NULL, sw_in and surface_type need to be set or albedo (see \link{rad_sw_out}).
 
 If lw_in is NULL, it will be estimated using the air temperature and relative humidity
 (see \link{rad_lw_in}).
@@ -113,7 +113,7 @@ If soil_flux is NULL, ts1, ts2, depth1, depth2, moisture and texture need to be 
 
 If additional parameters are desired, they can be commited:
 \itemize{
-\item location properties: "slope", "sky_view", "exposition" and "texture"
+\item location properties: "slope", "sky_view", "exposition", "texture" and "albedo"
 \item depth of ground measurements: "depth1" and "depth2" in m.
 \item additional measurements: "ts1", "ts2" and "t_surface" in °C and "moisture".
 }

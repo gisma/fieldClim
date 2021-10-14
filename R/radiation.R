@@ -237,7 +237,7 @@ rad_sw_out <- function (...) {
 #' @param albedo if albedo measurements are performed, values in decimal can be inserted here.
 #' @export
 rad_sw_out.numeric <- function(rad_sw_in, surface_type = "field", albedo = NULL, ...){
-  if (albedo ! NULL){
+  if (albedo != is.null){
     albedo = albedo
   } else {
     surface_properties <- surface_properties

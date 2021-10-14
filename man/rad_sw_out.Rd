@@ -8,7 +8,7 @@
 \usage{
 rad_sw_out(...)
 
-\method{rad_sw_out}{numeric}(rad_sw_in, surface_type = "field", ...)
+\method{rad_sw_out}{numeric}(rad_sw_in, surface_type = "field", albedo = NULL, ...)
 
 \method{rad_sw_out}{weather_station}(weather_station, surface_type = "field", ...)
 }
@@ -18,6 +18,8 @@ rad_sw_out(...)
 \item{rad_sw_in}{Shortwave radiation on the ground onto a horizontal area in W/m².}
 
 \item{surface_type}{type of surface for which an albedo will be selected.}
+
+\item{albedo}{if albedo measurements are performed, values in decimal can be inserted here}
 
 \item{weather_station}{Object of class weather_station.}
 }
