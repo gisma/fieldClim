@@ -14,7 +14,7 @@
 #' By setting slope, sky_view and exposition, sw_in will be topographically corrected
 #' (see [fieldClim::rad_sw_in_topo]).
 #'
-#' If sw_out is NULL, sw_in and surface_type need to be set (see [fieldClim::rad_sw_out]).
+#' If sw_out is NULL, sw_in and surface_type need to be set or albedo (see [fieldClim::rad_sw_out]).
 #'
 #' If lw_in is NULL, it will be estimated using the air temperature and relative humidity
 #' (see [fieldClim::rad_lw_in]).
@@ -27,7 +27,7 @@
 #' (see [fieldClim::soil_heat_flux] and [fieldClim::soil_thermal_cond]).
 #'
 #' If additional parameters are desired, they can be commited:
-#' - location properties: "slope", "sky_view", "exposition" and "texture"
+#' - location properties: "slope", "sky_view", "exposition", "texture" and "albedo"
 #' - depth of ground measurements: "depth1" and "depth2" in m.
 #' - additional measurements: "ts1", "ts2" and "t_surface" in °C and "moisture".
 #'
@@ -198,7 +198,7 @@ build_weather_station <-  function(lat,
 
 
   # Additional parameters
-  add_location <- c("slope", "sky_view", "exposition", "texture")
+  add_location <- c("slope", "sky_view", "exposition", "texture", "albedo")
   add_heights <- c("depth1", "depth2")
   add_measurements <- c("ts1", "ts2", "moisture", "t_surface")
 
