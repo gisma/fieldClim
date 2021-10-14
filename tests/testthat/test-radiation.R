@@ -12,7 +12,6 @@ lon <- 8.683303333333333
 sky_view <- 0.8
 em <- 0.95
 tges <- 0.6058589
-albedo <- 0.2
 slope <- 20
 sol_azimuth <- 179.1576
 sol_elevation <- 36.98267
