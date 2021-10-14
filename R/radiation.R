@@ -252,22 +252,27 @@ rad_sw_out.numeric <- function(rad_sw_in, surface_type = "field", albedo = NULL,
 #' @param weather_station Object of class weather_station.
 #' @param surface_type type of surface for which an albedo will be selected.
 #' @param albedo if albedo measurements are performed, values in decimal can be inserted here
-rad_sw_out.weather_station <- function(weather_station, surface_type = "field", albedo = NULL, ...) {
+rad_sw_out.weather_station <- function(weather_station, surface_type = "field", ...) {
   check_availability(weather_station, "sw_in")
   sw_in <- weather_station$measurements$sw_in
 
-  if (albedo ! NULL){
-    albdeo = albedo
+  attach(weather_station)
+
+  if(exists("albedo") == TRUE){
+
+    albedo <- weather_station$add_location$albedo
 
     if (albedo > 1 | albedo < 0){
-      warning("The values of the albedo are out of the valid range (0-1). \nPlease check again.")
-    }
-
+        warning("Albedo values a are out of the valid range (0-1). \nPlease check again.")
+      }
   } else {
     surface_properties <- surface_properties
     albedo <- surface_properties[which(surface_properties$surface_type == surface_type),]$albedo
   }
-  return(rad_sw_out(sw_in, albedo))
+
+  detach(weather_station)
+
+  return(rad_sw_out(sw_in, albedo = albedo))
 }
 
 
