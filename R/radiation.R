@@ -235,10 +235,13 @@ rad_sw_out <- function (...) {
 #' @param rad_sw_in Shortwave radiation on the ground onto a horizontal area in W/m².
 #' @param surface_type type of surface for which an albedo will be selected.
 #' @export
-rad_sw_out.numeric <- function(rad_sw_in, surface_type = "field", ...){
-  surface_properties <- surface_properties
-  albedo <- surface_properties[which(surface_properties$surface_type == surface_type),]$albedo
-  rad_sw_out <- rad_sw_in*albedo
+rad_sw_out.numeric <- function(rad_sw_in, surface_type = "field", albedo = NULL, ...){
+  if (albedo ! NULL){
+    albedo = albedo
+  } else {
+    surface_properties <- surface_properties
+    albedo <- surface_properties[which(surface_properties$surface_type == surface_type),]$albedo  }
+    rad_sw_out <- rad_sw_in*albedo
   return(rad_sw_out)
 }
 
