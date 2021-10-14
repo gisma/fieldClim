@@ -238,11 +238,7 @@ rad_sw_out <- function (...) {
 #' @export
 rad_sw_out.numeric <- function(rad_sw_in, surface_type = "field", albedo = NULL, ...){
   if (!is.null(albedo)){
-<<<<<<< HEAD
-    albedo = albedo
-=======
     albedo <- albedo
->>>>>>> dc6a2b45e1de9b9bcf5ddb987cdf8db3fe0ea7d2
   } else {
     surface_properties <- surface_properties
     albedo <- surface_properties[which(surface_properties$surface_type == surface_type),]$albedo
