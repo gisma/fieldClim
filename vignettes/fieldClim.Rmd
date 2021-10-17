@@ -232,7 +232,6 @@ test_station <- build_weather_station(lat = 50.840503,
                                       hum2 = ws$hum2,
                                       sw_in = ws$rad_sw_in,
                                       sw_out = ws$rad_sw_out,
-                                      lw_in = ws$rad_lw_in,
                                       soil_flux = ws$heatflux_soil,
                                       # Alternative longwave radiation
                                       t_surface = ws$t_surface,
@@ -278,7 +277,30 @@ As you can see the results are exactly the same, but using the `weather_station`
 A convenience function to calculate all the different methods for turbulent fluxes is given in `turb_flux_calc()`. This function is only available for `weather_station` objects as it returns the results straight into the given `weather_station`. The `water` package also has to be installed for this function to work.
 
 ```{r}
-library(water)
+#make a test_station object
+test_station <- build_weather_station(lat = 50.840503, # latitude
+                                      lon = 8.6833, # longitude
+                                      elev = 270, # elevation of the terrain
+                                      surface_type = "field", # type of surface the station is positioned
+                                      obs_height = 0.3, # obstacle height
+                                      z1 = 2, # height of lower measurement 
+                                      z2 = 10, # height of upper measurement
+                                      datetime = ws$datetime, # date of measurement
+                                      t1 = ws$t1, # temperature on 2m above ground
+                                      t2 = ws$t2, # temperature on 10m above ground
+                                      v1 = ws$v1, # windspeed on 2m above ground
+                                      v2 = ws$v2, # windspeed on 10m above ground
+                                      hum1 = ws$hum1, # humidity on 2m above ground
+                                      hum2 = ws$hum2, # humidity on 10m above ground
+                                      sw_in = ws$rad_sw_in, # incoming shortwave radiation
+                                      sw_out = ws$rad_sw_out, # reflected shortwave radiation
+                                      lw_in = ws$rad_lw_in, # incoming longwave radiation
+                                      lw_out = ws$rad_lw_out, # reflected longwave radiation
+                                      soil_flux = ws$heatflux_soil) # soil heat flux
+
+
+
+
 station_turbulent <- turb_flux_calc(test_station)
 
 names(station_turbulent$measurements)
