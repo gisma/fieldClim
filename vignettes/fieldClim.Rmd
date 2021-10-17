@@ -305,10 +305,6 @@ test_station <- build_weather_station(lat = 50.840503, # latitude
                                       soil_flux = ws$heatflux_soil) # soil heat flux
 
 
-
-
-=======
->>>>>>> 586a4ee166d927594e01184f7d7ec673fbfdb4da
 station_turbulent <- turb_flux_calc(test_station)
 
 names(station_turbulent$measurements)
