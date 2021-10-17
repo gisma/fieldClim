@@ -314,15 +314,15 @@ This converts all the entries in the `measurements` list of the object into a da
 There are also two additional toggles that can be set, called `reduced` and `unit`. `reduced` will omit some (very few) columns which aren't used often. `unit` will add longer column names with the correct units to all columns available with `reduced = TRUE`.
 
 ```{r}
-# 
-# normal <- as.data.frame(station_turbulent)
-# colnames(normal)
-# 
-# reduced <- as.data.frame(station_turbulent, reduced = T)
-# colnames(reduced)
-# 
-# unit <- as.data.frame(station_turbulent, reduced = T, unit = T)
-# colnames(unit)
+
+normal <- as.data.frame(station_turbulent)
+colnames(normal)
+
+reduced <- as.data.frame(station_turbulent, reduced = T)
+colnames(reduced)
+
+unit <- as.data.frame(station_turbulent, reduced = T, unit = T)
+colnames(unit)
 
 ```
 
