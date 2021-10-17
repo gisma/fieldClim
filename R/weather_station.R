@@ -316,7 +316,7 @@ build_weather_station <-  function(lat,
   # ---- Longwave ----
   lw_in_status <- is.null(lw_in)
   if(lw_in_status){
-    out_list$measurements$lw_in <- rad_lw_in(out_list$measurements$hum2, outlist$measurements$t2)
+    #out_list$measurements$lw_in <- rad_lw_in(out_list$measurements$hum2, out_list$measurements$t2)
     out_list$measurements$lw_in <- rad_lw_in(out_list)
   }
 

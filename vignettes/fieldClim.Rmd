@@ -232,7 +232,6 @@ test_station <- build_weather_station(lat = 50.840503,
                                       hum2 = ws$hum2,
                                       sw_in = ws$rad_sw_in,
                                       sw_out = ws$rad_sw_out,
-                                      lw_out = ws$rad_lw_out,
                                       soil_flux = ws$heatflux_soil,
                                       # Alternative longwave radiation
                                       t_surface = ws$t_surface,
