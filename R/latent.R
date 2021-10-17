@@ -77,8 +77,14 @@ latent_penman <- function (...) {
 #' @param lat Latitude in decimal degrees.
 #' @param lon Longitude in decimal degrees.
 latent_penman.POSIXt <- function(datetime,
-                       v, t, hum, z = 2, rad_bal,
-                       elev, lat, lon, ...){
+                                 v,
+                                 t,
+                                 hum,
+                                 z = 2,
+                                 rad_bal,
+                                 elev,
+                                 lat,
+                                 lon, ...){
   if(!inherits(datetime, "POSIXt")){
     stop("datetime has to be of class POSIXt.")
   }
@@ -124,8 +130,7 @@ latent_penman.weather_station <- function(weather_station, ...){
   elev <- weather_station$location_properties$elevation
   lat <- weather_station$location_properties$latitude
   lon <- weather_station$location_properties$longitude
-  return(latent_penman(datetime,
-                       v, t, hum, z, rad_bal,
+  return(latent_penman(datetime, v, t, hum, z, rad_bal,
                        elev, lat, lon))
 }
 
@@ -245,14 +250,14 @@ latent_bowen.numeric <- function(t1, t2, hum1, hum2, p1, p2, z1 = 2, z2 = 10,
   out <- (-1 * rad_bal-soil_flux) / (1 + bowen_ratio)
 
   # values of latent bowen will be checked whether they exceed the valid data range.
-  if (max(out) > 600) {
-    warning("There are values above 600 W/m^2!")
-    out[out > 600] <- 600
-  }
-  if(min(out) < -600){
-    warning("There are values below -600 W/m^2!")
-    out[out < -600] <- -600
-  }
+  # if (max(out) > 600) {
+  #   warning("There are values above 600 W/m^2!")
+  out[out > 600] <- 600
+  # }
+  # if(min(out) < -600){
+  #   warning("There are values below -600 W/m^2!")
+  out[out < -600] <- -600
+  # }
   return(out)
 }
 

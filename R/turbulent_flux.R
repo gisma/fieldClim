@@ -339,18 +339,18 @@ turb_flux_calc <- function(weather_station){
   sensible_pt  <- sensible_priestley_taylor(weather_station)
   latent_pt    <- latent_priestley_taylor(weather_station)
   sensible_bow <- sensible_bowen(weather_station)
-  latent_bow   <- latent_bowen(weather_station)
-  sensible_mon <- sensible_monin(weather_station)
-  latent_mon   <- latent_monin(weather_station)
+  # latent_bow   <- latent_bowen(weather_station)      # problem
+  # sensible_mon <- sensible_monin(weather_station)    # problem
+  # latent_mon   <- latent_monin(weather_station)      # problem
   latent_pen   <- latent_penman(weather_station)
 
   weather_station$measurements$stability <- stability
   weather_station$measurements$sensible_priestley_taylor <- sensible_pt
   weather_station$measurements$latent_priestley_taylor <- latent_pt
   weather_station$measurements$sensible_bowen <- sensible_bow
-  weather_station$measurements$latent_bowen <- latent_bow
-  weather_station$measurements$sensible_monin <- sensible_mon
-  weather_station$measurements$latent_monin <- latent_mon
+  # weather_station$measurements$latent_bowen <- latent_bow
+  # weather_station$measurements$sensible_monin <- sensible_mon
+  # weather_station$measurements$latent_monin <- latent_mon
   weather_station$measurements$latent_penman <- latent_pen
 
   return(weather_station)
