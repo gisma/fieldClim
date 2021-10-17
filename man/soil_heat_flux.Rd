@@ -28,7 +28,7 @@ soil_heat_flux(...)
 \item{weather_station}{Object of class weather_station.}
 }
 \value{
-Soil heat flux in W * m^-2.
+Soil heat flux in W * m^(-2).
 }
 \description{
 Calculates soil heat flux from measurements in two different

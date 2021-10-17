@@ -35,7 +35,7 @@ rad_sw_in_topo(...)
 
 \item{sol_azimuth}{Sun azimuth in degrees.}
 
-\item{rad_sw_in}{Shortwave radiation on the ground onto a horizontal area in W/m^2.}
+\item{rad_sw_in}{Shortwave radiation on the ground onto a horizontal area in W/m².}
 
 \item{albedo}{Albedo of surface.}
 

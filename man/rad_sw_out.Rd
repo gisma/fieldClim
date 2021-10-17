@@ -19,7 +19,7 @@ rad_sw_out(...)
 
 \item{surface_type}{type of surface for which an albedo will be selected.}
 
-\item{albedo}{if albedo measurements are performed, values in decimal can be inserted here}
+\item{albedo}{if albedo measurements are performed, values in decimal can be inserted here.}
 
 \item{weather_station}{Object of class weather_station.}
 }

@@ -15,11 +15,11 @@ turb_roughness_length(...)
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{surface_type}{Type of surface}
+\item{surface_type}{Type of surface.}
 
 \item{obs_height}{Height of obstacle in m.}
 
-\item{weather_station}{Object of class weather_station}
+\item{weather_station}{Object of class weather_station.}
 }
 \value{
 roughness length in m.
@@ -28,5 +28,5 @@ roughness length in m.
 Calculate the roughness length of a surface on the basis of the obstacle height or the type of the surface.
 Possible surface types are:
 "field", "acre", "lawn", "street", "agriculture", "settlement", "coniferous forest", "deciduous forest", "mixed forest", "city"
-You need to specify only one, "type" OR "obs_height".
+You need to specify only one, "surface_type" OR "obs_height".
 }

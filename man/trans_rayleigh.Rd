@@ -17,7 +17,7 @@ trans_rayleigh(...)
 
 \item{air_mass_abs}{Absolute optical air mass.}
 
-\item{weather_station}{Object of class weather_station}
+\item{weather_station}{Object of class weather_station.}
 }
 \value{
 Transmittance due to rayleigh scattering (0-1).

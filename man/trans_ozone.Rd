@@ -19,7 +19,7 @@ trans_ozone(...)
 
 \item{oz}{Atmospheric ozone as column in cm. Default is average value of 0.35 cm.}
 
-\item{weather_station}{Object of class weather_station}
+\item{weather_station}{Object of class weather_station.}
 }
 \value{
 Transmittance due to ozone (0-1).

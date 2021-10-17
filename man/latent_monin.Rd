@@ -50,7 +50,7 @@ latent_monin(...)
 
 \item{grad_rich_no}{Gradient-Richardson-Number.}
 
-\item{weather_station}{Object of class weather_station}
+\item{weather_station}{Object of class weather_station.}
 }
 \value{
 Latent heat flux in W/m².

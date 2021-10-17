@@ -15,11 +15,11 @@ trans_air_mass_abs(...)
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{air_mass_rel}{Relative optical air mass}
+\item{air_mass_rel}{Relative optical air mass.}
 
 \item{p}{Air pressure in hPa.}
 
-\item{weather_station}{Object of class weather_station}
+\item{weather_station}{Object of class weather_station.}
 }
 \value{
 Absolute optical air mass.

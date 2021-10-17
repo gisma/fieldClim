@@ -18,7 +18,7 @@
 \value{
 data.frame
 The columns of the data frame depend on \code{reduced} and \code{unit}.
-If \code{reduced = F}, the data.frame contains all coloumns of the \code{measurements} list in \code{weather_station}.
+If \code{reduced = F}, the data.frame contains all columns of the \code{measurements} list in \code{weather_station}.
 If \code{reduced = T}, the data.frame contains: "datetime", "t1", "t2", "v1", "v2", "p1", "p2", "hum1", "hum2", "soil_flux", "sw_in", "sw_out", "lw_in", "lw_out", "sw_bal", "lw_bal", "rad_bal", "stability", "sensible_priestley_taylor", "latent_priestley_taylor","sensible_bowen", "latent_bowen","sensible_monin", "latent_monin","latent_penman"
 If \code{unit = T}, the column names are replaced by more detailed names, containing the respective uits.
 }

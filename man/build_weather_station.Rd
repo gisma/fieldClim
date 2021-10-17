@@ -30,38 +30,38 @@ build_weather_station(
 )
 }
 \arguments{
-\item{lat}{Latitude of location. Preset: 50.840503 (climate station Caldern).}
+\item{lat}{Latitude of location. Preset: 50.840503 (climate station Caldern, Germany).}
 
-\item{lon}{Longitude of location. Preset: 8.683300 (climate station Caldern).}
+\item{lon}{Longitude of location. Preset: 8.683300 (climate station Caldern, Germany).}
 
-\item{elev}{Elevation of location above sea level in m. Preset: 270 m (climate station Caldern).}
+\item{elev}{Elevation of location above sea level in m. Preset: 270 m (climate station Caldern, Germany).}
 
 \item{surface_type}{Surface Type. Form: Character string. One of: "field", "acre", "lawn", "street", "agriculture", "settlement", "coniferous forest", "deciduous forest", "mixed forest", "city", Preset: "field".}
 
 \item{obs_height}{Height of vegetation in m. Preset: 0.3.}
 
-\item{z1}{Lower measurement height in m. Preset: 2m.}
+\item{z1}{Lower measurement height in m. Preset:  2m.}
 
-\item{z2}{Upper measurement height in m. Preset: 2m.}
+\item{z2}{Upper measurement height in m. Preset: 10m.}
 
 \item{datetime}{Name of datetime-coloumn in data.
 Form: POSIX-Object (See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:strptime]{base::strptime} for conversion.)}
 
-\item{t1}{Vector containing lower temperature data in °C.}
+\item{t1}{Vector containing temperature data in °C of the lower point of measurement.}
 
-\item{t2}{Vector containing upper temperature data in °C.}
+\item{t2}{Vector containing temperature data in °C of the upper point of measurement.}
 
-\item{v1}{Vector containing lower wind speed data in m/s.}
+\item{v1}{Vector containing wind speed data in m/s of the lower point of measurement.}
 
-\item{v2}{Vector containing upper wind speed data in m/s.}
+\item{v2}{Vector containing wind speed data in m/s of the upper point of measurement.}
 
-\item{hum1}{Vector containing lower humidity data in \%.}
+\item{hum1}{Vector containing humidity data in \% of the lower point of measurement.}
 
-\item{hum2}{Vector containing upper humidity data in \%.}
+\item{hum2}{Vector containing humidity data in \% of the upper point of measurement.}
 
-\item{p1}{Vector containing lower pressure data in hPa.}
+\item{p1}{Vector containing pressure data in hPa of the lower point of measurement.}
 
-\item{p2}{Vector containing upper pressure data in hPa.}
+\item{p2}{Vector containing pressure data in hPa of the upper point of measurement.}
 
 \item{sw_in}{Vector containing incoming shortwave radiation in W/m².}
 
@@ -99,7 +99,7 @@ atmospheric transmittance (see \link{rad_sw_in}).
 By setting slope, sky_view and exposition, sw_in will be topographically corrected
 (see \link{rad_sw_in_topo}).
 
-If sw_out is NULL, sw_in and surface_type need to be set or albedo (see \link{rad_sw_out}).
+If sw_out is NULL, sw_in and albedo or sw_in and surface_type need to be set (see \link{rad_sw_out}).
 
 If lw_in is NULL, it will be estimated using the air temperature and relative humidity
 (see \link{rad_lw_in}).
@@ -113,7 +113,7 @@ If soil_flux is NULL, ts1, ts2, depth1, depth2, moisture and texture need to be 
 
 If additional parameters are desired, they can be commited:
 \itemize{
-\item location properties: "slope", "sky_view", "exposition", "texture" and "albedo"
+\item location properties: "slope", "sky_view", "exposition", "texture" and "albedo".
 \item depth of ground measurements: "depth1" and "depth2" in m.
 \item additional measurements: "ts1", "ts2" and "t_surface" in °C and "moisture".
 }
@@ -122,87 +122,124 @@ If additional parameters are desired, they can be commited:
 \dontrun{
 # Standard parameters
 test_station <- build_weather_station(lat = 50.840503,
-                                     lon = 8.6833,
-                                     elev = 270,
-                                     surface_type = "field",
-                                     obs_height = 0.3, # obstacle height
-                                     z1 = 2, # measurement heights
-                                     z2 = 10,
-                                     datetime = ws$datetime,
-                                     t1 = ws$t1, # temperature
-                                     t2 = ws$t2,
-                                     v1 = ws$v1, # windspeed
-                                     v2 = ws$v2,
-                                     hum1 = ws$hum1, # humidity
-                                     hum2 = ws$hum2,
-                                     sw_in = ws$rad_sw_in, # shortwave radiation
-                                     sw_out = ws$rad_sw_out,
-                                     lw_in = ws$rad_lw_in, # longwave radiation
-                                     lw_out = ws$rad_lw_out,
-                                     soil_flux = ws$heatflux_soil)
+                                      lon = 8.6833,
+                                      elev = 270,
+                                      surface_type = "field",
+                                      obs_height = 0.3, # obstacle height
+                                      z1 = 2, # measurement heights
+                                      z2 = 10,
+                                      datetime = ws$datetime,
+                                      t1 = ws$t1, # temperature
+                                      t2 = ws$t2,
+                                      v1 = ws$v1, # windspeed
+                                      v2 = ws$v2,
+                                      hum1 = ws$hum1, # humidity
+                                      hum2 = ws$hum2,
+                                      sw_in = ws$rad_sw_in, # shortwave radiation
+                                      sw_out = ws$rad_sw_out,
+                                      lw_in = ws$rad_lw_in, # longwave radiation
+                                      lw_out = ws$rad_lw_out,
+                                      soil_flux = ws$heatflux_soil)
 # Specify pressure
-test_station <- build_weather_station(lat = 50.840503, lon = 8.6833, elev = 270,
-                                     surface_type = "field", obs_height = 0.3,
-                                     z1 = 2, z2 = 10, datetime = ws$datetime,
-                                     t1 = ws$t1, t2 = ws$t2, v1 = ws$v1, v2 = ws$v2,
-                                     hum1 = ws$hum1, hum2 = ws$hum2,
-                                     sw_in = ws$rad_sw_in,
-                                     sw_out = ws$rad_sw_out,
-                                     lw_in = ws$rad_lw_in,
-                                     lw_out = ws$rad_lw_out,
-                                     soil_flux = ws$heatflux_soil,
-                                     # ADDED PRESSURE
-                                     p1 = ws$p1,
-                                     p2 = ws$p2)
+test_station <- build_weather_station(lat = 50.840503,
+                                      lon = 8.6833,
+                                      elev = 270,
+                                      surface_type = "field",
+                                      obs_height = 0.3,
+                                      z1 = 2,
+                                      z2 = 10,
+                                      datetime = ws$datetime,
+                                      t1 = ws$t1,
+                                      t2 = ws$t2,
+                                      v1 = ws$v1,
+                                      v2 = ws$v2,
+                                      hum1 = ws$hum1,
+                                      hum2 = ws$hum2,
+                                      sw_in = ws$rad_sw_in,
+                                      sw_out = ws$rad_sw_out,
+                                      lw_in = ws$rad_lw_in,
+                                      lw_out = ws$rad_lw_out,
+                                      soil_flux = ws$heatflux_soil,
+                                      # commit pressure values
+                                      p1 = ws$p1,
+                                      p2 = ws$p2)
 
 # Alternative calculation of soil flux
-test_station <- build_weather_station(lat = 50.840503, lon = 8.6833, elev = 270,
-                                     surface_type = "field", obs_height = 0.3,
-                                     z1 = 2, z2 = 10, datetime = ws$datetime,
-                                     t1 = ws$t1, t2 = ws$t2, v1 = ws$v1, v2 = ws$v2,
-                                     hum1 = ws$hum1, hum2 = ws$hum2,
-                                     sw_in = ws$rad_sw_in,
-                                     sw_out = ws$rad_sw_out,
-                                     lw_in = ws$rad_lw_in,
-                                     lw_out = ws$rad_lw_out,
-                                     # Alternative Soil flux:
-                                     depth1 = 0,
-                                     depth2 = 0.3,
-                                     ts1 = ws$t_surface,
-                                     ts2 = ws$ts1,
-                                     moisture = ws$water_vol_soil,
-                                     texture = "clay")
+test_station <- build_weather_station(lat = 50.840503,
+                                      lon = 8.6833,
+                                      elev = 270,
+                                      surface_type = "field",
+                                      obs_height = 0.3,
+                                      z1 = 2,
+                                      z2 = 10,
+                                      datetime = ws$datetime,
+                                      t1 = ws$t1,
+                                      t2 = ws$t2,
+                                      v1 = ws$v1,
+                                      v2 = ws$v2,
+                                      hum1 = ws$hum1,
+                                      hum2 = ws$hum2,
+                                      sw_in = ws$rad_sw_in,
+                                      sw_out = ws$rad_sw_out,
+                                      lw_in = ws$rad_lw_in,
+                                      lw_out = ws$rad_lw_out,
+                                      # alternative soil flux:
+                                      depth1 = 0,
+                                      depth2 = 0.3,
+                                      ts1 = ws$t_surface,
+                                      ts2 = ws$ts1,
+                                      moisture = ws$water_vol_soil,
+                                      texture = "clay")
 # Alternative shortwave
-test_station <- build_weather_station(lat = 50.840503, lon = 8.6833, elev = 270,
-                                     surface_type = "field", obs_height = 0.3,
-                                     z1 = 2, z2 = 10, datetime = ws$datetime,
-                                     t1 = ws$t1, t2 = ws$t2, v1 = ws$v1, v2 = ws$v2,
-                                     hum1 = ws$hum1, hum2 = ws$hum2,
-                                     lw_in = ws$rad_lw_in,
-                                     lw_out = ws$rad_lw_out,
-                                     soil_flux = ws$heatflux_soil,
-                                     # Alternative shortwave radiation:
-                                     # Topographic correction
-                                     slope = 10, # In degrees
-                                     exposition = 20, # North = 0, South = 180
-                                     sky_view = 0.82 # Sky view factor (0-1)
+test_station <- build_weather_station(lat = 50.840503,
+                                      lon = 8.6833,
+                                      elev = 270,
+                                      surface_type = "field",
+                                      obs_height = 0.3,
+                                      z1 = 2,
+                                      z2 = 10,
+                                      datetime = ws$datetime,
+                                      t1 = ws$t1,
+                                      t2 = ws$t2,
+                                      v1 = ws$v1,
+                                      v2 = ws$v2,
+                                      hum1 = ws$hum1,
+                                      hum2 = ws$hum2,
+                                      lw_in = ws$rad_lw_in,
+                                      lw_out = ws$rad_lw_out,
+                                      soil_flux = ws$heatflux_soil,
+                                      # Alternative shortwave radiation:
+
+                                      # Topographic correction
+                                      slope = 10, # In degrees
+                                      exposition = 20, # North = 0, South = 180
+                                      sky_view = 0.82 # Sky view factor (0-1)
 )
 
 # Alternative longwave
-test_station <- build_weather_station(lat = 50.840503, lon = 8.6833, elev = 270,
-                                     surface_type = "field", obs_height = 0.3,
-                                     z1 = 2, z2 = 10, datetime = ws$datetime,
-                                     t1 = ws$t1, t2 = ws$t2, v1 = ws$v1, v2 = ws$v2,
-                                     hum1 = ws$hum1, hum2 = ws$hum2,
-                                     sw_in = ws$rad_sw_in,
-                                     sw_out = ws$rad_sw_out,
-                                     soil_flux = ws$heatflux_soil,
-                                     # Alternative longwave radiation:
-                                     t_surface = ws$t_surface,
-                                     # Different emissivity:
-                                     # lw_out = rad_lw_out(ws$t_surface, emissivity_surface = 0.92),
-                                     # Topographic correction
-                                     sky_view = 0.82 # Sky view factor (0-1)
+test_station <- build_weather_station(lat = 50.840503,
+                                      lon = 8.6833,
+                                      elev = 270,
+                                      surface_type = "field",
+                                      obs_height = 0.3,
+                                      z1 = 2,
+                                      z2 = 10,
+                                      datetime = ws$datetime,
+                                      t1 = ws$t1,
+                                      t2 = ws$t2,
+                                      v1 = ws$v1,
+                                      v2 = ws$v2,
+                                      hum1 = ws$hum1,
+                                      hum2 = ws$hum2,
+                                      sw_in = ws$rad_sw_in,
+                                      sw_out = ws$rad_sw_out,
+                                      soil_flux = ws$heatflux_soil,
+                                      # alternative longwave radiation:
+                                      t_surface = ws$t_surface,
+                                      # different emissivity:
+                                      # lw_out = rad_lw_out(ws$t_surface, emissivity_surface = 0.92),
+                                      # Topographic correction
+                                      sky_view = 0.82 # Sky view factor (0-1)
 )
 
 }

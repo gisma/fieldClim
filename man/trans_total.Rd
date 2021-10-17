@@ -10,7 +10,7 @@ trans_total(...)
 
 \method{trans_total}{numeric}(sol_elevation, t, elev, oz = 0.35, vis = 30, p = NULL, ...)
 
-\method{trans_total}{weather_station}(weather_station, ...)
+\method{trans_total}{weather_station}(weather_station, oz = 0.35, vis = 30, ...)
 }
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
@@ -21,9 +21,11 @@ trans_total(...)
 
 \item{elev}{Altitude above sea level in m.}
 
-\item{oz}{Atmospheric ozone as column in cm. Default is average global value.}
+\item{oz}{OPTIONAL. Columnar ozone in cm.
+Default is average global value.}
 
-\item{vis}{Meteorological visibility in km. Default is the visibility on a clear day.}
+\item{vis}{OPTIONAL. Meteorological visibility in km.
+Default is the visibility on a clear day.}
 
 \item{p}{OPTIONAL. Pressure in hPa. Estimated from elev and t if not available.}
 

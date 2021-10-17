@@ -15,7 +15,7 @@ pres_air_density(...)
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{weather_station}{Object of class weather_station}
+\item{weather_station}{Object of class weather_station.}
 
 \item{height}{"lower" or "upper"}
 

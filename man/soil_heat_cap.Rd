@@ -22,7 +22,7 @@ soil_heat_cap(...)
 \item{weather_station}{Object of class weather_station.}
 }
 \value{
-Numeric vector with volumetric heat capacity in 10^6 J/ (m³ * K)
+Numeric vector with volumetric heat capacity in 10^6 J/ (m³ * K).
 }
 \description{
 Calculates soil volumetric heat capacity (10^6 J / (m³ * K)) from soil moisture (Vol-\%) and texture.

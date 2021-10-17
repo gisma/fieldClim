@@ -27,11 +27,11 @@ sensible_bowen(...)
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{t1}{Temperature at lower height (e.g. height of anemometer) in °C.}
+\item{t1}{Temperature at lower height in °C.}
 
 \item{t2}{Temperature at upper height in °C.}
 
-\item{hum1}{Relative humidity at lower height (e.g. height of anemometer) in \%.}
+\item{hum1}{Relative humidity at lower height in \%.}
 
 \item{hum2}{Relative humidity at upper height in \%.}
 
@@ -39,18 +39,18 @@ sensible_bowen(...)
 
 \item{p2}{Air pressure at upper height in hPa.}
 
-\item{z1}{Lower height of measurement (e.g. height of anemometer) in m.}
+\item{z1}{Lower height of measurement in m.}
 
 \item{z2}{Upper height of measurement in m.}
 
-\item{rad_bal}{Radiation balance in W/m^2.}
+\item{rad_bal}{Radiation balance in W/m².}
 
-\item{soil_flux}{Soil flux in W/m^2.}
+\item{soil_flux}{Soil flux in W/m².}
 
 \item{weather_station}{Object of class weather_station}
 }
 \value{
-Sensible heat flux in W/m^2
+Sensible heat flux in W/m².
 }
 \description{
 Calculates the sensible heat flux using the Bowen Method. Negative

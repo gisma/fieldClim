@@ -21,7 +21,7 @@ turb_ustar(...)
 
 \item{z0}{Roughness length in m.}
 
-\item{weather_station}{Object of class weather_station}
+\item{weather_station}{Object of class weather_station.}
 }
 \value{
 Friction velocity in m/s.

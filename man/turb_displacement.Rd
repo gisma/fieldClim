@@ -17,7 +17,7 @@ turb_displacement(...)
 
 \item{obs_height}{Height of vegetation in m.}
 
-\item{surroundings}{choose either 'vegetation' or 'city'.}
+\item{surroundings}{Choose either 'vegetation' or 'city'.}
 
 \item{weather_station}{Object of class weather_station}
 }

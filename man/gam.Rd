@@ -2,12 +2,12 @@
 % Please edit documentation in R/utility_turbulent_flux.R
 \name{gam}
 \alias{gam}
-\title{gamma PT coefficient}
+\title{gamma Priestly-Taylor coefficient}
 \usage{
 gam(t)
 }
 \arguments{
-\item{t}{Air temperature in °C}
+\item{t}{Air temperature in °C.}
 }
 \value{
 gamma coefficient for Priestley-Taylor calculations.

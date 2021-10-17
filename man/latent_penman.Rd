@@ -34,7 +34,7 @@ See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:strptime]{base::strp
 
 \item{lon}{Longitude in decimal degrees.}
 
-\item{weather_station}{Object of class weather_station}
+\item{weather_station}{Object of class weather_station.}
 }
 \value{
 Latent heat flux in W/m².

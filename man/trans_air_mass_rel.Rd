@@ -17,7 +17,7 @@ trans_air_mass_rel(...)
 
 \item{sol_elevation}{Solar elevation in degrees.}
 
-\item{weather_station}{Object of class weather_station}
+\item{weather_station}{Object of class weather_station.}
 }
 \value{
 Relative optical air mass.

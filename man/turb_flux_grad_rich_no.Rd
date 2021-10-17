@@ -39,5 +39,6 @@ Gradient-Richardson-Number.
 \description{
 Calculation of the Gradient-Richardson-Number. The number represents the
 stability of the atmosphere. Negative values signify unstable conditions,
-positive values signify stable conditions.
+positive values signify stable conditions, whereas values around zero represent
+neutral conditions.
 }

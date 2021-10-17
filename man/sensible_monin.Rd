@@ -47,7 +47,7 @@ sensible_monin(...)
 \item{weather_station}{Object of class weather_station.}
 }
 \value{
-Sensible heat flux in W/m^2.
+Sensible heat flux in W/m².
 }
 \description{
 Calculates the sensible heat flux using the Monin-Obukhov length. Negative
