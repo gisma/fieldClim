@@ -232,11 +232,7 @@ test_station <- build_weather_station(lat = 50.840503,
                                       hum2 = ws$hum2,
                                       sw_in = ws$rad_sw_in,
                                       sw_out = ws$rad_sw_out,
-<<<<<<< HEAD
-=======
-                                      lw_in = ws$rad_lw_in,
                                       lw_out = ws$rad_lw_out,
->>>>>>> 586a4ee166d927594e01184f7d7ec673fbfdb4da
                                       soil_flux = ws$heatflux_soil,
                                       # Alternative longwave radiation
                                       t_surface = ws$t_surface,
@@ -282,7 +278,6 @@ As you can see the results are exactly the same, but using the `weather_station`
 A convenience function to calculate all the different methods for turbulent fluxes is given in `turb_flux_calc()`. This function is only available for `weather_station` objects as it returns the results straight into the given `weather_station`. The `water` package also has to be installed for this function to work.
 
 ```{r}
-<<<<<<< HEAD
 #make a test_station object
 test_station <- build_weather_station(lat = 50.840503, # latitude
                                       lon = 8.6833, # longitude
