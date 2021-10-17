@@ -33,6 +33,17 @@ latent_priestley_taylor.numeric <- function(t, rad_bal, soil_flux, surface_type 
   gam <- gam(t)
 
   QE_TP <- alpha_pt * sc * (((-1) * rad_bal - soil_flux) / sc + gam)
+
+  # values of latent priestley-taylor will be checked whether they exceed the valid data range.
+  if (max(QE_TP) > 600) {
+    warning("There are values above 600 W/m^2!")
+    QE_TP[QE_TP > 600] <- 600
+  }
+  if(QE_TP(QE_TP) < -600){
+    warning("There are values below -600 W/m^2!")
+    QE_TP[QE_TP < -600] <- -600
+  }
+
   return(QE_TP)
 }
 
@@ -110,6 +121,17 @@ latent_penman.POSIXt <- function(datetime,
 
   lv <- hum_evap_heat(t)  # specific evaporation heat
   QE_PM <- lv * (water::hourlyET(WeatherStation, hours = ut, DOY = doy) / 3600) * (-1)
+
+  # values of latent penman will be checked whether they exceed the valid data range.
+  if (max(QE_PM) > 600) {
+    warning("There are values above 600 W/m^2!")
+    QE_PM[QE_PM > 600] <- 600
+  }
+  if(QE_PM(QE_PM) < -600){
+    warning("There are values below -600 W/m^2!")
+    QE_PM[QE_PM < -600] <- -600
+  }
+
   return(QE_PM)
 }
 
@@ -178,6 +200,17 @@ latent_monin.numeric <- function(hum1, hum2, t1, t2, p1, p2, z1 = 2, z2 = 10,
     else if(grad_rich_no[i]  > 0){busi[i] <- 0.95 + (7.8 * s1[i])}
   }
   QL <- (-1) * air_density * lv * ((k*ustar)/busi) * schmidt * moist_gradient
+
+  # values of latent monin will be checked whether they exceed the valid data range.
+  if (max(QL) > 600) {
+    warning("There are values above 600 W/m^2!")
+    QL[QL > 600] <- 600
+  }
+  if(QL(QL) < -600){
+    warning("There are values below -600 W/m^2!")
+    QL[QL < -600] <- -600
+  }
+
   return(QL)
 }
 
@@ -250,14 +283,14 @@ latent_bowen.numeric <- function(t1, t2, hum1, hum2, p1, p2, z1 = 2, z2 = 10,
   out <- (-1 * rad_bal-soil_flux) / (1 + bowen_ratio)
 
   # values of latent bowen will be checked whether they exceed the valid data range.
-  # if (max(out) > 600) {
-  #   warning("There are values above 600 W/m^2!")
-  out[out > 600] <- 600
-  # }
-  # if(min(out) < -600){
-  #   warning("There are values below -600 W/m^2!")
-  out[out < -600] <- -600
-  # }
+  if (max(out) > 600) {
+    warning("There are values above 600 W/m^2!")
+    out[out > 600] <- 600
+  }
+  if(min(out) < -600){
+    warning("There are values below -600 W/m^2!")
+    out[out < -600] <- -600
+  }
   return(out)
 }
 
