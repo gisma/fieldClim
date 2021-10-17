@@ -33,16 +33,6 @@ sensible_priestley_taylor.numeric <- function(t, rad_bal, soil_flux, surface_typ
 
   QH_TP <- ((1 - alpha_pt) * sc + gam) * (-1 * rad_bal - soil_flux) / (sc + gam)
 
-  # values of sensible priestley-taylor will be checked whether they exceed the valid data range.
-  if (max(QH_TP) > 600) {
-    warning("There are values above 600 W/m^2!")
-    QH_TP[QH_TP > 600] <- 600
-  }
-  if(QH_TP(QH_TP) < -600){
-    warning("There are values below -600 W/m^2!")
-    QH_TP[QH_TP < -600] <- -600
-  }
-
   return(QH_TP)
 }
 
@@ -107,16 +97,6 @@ sensible_monin.numeric <- function(t1, t2, p1, p2, z1 = 2, z2 = 10,
     }
   }
   QH <- (-1) * air_density * cp * (k * ustar * z2 / busi) * t_gradient
-
-  # values of sensible monin will be checked whether they exceed the valid data range.
-  if (max(QH) > 600) {
-    warning("There are values above 600 W/m^2!")
-    QH[QH > 600] <- 600
-  }
-  if(QH(QH) < -600){
-    warning("There are values below -600 W/m^2!")
-    QH[QH < -600] <- -600
-  }
 
   return(QH)
 }
