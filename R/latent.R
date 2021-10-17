@@ -19,8 +19,7 @@ latent_priestley_taylor <- function (...) {
 #' @param rad_bal Radiation balance in W/m².
 #' @param soil_flux Soil flux in W/m².
 #' @param surface_type Surface type, for which a Priestley-Taylor coefficient will be selected. Default is for short grass.
-#' @param z elevation of measurement in m.
-latent_priestley_taylor.numeric <- function(t, z, rad_bal, soil_flux, surface_type = "field", ...){
+latent_priestley_taylor.numeric <- function(t, rad_bal, soil_flux, surface_type = "field", ...){
   priestley_taylor_coefficient <- priestley_taylor_coefficient
 
   if(!surface_type %in% priestley_taylor_coefficient$surface_type){

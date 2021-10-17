@@ -38,7 +38,7 @@ test_that("latent_monin", {
 })
 
 test_that("latent_priestley_taylor", {
-  expect_equal(latent_priestley_taylor(t = t1, z = z1,
+  expect_equal(latent_priestley_taylor(t = t1,
                                        rad_bal = rad_bal,
                                        soil_flux = soil_flux),
                -492.8, tolerance = 1e-1)

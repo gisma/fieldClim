@@ -8,7 +8,7 @@
 \usage{
 latent_priestley_taylor(...)
 
-\method{latent_priestley_taylor}{numeric}(t, z, rad_bal, soil_flux, surface_type = "field", ...)
+\method{latent_priestley_taylor}{numeric}(t, rad_bal, soil_flux, surface_type = "field", ...)
 
 \method{latent_priestley_taylor}{weather_station}(weather_station, ...)
 }
@@ -16,8 +16,6 @@ latent_priestley_taylor(...)
 \item{...}{Additional parameters passed to later functions.}
 
 \item{t}{Air temperature in °C.}
-
-\item{z}{elevation of measurement in m.}
 
 \item{rad_bal}{Radiation balance in W/m².}
 
