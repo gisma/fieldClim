@@ -70,7 +70,7 @@ sensible_monin <- function (...) {
 #' @param p1 Pressure at lower height in hPa.
 #' @param p2 Pressure at upper height in hPa.
 #' @param z1 Lower height of measurement in m.
-#' @param z2 Upper height of measurement in m.
+#' @param z2 Upper height of measurement in m (Use highest point of measurement as values are less disturbed).
 #' @param monin Monin-Obukhov-Length in m.
 #' @param ustar Friction velocity in m/s.
 #' @param grad_rich_no Gradient-Richardson-Number.
