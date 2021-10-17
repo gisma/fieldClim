@@ -65,88 +65,125 @@
 #' \dontrun{
 #' # Standard parameters
 #' test_station <- build_weather_station(lat = 50.840503,
-#'                                      lon = 8.6833,
-#'                                      elev = 270,
-#'                                      surface_type = "field",
-#'                                      obs_height = 0.3, # obstacle height
-#'                                      z1 = 2, # measurement heights
-#'                                      z2 = 10,
-#'                                      datetime = ws$datetime,
-#'                                      t1 = ws$t1, # temperature
-#'                                      t2 = ws$t2,
-#'                                      v1 = ws$v1, # windspeed
-#'                                      v2 = ws$v2,
-#'                                      hum1 = ws$hum1, # humidity
-#'                                      hum2 = ws$hum2,
-#'                                      sw_in = ws$rad_sw_in, # shortwave radiation
-#'                                      sw_out = ws$rad_sw_out,
-#'                                      lw_in = ws$rad_lw_in, # longwave radiation
-#'                                      lw_out = ws$rad_lw_out,
-#'                                      soil_flux = ws$heatflux_soil)
+#'                                       lon = 8.6833,
+#'                                       elev = 270,
+#'                                       surface_type = "field",
+#'                                       obs_height = 0.3, # obstacle height
+#'                                       z1 = 2, # measurement heights
+#'                                       z2 = 10,
+#'                                       datetime = ws$datetime,
+#'                                       t1 = ws$t1, # temperature
+#'                                       t2 = ws$t2,
+#'                                       v1 = ws$v1, # windspeed
+#'                                       v2 = ws$v2,
+#'                                       hum1 = ws$hum1, # humidity
+#'                                       hum2 = ws$hum2,
+#'                                       sw_in = ws$rad_sw_in, # shortwave radiation
+#'                                       sw_out = ws$rad_sw_out,
+#'                                       lw_in = ws$rad_lw_in, # longwave radiation
+#'                                       lw_out = ws$rad_lw_out,
+#'                                       soil_flux = ws$heatflux_soil)
 #' # Specify pressure
-#' test_station <- build_weather_station(lat = 50.840503, lon = 8.6833, elev = 270,
-#'                                      surface_type = "field", obs_height = 0.3,
-#'                                      z1 = 2, z2 = 10, datetime = ws$datetime,
-#'                                      t1 = ws$t1, t2 = ws$t2, v1 = ws$v1, v2 = ws$v2,
-#'                                      hum1 = ws$hum1, hum2 = ws$hum2,
-#'                                      sw_in = ws$rad_sw_in,
-#'                                      sw_out = ws$rad_sw_out,
-#'                                      lw_in = ws$rad_lw_in,
-#'                                      lw_out = ws$rad_lw_out,
-#'                                      soil_flux = ws$heatflux_soil,
-#'                                      # ADDED PRESSURE
-#'                                      p1 = ws$p1,
-#'                                      p2 = ws$p2)
+#' test_station <- build_weather_station(lat = 50.840503,
+#'                                       lon = 8.6833,
+#'                                       elev = 270,
+#'                                       surface_type = "field",
+#'                                       obs_height = 0.3,
+#'                                       z1 = 2,
+#'                                       z2 = 10,
+#'                                       datetime = ws$datetime,
+#'                                       t1 = ws$t1,
+#'                                       t2 = ws$t2,
+#'                                       v1 = ws$v1,
+#'                                       v2 = ws$v2,
+#'                                       hum1 = ws$hum1,
+#'                                       hum2 = ws$hum2,
+#'                                       sw_in = ws$rad_sw_in,
+#'                                       sw_out = ws$rad_sw_out,
+#'                                       lw_in = ws$rad_lw_in,
+#'                                       lw_out = ws$rad_lw_out,
+#'                                       soil_flux = ws$heatflux_soil,
+#'                                       # commit pressure values
+#'                                       p1 = ws$p1,
+#'                                       p2 = ws$p2)
 #'
 #' # Alternative calculation of soil flux
-#' test_station <- build_weather_station(lat = 50.840503, lon = 8.6833, elev = 270,
-#'                                      surface_type = "field", obs_height = 0.3,
-#'                                      z1 = 2, z2 = 10, datetime = ws$datetime,
-#'                                      t1 = ws$t1, t2 = ws$t2, v1 = ws$v1, v2 = ws$v2,
-#'                                      hum1 = ws$hum1, hum2 = ws$hum2,
-#'                                      sw_in = ws$rad_sw_in,
-#'                                      sw_out = ws$rad_sw_out,
-#'                                      lw_in = ws$rad_lw_in,
-#'                                      lw_out = ws$rad_lw_out,
-#'                                      # Alternative Soil flux:
-#'                                      depth1 = 0,
-#'                                      depth2 = 0.3,
-#'                                      ts1 = ws$t_surface,
-#'                                      ts2 = ws$ts1,
-#'                                      moisture = ws$water_vol_soil,
-#'                                      texture = "clay")
+#' test_station <- build_weather_station(lat = 50.840503,
+#'                                       lon = 8.6833,
+#'                                       elev = 270,
+#'                                       surface_type = "field",
+#'                                       obs_height = 0.3,
+#'                                       z1 = 2,
+#'                                       z2 = 10,
+#'                                       datetime = ws$datetime,
+#'                                       t1 = ws$t1,
+#'                                       t2 = ws$t2,
+#'                                       v1 = ws$v1,
+#'                                       v2 = ws$v2,
+#'                                       hum1 = ws$hum1,
+#'                                       hum2 = ws$hum2,
+#'                                       sw_in = ws$rad_sw_in,
+#'                                       sw_out = ws$rad_sw_out,
+#'                                       lw_in = ws$rad_lw_in,
+#'                                       lw_out = ws$rad_lw_out,
+#'                                       # alternative soil flux:
+#'                                       depth1 = 0,
+#'                                       depth2 = 0.3,
+#'                                       ts1 = ws$t_surface,
+#'                                       ts2 = ws$ts1,
+#'                                       moisture = ws$water_vol_soil,
+#'                                       texture = "clay")
 #
 #' # Alternative shortwave
-#' test_station <- build_weather_station(lat = 50.840503, lon = 8.6833, elev = 270,
-#'                                      surface_type = "field", obs_height = 0.3,
-#'                                      z1 = 2, z2 = 10, datetime = ws$datetime,
-#'                                      t1 = ws$t1, t2 = ws$t2, v1 = ws$v1, v2 = ws$v2,
-#'                                      hum1 = ws$hum1, hum2 = ws$hum2,
-#'                                      lw_in = ws$rad_lw_in,
-#'                                      lw_out = ws$rad_lw_out,
-#'                                      soil_flux = ws$heatflux_soil,
-#'                                      # Alternative shortwave radiation:
-#'                                      # Topographic correction
-#'                                      slope = 10, # In degrees
-#'                                      exposition = 20, # North = 0, South = 180
-#'                                      sky_view = 0.82 # Sky view factor (0-1)
+#' test_station <- build_weather_station(lat = 50.840503,
+#'                                       lon = 8.6833,
+#'                                       elev = 270,
+#'                                       surface_type = "field",
+#'                                       obs_height = 0.3,
+#'                                       z1 = 2,
+#'                                       z2 = 10,
+#'                                       datetime = ws$datetime,
+#'                                       t1 = ws$t1,
+#'                                       t2 = ws$t2,
+#'                                       v1 = ws$v1,
+#'                                       v2 = ws$v2,
+#'                                       hum1 = ws$hum1,
+#'                                       hum2 = ws$hum2,
+#'                                       lw_in = ws$rad_lw_in,
+#'                                       lw_out = ws$rad_lw_out,
+#'                                       soil_flux = ws$heatflux_soil,
+#'                                       # Alternative shortwave radiation:
+#'
+#'                                       # Topographic correction
+#'                                       slope = 10, # In degrees
+#'                                       exposition = 20, # North = 0, South = 180
+#'                                       sky_view = 0.82 # Sky view factor (0-1)
 #' )
 #'
 #' # Alternative longwave
-#' test_station <- build_weather_station(lat = 50.840503, lon = 8.6833, elev = 270,
-#'                                      surface_type = "field", obs_height = 0.3,
-#'                                      z1 = 2, z2 = 10, datetime = ws$datetime,
-#'                                      t1 = ws$t1, t2 = ws$t2, v1 = ws$v1, v2 = ws$v2,
-#'                                      hum1 = ws$hum1, hum2 = ws$hum2,
-#'                                      sw_in = ws$rad_sw_in,
-#'                                      sw_out = ws$rad_sw_out,
-#'                                      soil_flux = ws$heatflux_soil,
-#'                                      # Alternative longwave radiation:
-#'                                      t_surface = ws$t_surface,
-#'                                      # Different emissivity:
-#'                                      # lw_out = rad_lw_out(ws$t_surface, emissivity_surface = 0.92),
-#'                                      # Topographic correction
-#'                                      sky_view = 0.82 # Sky view factor (0-1)
+#' test_station <- build_weather_station(lat = 50.840503,
+#'                                       lon = 8.6833,
+#'                                       elev = 270,
+#'                                       surface_type = "field",
+#'                                       obs_height = 0.3,
+#'                                       z1 = 2,
+#'                                       z2 = 10,
+#'                                       datetime = ws$datetime,
+#'                                       t1 = ws$t1,
+#'                                       t2 = ws$t2,
+#'                                       v1 = ws$v1,
+#'                                       v2 = ws$v2,
+#'                                       hum1 = ws$hum1,
+#'                                       hum2 = ws$hum2,
+#'                                       sw_in = ws$rad_sw_in,
+#'                                       sw_out = ws$rad_sw_out,
+#'                                       soil_flux = ws$heatflux_soil,
+#'                                       # alternative longwave radiation:
+#'                                       t_surface = ws$t_surface,
+#'                                       # different emissivity:
+#'                                       # lw_out = rad_lw_out(ws$t_surface, emissivity_surface = 0.92),
+#'                                       # Topographic correction
+#'                                       sky_view = 0.82 # Sky view factor (0-1)
 #' )
 #'
 #' }
