@@ -3,7 +3,7 @@
 #' Calculate the roughness length of a surface on the basis of the obstacle height or the type of the surface.
 #' Possible surface types are:
 #' "field", "acre", "lawn", "street", "agriculture", "settlement", "coniferous forest", "deciduous forest", "mixed forest", "city"
-#' You need to specify only one, "type" OR "obs_height".
+#' You need to specify only one, "surface_type" OR "obs_height".
 #'
 #' @rdname turb_roughness_length
 #' @param ... Additional parameters passed to later functions.
@@ -16,7 +16,7 @@ turb_roughness_length <- function (...) {
 
 #' @rdname turb_roughness_length
 #' @method turb_roughness_length default
-#' @param surface_type Type of surface
+#' @param surface_type Type of surface.
 #' @param obs_height Height of obstacle in m.
 #' @export
 turb_roughness_length.default <- function(surface_type = NULL, obs_height = NULL, ...){
@@ -34,7 +34,7 @@ turb_roughness_length.default <- function(surface_type = NULL, obs_height = NULL
 
 #' @rdname turb_roughness_length
 #' @method turb_roughness_length weather_station
-#' @param weather_station Object of class weather_station
+#' @param weather_station Object of class weather_station.
 #' @export
 turb_roughness_length.weather_station <- function(weather_station, ...){
   check_availability(weather_station, "obs_height", "surface_type")
@@ -64,7 +64,7 @@ turb_displacement <- function (...) {
 #' @rdname turb_displacement
 #' @method turb_displacement numeric
 #' @param obs_height Height of vegetation in m.
-#' @param surroundings choose either 'vegetation' or 'city'.
+#' @param surroundings Choose either 'vegetation' or 'city'.
 #' @export
 turb_displacement.numeric <- function(obs_height, surroundings = "vegetation", ...){
   if(surroundings == "vegetation"){
@@ -120,7 +120,7 @@ turb_ustar.numeric <- function(v, z, z0, ...){
 
 #' @rdname turb_ustar
 #' @method turb_ustar weather_station
-#' @param weather_station Object of class weather_station
+#' @param weather_station Object of class weather_station.
 #' @export
 turb_ustar.weather_station <- function(weather_station, ...){
   check_availability(weather_station, "v1", "z1")

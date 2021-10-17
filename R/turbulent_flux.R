@@ -70,7 +70,8 @@ turb_flux_monin.weather_station <- function(weather_station, ...){
 #'
 #' Calculation of the Gradient-Richardson-Number. The number represents the
 #' stability of the atmosphere. Negative values signify unstable conditions,
-#' positive values signify stable conditions.
+#' positive values signify stable conditions, whereas values around zero represent
+#' neutral conditions.
 #'
 #' @rdname turb_flux_grad_rich_no
 #' @param ... Additional parameters passed to later functions.

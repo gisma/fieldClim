@@ -14,13 +14,13 @@ sc <- function(t){
 }
 
 
-#' gamma PT coefficient
+#' gamma Priestly-Taylor coefficient
 #'
 #' Calculates gamma for latent and sensible Priestley-Taylor-Method.
 #' gamma is the temperature-sensitive psychrometer constant.
 #' This function is a polynomial fit for the table 6 in Foken (2013), p.48.
 #'
-#' @param t Air temperature in °C
+#' @param t Air temperature in °C.
 #'
 #' @return gamma coefficient for Priestley-Taylor calculations.
 gam <- function(t){
