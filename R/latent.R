@@ -19,8 +19,7 @@ latent_priestley_taylor <- function (...) {
 #' @param rad_bal Radiation balance in W/m².
 #' @param soil_flux Soil flux in W/m².
 #' @param surface_type Surface type, for which a Priestley-Taylor coefficient will be selected. Default is for short grass.
-#' @param z elevation of measurement in m.
-latent_priestley_taylor.numeric <- function(t, z, rad_bal, soil_flux, surface_type = "field", ...){
+latent_priestley_taylor.numeric <- function(t, rad_bal, soil_flux, surface_type = "field", ...){
   priestley_taylor_coefficient <- priestley_taylor_coefficient
 
   if(!surface_type %in% priestley_taylor_coefficient$surface_type){
@@ -34,6 +33,7 @@ latent_priestley_taylor.numeric <- function(t, z, rad_bal, soil_flux, surface_ty
   gam <- gam(t)
 
   QE_TP <- alpha_pt * sc * (((-1) * rad_bal - soil_flux) / sc + gam)
+
   return(QE_TP)
 }
 
@@ -78,8 +78,14 @@ latent_penman <- function (...) {
 #' @param lat Latitude in decimal degrees.
 #' @param lon Longitude in decimal degrees.
 latent_penman.POSIXt <- function(datetime,
-                       v, t, hum, z = 2, rad_bal,
-                       elev, lat, lon, ...){
+                                 v,
+                                 t,
+                                 hum,
+                                 z = 2,
+                                 rad_bal,
+                                 elev,
+                                 lat,
+                                 lon, ...){
   if(!inherits(datetime, "POSIXt")){
     stop("datetime has to be of class POSIXt.")
   }
@@ -105,6 +111,7 @@ latent_penman.POSIXt <- function(datetime,
 
   lv <- hum_evap_heat(t)  # specific evaporation heat
   QE_PM <- lv * (water::hourlyET(WeatherStation, hours = ut, DOY = doy) / 3600) * (-1)
+
   return(QE_PM)
 }
 
@@ -125,8 +132,7 @@ latent_penman.weather_station <- function(weather_station, ...){
   elev <- weather_station$location_properties$elevation
   lat <- weather_station$location_properties$latitude
   lon <- weather_station$location_properties$longitude
-  return(latent_penman(datetime,
-                       v, t, hum, z, rad_bal,
+  return(latent_penman(datetime, v, t, hum, z, rad_bal,
                        elev, lat, lon))
 }
 
@@ -174,6 +180,7 @@ latent_monin.numeric <- function(hum1, hum2, t1, t2, p1, p2, z1 = 2, z2 = 10,
     else if(grad_rich_no[i]  > 0){busi[i] <- 0.95 + (7.8 * s1[i])}
   }
   QL <- (-1) * air_density * lv * ((k*ustar)/busi) * schmidt * moist_gradient
+
   return(QL)
 }
 
@@ -246,11 +253,11 @@ latent_bowen.numeric <- function(t1, t2, hum1, hum2, p1, p2, z1 = 2, z2 = 10,
   out <- (-1 * rad_bal-soil_flux) / (1 + bowen_ratio)
 
   # values of latent bowen will be checked whether they exceed the valid data range.
-  if (out > 600) {
+  if (max(out) > 600) {
     warning("There are values above 600 W/m^2!")
     out[out > 600] <- 600
   }
-  if(out < -600){
+  if(min(out) < -600){
     warning("There are values below -600 W/m^2!")
     out[out < -600] <- -600
   }
