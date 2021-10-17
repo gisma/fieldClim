@@ -236,8 +236,6 @@ test_station <- build_weather_station(lat = 50.840503,
                                       soil_flux = ws$heatflux_soil,
                                       # alternative longwave radiation:
                                       t_surface = ws$t_surface,
-                                      # different emissivity:
-                                      # lw_out = rad_lw_out(ws$t_surface, emissivity_surface = 0.92),
                                       # Topographic correction
                                       sky_view = 0.82 # Sky view factor (0-1)
 )

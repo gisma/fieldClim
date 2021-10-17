@@ -75,10 +75,9 @@ rad_lw_in.numeric <- function(hum, t, ...){
 rad_lw_in.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "t2", "hum2")
   hum <- weather_station$measurements$hum2
-  t <- weather_station$measurements$t2
-  emissivity_air <- rad_emissivity_air(weather_station, "upper")
+  t   <- weather_station$measurements$t2
 
-  return(rad_lw_in(emissivity_air = NULL, hum, t))
+  return(rad_lw_in(hum, t))
 }
 
 

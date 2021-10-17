@@ -180,8 +180,6 @@
 #'                                       soil_flux = ws$heatflux_soil,
 #'                                       # alternative longwave radiation:
 #'                                       t_surface = ws$t_surface,
-#'                                       # different emissivity:
-#'                                       # lw_out = rad_lw_out(ws$t_surface, emissivity_surface = 0.92),
 #'                                       # Topographic correction
 #'                                       sky_view = 0.82 # Sky view factor (0-1)
 #' )
@@ -305,8 +303,6 @@ build_weather_station <-  function(lat,
     }
 
     out_list$measurements$sw_out <- rad_sw_out(out_list)
-    #out_list$measurements$sw_out <- rad_sw_out(ws$measurements$sw_in, ws$location_properties$surface_type)
-
   }
 
   if(sw_in_status
@@ -320,7 +316,8 @@ build_weather_station <-  function(lat,
   # ---- Longwave ----
   lw_in_status <- is.null(lw_in)
   if(lw_in_status){
-    out_list$measurements$lw_in <- rad_lw_in(out_list$measurements$hum1, outlist$measurements$t1)
+    out_list$measurements$lw_in <- rad_lw_in(out_list$measurements$hum2, outlist$measurements$t2)
+    out_list$measurements$lw_in <- rad_lw_in(out_list)
   }
 
   if(is.null(lw_out)){
@@ -360,12 +357,13 @@ build_weather_station <-  function(lat,
       stop("If soil_flux is NULL, 'texture', 'depth1', 'depth2', 'ts1', 'ts2' and 'moisture'",
            "need to be passed to build weather_station.")
     }
-    out_list$measurements$soil_flux <- soil_heat_flux(ts1,
-                                                      ts2,
-                                                      depth1,
-                                                      depth2,
-                                                      soil_thermal_cond(moisture, texture))
+    # out_list$measurements$soil_flux <- soil_heat_flux(ts1,
+    #                                                   ts2,
+    #                                                   depth1,
+    #                                                   depth2,
+    #                                                   soil_thermal_cond(moisture, texture))
 
+    out_list$measurements$soil_flux <- soil_heat_flux(out_list)
   }
 
   # ---- Stability ----

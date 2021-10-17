@@ -200,6 +200,7 @@ test_station <- build_weather_station(lat = 50.840503,
                                       lw_out = ws$rad_lw_out,
                                       soil_flux = ws$heatflux_soil,
                                       # Alternative shortwave radiation
+                                      albedo = ws$albedo,
                                       # Topographic correction
                                       slope = 10, # In degrees
                                       exposition = 20, # North = 0, South = 180
@@ -215,31 +216,29 @@ If `lw_in` is not provided, it will get estimated using the air temperature and 
 If `lw_out` is not provided, the surface temperature needs to be set as `t_surface` (see `?rad_lw_out`). The surface temperature and emissivity get combined to estimate the longwave emissions. The default emissivity used in `build_weather_station()` is the one for short grass (0.95). If a different emissivity is needed, `rad_lw_out()` can be used directly.
 
 ```{r}
-# test_station <- build_weather_station(lat = 50.840503,
-#                                       lon = 8.6833,
-#                                       elev = 270,
-#                                       surface_type = "field",
-#                                       obs_height = 0.3,
-#                                       z1 = 2,
-#                                       z2 = 10,
-#                                       datetime = ws$datetime,
-#                                       t1 = ws$t1,
-#                                       t2 = ws$t2,
-#                                       v1 = ws$v1,
-#                                       v2 = ws$v2,
-#                                       hum1 = ws$hum1,
-#                                       hum2 = ws$hum2,
-#                                       sw_in = ws$rad_sw_in,
-#                                       sw_out = ws$rad_sw_out,
-#                                       lw_in = ws$rad_lw_in,
-#                                       soil_flux = ws$heatflux_soil,
-#                                       # Alternative longwave radiation:
-#                                       t_surface = ws$t_surface,
-#                                       # Different emissivity:
-#                                       # lw_out = rad_lw_out(ws$t_surface, emissivity_surface = 0.92),
-#                                       # Topographic correction
-#                                       sky_view = 0.82 # Sky view factor (0-1)
-#                                       )
+test_station <- build_weather_station(lat = 50.840503,
+                                      lon = 8.6833,
+                                      elev = 270,
+                                      surface_type = "field",
+                                      obs_height = 0.3,
+                                      z1 = 2,
+                                      z2 = 10,
+                                      datetime = ws$datetime,
+                                      t1 = ws$t1,
+                                      t2 = ws$t2,
+                                      v1 = ws$v1,
+                                      v2 = ws$v2,
+                                      hum1 = ws$hum1,
+                                      hum2 = ws$hum2,
+                                      sw_in = ws$rad_sw_in,
+                                      sw_out = ws$rad_sw_out,
+                                      lw_in = ws$rad_lw_in,
+                                      soil_flux = ws$heatflux_soil,
+                                      # Alternative longwave radiation
+                                      t_surface = ws$t_surface,
+                                      # Topographic correction
+                                      sky_view = 0.82 # Sky view factor (0-1)
+                                      )
 ```
 
 ## Calculations using the provided functions
@@ -249,16 +248,16 @@ Most functions can be called in two different ways. Either by passing all the ne
 First let's calculate it by passing the needed parameters ourselves:
 
 ```{r}
-# grad_rich_manual <- turb_flux_grad_rich_no(t1 = ws$t1, 
-#                                            t2 = ws$t2, 
-#                                            z1 = 2, 
-#                                            z2 = 10, 
-#                                            v1 = ws$v1, 
-#                                            v2 = ws$v2, 
-#                                            p1 = pres_p(270+2, ws$t1), 
-#                                            p2 = pres_p(270+10, ws$t2))
-# 
-# head(grad_rich_manual)
+grad_rich_manual <- turb_flux_grad_rich_no(t1 = ws$t1,
+                                           t2 = ws$t2,
+                                           z1 = 2,
+                                           z2 = 10,
+                                           v1 = ws$v1,
+                                           v2 = ws$v2,
+                                           p1 = pres_p(270+2, ws$t1),
+                                           p2 = pres_p(270+10, ws$t2))
+
+head(grad_rich_manual)
 ```
 
 As you can see it is quite the effort to get all the appropriate parameters. You even have to calculate some additional ones (like `p1`, `p2` in this example) beforehand if they are not available.
@@ -266,9 +265,9 @@ As you can see it is quite the effort to get all the appropriate parameters. You
 So instead it is a lot more comfortable to use a `weather_station` object. Here we use the object we have defined earlier:
 
 ```{r}
-# grad_rich_quick <- turb_flux_grad_rich_no(test_station)
-# 
-# head(grad_rich_quick)
+grad_rich_quick <- turb_flux_grad_rich_no(test_station)
+
+head(grad_rich_quick)
 ```
 
 As you can see the results are exactly the same, but using the `weather_station` object is much more convenient.
@@ -279,10 +278,10 @@ As you can see the results are exactly the same, but using the `weather_station`
 A convenience function to calculate all the different methods for turbulent fluxes is given in `turb_flux_calc()`. This function is only available for `weather_station` objects as it returns the results straight into the given `weather_station`. The `water` package also has to be installed for this function to work.
 
 ```{r}
-# library(water)
-# station_turbulent <- turb_flux_calc(test_station)
-# 
-# names(station_turbulent$measurements)
+library(water)
+station_turbulent <- turb_flux_calc(test_station)
+
+names(station_turbulent$measurements)
 ```
 
 You can see that now there are all results from the different methods to calculate the turbulent fluxes available in the measurement list of the weather_station object. 
