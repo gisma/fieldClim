@@ -14,7 +14,7 @@
 #' By setting slope, sky_view and exposition, sw_in will be topographically corrected
 #' (see [fieldClim::rad_sw_in_topo]).
 #'
-#' If sw_out is NULL, sw_in and surface_type need to be set or albedo (see [fieldClim::rad_sw_out]).
+#' If sw_out is NULL, sw_in and albedo or sw_in and surface_type need to be set (see [fieldClim::rad_sw_out]).
 #'
 #' If lw_in is NULL, it will be estimated using the air temperature and relative humidity
 #' (see [fieldClim::rad_lw_in]).
@@ -27,27 +27,27 @@
 #' (see [fieldClim::soil_heat_flux] and [fieldClim::soil_thermal_cond]).
 #'
 #' If additional parameters are desired, they can be commited:
-#' - location properties: "slope", "sky_view", "exposition", "texture" and "albedo"
+#' - location properties: "slope", "sky_view", "exposition", "texture" and "albedo".
 #' - depth of ground measurements: "depth1" and "depth2" in m.
 #' - additional measurements: "ts1", "ts2" and "t_surface" in °C and "moisture".
 #'
-#' @param lat Latitude of location. Preset: 50.840503 (climate station Caldern).
-#' @param lon Longitude of location. Preset: 8.683300 (climate station Caldern).
-#' @param elev Elevation of location above sea level in m. Preset: 270 m (climate station Caldern).
+#' @param lat Latitude of location. Preset: 50.840503 (climate station Caldern, Germany).
+#' @param lon Longitude of location. Preset: 8.683300 (climate station Caldern, Germany).
+#' @param elev Elevation of location above sea level in m. Preset: 270 m (climate station Caldern, Germany).
 #' @param surface_type Surface Type. Form: Character string. One of: "field", "acre", "lawn", "street", "agriculture", "settlement", "coniferous forest", "deciduous forest", "mixed forest", "city", Preset: "field".
 #' @param obs_height Height of vegetation in m. Preset: 0.3.
-#' @param z1 Lower measurement height in m. Preset: 2m.
-#' @param z2 Upper measurement height in m. Preset: 2m.
+#' @param z1 Lower measurement height in m. Preset:  2m.
+#' @param z2 Upper measurement height in m. Preset: 10m.
 #' @param datetime Name of datetime-coloumn in data.
 #' Form: POSIX-Object (See [base::as.POSIXlt] and [base::strptime] for conversion.)
-#' @param t1 Vector containing lower temperature data in °C.
-#' @param t2 Vector containing upper temperature data in °C.
-#' @param v1 Vector containing lower wind speed data in m/s.
-#' @param v2 Vector containing upper wind speed data in m/s.
-#' @param hum1 Vector containing lower humidity data in %.
-#' @param hum2 Vector containing upper humidity data in %.
-#' @param p1 Vector containing lower pressure data in hPa.
-#' @param p2 Vector containing upper pressure data in hPa.
+#' @param t1 Vector containing temperature data in °C of the lower point of measurement.
+#' @param t2 Vector containing temperature data in °C of the upper point of measurement.
+#' @param v1 Vector containing wind speed data in m/s of the lower point of measurement.
+#' @param v2 Vector containing wind speed data in m/s of the upper point of measurement.
+#' @param hum1 Vector containing humidity data in % of the lower point of measurement.
+#' @param hum2 Vector containing humidity data in % of the upper point of measurement.
+#' @param p1 Vector containing pressure data in hPa of the lower point of measurement.
+#' @param p2 Vector containing pressure data in hPa of the upper point of measurement.
 #' @param sw_in Vector containing incoming shortwave radiation in W/m².
 #' @param sw_out Vector containing outgoing shortwave radiation in W/m².
 #' @param lw_in Vector containing incoming longwave radiation in W/m².

@@ -37,7 +37,7 @@ sensible_priestley_taylor.numeric <- function(t, rad_bal, soil_flux, surface_typ
 
 #' @rdname sensible_priestley_taylor
 #' @method sensible_priestley_taylor weather_station
-#' @param weather_station Object of class weather_station
+#' @param weather_station Object of class weather_station.
 #' @export
 sensible_priestley_taylor.weather_station <- function(weather_station, ...){
   check_availability(weather_station, "t1", "rad_bal", "soil_flux")
@@ -48,8 +48,6 @@ sensible_priestley_taylor.weather_station <- function(weather_station, ...){
 }
 
 
-
-
 #' Sensible Heat using Monin-Obukhov length
 #'
 #' Calculates the sensible heat flux using the Monin-Obukhov length. Negative
@@ -57,7 +55,7 @@ sensible_priestley_taylor.weather_station <- function(weather_station, ...){
 #' towards the surface.
 #'
 #' @param ... Additional parameters passed to later functions.
-#' @return Sensible heat flux in W/m^2.
+#' @return Sensible heat flux in W/m².
 #' @export
 sensible_monin <- function (...) {
   UseMethod("sensible_monin")
@@ -129,7 +127,7 @@ sensible_monin.weather_station <- function(weather_station, ...){
 #' towards the surface.
 #'
 #' @param ... Additional parameters passed to later functions.
-#' @return Sensible heat flux in W/m^2
+#' @return Sensible heat flux in W/m².
 #' @export
 #'
 sensible_bowen <- function (...) {
@@ -139,16 +137,16 @@ sensible_bowen <- function (...) {
 #' @rdname sensible_bowen
 #' @method sensible_bowen numeric
 #' @export
-#' @param t1 Temperature at lower height (e.g. height of anemometer) in °C.
+#' @param t1 Temperature at lower height in °C.
 #' @param t2 Temperature at upper height in °C.
-#' @param hum1 Relative humidity at lower height (e.g. height of anemometer) in %.
+#' @param hum1 Relative humidity at lower height in %.
 #' @param hum2 Relative humidity at upper height in %.
 #' @param p1 Air pressure at lower height in hPa.
 #' @param p2 Air pressure at upper height in hPa.
-#' @param z1 Lower height of measurement (e.g. height of anemometer) in m.
+#' @param z1 Lower height of measurement in m.
 #' @param z2 Upper height of measurement in m.
-#' @param rad_bal Radiation balance in W/m^2.
-#' @param soil_flux Soil flux in W/m^2.
+#' @param rad_bal Radiation balance in W/m².
+#' @param soil_flux Soil flux in W/m².
 sensible_bowen.numeric <- function(t1, t2, hum1, hum2, p1, p2, z1 = 2, z2 = 10,
                            rad_bal, soil_flux, ...){
 
@@ -188,10 +186,3 @@ sensible_bowen.weather_station <- function(weather_station, ...){
   return(sensible_bowen(t1, t2, hum1, hum2, p1, p2, z1, z2,
                       rad_bal, soil_flux))
 }
-
-
-
-
-
-
-

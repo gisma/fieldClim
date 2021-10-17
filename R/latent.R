@@ -110,7 +110,7 @@ latent_penman.POSIXt <- function(datetime,
 
 #' @rdname latent_penman
 #' @method latent_penman weather_station
-#' @param weather_station Object of class weather_station
+#' @param weather_station Object of class weather_station.
 #' @export
 latent_penman.weather_station <- function(weather_station, ...){
   check_availability(weather_station, "datetime",
@@ -179,7 +179,7 @@ latent_monin.numeric <- function(hum1, hum2, t1, t2, p1, p2, z1 = 2, z2 = 10,
 
 #' @rdname latent_monin
 #' @method latent_monin weather_station
-#' @param weather_station Object of class weather_station
+#' @param weather_station Object of class weather_station.
 #' @export
 latent_monin.weather_station <- function(weather_station, ...){
   check_availability(weather_station, "z1", "z2", "t1", "t2", "p1", "p2", "hum1", "hum2")
@@ -218,13 +218,13 @@ latent_bowen <- function (...) {
 #' @rdname latent_bowen
 #' @method latent_bowen numeric
 #' @export
-#' @param t1 Temperature at lower height (e.g. height of anemometer) in °C.
+#' @param t1 Temperature at lower height in °C.
 #' @param t2 Temperature at upper height in °C.
-#' @param hum1 Relative humidity at lower height (e.g. height of anemometer) in %.
+#' @param hum1 Relative humidity at lower height in %.
 #' @param hum2 Relative humidity at upper height in %.
 #' @param p1 Air pressure at lower height in hPa.
 #' @param p2 Air pressure at upper height in hPa.
-#' @param z1 Lower height of measurement (e.g. height of anemometer) in m.
+#' @param z1 Lower height of measuremen in m.
 #' @param z2 Upper height of measurement in m.
 #' @param rad_bal Radiation balance in W/m².
 #' @param soil_flux Soil flux in W/m².
@@ -259,7 +259,7 @@ latent_bowen.numeric <- function(t1, t2, hum1, hum2, p1, p2, z1 = 2, z2 = 10,
 
 #' @rdname latent_bowen
 #' @method latent_bowen weather_station
-#' @param weather_station Object of class weather_station
+#' @param weather_station Object of class weather_station.
 #' @export
 latent_bowen.weather_station <- function(weather_station, ...){
   check_availability(weather_station, "z1", "z2", "t1", "t2", "p1", "p2",

@@ -24,7 +24,7 @@ temp_pot_temp.numeric <- function(t, p, ...){
 
 #' @rdname temp_pot_temp
 #' @method temp_pot_temp weather_station
-#' @param weather_station Object of class weather_station
+#' @param weather_station Object of class weather_station.
 #' @param height Height of measurement, either "upper" or "lower".
 temp_pot_temp.weather_station <- function(weather_station, height = "lower", ...){
   if(height=="lower"){

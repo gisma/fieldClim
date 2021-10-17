@@ -13,7 +13,7 @@ pres_p <- function (...) {
 
 #' @rdname pres_p
 #' @method pres_p weather_station
-#' @param weather_station Object of class weather_station
+#' @param weather_station Object of class weather_station.
 #' @param height 'lower' or 'upper'
 #' @export
 #'
@@ -61,7 +61,7 @@ pres_air_density <- function (...) {
 
 #' @rdname pres_air_density
 #' @method pres_air_density weather_station
-#' @param weather_station Object of class weather_station
+#' @param weather_station Object of class weather_station.
 #' @param height "lower" or "upper"
 #' @export
 #'

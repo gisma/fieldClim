@@ -270,7 +270,7 @@ hum_moisture_gradient.numeric <- function(hum1, hum2, t1, t2, p1, p2, z1 = 2, z2
 
 #' @rdname hum_moisture_gradient
 #' @method hum_moisture_gradient weather_station
-#' @param weather_station Object of class weather_station
+#' @param weather_station Object of class weather_station.
 #' @export
 hum_moisture_gradient.weather_station <- function(weather_station, ...){
   check_availability(weather_station, "z1", "z2", "t1", "t2", "p1", "p2", "hum1", "hum2")

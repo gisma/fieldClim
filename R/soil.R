@@ -63,7 +63,7 @@ soil_thermal_cond.weather_station <- function(weather_station, ...) {
 #'
 #' @rdname soil_heat_cap
 #' @param ... Additional parameters passed to later functions.
-#' @return Numeric vector with volumetric heat capacity in 10^6 J/ (m³ * K)
+#' @return Numeric vector with volumetric heat capacity in 10^6 J/ (m³ * K).
 #' @export
 #'
 soil_heat_cap <- function (...) {
@@ -122,7 +122,7 @@ soil_heat_cap.weather_station <- function(weather_station, ...) {
 #'
 #' @rdname soil_heat_flux
 #' @param ... Additional parameters passed to later functions.
-#' @return Soil heat flux in W * m^-2.
+#' @return Soil heat flux in W * m^(-2).
 #' @export
 #'
 soil_heat_flux <- function (...) {

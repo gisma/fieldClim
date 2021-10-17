@@ -332,7 +332,7 @@ rad_sw_in_topo <- function (...) {
 #' @param sol_elevation Sun elevation in degrees.
 #' @param sol_azimuth Sun azimuth in degrees.
 #' @param exposition Exposition (North = 0, South = 180).
-#' @param rad_sw_in Shortwave radiation on the ground onto a horizontal area in W/m^2.
+#' @param rad_sw_in Shortwave radiation on the ground onto a horizontal area in W/m².
 #' @param albedo Albedo of surface.
 #' @param trans_total Total transmittance of the atmosphere (0-1).
 #' Default is average atmospheric transmittance.

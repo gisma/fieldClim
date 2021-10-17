@@ -7,7 +7,7 @@ knitr::opts_chunk$set(
 
 ## -----------------------------------------------------------------------------
 library(fieldClim)
-ws <- get(data(weather_station_example_data, package="fieldClim"))
+ws <- get(data(weather_station_example_data, package = "fieldClim"))
 
 colnames(ws)
 

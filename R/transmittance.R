@@ -23,7 +23,7 @@ trans_air_mass_rel.numeric <- function(sol_elevation, ...) {
 
 #' @rdname trans_air_mass_rel
 #' @method trans_air_mass_rel weather_station
-#' @param weather_station Object of class weather_station
+#' @param weather_station Object of class weather_station.
 #' @export
 #'
 trans_air_mass_rel.weather_station <- function(weather_station, ...){
@@ -47,7 +47,7 @@ trans_air_mass_abs <- function (...) {
 
 #' @rdname trans_air_mass_abs
 #' @method trans_air_mass_abs numeric
-#' @param air_mass_rel Relative optical air mass
+#' @param air_mass_rel Relative optical air mass.
 #' @param p Air pressure in hPa.
 #' @export
 #'
@@ -59,7 +59,7 @@ trans_air_mass_abs.numeric <- function(air_mass_rel, p, ...){
 
 #' @rdname trans_air_mass_abs
 #' @method trans_air_mass_abs weather_station
-#' @param weather_station Object of class weather_station
+#' @param weather_station Object of class weather_station.
 #' @export
 #'
 trans_air_mass_abs.weather_station <- function(weather_station, ...){
@@ -98,7 +98,7 @@ trans_rayleigh.numeric <- function(air_mass_abs, ...){
 
 #' @rdname trans_rayleigh
 #' @method trans_rayleigh weather_station
-#' @param weather_station Object of class weather_station
+#' @param weather_station Object of class weather_station.
 #' @export
 #'
 trans_rayleigh.weather_station <- function(weather_station, ...){
@@ -134,7 +134,7 @@ trans_ozone.numeric <- function(air_mass_rel, oz = 0.35, ...) {
 
 #' @rdname trans_ozone
 #' @method trans_ozone weather_station
-#' @param weather_station Object of class weather_station
+#' @param weather_station Object of class weather_station.
 #' @export
 #'
 trans_ozone.weather_station <- function(weather_station, ...){

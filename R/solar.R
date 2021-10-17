@@ -132,7 +132,6 @@ sol_angles.weather_station <- function(weather_station, ...) {
 }
 
 
-
 #' Solar elevation angle
 #'
 #' Calculates solar elevation angle for the given date and time.
