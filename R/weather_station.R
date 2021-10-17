@@ -295,7 +295,7 @@ build_weather_station <-  function(lat,
   # ---- Shortwave ----
   sw_in_status <- is.null(sw_in)
   if(sw_in_status){
-    out_list$measurements$sw_in <- rad_sw_in(out_list) # You could specify transmittance here
+    out_list$measurements$sw_in <- rad_sw_in(out_list)
   }
 
   if(is.null(sw_out)){
@@ -304,8 +304,8 @@ build_weather_station <-  function(lat,
       stop("If sw_out is NULL, 'sw_in' needs to be passed or calculated to build_weather_station.")
     }
 
-    #out_list$measurements$sw_out <- rad_sw_out(out_list) # You could specify transmittance here
-    out_list$measurements$sw_out <- rad_sw_out(ws$measurements$sw_in, ws$location_properties$surface_type)
+    out_list$measurements$sw_out <- rad_sw_out(out_list)
+    #out_list$measurements$sw_out <- rad_sw_out(ws$measurements$sw_in, ws$location_properties$surface_type)
 
   }
 
@@ -360,13 +360,6 @@ build_weather_station <-  function(lat,
       stop("If soil_flux is NULL, 'texture', 'depth1', 'depth2', 'ts1', 'ts2' and 'moisture'",
            "need to be passed to build weather_station.")
     }
-        # ts1, ts2, depth1, depth2, thermal_cond
-    #out_list$measurements$soil_flux <- soil_heat_flux(out_list)
-    # out_list$measurements$soil_flux <- soil_heat_flux(out_list$add_measurements$ts1,
-    #                                                   out_list$add_measurements$ts2,
-    #                                                   out_list$add_heights$depth1,
-    #                                                   out_list$add_heights$depth2,
-    #                                                   soil_thermal_cond(out_list$add_measurements$moisture))
     out_list$measurements$soil_flux <- soil_heat_flux(ts1,
                                                       ts2,
                                                       depth1,

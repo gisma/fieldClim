@@ -11,14 +11,23 @@ day$t_surface <- (day$LUpCo/5.67e-8)^(1/4)-273.15
 
 # select necessary columns
 
-sel_columns <- c("datetime", "Ta_2m", "Huma_2m", "Ta_10m", "Huma_10m",
-                 "rad_sw_in", "rad_sw_out", "rad_lw_in", "rad_lw_out",
-                 "RsNet", "RlNet", "Albedo", "rad_net",
+sel_columns <- c("datetime",
+                 "Ta_2m", "Huma_2m",
+                 "Ta_10m", "Huma_10m",
+                 "rad_sw_in", "rad_sw_out",
+                 "rad_lw_in", "rad_lw_out",
+                 "RsNet", "RlNet",
+                 "Albedo", "rad_net",
                  "water_vol_soil", "Ts", "heatflux_soil",
                  "Windspeed_2m", "Windspeed_10m", "t_surface")
-new_names <-  c("datetime", "t1", "hum1", "t2", "hum2",
-                "rad_sw_in", "rad_sw_out", "rad_lw_in", "rad_lw_out",
-                "rad_sw_bal", "rad_lw_bal", "albedo", "rad_bal",
+
+new_names <-  c("datetime",
+                "t1", "hum1",
+                "t2", "hum2",
+                "rad_sw_in", "rad_sw_out",
+                "rad_lw_in", "rad_lw_out",
+                "rad_sw_bal", "rad_lw_bal",
+                "albedo", "rad_bal",
                 "water_vol_soil", "ts1", "heatflux_soil",
                 "v1", "v2", "t_surface")
 

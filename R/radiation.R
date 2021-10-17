@@ -208,10 +208,11 @@ rad_sw_in.numeric <- function(rad_sw_toa, trans_total, ...){
 #' @param vis OPTIONAL. Needed if trans_total = NULL. Meteorological visibility in km.
 #' Default is the visibility on a clear day.
 rad_sw_in.weather_station <- function(weather_station,
-                                      trans_total = NULL, oz = 0.35, vis = 30, ...) {
+                                      trans_total = NULL,
+                                      oz = 0.35, vis = 30, ...) {
   rad_sw_toa <- rad_sw_toa(weather_station)
   if(is.null(trans_total)){
-    trans_total <- trans_total(weather_station)
+    trans_total <- trans_total(weather_station, oz = oz, vis = vis)
   }
   return(rad_sw_in(rad_sw_toa, trans_total))
 }
@@ -252,26 +253,22 @@ rad_sw_out.numeric <- function(rad_sw_in, surface_type = "field", albedo = NULL,
 #' @export
 #' @param weather_station Object of class weather_station.
 #' @param surface_type type of surface for which an albedo will be selected.
-#' @param albedo if albedo measurements are performed, values in decimal can be inserted here
+#' @param albedo if albedo measurements are performed, values in decimal can be inserted here.
 rad_sw_out.weather_station <- function(weather_station, surface_type = "field", ...) {
   check_availability(weather_station, "sw_in")
   sw_in <- weather_station$measurements$sw_in
 
-  attach(weather_station)
+  if(!(is.null(weather_station$albedo))){
 
-  if(exists("albedo") == TRUE){
-
-    albedo <- weather_station$add_location$albedo
+    albedo <- weather_station$albedo
 
     if (albedo > 1 | albedo < 0){
-        warning("Albedo values a are out of the valid range (0-1). \nPlease check again.")
-      }
+      warning("Albedo values a are out of the valid range (0-1). \nPlease check again.")
+    }
   } else {
     surface_properties <- surface_properties
     albedo <- surface_properties[which(surface_properties$surface_type == surface_type),]$albedo
   }
-
-  detach(weather_station)
 
   return(rad_sw_out(sw_in, albedo = albedo))
 }

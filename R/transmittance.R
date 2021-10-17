@@ -295,13 +295,17 @@ trans_total.numeric <- function(sol_elevation, t, elev, oz = 0.35, vis = 30,
 #' @rdname trans_total
 #' @method trans_total weather_station
 #' @param weather_station Object of class weather_station.
+#' @param oz OPTIONAL. Columnar ozone in cm.
+#' Default is average global value.
+#' @param vis OPTIONAL. Meteorological visibility in km.
+#' Default is the visibility on a clear day.
 #' @export
 #'
-trans_total.weather_station <- function(weather_station, ...){
+trans_total.weather_station <- function(weather_station, oz = 0.35, vis = 30, ...){
   sol_elevation <- sol_elevation(weather_station)
   check_availability(weather_station, "t2", "z2", "elevation", "p2")
   t <- weather_station$measurements$t2
   elev <- weather_station$location_properties$elevation + weather_station$properties$z2
   p2 <- weather_station$measurements$p2
-  return(trans_total(sol_elevation, t, elev, p = p2, ...))
+  return(trans_total(sol_elevation, t, elev, oz = oz, vis = vis, p = p2, ...))
 }
