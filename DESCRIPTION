@@ -20,8 +20,8 @@ Authors@R:
            email = "wenzel@students.uni-marburg.de")
     )
 Description: Calculates different micrometeorological parameters for weather stations. For example estimation of
-radiation balance, calculation of soil heat flux from soil temperature measurements, calculation of turbulent fluxes
-(Bowen Ratio, Penman, Priestley-Taylor) and much more.
+             radiation balance, calculation of soil heat flux from soil temperature measurements, calculation of turbulent fluxes
+             (Bowen Ratio, Penman, Priestley-Taylor) and much more.
 License: Apache License 2.0
 Encoding: UTF-8
 LazyData: true
