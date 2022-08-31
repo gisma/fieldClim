@@ -1,6 +1,6 @@
 #' Air pressure
 #'
-#' Calculation of pressure as a function of height.
+#' Calculation of pressure as a function of the elevation above sea level.
 #'
 #' @rdname pres_p
 #' @param ... Additional parameters passed to later functions.
