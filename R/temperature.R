@@ -19,7 +19,7 @@ temp_pot_temp <- function (...) {
 temp_pot_temp.numeric <- function(t, p, ...){
   p0 <- 1013.25          # standard air pressure in hPa
   air_const <- 0.286     # specific gas constant / specific heat capacity
-  pot_temp <- ((t+273.15)*(p0/p)**air_const) - 273.15
+  pot_temp <- ((t+273.15)*((p0/p)**air_const)) - 273.15
   return(pot_temp)
 }
 
