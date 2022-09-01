@@ -90,7 +90,7 @@ turb_displacement.weather_station <- function(weather_station, surroundings = "v
 
 #' Friction velocity
 #'
-#' Calculate the friction velocity of the underground.
+#' Calculate the friction velocity of the surface.
 #'
 #' @rdname turb_ustar
 #' @param ... Additional parameters passed to later functions.
