@@ -12,6 +12,22 @@ pres_p <- function (...) {
 }
 
 #' @rdname pres_p
+#' @method pres_p numeric
+#' @param elev Elevation above sea level in m.
+#' @param t Temperature in °C.
+#' @export
+#'
+pres_p.numeric <- function(elev, t, ...){
+  t <- t + 273.15  # to Kelvin
+  p0 <- 1013.25    # standard pressure in hPa
+  g <- 9.81        # gravity acceleration
+  rl <- 287.05     # specific gas constant
+  p <- p0 * exp(- (g * elev) / (rl * t))
+  return(p)
+}
+
+
+#' @rdname pres_p
 #' @method pres_p weather_station
 #' @param weather_station Object of class weather_station.
 #' @param height 'lower' or 'upper'
@@ -25,24 +41,9 @@ pres_p.weather_station <- function(weather_station, height = "lower", ...){
   } else if(height=="upper"){
     check_availability(weather_station, "t2", "elevation", "z2")
     t <- weather_station$measurements$t2   # to Kelvin
-    z <- weather_station$location_properties$elevation + weather_station$properties$z2
+    elev <- weather_station$location_properties$elevation + weather_station$properties$z2
   }
-  return(pres_p(z, t))
-}
-
-#' @rdname pres_p
-#' @method pres_p numeric
-#' @param elev Elevation above sea level in m.
-#' @param t Temperature in °C.
-#' @export
-#'
-pres_p.numeric <- function(elev, t, ...){
-  t <- t + 273.15  # to Kelvin
-  p0 <- 1013.25    # standard pressure in hPa
-  g <- 9.81        # gravity acceleration
-  rl <- 287.05     # specific gas constant
-  p <- p0 * exp(- (g * elev) / (rl * t))
-  return(p)
+  return(pres_p(elev, t))
 }
 
 
