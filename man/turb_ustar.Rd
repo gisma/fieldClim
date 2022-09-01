@@ -27,5 +27,5 @@ turb_ustar(...)
 Friction velocity in m/s.
 }
 \description{
-Calculate the friction velocity of the underground.
+Calculate the friction velocity of the surface.
 }

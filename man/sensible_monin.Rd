@@ -36,7 +36,7 @@ sensible_monin(...)
 
 \item{z1}{Lower height of measurement in m.}
 
-\item{z2}{Upper height of measurement in m.}
+\item{z2}{Upper height of measurement in m (Use highest point of measurement as values are less disturbed).}
 
 \item{monin}{Monin-Obukhov-Length in m.}
 
