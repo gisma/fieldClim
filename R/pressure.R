@@ -37,7 +37,7 @@ pres_p.weather_station <- function(weather_station, height = "lower", ...){
   if(height=="lower"){
     check_availability(weather_station, "t1", "elevation", "z1")
     t <- weather_station$measurements$t1   # to Kelvin
-    z <- weather_station$location_properties$elevation + weather_station$properties$z1
+    elev <- weather_station$location_properties$elevation + weather_station$properties$z1
   } else if(height=="upper"){
     check_availability(weather_station, "t2", "elevation", "z2")
     t <- weather_station$measurements$t2   # to Kelvin
