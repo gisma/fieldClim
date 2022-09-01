@@ -15,7 +15,6 @@ temp_pot_temp <- function (...) {
 #' @method temp_pot_temp numeric
 #' @param t Temperature in °C.
 #' @param p Pressure in hPa.
-#'
 temp_pot_temp.numeric <- function(t, p, ...){
   p0 <- 1013.25          # standard air pressure in hPa
   air_const <- 0.286     # specific gas constant / specific heat capacity
