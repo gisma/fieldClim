@@ -89,7 +89,7 @@ pres_air_density.numeric <- function(p, t, ...){
   ad <- (p * 100) / (287.05 * (t + 273.15))
   return(ad)
 }
-=======
+
 #' Air pressure
 #'
 #' Calculation of pressure as a function of the elevation above sea level.
