@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #' Monin-Obhukov-Length
 #'
 #' Calculation of the Monin-Obhukov-Length.
@@ -714,4 +713,3 @@ turb_flux_calc <- function(weather_station){
 
   return(weather_station)
 }
->>>>>>> b6f3cc34f74572eca076d1bc4ce09fa88c51bcbb

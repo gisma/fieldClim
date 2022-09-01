@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #' Roughness length
 #'
 #' Calculate the roughness length of a surface on the basis of the obstacle height or the type of the surface.
@@ -262,4 +261,3 @@ turb_ustar.weather_station <- function(weather_station, ...){
   z0 <- turb_roughness_length(weather_station)
   return(turb_ustar(v,z,z0))
 }
->>>>>>> b6f3cc34f74572eca076d1bc4ce09fa88c51bcbb
