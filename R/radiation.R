@@ -253,17 +253,16 @@ rad_sw_out.numeric <- function(rad_sw_in, surface_type = "field", albedo = NULL,
   if (!is.null(albedo)){
     albedo <- albedo
     
-    if (albedo > 1 | albedo < 0){
+    if (any(albedo > 1 | albedo < 0)){
       warning("One or more input values for albedo argument are outside of the valid range (0-1). \n They will be set to NA.")
-      ifelse((albedo > 1), NA, albedo)
-      ifelse((albedo < 0), NA, albedo)
+      albedo[albedo > 1 | albedo < 0] <- NA
     }
     
   } else {
     surface_properties <- surface_properties
     albedo <- surface_properties[which(surface_properties$surface_type == surface_type),]$albedo
   }
-    rad_sw_out <- rad_sw_in * albedo
+  rad_sw_out <- rad_sw_in * albedo
   return(rad_sw_out)
 }
 
@@ -276,23 +275,17 @@ rad_sw_out.numeric <- function(rad_sw_in, surface_type = "field", albedo = NULL,
 rad_sw_out.weather_station <- function(weather_station, surface_type = "field", ...) {
   check_availability(weather_station, "sw_in")
   sw_in <- weather_station$measurements$sw_in
-
+  
   if(!(is.null(weather_station$location_properties$albedo))){
-
+    
     albedo <- weather_station$location_properties$albedo
-
-    if (albedo > 1 | albedo < 0){
-      warning("One or more input values for albedo argument are outside of the valid range (0-1). \n They will be set to NA.")
-      ifelse((albedo > 1), NA, albedo)
-      ifelse((albedo < 0), NA, albedo)
-    }
     
   } else {
     surface_properties <- surface_properties
     albedo <- surface_properties[which(surface_properties$surface_type == surface_type),]$albedo
   }
-
-  return(rad_sw_out(sw_in, albedo = albedo))
+  
+  return(rad_sw_out.numeric(sw_in, albedo = albedo))
 }
 
 
