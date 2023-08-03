@@ -220,7 +220,7 @@ hum_precipitable_water.numeric <- function(p, t, elev, ...){
 #' @param weather_station Object of class weather_station.
 #' @param height Height of measurement. "lower" or "upper".
 hum_precipitable_water.weather_station <- function(weather_station, height = "lower", ...) {
-  check_availability(weather_station, "t1", "t2", "p1", "p2", "elev")
+  check_availability(weather_station, "t1", "t2", "p1", "p2", "elevation")
   if(!height %in% c("upper", "lower")){
     stop("'height' must be either 'lower' or 'upper'.")
   }

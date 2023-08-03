@@ -30,13 +30,12 @@ temp_pot_temp.weather_station <- function(weather_station, height = "lower", ...
   if(height=="lower"){
     check_availability(weather_station, "t1", "p1")
     t <- weather_station$measurements$t1
-    p <- weather_station$properties$p1
+    p <- weather_station$measurements$p1
   } else if(height=="upper"){
     check_availability(weather_station, "t2", "p2")
     t <- weather_station$measurements$t2
-    p <- weather_station$properties$p2
+    p <- weather_station$measurements$p2
   }
-  check_availability(t, p)
 
   return(temp_pot_temp(t,p))
 }

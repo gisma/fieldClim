@@ -17,7 +17,7 @@ trans_air_mass_rel <- function (...) {
 #' @export
 #'
 trans_air_mass_rel.numeric <- function(sol_elevation, ...) {
-  mr <- 1 / (sin(pi/180*sol_elevation) + (1.5 * sol_elevation**(-0.72)))
+  mr <- 1 / (sin(pi/180*sol_elevation))
   return(mr)
 }
 
@@ -66,7 +66,7 @@ trans_air_mass_abs.weather_station <- function(weather_station, ...){
 
   check_availability(weather_station, "p2")
 
-  p <- weather_station$properties$p2
+  p <- weather_station$measurements$p2
   air_mass_rel <- trans_air_mass_rel(weather_station)
   return(trans_air_mass_abs(air_mass_rel, p))
 }

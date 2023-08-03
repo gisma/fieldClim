@@ -107,14 +107,12 @@ turb_ustar <- function (...) {
 #' @param z Height of anemometer in m.
 #' @param z0 Roughness length in m.
 #' @export
-turb_ustar.numeric <- function(v, z, z0, ...){
+turb_ustar.numeric <- function(v, z, z0, ...) {
   ustar <- (v * 0.4) / log(z / z0)
-
-  if(ustar == Inf){
-    print("ustar value is infinity and will be set to NA.")
-    ustar = NA
+  if (any(is.infinite(ustar))) {
+    print("One or more ustar values are infinite. They are set to NA.")
+    ustar[is.infinite(ustar)] <- NA
   }
-
   return(ustar)
 }
 

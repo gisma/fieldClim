@@ -16,12 +16,20 @@ rad_emissivity_air <- function (...) {
 #' @param elev Meters above sea level in m.
 #' @param p OPTIONAL. Air pressure in hPa.
 #' @export
-rad_emissivity_air.numeric <- function(t, elev, p = NULL, ...){
+rad_emissivity_air.numeric <- function(t, elev, hum, p = NULL, ...){
   if(is.null(p)) p <- pres_p(elev, t)
-  svp <- hum_sat_vapor_pres(t)
-  t_over <- t*(0.0065*elev)
-
-  eat <- ((1.24*svp/t_over)**(1/7))*(p/1013.25)
+  
+  # Calculate temperature adjusted to elevation (with saturated adiabatic lapse rate)
+  t_adj <- t-(0.0065*elev) 
+  
+  # Calculate saturated vapor pressure with adjusted temperature
+  svp <- hum_sat_vapor_pres(t_adj)
+  
+  # Calculate vapor pressure with saturated vapor pressure and measured humidity
+  e <- hum*svp
+  
+  # Calculate emissivity
+  eat <- ((1.24*e/(t_adj+273.15))**1/7)*(p/1013.25)
 
   return(eat)
 }
@@ -32,7 +40,7 @@ rad_emissivity_air.numeric <- function(t, elev, p = NULL, ...){
 #' @param weather_station Object of class weather_station.
 #' @param height Height of measurement. "lower" or "upper".
 rad_emissivity_air.weather_station <- function(weather_station, height = "lower", ...) {
-  check_availability(weather_station, "t1", "t2", "elevation", "p1", "p2")
+  check_availability(weather_station, "t1", "t2", "elevation", "p1", "p2", "hum1", "hum2")
   if(!height %in% c("upper", "lower")){
     stop("'height' must be either 'lower' or 'upper'.")
   }
@@ -41,8 +49,9 @@ rad_emissivity_air.weather_station <- function(weather_station, height = "lower"
   t <- weather_station$measurements[[paste0("t", height_num)]]
   p <- weather_station$measurements[[paste0("p", height_num)]]
   elev <- weather_station$location_properties$elevation
+  hum <- weather_station$measurements[[paste0("hum", height_num)]]
 
-  return(rad_emissivity_air(t, elev, p))
+  return(rad_emissivity_air(t, elev, p, hum))
 }
 
 #' Longwave radiation of the atmosphere
@@ -118,13 +127,17 @@ rad_lw_out.numeric <- function(t_surface, surface_type = "field", ...){
 #' @param surface_type Surface type for which a specific emissivity will be selected.
 #' Default is 'field' as surface type.
 rad_lw_out.weather_station <- function(weather_station, surface_type = "field", ...) {
-  check_availability(weather_station, "t_surface")
-  t <- weather_station$measurements$t_surface
-
+  if(exists("weather_station$measurements$t_surface")){
+    t <- weather_station$measurements$t_surface
+  } else {
+    t <- weather_station$measurements$t1
+    warning("There is no surface temperature available in this weather_station object. The 2 m air temperature will be used instead.")
+  }
+  
   surface_properties <- surface_properties
   emissivity <- surface_properties[which(surface_properties$surface_type == surface_type),]$emissivity
 
-  return(rad_lw_out(t, emissivity))
+  return(rad_lw_out(t, surface_type))
 }
 
 
@@ -239,6 +252,13 @@ rad_sw_out <- function (...) {
 rad_sw_out.numeric <- function(rad_sw_in, surface_type = "field", albedo = NULL, ...){
   if (!is.null(albedo)){
     albedo <- albedo
+    
+    if (albedo > 1 | albedo < 0){
+      warning("One or more input values for albedo argument are outside of the valid range (0-1). \n They will be set to NA.")
+      ifelse((albedo > 1), NA, albedo)
+      ifelse((albedo < 0), NA, albedo)
+    }
+    
   } else {
     surface_properties <- surface_properties
     albedo <- surface_properties[which(surface_properties$surface_type == surface_type),]$albedo
@@ -257,13 +277,16 @@ rad_sw_out.weather_station <- function(weather_station, surface_type = "field", 
   check_availability(weather_station, "sw_in")
   sw_in <- weather_station$measurements$sw_in
 
-  if(!(is.null(weather_station$albedo))){
+  if(!(is.null(weather_station$location_properties$albedo))){
 
-    albedo <- weather_station$albedo
+    albedo <- weather_station$location_properties$albedo
 
     if (albedo > 1 | albedo < 0){
-      warning("Albedo values a are out of the valid range (0-1). \nPlease check again.")
+      warning("One or more input values for albedo argument are outside of the valid range (0-1). \n They will be set to NA.")
+      ifelse((albedo > 1), NA, albedo)
+      ifelse((albedo < 0), NA, albedo)
     }
+    
   } else {
     surface_properties <- surface_properties
     albedo <- surface_properties[which(surface_properties$surface_type == surface_type),]$albedo
