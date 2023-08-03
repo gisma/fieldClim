@@ -285,7 +285,7 @@ rad_sw_out.weather_station <- function(weather_station, surface_type = "field", 
     albedo <- surface_properties[which(surface_properties$surface_type == surface_type),]$albedo
   }
   
-  return(rad_sw_out.numeric(sw_in, albedo = albedo))
+  return(rad_sw_out(sw_in, albedo = albedo))
 }
 
 
