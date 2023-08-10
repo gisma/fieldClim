@@ -8,7 +8,7 @@
 \usage{
 rad_lw_in_topo(...)
 
-\method{rad_lw_in_topo}{numeric}(rad_lw_out, rad_lw_in, terr_sky_view, ...)
+\method{rad_lw_in_topo}{numeric}(rad_lw_out, hum, t, terr_sky_view, ...)
 
 \method{rad_lw_in_topo}{weather_station}(weather_station, ...)
 }
@@ -17,7 +17,9 @@ rad_lw_in_topo(...)
 
 \item{rad_lw_out}{Longwave surface emissions in W/m².}
 
-\item{rad_lw_in}{Atmospheric radiation in W/m².}
+\item{hum}{Relative humidity in \%.}
+
+\item{t}{Air temperature in °C.}
 
 \item{terr_sky_view}{Sky view factor from 0-1. (See \link{terr_sky_view})}
 
