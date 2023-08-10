@@ -1,6 +1,6 @@
 #' Soil thermal conductivity
 #'
-#' Calculates soil thermal conductivity (W/m K) from soil moisture (Vol-%) and texture.
+#' Calculates soil thermal conductivity (W/m K) from soil moisture (Cubic meter/cubic meter) and texture.
 #'
 #' Works by linearly interpolating thermal conductivity based on measured data.
 #'
@@ -15,12 +15,15 @@ soil_thermal_cond <- function (...) {
 
 #' @rdname soil_thermal_cond
 #' @method soil_thermal_cond numeric
-#' @param moisture Soil moisture in Vol-%.
+#' @param moisture Soil moisture in Cubic meter/cubic meter
 #' @param texture Soil texture. Either "sand", "peat" or "clay".
 #' @importFrom stats approx
 #' @export
 #'
 soil_thermal_cond.numeric <- function(moisture, texture = "sand", ...) {
+  # convert moisture from [cubic m/cubic m] to [Vol-%]
+  moisture = moisture * 100 
+  
   if(texture == "sand"){
     y <- c(0.269,1.46,1.98,2.18,2.31,2.49,2.58)
     x <- c(0, 5, 10, 15, 20, 30, 43)
@@ -34,7 +37,7 @@ soil_thermal_cond.numeric <- function(moisture, texture = "sand", ...) {
     x <- c(0, 10, 30, 50, 70, 80, 90)
 
   } else {
-    stop("Texture not available. Input either 'sand', 'peat' or 'clay'")
+    stop("Texture not available. Input has to be either 'sand', 'peat' or 'clay'")
   }
 
   # linear interpolation of values
@@ -57,7 +60,7 @@ soil_thermal_cond.weather_station <- function(weather_station, ...) {
 
 #' Soil volumetric heat capacity
 #'
-#' Calculates soil volumetric heat capacity (MJ / (m³ * K)) from soil moisture (Vol-%) and texture.
+#' Calculates soil volumetric heat capacity (MJ / (m³ * K)) from soil moisture (Cubic meter/cubic meter) and texture.
 #'
 #' Works by linearly interpolating volumetric heat capacity based on measured data.
 #'
@@ -72,11 +75,14 @@ soil_heat_cap <- function (...) {
 
 #' @rdname soil_heat_cap
 #' @method soil_heat_cap numeric
-#' @param moisture Soil moisture in Vol-%.
+#' @param moisture Soil moisture in Cubic meter/cubic meter
 #' @param texture Soil texture. Either "sand", "peat" or "clay".
 #' @importFrom stats approx
 #' @export
 soil_heat_cap.numeric <- function(moisture, texture = "sand", ...) {
+  # convert moisture from [cubic m/cubic m] to [Vol-%]
+  moisture = moisture * 100 
+  
   if(texture == "sand"){
     y <- c(1.17,1.38,1.59,1.8,2.0,2.42,2.97)
     x <- c(0, 5, 10, 15, 20, 30, 43)
