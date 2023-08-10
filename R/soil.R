@@ -182,7 +182,7 @@ soil_attenuation <- function (...) {
 #' @param thermal_cond Thermal conductivity of soil in W/m K.
 #' @param vol_heat_cap Volumetric heat capacity of soil in J/(m³ * K).
 soil_attenuation.numeric <- function(thermal_cond, vol_heat_cap, ...) {
-  soil_att <- sqrt((thermal_cond * 86400) /(vol_heat_cap * (10^6) * pi))
+  soil_att <- sqrt((thermal_cond/(vol_heat_cap*(10^6)*pi))*86400)
   return(soil_att)
 }
 
