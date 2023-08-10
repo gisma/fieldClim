@@ -464,11 +464,15 @@ rad_lw_in_topo <- function (...) {
 #' @method rad_lw_in_topo numeric
 #' @export
 #' @param rad_lw_out Longwave surface emissions in W/m².
-#' @param rad_lw_in Atmospheric radiation in W/m².
+#' @param hum relative humidity in %.
+#' @param t Air temperature in °C.
 #' @param terr_sky_view Sky view factor from 0-1. (See [fieldClim::terr_sky_view])
 rad_lw_in_topo.numeric <- function(rad_lw_out,
-                                   rad_lw_in,
+                                   hum,
+                                   t,
                                    terr_sky_view, ...){
+  # Calculate incoming longwave radiation
+  rad_lw_in <- rad_lw_in(hum, t)
   # Longwave component:
   rad_lw_in_topo <- rad_lw_in*terr_sky_view + rad_lw_out*(1-terr_sky_view)
   return(rad_lw_in_topo)
@@ -481,10 +485,13 @@ rad_lw_in_topo.numeric <- function(rad_lw_out,
 rad_lw_in_topo.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "lw_out", "lw_in", "sky_view")
   rad_lw_surface <- weather_station$measurements$lw_out
-  rad_lw_atmospheric <- weather_station$measurements$lw_in
+  hum <- weather_station$measurements$hum1
+  t <- weather_station$measurements$t1
   terr_sky_view <- weather_station$location_properties$sky_view
-
+  
   return(rad_lw_in_topo(rad_lw_surface,
-                        rad_lw_atmospheric,
+                        hum,
+                        t,
                         terr_sky_view))
 }
+
