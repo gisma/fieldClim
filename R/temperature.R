@@ -15,6 +15,7 @@ temp_pot_temp <- function (...) {
 #' @method temp_pot_temp numeric
 #' @param t Temperature in °C.
 #' @param p Pressure in hPa.
+#' @export
 temp_pot_temp.numeric <- function(t, p, ...){
   p0 <- 1013.25          # standard air pressure in hPa
   air_const <- 0.286     # specific gas constant / specific heat capacity
@@ -26,6 +27,7 @@ temp_pot_temp.numeric <- function(t, p, ...){
 #' @method temp_pot_temp weather_station
 #' @param weather_station Object of class weather_station.
 #' @param height Height of measurement, either "upper" or "lower".
+#' @export
 temp_pot_temp.weather_station <- function(weather_station, height = "lower", ...){
   if(height=="lower"){
     check_availability(weather_station, "t1", "p1")
