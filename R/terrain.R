@@ -20,9 +20,9 @@ terr_sky_view <- function (...) {
 #' @export
 terr_sky_view.numeric <- function(slope, valley = F, ...) {
   if(valley == TRUE){
-    return(1 - cos(slope * pi / 180))
+    return(cos(slope * pi / 180))
   }else{
-    return((1 - cos(slope * pi / 180)) / 2.0)
+    return((1 + cos(slope * pi / 180)) / 2.0)
   }
 }
 
