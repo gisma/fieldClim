@@ -33,3 +33,6 @@ Estimates total precipitable water in the atmosphere.
 It uses a moist adiabatic temperature gradient which might not be
 suitable for every application.
 }
+\references{
+p246
+}

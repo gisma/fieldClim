@@ -19,7 +19,7 @@ pos_min_dist <- function (...) {
 #' @param obs_radius If ring == T: radius of the ring in m.
 #' @export
 #' @return Minimal distance between measurement point and obstacle for undisturbed measurement in m.
-#'
+#' @references p189eq9.1.
 pos_min_dist.numeric <- function(obs_width, obs_height, ring = F, obs_radius = NULL, ...){
   #if climate station is positioned on a clearing:
   if(ring == TRUE){
@@ -54,7 +54,7 @@ pos_min_dist.numeric <- function(obs_width, obs_height, ring = F, obs_radius = N
 #'
 #' @return Message, that tells you if climate station is well positioned or, if not, in which distance to the obstacle it needs to be placed instead.
 #' @export
-#'
+#' @references p189eq9.1.
 pos_max_dist <- function(dist, obs_width, obs_height, ring = F){
   if(ring == T){
     if(dist < 15 * obs_height){
@@ -97,7 +97,6 @@ pos_max_dist <- function(dist, obs_width, obs_height, ring = F){
 #'
 #' @return Message, that tells you if climate station is well positioned or, if not, in which height the anemometer needs to be positioned to ensure independency of measurements.
 #' @export
-#'
 pos_anemometer_height <- function(dist, min_dist, obs_height){
   if(dist >= min_dist){
     return("The climate station is positioned beyond the needed minimum distance. It is not required to change the height of the anemometer.")

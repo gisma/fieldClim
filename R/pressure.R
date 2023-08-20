@@ -16,7 +16,7 @@ pres_p <- function (...) {
 #' @param elev Elevation above sea level in m.
 #' @param t Temperature in °C.
 #' @export
-#'
+#' @references Foken p51eqE2.1
 pres_p.numeric <- function(elev, t, ...){
   t <- t + 273.15  # to Kelvin
   p0 <- 1013.25    # standard pressure in hPa

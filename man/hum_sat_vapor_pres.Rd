@@ -28,3 +28,6 @@ Saturation vapor pressure in hPa.
 Calculates the saturation vapor pressure from air temperature using the \emph{Magnus}
 formula (applicable over water surfaces).
 }
+\references{
+p261.
+}

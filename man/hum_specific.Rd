@@ -29,3 +29,6 @@ Specific humidity in kg/kg.
 \description{
 Calculates specific humidity from vapor pressure and air pressure.
 }
+\references{
+p262.
+}

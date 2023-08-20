@@ -60,3 +60,6 @@ Calculates the latent heat flux using the Monin-Obukhov length. Negative
 flux signifies flux away from the surface, positive values signify flux
 towards the surface.
 }
+\references{
+p77eq4.6, Foken p61 Tab. 2.10.
+}

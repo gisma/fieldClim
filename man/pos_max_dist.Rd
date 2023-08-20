@@ -21,3 +21,6 @@ Message, that tells you if climate station is well positioned or, if not, in whi
 \description{
 If station is positioned beyond minimum distance, check if it lies within maximum distance.
 }
+\references{
+p189eq9.1.
+}

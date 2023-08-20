@@ -27,3 +27,6 @@ Enthalpy of vaporization in J/kg.
 \description{
 Calculates heat of evaporation for water from air temperature.
 }
+\references{
+p261.
+}

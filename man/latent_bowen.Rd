@@ -59,3 +59,6 @@ towards the surface.
 Values above 600 W/m² and below -600 W/m² will be recognized
 as measurement mistakes and smoothed respectively.
 }
+\references{
+p221eq9.21.
+}

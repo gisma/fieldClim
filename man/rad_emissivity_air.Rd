@@ -19,6 +19,8 @@ rad_emissivity_air(...)
 
 \item{elev}{Meters above sea level in m.}
 
+\item{hum}{humidity.}
+
 \item{p}{OPTIONAL. Air pressure in hPa.}
 
 \item{weather_station}{Object of class weather_station.}
@@ -30,4 +32,7 @@ Emissivity of the atmosphere (0-1).
 }
 \description{
 Calculation of the emissivity of the atmosphere.
+}
+\references{
+p67eq3.23
 }

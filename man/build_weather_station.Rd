@@ -74,6 +74,8 @@ Form: POSIX-Object (See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:
 
 \item{soil_flux}{Vector containing soil flux in W/m².}
 
+\item{valley}{Does the weather station locate in a valley?}
+
 \item{...}{Additional parameters, see details for usage.}
 }
 \value{

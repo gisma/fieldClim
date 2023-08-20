@@ -8,7 +8,7 @@
 \usage{
 hum_absolute(...)
 
-\method{hum_absolute}{numeric}(p_vapor, t_pot, ...)
+\method{hum_absolute}{numeric}(p_vapor, t, ...)
 
 \method{hum_absolute}{weather_station}(weather_station, height, ...)
 }
@@ -17,7 +17,7 @@ hum_absolute(...)
 
 \item{p_vapor}{Vapor pressure in hPa.}
 
-\item{t_pot}{Potential air temperature in °C}
+\item{t}{Temperature in °C.}
 
 \item{weather_station}{Object of class weather_station.}
 
@@ -28,4 +28,7 @@ Absolute humidity in kg/m³.
 }
 \description{
 Calculates absolute humidity from vapor pressure and air temperature.
+}
+\references{
+p262.
 }
