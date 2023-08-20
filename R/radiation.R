@@ -306,6 +306,7 @@ rad_sw_radiation_balance <- function (...) {
 #' @param rad_sw_ground_horizontal Shortwave radiation on the ground onto a horizontal area in W/m^2.
 #' @param rad_sw_reflected Reflected shortwave radiation in W/m².
 #' @export
+#' @references p45eq3.1
 rad_sw_radiation_balance.numeric <- function(rad_sw_ground_horizontal, rad_sw_reflected, ...){
   rad_sw_radiation_balance <- rad_sw_ground_horizontal-rad_sw_reflected
   return(rad_sw_radiation_balance)
@@ -422,10 +423,11 @@ rad_bal_total <- function (...) {
 #' @param rad_sw_radiation_balance Shortwave radiation balance in W/m².
 #' @param rad_lw_out Longwave surface emissions in W/m².
 #' @param rad_lw_in Atmospheric radiation in W/m².
+#' @references p45eq3.1
 rad_bal_total.numeric <- function(rad_sw_radiation_balance,
-                                  rad_lw_out,
-                                  rad_lw_in, ...){
-  radbil <- rad_sw_radiation_balance - (rad_lw_out-rad_lw_in)
+                                  rad_lw_in,
+                                  rad_lw_out, ...){
+  radbil <- rad_sw_radiation_balance + (rad_lw_in-rad_lw_out)
   return(radbil)
 }
 
@@ -464,6 +466,7 @@ rad_lw_in_topo <- function (...) {
 #' @param hum relative humidity in %.
 #' @param t Air temperature in °C.
 #' @param terr_sky_view Sky view factor from 0-1. (See [fieldClim::terr_sky_view])
+#' @references p68eq3.24
 rad_lw_in_topo.numeric <- function(rad_lw_out,
                                    hum,
                                    t,
