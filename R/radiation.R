@@ -247,6 +247,7 @@ rad_sw_out <- function (...) {
 #' @param surface_type type of surface for which an albedo will be selected.
 #' @param albedo if albedo measurements are performed, values in decimal can be inserted here.
 #' @export
+#' @references p59eq3.15
 rad_sw_out.numeric <- function(rad_sw_in, surface_type = "field", albedo = NULL, ...){
   if (!is.null(albedo)){
     albedo <- albedo
@@ -348,30 +349,28 @@ rad_sw_in_topo <- function (...) {
 #' Default is average atmospheric transmittance.
 #' @param terr_sky_view Sky view factor (0-1).
 #' @export
+#' @references p46eq3.3, p46eq3.8, p46eq3.7, p46eq3.9, p46eq3.11
 rad_sw_in_topo.numeric <- function(slope,
                                    exposition = 0,
                                    terr_sky_view,
                                    sol_elevation, sol_azimuth,
-                                   rad_sw_in, albedo,
-                                   trans_total = 0.8, ...){
-  sol_dir <- rad_sw_in*0.9751*trans_total
-  sol_dif <- rad_sw_in-sol_dir
+                                   rad_sw_toa, albedo,
+                                   trans_total = 0.8,
+                                   trans_vapor, trans_ozone, ...){
+  sol_dir <- rad_sw_toa * 0.9751 * trans_total
+  sol_dif <- 0.5 * (  (1-(1-trans_vapor)-(1-trans_ozone)) * rad_sw_tao - sol_dir  )
   f <- (pi/180)
+  
   if(slope > 0) {
     terrain_angle <- (cos(slope*f)*sin(sol_elevation*f)
                       + sin(slope*f)*cos(sol_elevation*f)*cos(sol_azimuth*f
                                                               -(exposition*f)))
-    rad_sw_topo_direct <- (sol_dir/sin(sol_elevation*f))*terrain_angle
-  }
-  if(slope == 0) {
+    rad_sw_topo_direct <- sol_dir / sin(sol_elevation*f) *terrain_angle
+  } else if(slope == 0) {
     rad_sw_topo_direct <- sol_dir
   }
-  if(terr_sky_view < 1) {
-    rad_sw_topo_diffuse <- sol_dif*terr_sky_view
-  }
-  if(terr_sky_view == 1) {
-    rad_sw_topo_diffuse <- sol_dif
-  }
+  
+  rad_sw_topo_diffuse <- sol_dif * terr_sky_view
   sol_ter <- (rad_sw_topo_direct + rad_sw_topo_diffuse) * albedo * (1-terr_sky_view)
   sol_in_topo <- rad_sw_topo_direct + rad_sw_topo_diffuse + sol_ter
   return(sol_in_topo)
