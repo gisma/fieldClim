@@ -156,6 +156,7 @@ hum_absolute.weather_station <- function(weather_station, height, ...) {
 #'
 #' @param ... Additional parameters passed to later functions.
 #' @return Enthalpy of vaporization in J/kg.
+#' @references p261.
 #' @export
 #'
 hum_evap_heat <- function (...) {
@@ -167,7 +168,7 @@ hum_evap_heat <- function (...) {
 #' @export
 #' @param t Air temperature in °C.
 hum_evap_heat.numeric <- function(t, ...){
-  return((2.500827 - 0.002372 * t) * 10^6)
+  return((2.5008 - 0.002372 * t) * 10^6)
 }
 
 #' @rdname hum_evap_heat
