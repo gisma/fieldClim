@@ -5,6 +5,7 @@
 #'
 #' @param ... Additional parameters passed to later functions.
 #' @return Saturation vapor pressure in hPa.
+#' @references p261.
 #' @export
 #'
 hum_sat_vapor_pres <- function (...) {
@@ -44,7 +45,6 @@ hum_sat_vapor_pres.weather_station <- function(weather_station, height = "lower"
 #' @param ... Additional parameters passed to later functions.
 #' @return Vapor pressure in hPa.
 #' @export
-#'
 hum_vapor_pres <- function (...) {
   UseMethod("hum_vapor_pres")
 }
@@ -81,6 +81,7 @@ hum_vapor_pres.weather_station <- function(weather_station, height = "lower", ..
 #'
 #' @param ... Additional parameters passed to later functions.
 #' @return Specific humidity in kg/kg.
+#' @references p262.
 #' @export
 #'
 hum_specific <- function (...) {
