@@ -160,6 +160,7 @@ rad_sw_toa <- function (...) {
 #' @param lat Latitude of the place of the climate station in decimal degrees.
 #' @param lon Longitude of the place of the climate station in decimal degrees.
 #' @export
+#' @references p243, p244
 rad_sw_toa.POSIXt <- function(datetime, lat, lon, ...){
   if(!inherits(datetime, "POSIXt")){
     stop("datetime has to be of class POSIXt.")
@@ -185,8 +186,6 @@ rad_sw_toa.weather_station <- function(weather_station, ...) {
   return(rad_sw_toa(datetime, lat, lon))
 }
 
-
-
 #' Shortwave radiation onto a horizontal area on the ground
 #'
 #' Calculation of the shortwave radiation onto a horizontal area on the ground.
@@ -194,7 +193,6 @@ rad_sw_toa.weather_station <- function(weather_station, ...) {
 #' @param ... Additional parameters passed to later functions.
 #' @return Shortwave radiation on the ground onto a horizontal area in W/m².
 #' @export
-#'
 rad_sw_in <- function (...) {
   UseMethod("rad_sw_in")
 }
@@ -204,8 +202,9 @@ rad_sw_in <- function (...) {
 #' @param rad_sw_toa Shortwave radiation at top of atmosphere in W/m².
 #' @param trans_total Total transmittance of the atmosphere (0-1).
 #' @export
+#' @references p46eq3.3
 rad_sw_in.numeric <- function(rad_sw_toa, trans_total, ...){
-  rad_sw_ground_horizontal <- rad_sw_toa*trans_total
+  rad_sw_ground_horizontal <- rad_sw_toa * 0.9751 * trans_total
   return(rad_sw_ground_horizontal)
 }
 
