@@ -5,7 +5,6 @@
 #'
 #' @param ... Additional parameters passed to later functions.
 #' @return Saturation vapor pressure in hPa.
-#' @references p261.
 #' @export
 #'
 hum_sat_vapor_pres <- function (...) {
@@ -16,6 +15,7 @@ hum_sat_vapor_pres <- function (...) {
 #' @method hum_sat_vapor_pres numeric
 #' @export
 #' @param t Air temperature in °C.
+#' @references p261.
 hum_sat_vapor_pres.numeric <- function(t, ...) {
   a <- 7.5
   b <- 235
@@ -81,7 +81,6 @@ hum_vapor_pres.weather_station <- function(weather_station, height = "lower", ..
 #'
 #' @param ... Additional parameters passed to later functions.
 #' @return Specific humidity in kg/kg.
-#' @references p262.
 #' @export
 #'
 hum_specific <- function (...) {
@@ -93,6 +92,7 @@ hum_specific <- function (...) {
 #' @export
 #' @param p_vapor Vapor pressure in hPa.
 #' @param p Air pressure in hPa.
+#' @references p262.
 hum_specific.numeric <- function(p_vapor, p, ...) {
   return(0.622*(p_vapor/p))
 }
@@ -119,7 +119,6 @@ hum_specific.weather_station <- function(weather_station, height, ...) {
 #'
 #' @param ... Additional parameters passed to later functions.
 #' @return Absolute humidity in kg/m³.
-#' @references p262.
 #' @export
 #'
 hum_absolute <- function (...) {
@@ -131,6 +130,7 @@ hum_absolute <- function (...) {
 #' @export
 #' @param p_vapor Vapor pressure in hPa.
 #' @param t Temperature in °C.
+#' @references p262.
 hum_absolute.numeric <- function(p_vapor, t, ...) {
   t <- t + 273.15
   return((0.21668 * p_vapor) / t)
@@ -156,7 +156,6 @@ hum_absolute.weather_station <- function(weather_station, height, ...) {
 #'
 #' @param ... Additional parameters passed to later functions.
 #' @return Enthalpy of vaporization in J/kg.
-#' @references p261.
 #' @export
 #'
 hum_evap_heat <- function (...) {
@@ -167,6 +166,7 @@ hum_evap_heat <- function (...) {
 #' @method hum_evap_heat numeric
 #' @export
 #' @param t Air temperature in °C.
+#' @references p261.
 hum_evap_heat.numeric <- function(t, ...){
   return((2.5008 - 0.002372 * t) * 10^6)
 }
@@ -195,7 +195,6 @@ hum_evap_heat.weather_station <- function(weather_station, height = "lower", ...
 #'
 #' @param ... Additional parameters passed to later functions.
 #' @return Total precipitable water in cm (grams).
-#' @references p246
 #' @export
 #'
 hum_precipitable_water <- function (...) {
@@ -208,6 +207,7 @@ hum_precipitable_water <- function (...) {
 #' @param p Air pressure in hPa.
 #' @param t Air temperature in °C.
 #' @param elev Elevation above sea level in m.
+#' @references p246
 hum_precipitable_water.numeric <- function(p, t, elev, ...){
   p0    <- 1013.25          # Pressure standard atmosphere
   t     <- t + 273.15       # °C in K

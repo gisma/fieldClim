@@ -6,9 +6,7 @@
 #'
 #' @param ... Additional parameters passed to later functions.
 #' @return Latent heat flux in W/m².
-#' @references Foken p220eq5.7.
 #' @export
-#'
 latent_priestley_taylor <- function (...) {
   UseMethod("latent_priestley_taylor")
 }
@@ -20,6 +18,7 @@ latent_priestley_taylor <- function (...) {
 #' @param rad_bal Radiation balance in W/m².
 #' @param soil_flux Soil flux in W/m².
 #' @param surface_type Surface type, for which a Priestley-Taylor coefficient will be selected. Default is for short grass.
+#' @references Foken p220eq5.7.
 latent_priestley_taylor.numeric <- function(t, rad_bal, soil_flux, surface_type = "field", ...){
   priestley_taylor_coefficient <- priestley_taylor_coefficient
 

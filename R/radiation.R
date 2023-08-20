@@ -4,9 +4,7 @@
 #'
 #' @param ... Additional parameters passed to later functions.
 #' @return Emissivity of the atmosphere (0-1).
-#' @references p67eq3.23
 #' @export
-#'
 rad_emissivity_air <- function (...) {
   UseMethod("rad_emissivity_air")
 }
@@ -18,11 +16,12 @@ rad_emissivity_air <- function (...) {
 #' @param hum humidity.
 #' @param p OPTIONAL. Air pressure in hPa.
 #' @export
+#' @references p67eq3.23
 rad_emissivity_air.numeric <- function(t, elev, hum, p = NULL, ...){
   if(is.null(p)) p <- pres_p(elev, t)
   
   # Calculate temperature adjusted to elevation (with saturated adiabatic lapse rate)
-  t_adj <- t-(0.0065*elev) 
+  t_adj <- t-(0.0065*elev)
   
   # Calculate saturated vapor pressure with adjusted temperature
   svp <- hum_sat_vapor_pres(t_adj)
