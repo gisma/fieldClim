@@ -62,7 +62,6 @@ rad_emissivity_air.weather_station <- function(weather_station, height = "lower"
 #' @param ... Additional parameters passed to later functions.
 #' @return Atmospheric radiation in W/m².
 #' @export
-#'
 rad_lw_in <- function (...) {
   UseMethod("rad_lw_in")
 }
@@ -72,9 +71,10 @@ rad_lw_in <- function (...) {
 #' @param hum relative humidity in %.
 #' @param t Air temperature in °C.
 #' @export
+#' @references p66eq3.21
 rad_lw_in.numeric <- function(hum, t, ...){
-  sigma <- 5.6697e-8
-  gs <- sigma * ((t + 273.15)^4) * (0.594 + 0.0416 * sqrt(hum_vapor_pres(hum, t)))
+  sigma <- 5.6693e-8
+  gs <- (0.594 + 0.0416 * sqrt(hum_vapor_pres(hum, t))) * sigma * (t + 273.15)^4
   return(gs)
 }
 
@@ -90,8 +90,6 @@ rad_lw_in.weather_station <- function(weather_station, ...) {
   return(rad_lw_in(hum, t))
 }
 
-
-
 #' Longwave radiation of the surface
 #'
 #' Calculates emissions of a surface.
@@ -102,7 +100,6 @@ rad_lw_in.weather_station <- function(weather_station, ...) {
 #' @param ... Additional parameters passed to later functions.
 #' @return Emissions in W/m².
 #' @export
-#'
 rad_lw_out <- function (...) {
   UseMethod("rad_lw_out")
 }
@@ -113,6 +110,7 @@ rad_lw_out <- function (...) {
 #' @param surface_type Surface type for which a specific emissivity will be selected.
 #' Default is 'field' as surface type.
 #' @export
+#' @references p66eq3.20
 rad_lw_out.numeric <- function(t_surface, surface_type = "field", ...){
   surface_properties <- surface_properties
   emissivity <- surface_properties[which(surface_properties$surface_type == surface_type),]$emissivity
