@@ -165,6 +165,7 @@ latent_monin <- function (...) {
 #' @param monin Monin-Obukhov-Length in m.
 #' @param ustar Friction velocity in m/s.
 #' @param grad_rich_no Gradient-Richardson-Number.
+#' @references p77eq4.6, Foken p61 Tab. 2.10.
 latent_monin.numeric <- function(hum1, hum2, t1, t2, p1, p2, z1 = 2, z2 = 10,
                          monin, ustar, grad_rich_no, ...) {
 
@@ -236,6 +237,7 @@ latent_bowen <- function (...) {
 #' @param z2 Upper height of measurement in m.
 #' @param rad_bal Radiation balance in W/m².
 #' @param soil_flux Soil flux in W/m².
+#' @references p221eq9.21.
 latent_bowen.numeric <- function(t1, t2, hum1, hum2, p1, p2, z1 = 2, z2 = 10,
                          rad_bal, soil_flux, ...){
 
@@ -258,6 +260,7 @@ latent_bowen.numeric <- function(t1, t2, hum1, hum2, p1, p2, z1 = 2, z2 = 10,
     warning("There are values above 600 W/m^2!")
     out[out > 600] <- 600
   }
+  
   if(min(out) < -600){
     warning("There are values below -600 W/m^2!")
     out[out < -600] <- -600
