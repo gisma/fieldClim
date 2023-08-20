@@ -8,6 +8,7 @@
 #' @rdname turb_roughness_length
 #' @param ... Additional parameters passed to later functions.
 #' @return roughness length in m.
+#' @references p239.
 #' @export
 #'
 turb_roughness_length <- function (...) {
@@ -95,6 +96,7 @@ turb_displacement.weather_station <- function(weather_station, surroundings = "v
 #' @rdname turb_ustar
 #' @param ... Additional parameters passed to later functions.
 #' @return Friction velocity in m/s.
+#' @references p239
 #' @export
 #'
 turb_ustar <- function (...) {

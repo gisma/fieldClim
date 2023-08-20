@@ -17,11 +17,14 @@ bound_thermal_avg(ustar, v, temp_change_dist, t_pot_upwind, t_pot, lapse_rate)
 
 \item{t_pot}{Potential temperature at site in °C.}
 
-\item{lapse_rate}{Lapse rate in K/m (or °C/m)}
+\item{lapse_rate}{Lapse rate in °C/m.}
 }
 \value{
 Average height of the thermal boundary layer in m.
 }
 \description{
 Calculation of the average height of the thermal internal boundary layer.
+}
+\references{
+p242.
 }

@@ -53,6 +53,7 @@
 #' @param lw_in Vector containing incoming longwave radiation in W/m².
 #' @param lw_out Vector containing outgoing shortwave radiation in W/m².
 #' @param soil_flux Vector containing soil flux in W/m².
+#' @param valley Does the weather station locate in a valley?
 #' @param ... Additional parameters, see details for usage.
 #'
 #' @return List of class "weather_station", that contains:

@@ -4,6 +4,7 @@
 #'
 #' @param ... Additional parameters passed to later functions.
 #' @return Emissivity of the atmosphere (0-1).
+#' @references p67eq3.23
 #' @export
 #'
 rad_emissivity_air <- function (...) {
@@ -14,6 +15,7 @@ rad_emissivity_air <- function (...) {
 #' @method rad_emissivity_air numeric
 #' @param t Air temperature in °C.
 #' @param elev Meters above sea level in m.
+#' @param hum humidity.
 #' @param p OPTIONAL. Air pressure in hPa.
 #' @export
 rad_emissivity_air.numeric <- function(t, elev, hum, p = NULL, ...){

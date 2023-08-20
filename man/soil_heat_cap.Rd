@@ -15,7 +15,7 @@ soil_heat_cap(...)
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{moisture}{Soil moisture in Vol-\%.}
+\item{moisture}{Soil moisture in Cubic meter/cubic meter}
 
 \item{texture}{Soil texture. Either "sand", "peat" or "clay".}
 
@@ -25,7 +25,7 @@ soil_heat_cap(...)
 Numeric vector with volumetric heat capacity in  MJ/ (m³ * K).
 }
 \description{
-Calculates soil volumetric heat capacity (MJ / (m³ * K)) from soil moisture (Vol-\%) and texture.
+Calculates soil volumetric heat capacity (MJ / (m³ * K)) from soil moisture (Cubic meter/cubic meter) and texture.
 }
 \details{
 Works by linearly interpolating volumetric heat capacity based on measured data.

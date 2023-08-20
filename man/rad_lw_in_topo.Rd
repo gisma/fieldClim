@@ -17,7 +17,7 @@ rad_lw_in_topo(...)
 
 \item{rad_lw_out}{Longwave surface emissions in W/m².}
 
-\item{hum}{Relative humidity in \%.}
+\item{hum}{relative humidity in \%.}
 
 \item{t}{Air temperature in °C.}
 

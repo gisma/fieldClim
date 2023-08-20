@@ -26,6 +26,7 @@ build_weather_station(
   lw_in = NULL,
   lw_out = NULL,
   soil_flux = NULL,
+  valley = FALSE,
   ...
 )
 }

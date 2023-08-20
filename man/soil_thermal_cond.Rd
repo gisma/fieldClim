@@ -15,7 +15,7 @@ soil_thermal_cond(...)
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{moisture}{Soil moisture in Vol-\%.}
+\item{moisture}{Soil moisture in Cubic meter/cubic meter}
 
 \item{texture}{Soil texture. Either "sand", "peat" or "clay".}
 
@@ -25,7 +25,7 @@ soil_thermal_cond(...)
 Soil thermal conductivity in W/m K.
 }
 \description{
-Calculates soil thermal conductivity (W/m K) from soil moisture (Vol-\%) and texture.
+Calculates soil thermal conductivity (W/m K) from soil moisture (Cubic meter/cubic meter) and texture.
 }
 \details{
 Works by linearly interpolating thermal conductivity based on measured data.

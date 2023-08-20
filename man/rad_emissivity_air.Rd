@@ -8,7 +8,7 @@
 \usage{
 rad_emissivity_air(...)
 
-\method{rad_emissivity_air}{numeric}(t, elev, p = NULL, ...)
+\method{rad_emissivity_air}{numeric}(t, elev, hum, p = NULL, ...)
 
 \method{rad_emissivity_air}{weather_station}(weather_station, height = "lower", ...)
 }
