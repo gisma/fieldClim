@@ -119,6 +119,7 @@ hum_specific.weather_station <- function(weather_station, height, ...) {
 #'
 #' @param ... Additional parameters passed to later functions.
 #' @return Absolute humidity in kg/m³.
+#' @references p262.
 #' @export
 #'
 hum_absolute <- function (...) {
@@ -129,10 +130,10 @@ hum_absolute <- function (...) {
 #' @method hum_absolute numeric
 #' @export
 #' @param p_vapor Vapor pressure in hPa.
-#' @param t_pot Potential air temperature in °C
-hum_absolute.numeric <- function(p_vapor, t_pot, ...) {
-  t_pot <- t_pot + 273.15
-  return((0.21667 * p_vapor) / t_pot)
+#' @param t Temperature in °C.
+hum_absolute.numeric <- function(p_vapor, t, ...) {
+  t <- t + 273.15
+  return((0.21668 * p_vapor) / t)
 }
 
 #' @rdname hum_absolute
