@@ -195,6 +195,7 @@ hum_evap_heat.weather_station <- function(weather_station, height = "lower", ...
 #'
 #' @param ... Additional parameters passed to later functions.
 #' @return Total precipitable water in cm (grams).
+#' @references p246
 #' @export
 #'
 hum_precipitable_water <- function (...) {

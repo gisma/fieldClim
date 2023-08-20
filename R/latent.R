@@ -6,6 +6,7 @@
 #'
 #' @param ... Additional parameters passed to later functions.
 #' @return Latent heat flux in W/m².
+#' @references Foken p220eq5.7.
 #' @export
 #'
 latent_priestley_taylor <- function (...) {
@@ -32,7 +33,7 @@ latent_priestley_taylor.numeric <- function(t, rad_bal, soil_flux, surface_type 
   sc <- sc(t)
   gam <- gam(t)
 
-  QE_TP <- alpha_pt * sc * (((-1) * rad_bal - soil_flux) / sc + gam)
+  QE_TP <- alpha_pt * sc * (-rad_bal - soil_flux) / (sc + gam)
 
   return(QE_TP)
 }
