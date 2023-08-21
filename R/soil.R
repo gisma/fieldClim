@@ -22,7 +22,7 @@ soil_thermal_cond <- function(...) {
 #' @references p254.
 soil_thermal_cond.numeric <- function(moisture, texture = "sand", ...) {
   # convert moisture from [cubic m/cubic m] to [Vol-%]
-  moisture = moisture * 100
+  moisture <- moisture * 100
 
   if (texture == "sand") {
     y <- c(0.269, 1.46, 1.98, 2.18, 2.31, 2.49, 2.58)
@@ -79,7 +79,7 @@ soil_heat_cap <- function(...) {
 #' @references p254.
 soil_heat_cap.numeric <- function(moisture, texture = "sand", ...) {
   # convert moisture from [cubic m/cubic m] to [Vol-%]
-  moisture = moisture * 100
+  moisture <- moisture * 100
 
   if (texture == "sand") {
     y <- c(1.17, 1.38, 1.59, 1.8, 2.0, 2.42, 2.97)

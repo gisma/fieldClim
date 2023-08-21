@@ -27,37 +27,39 @@ Create a data.frame from a weather station object, that contains weather station
 }
 \examples{
 \dontrun{
-#create a weather_station object
-test_station <- build_weather_station(lat = 50.840503,
-                                     lon = 8.6833,
-                                     elev = 270,
-                                     surface_type = "Meadow",
-                                     obs_height = 0.3, # obstacle height
-                                     z1 = 2, # measurement heights
-                                     z2 = 10,
-                                     datetime = ws$datetime,
-                                     t1 = ws$t1, # temperature
-                                     t2 = ws$t2,
-                                     v1 = ws$v1, # windspeed
-                                     v2 = ws$v2,
-                                     hum1 = ws$hum1, # humidity
-                                     hum2 = ws$hum2,
-                                     sw_in = ws$rad_sw_in, # shortwave radiation
-                                     sw_out = ws$rad_sw_out,
-                                     lw_in = ws$rad_lw_in, # longwave radiation
-                                     lw_out = ws$rad_lw_out,
-                                     soil_flux = ws$heatflux_soil)
+# create a weather_station object
+test_station <- build_weather_station(
+  lat = 50.840503,
+  lon = 8.6833,
+  elev = 270,
+  surface_type = "Meadow",
+  obs_height = 0.3, # obstacle height
+  z1 = 2, # measurement heights
+  z2 = 10,
+  datetime = ws$datetime,
+  t1 = ws$t1, # temperature
+  t2 = ws$t2,
+  v1 = ws$v1, # windspeed
+  v2 = ws$v2,
+  hum1 = ws$hum1, # humidity
+  hum2 = ws$hum2,
+  sw_in = ws$rad_sw_in, # shortwave radiation
+  sw_out = ws$rad_sw_out,
+  lw_in = ws$rad_lw_in, # longwave radiation
+  lw_out = ws$rad_lw_out,
+  soil_flux = ws$heatflux_soil
+)
 
-#add turbulent fluxes to the object
+# add turbulent fluxes to the object
 station_turbulent <- turb_flux_calc(test_station)
 
-#create a data.frame which contains the same coloumns as the weather_station object
+# create a data.frame which contains the same coloumns as the weather_station object
 normal <- as.data.frame(station_turbulent)
 
-#create a reduced data.frame
+# create a reduced data.frame
 reduced <- as.data.frame(station_turbulent, reduced = T)
 
-#create a reduced data.frame with detailed units
+# create a reduced data.frame with detailed units
 unit <- as.data.frame(station_turbulent, reduced = T, unit = T)
 }
 

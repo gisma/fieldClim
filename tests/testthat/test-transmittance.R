@@ -6,8 +6,8 @@ oz <- 0.35 # average ozon columnar values 0.35 cm
 t <- 20.8 # temperature in °C
 vis <- 40 # horizontal visibility range in km
 elev <- 200 # terrain height in m
-air_mass_rel = 1.402452
-sol_elevation = 36.98267
+air_mass_rel <- 1.402452
+sol_elevation <- 36.98267
 datetime <- as.POSIXlt("2018-9-29 10:12:00", tz = "CET")
 
 test_that("trans_air_mass_rel", {

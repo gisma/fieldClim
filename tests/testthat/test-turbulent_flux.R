@@ -19,7 +19,7 @@ z2 <- 10
 v1 <- 1
 v2 <- 2.3
 ludi <- 1.225
-grad_rich_no = -0.6230135
+grad_rich_no <- -0.6230135
 
 
 test_that("turb_flux_grad_rich_no", {

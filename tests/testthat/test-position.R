@@ -1,11 +1,11 @@
 context("Position of climate station")
 
 # Test data
-obs_width = 30
-obs_height = 13
-obs_radius = NULL
-dist = 15
-min_dist = 145
+obs_width <- 30
+obs_height <- 13
+obs_radius <- NULL
+dist <- 15
+min_dist <- 145
 
 test_that("pos_min_dist", {
   expect_equal(pos_min_dist(obs_width, obs_height, ring = FALSE, obs_radius),

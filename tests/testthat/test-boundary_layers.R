@@ -1,13 +1,13 @@
 context("Boundary layers")
 
 # Test data
-dist = 200
-ustar = 0.1596604
-v = 3.0
-temp_change_dist = 200
-pt_upwind = 284
-t_pot = 280
-lapse_rate = -0.006
+dist <- 200
+ustar <- 0.1596604
+v <- 3.0
+temp_change_dist <- 200
+pt_upwind <- 284
+t_pot <- 280
+lapse_rate <- -0.006
 
 
 test_that("bound_mech_low", {

@@ -1,9 +1,9 @@
 context("Pressure")
 
 # Test data
-elev = 200
-t = 20.8
-p = 989.9613
+elev <- 200
+t <- 20.8
+p <- 989.9613
 
 test_that("pres_p", {
   expect_equal(pres_p(elev, t), 989.9613, tolerance = 1e-4)
