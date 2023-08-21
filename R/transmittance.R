@@ -15,9 +15,10 @@ trans_air_mass_rel <- function (...) {
 #' @method trans_air_mass_rel numeric
 #' @param sol_elevation Solar elevation in degrees.
 #' @export
-#'
+#' @reference p246
 trans_air_mass_rel.numeric <- function(sol_elevation, ...) {
-  mr <- 1 / (sin(pi/180*sol_elevation))
+  sol_elevation <- pi / 180 * sol_elevation
+  mr <- 1 / (sin(sol_elevation) + 1.5 * sol_elevation^-0.72)
   return(mr)
 }
 

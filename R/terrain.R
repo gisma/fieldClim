@@ -18,6 +18,7 @@ terr_sky_view <- function (...) {
 #' @param slope Inclination of slope in degrees.
 #' @param valley If the position is in a valley (TRUE) or on a slope (FALSE).
 #' @export
+#' @references p57eq3.12, p57eq3.13
 terr_sky_view.numeric <- function(slope, valley = F, ...) {
   if(valley == TRUE){
     return(cos(slope * pi / 180))
