@@ -30,3 +30,6 @@ data.frame with two columns: sol_azimuth and sol_elevation.
 \description{
 Calculates solar azimuth and solar elevation angle.
 }
+\references{
+p243
+}

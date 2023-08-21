@@ -37,3 +37,6 @@ Total transmittance (0-1)
 \description{
 Calculates total transmittance of the atmosphere.
 }
+\references{
+p46.
+}

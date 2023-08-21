@@ -29,3 +29,6 @@ Reflected shortwave radiation in W/m².
 \description{
 Calculation of the reflected shortwave radiation.
 }
+\references{
+p59eq3.15
+}

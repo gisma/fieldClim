@@ -30,3 +30,6 @@ Shortwave radiation at top of atmosphere in W/m².
 \description{
 Calculation of the shortwave radiation at the top of the atmosphere.
 }
+\references{
+p243, p244
+}

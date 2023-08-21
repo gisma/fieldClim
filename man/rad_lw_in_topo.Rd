@@ -31,3 +31,6 @@ Incoming longwave radiation with topography in W/m².
 \description{
 Corrects the incoming longwave radiation using the sky view factor.
 }
+\references{
+p68eq3.24
+}

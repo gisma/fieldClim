@@ -29,3 +29,6 @@ Potential temperature in °C.
 \description{
 Calculation of the potential air temperature.
 }
+\references{
+p261.
+}

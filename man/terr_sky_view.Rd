@@ -31,3 +31,6 @@ position in valley or on a slope.
 \details{
 Terrain view factor can be calculated by 1-terr_sky_view.
 }
+\references{
+p57eq3.12, p57eq3.13
+}

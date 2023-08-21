@@ -33,3 +33,6 @@ Calculates the Sensible heat flux using the Priestley-Taylor method. Negative
 heat flux signifies flux away from the surface, positive values signify flux
 towards the surface.
 }
+\references{
+Foken p220eq5.6.
+}

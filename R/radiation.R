@@ -344,20 +344,23 @@ rad_sw_in_topo <- function (...) {
 #' @param sol_elevation Sun elevation in degrees.
 #' @param sol_azimuth Sun azimuth in degrees.
 #' @param exposition Exposition (North = 0, South = 180).
-#' @param rad_sw_in Shortwave radiation on the ground onto a horizontal area in W/m².
+#' @param rad_sw_toa Shortwave radiation on the ground onto a horizontal area in W/m².
 #' @param albedo Albedo of surface.
 #' @param trans_total Total transmittance of the atmosphere (0-1).
 #' Default is average atmospheric transmittance.
 #' @param terr_sky_view Sky view factor (0-1).
+#' @param trans_vapor Transmittance due to water vapor (0-1).
+#' @param trans_ozone Transmittance due to ozone (0-1).
 #' @export
-#' @references p46eq3.3, p46eq3.8, p46eq3.7, p46eq3.9, p46eq3.11
+#' @references p46eq3.3, p52eq3.8, p52eq3.7, p55eq3.9, p57eq3.11
 rad_sw_in_topo.numeric <- function(slope,
                                    exposition = 0,
                                    terr_sky_view,
                                    sol_elevation, sol_azimuth,
                                    rad_sw_toa, albedo,
                                    trans_total = 0.8,
-                                   trans_vapor, trans_ozone, ...){
+                                   trans_vapor = 0.5,
+                                   trans_ozone = 0.5, ...){
   sol_dir <- rad_sw_toa * 0.9751 * trans_total
   sol_dif <- 0.5 * (  (1-(1-trans_vapor)-(1-trans_ozone)) * rad_sw_tao - sol_dir  )
   f <- (pi/180)

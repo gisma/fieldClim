@@ -42,3 +42,6 @@ stability of the atmosphere. Negative values signify unstable conditions,
 positive values signify stable conditions, whereas values around zero represent
 neutral conditions.
 }
+\references{
+p43eq2.5.
+}

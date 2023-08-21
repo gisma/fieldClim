@@ -26,3 +26,6 @@ Eccentricity at the date.
 \description{
 Calculates the eccentricity.
 }
+\references{
+p243.
+}

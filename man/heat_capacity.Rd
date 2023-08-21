@@ -15,3 +15,6 @@ Heat capacity density in J/(K*m³)
 \description{
 Calculates volumetric heat capacity
 }
+\references{
+p261.
+}

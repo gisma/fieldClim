@@ -25,3 +25,6 @@ Transmittance due to gas (0-1)
 \description{
 Calculates transmittance due to O$\emph{{2}$ and CO$}{2}$.
 }
+\references{
+p246.
+}

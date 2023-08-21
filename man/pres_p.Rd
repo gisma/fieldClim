@@ -29,3 +29,6 @@ Pressure in hPa.
 \description{
 Calculation of pressure as a function of the elevation above sea level.
 }
+\references{
+Foken p51eqE2.1
+}

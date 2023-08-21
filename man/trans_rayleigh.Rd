@@ -25,3 +25,6 @@ Transmittance due to rayleigh scattering (0-1).
 \description{
 Calculates transmittance due to rayleigh scattering.
 }
+\references{
+p245.
+}

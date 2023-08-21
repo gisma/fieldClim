@@ -27,3 +27,6 @@ Absolute optical air mass.
 \description{
 Calculates absolute optical air mass.
 }
+\references{
+p247.
+}

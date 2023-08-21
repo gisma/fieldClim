@@ -27,3 +27,6 @@ Transmittance due to aerosols (0-1).
 \description{
 Calculates transmittance due to aerosols.
 }
+\references{
+p246.
+}

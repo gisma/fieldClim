@@ -20,3 +20,6 @@ Bowen-ratio
 \description{
 Calculates Bowen-ratio.
 }
+\references{
+p221eq9.21.
+}

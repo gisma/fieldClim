@@ -27,3 +27,6 @@ Soil attenuation length in m.
 \description{
 Calculates soil attenuation length.
 }
+\references{
+p253.
+}

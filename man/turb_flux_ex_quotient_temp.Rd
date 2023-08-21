@@ -35,3 +35,6 @@ Exchange quotient for heat transmission in kg/(m*s).
 \description{
 Calculation of the exchange quotient of the turbulent heat transmission.
 }
+\references{
+Foken p362 Businger.
+}

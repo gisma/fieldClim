@@ -25,3 +25,6 @@ Relative optical air mass.
 \description{
 Calculates relative optical air mass. Returns NA for negative values.
 }
+\references{
+p246.
+}

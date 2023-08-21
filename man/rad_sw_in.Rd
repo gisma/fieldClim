@@ -33,3 +33,6 @@ Shortwave radiation on the ground onto a horizontal area in W/m².
 \description{
 Calculation of the shortwave radiation onto a horizontal area on the ground.
 }
+\references{
+p46eq3.3
+}

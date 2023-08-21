@@ -27,3 +27,6 @@ Transmittance due to water vapor (0-1).
 \description{
 Calculates transmittance due to water vapor.
 }
+\references{
+p245.
+}

@@ -27,3 +27,6 @@ Transmittance due to ozone (0-1).
 \description{
 Calculates transmittance due to ozone.
 }
+\references{
+p245.
+}

@@ -32,3 +32,6 @@ Calculates emissions of a surface.
 If a weather_station object is given, the lower air temperature will be used
 instead of the surface temperature.
 }
+\references{
+p66eq3.20
+}

@@ -27,3 +27,6 @@ Shortwave radiation balance in W/m².
 \description{
 Calculation of the shortwave radiation balance.
 }
+\references{
+p45eq3.1
+}

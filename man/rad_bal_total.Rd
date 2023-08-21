@@ -8,7 +8,7 @@
 \usage{
 rad_bal_total(...)
 
-\method{rad_bal_total}{numeric}(rad_sw_radiation_balance, rad_lw_out, rad_lw_in, ...)
+\method{rad_bal_total}{numeric}(rad_sw_radiation_balance, rad_lw_in, rad_lw_out, ...)
 
 \method{rad_bal_total}{weather_station}(weather_station, ...)
 }
@@ -17,9 +17,9 @@ rad_bal_total(...)
 
 \item{rad_sw_radiation_balance}{Shortwave radiation balance in W/m².}
 
-\item{rad_lw_out}{Longwave surface emissions in W/m².}
-
 \item{rad_lw_in}{Atmospheric radiation in W/m².}
+
+\item{rad_lw_out}{Longwave surface emissions in W/m².}
 
 \item{weather_station}{Object of class weather_station.}
 }
@@ -28,4 +28,7 @@ Total radiation balance in W/m².
 }
 \description{
 Calculate total radiation balance.
+}
+\references{
+p45eq3.1
 }

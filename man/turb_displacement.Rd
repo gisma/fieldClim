@@ -28,3 +28,6 @@ Displacement height in m.
 Calculate the displacement height, caused by an obstacle (e.g. a crop field).
 Works for vegetation only.
 }
+\references{
+p241.
+}

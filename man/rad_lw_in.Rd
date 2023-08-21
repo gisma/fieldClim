@@ -27,3 +27,6 @@ Atmospheric radiation in W/m².
 \description{
 Calculation of the longwave radiation of the atmosphere.
 }
+\references{
+p66eq3.21
+}

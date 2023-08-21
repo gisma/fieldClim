@@ -30,3 +30,6 @@ Calculates soil volumetric heat capacity (MJ / (m³ * K)) from soil moisture (Cu
 \details{
 Works by linearly interpolating volumetric heat capacity based on measured data.
 }
+\references{
+p254.
+}

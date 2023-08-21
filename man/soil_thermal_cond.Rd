@@ -30,3 +30,6 @@ Calculates soil thermal conductivity (W/m K) from soil moisture (Cubic meter/cub
 \details{
 Works by linearly interpolating thermal conductivity based on measured data.
 }
+\references{
+p254.
+}
