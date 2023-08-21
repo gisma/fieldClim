@@ -17,8 +17,8 @@ rad_sw_in_topo(...)
   rad_sw_toa,
   albedo,
   trans_total = 0.8,
-  trans_vapor,
-  trans_ozone,
+  trans_vapor = 0.5,
+  trans_ozone = 0.5,
   ...
 )
 
@@ -37,14 +37,18 @@ rad_sw_in_topo(...)
 
 \item{sol_azimuth}{Sun azimuth in degrees.}
 
+\item{rad_sw_toa}{Shortwave radiation at top of atmosphere in W/m².}
+
 \item{albedo}{Albedo of surface.}
 
 \item{trans_total}{Total transmittance of the atmosphere (0-1).
 Default is average atmospheric transmittance.}
 
-\item{weather_station}{Object of class weather_station.}
+\item{trans_vapor}{Transmittance due to water vapor (0-1).}
 
-\item{rad_sw_in}{Shortwave radiation on the ground onto a horizontal area in W/m².}
+\item{trans_ozone}{Transmittance due to ozone (0-1).}
+
+\item{weather_station}{Object of class weather_station.}
 }
 \value{
 Shortwave radiation balance in dependency of topography in W/m².
@@ -53,5 +57,5 @@ Shortwave radiation balance in dependency of topography in W/m².
 Calculate shortwave radiation balance in dependency of topography.
 }
 \references{
-p46eq3.3, p46eq3.8, p46eq3.7, p46eq3.9, p46eq3.11
+p46eq3.3, p52eq3.8, p52eq3.7, p55eq3.9, p57eq3.11
 }

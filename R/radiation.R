@@ -344,7 +344,7 @@ rad_sw_in_topo <- function (...) {
 #' @param sol_elevation Sun elevation in degrees.
 #' @param sol_azimuth Sun azimuth in degrees.
 #' @param exposition Exposition (North = 0, South = 180).
-#' @param rad_sw_toa Shortwave radiation on the ground onto a horizontal area in W/m².
+#' @param rad_sw_toa Shortwave radiation at top of atmosphere in W/m².
 #' @param albedo Albedo of surface.
 #' @param trans_total Total transmittance of the atmosphere (0-1).
 #' Default is average atmospheric transmittance.
@@ -392,7 +392,7 @@ rad_sw_in_topo.weather_station <- function(weather_station, trans_total = 0.8, .
   valley <- weather_station$location_properties$valley
   terr_sky_view <- weather_station$location_properties$sky_view
   exposition <- weather_station$location_properties$exposition
-  rad_sw_in <- weather_station$measurements$sw_in
+  rad_sw_tao <- weather_station$measurements$sw_in # need to be changed!!
   datetime <- weather_station$measurements$datetime
   albedo <- weather_station$location_properties$albedo
   sol_elevation <- sol_elevation(weather_station)
@@ -402,7 +402,7 @@ rad_sw_in_topo.weather_station <- function(weather_station, trans_total = 0.8, .
                         exposition,
                         terr_sky_view,
                         sol_elevation, sol_azimuth,
-                        rad_sw_in, albedo,
+                        rad_sw_tao, albedo,
                         trans_total))
 }
 
