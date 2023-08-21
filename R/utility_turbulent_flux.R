@@ -40,6 +40,7 @@ gam <- function(t){
 #'
 #' @return Bowen-ratio
 #' @export
+#' @references p221eq9.21.
 bowen_ratio <- function(t, dpot, dah){
   heat_cap <- heat_capacity(t)
   evap_heat <- hum_evap_heat(t)
@@ -55,8 +56,8 @@ bowen_ratio <- function(t, dpot, dah){
 #'
 #' @return Heat capacity density in J/(K*m³)
 #' @export
-#'
+#' @references p261.
 heat_capacity <- function(t){
-  ca <- 1005*(1.2754298 - 0.0047219538 * t + 1.6463585 * 10^(-5) * t)
+  ca <- 1005 * (1.2754298 - 0.0047219538 * t + 1.6463585 * 10^-5 * t)
   return(ca)
 }

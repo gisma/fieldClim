@@ -20,6 +20,7 @@ turb_roughness_length <- function (...) {
 #' @param surface_type Type of surface.
 #' @param obs_height Height of obstacle in m.
 #' @export
+#' @references p239.
 turb_roughness_length.default <- function(surface_type = NULL, obs_height = NULL, ...){
   surface_properties <- surface_properties
   if(!is.null(obs_height)){
@@ -67,6 +68,7 @@ turb_displacement <- function (...) {
 #' @param obs_height Height of vegetation in m.
 #' @param surroundings Choose either 'vegetation' or 'city'.
 #' @export
+#' @references p241.
 turb_displacement.numeric <- function(obs_height, surroundings = "vegetation", ...){
   if(surroundings == "vegetation"){
     d0 <- ( 2 / 3 ) * obs_height  # for vegetation
@@ -109,6 +111,7 @@ turb_ustar <- function (...) {
 #' @param z Height of anemometer in m.
 #' @param z0 Roughness length in m.
 #' @export
+#' @references p239.
 turb_ustar.numeric <- function(v, z, z0, ...) {
   ustar <- (v * 0.4) / log(z / z0)
   if (any(is.infinite(ustar))) {

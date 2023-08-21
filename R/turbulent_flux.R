@@ -24,6 +24,7 @@ turb_flux_monin <- function (...) {
 #' @param t1 Temperature at lower height (e.g. height of anemometer) in °C.
 #' @param t2 Temperature at upper height in °C.
 #' @export
+#' @references p241
 turb_flux_monin.numeric <- function(grad_rich_no, z1 = 2, z2 = 10, z0, v1, v2, t1, t2, ...){
   ustar <- turb_ustar(v1,z1,z0)
   monin <- rep(NA, length(grad_rich_no))
@@ -77,7 +78,7 @@ turb_flux_monin.weather_station <- function(weather_station, ...){
 #' @param ... Additional parameters passed to later functions.
 #' @return Gradient-Richardson-Number.
 #' @export
-#'
+#' @references p43eq2.5.
 turb_flux_grad_rich_no <- function (...) {
   UseMethod("turb_flux_grad_rich_no")
 }
@@ -98,7 +99,7 @@ turb_flux_grad_rich_no.numeric <- function(t1, t2, z1 = 2, z2 = 10, v1, v2, p1, 
   pot_temp2 <- temp_pot_temp(t2, p2)
   pot_temp1 = pot_temp1 + 273.15
   pot_temp2 = pot_temp2 + 273.15
-  grad_rich_no <- (9.81 / pot_temp1) * ((pot_temp2 - pot_temp1) / (z2 - z1)) * (((v2 - v1) / (z2 - z1))^(-2))
+  grad_rich_no <- (9.81 / pot_temp1) * ((pot_temp2 - pot_temp1) / (z2 - z1)) * ((v2 - v1) / (z2 - z1))^-2
   grad_rich_no <- ifelse(is.nan(grad_rich_no), 0, grad_rich_no)
   return(grad_rich_no)
 }
@@ -178,6 +179,7 @@ turb_flux_ex_quotient_temp <- function (...) {
 #' @param z Height in m.
 #' @param air_density Air density in kg/m³.
 #' @export
+#' @references Foken p362 Businger.
 turb_flux_ex_quotient_temp.numeric <- function(grad_rich_no, ustar, monin, z, air_density, ...){
   ex <- rep(NA, length(grad_rich_no))
   for(i in 1:length(grad_rich_no)){
@@ -242,6 +244,7 @@ turb_flux_ex_quotient_imp <- function (...) {
 #' @param z Observation height in m.
 #' @param air_density Air density in kg/m³.
 #' @export
+#' @references Foken p361 Businger.
 turb_flux_ex_quotient_imp.numeric <- function(grad_rich_no, ustar, monin, z, air_density, ...){
   ex <- rep(NA, length(grad_rich_no))
   for(i in 1:length(grad_rich_no)){

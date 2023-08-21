@@ -15,7 +15,7 @@ trans_air_mass_rel <- function (...) {
 #' @method trans_air_mass_rel numeric
 #' @param sol_elevation Solar elevation in degrees.
 #' @export
-#' @reference p246
+#' @references p246.
 trans_air_mass_rel.numeric <- function(sol_elevation, ...) {
   sol_elevation <- pi / 180 * sol_elevation
   mr <- 1 / (sin(sol_elevation) + 1.5 * sol_elevation^-0.72)
@@ -51,7 +51,7 @@ trans_air_mass_abs <- function (...) {
 #' @param air_mass_rel Relative optical air mass.
 #' @param p Air pressure in hPa.
 #' @export
-#'
+#' @references p247.
 trans_air_mass_abs.numeric <- function(air_mass_rel, p, ...){
   p0 <- 1013.25
   air_mass_abs <- air_mass_rel * (p / p0)
@@ -90,9 +90,9 @@ trans_rayleigh <- function (...) {
 #' @method trans_rayleigh numeric
 #' @param air_mass_abs Absolute optical air mass.
 #' @export
-#'
+#' @references p245.
 trans_rayleigh.numeric <- function(air_mass_abs, ...){
-  x1 <- (-0.0903) * air_mass_abs^(0.84) * (1.0 + air_mass_abs - air_mass_abs^(1.01))
+  x1 <- -0.0903 * air_mass_abs^(0.84) * (1.0 + air_mass_abs - air_mass_abs^(1.01))
   x <- exp(x1)
   return(x)
 }
@@ -126,7 +126,7 @@ trans_ozone <- function (...) {
 #' @param air_mass_rel Relative optical air mass.
 #' @param oz Atmospheric ozone as column in cm. Default is average value of 0.35 cm.
 #' @export
-#'
+#' @references p245.
 trans_ozone.numeric <- function(air_mass_rel, oz = 0.35, ...) {
   x <- oz * air_mass_rel
   xx <- 1-(0.1611 * x * (1 + 139.48 * x)^(-0.3035) - 0.002715 * x * (1 + 0.044 * x + 0.0003 * x^2)^(-1))
@@ -162,10 +162,10 @@ trans_vapor <- function (...) {
 #' @param air_mass_rel Relative optical air mass.
 #' @param precipitable_water Precipitable water in cm.
 #' @export
-#'
+#' @references p245.
 trans_vapor.numeric <- function(air_mass_rel, precipitable_water, ...) {
   y <- precipitable_water*air_mass_rel
-  yy <- 1 -(2.4959 * y *((1 + 79.034 * y)^(0.6828) + 6.385 * y)^(-1))
+  yy <- 1 - 2.4959 * y * ( (1 + 79.034 * y)^0.6828 + 6.385 * y )^-1
   return(yy)
 }
 
@@ -199,12 +199,12 @@ trans_aerosol <- function (...) {
 #' @param air_mass_abs Absolute optical air mass.
 #' @param vis Visibility in km.
 #' @export
-#'
+#' @references p246.
 trans_aerosol.numeric <- function(air_mass_abs, vis = 30, ...) {
   tau38 <- 3.6536 * vis^(-0.7111)
   tau5 <- 2.4087 * vis^(-0.719)
   tex <- 0.2758 * tau38 + 0.35 * tau5
-  x1 <- (tex^(0.873) * (-1)) * (1.0 + tex - tex^(0.7088)) * air_mass_abs^(0.9108)
+  x1 <- -tex^0.873 * (1 + tex - tex^0.7088) * air_mass_abs^0.9108
   x <- exp(x1)
   return(x)
 }
@@ -237,9 +237,9 @@ trans_gas <- function (...) {
 #' @method trans_gas numeric
 #' @param air_mass_abs Absolute optical air mass.
 #' @export
-#'
+#' @references p246.
 trans_gas.numeric <- function(air_mass_abs, ...) {
-  trans_ga <- exp((-0.0127) * air_mass_abs^(0.26))
+  trans_ga <- exp(-0.0127 * air_mass_abs^0.26)
   return(trans_ga)
 }
 
@@ -276,7 +276,7 @@ trans_total <- function (...) {
 #' @param vis Meteorological visibility in km. Default is the visibility on a clear day.
 #' @param p OPTIONAL. Pressure in hPa. Estimated from elev and t if not available.
 #' @export
-#'
+#' @references p46.
 trans_total.numeric <- function(sol_elevation, t, elev, oz = 0.35, vis = 30,
                                 p = NULL, ...){
 
