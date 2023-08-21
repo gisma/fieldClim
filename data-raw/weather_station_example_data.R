@@ -4,34 +4,38 @@ library(fieldClim)
 
 day <- read.csv(file.path("data-raw", "caldern_weather_station.csv"))
 
-#calculate surface temperature from lw_out:
+# calculate surface temperature from lw_out:
 
-day$t_surface <- (day$LUpCo/5.67e-8)^(1/4)-273.15
+day$t_surface <- (day$LUpCo / 5.67e-8)^(1 / 4) - 273.15
 
 
 # select necessary columns
 
-sel_columns <- c("datetime",
-                 "Ta_2m", "Huma_2m",
-                 "Ta_10m", "Huma_10m",
-                 "rad_sw_in", "rad_sw_out",
-                 "rad_lw_in", "rad_lw_out",
-                 "RsNet", "RlNet",
-                 "Albedo", "rad_net",
-                 "water_vol_soil", "Ts", "heatflux_soil",
-                 "Windspeed_2m", "Windspeed_10m", "t_surface")
+sel_columns <- c(
+  "datetime",
+  "Ta_2m", "Huma_2m",
+  "Ta_10m", "Huma_10m",
+  "rad_sw_in", "rad_sw_out",
+  "rad_lw_in", "rad_lw_out",
+  "RsNet", "RlNet",
+  "Albedo", "rad_net",
+  "water_vol_soil", "Ts", "heatflux_soil",
+  "Windspeed_2m", "Windspeed_10m", "t_surface"
+)
 
-new_names <-  c("datetime",
-                "t1", "hum1",
-                "t2", "hum2",
-                "rad_sw_in", "rad_sw_out",
-                "rad_lw_in", "rad_lw_out",
-                "rad_sw_bal", "rad_lw_bal",
-                "albedo", "rad_bal",
-                "water_vol_soil", "ts1", "heatflux_soil",
-                "v1", "v2", "t_surface")
+new_names <- c(
+  "datetime",
+  "t1", "hum1",
+  "t2", "hum2",
+  "rad_sw_in", "rad_sw_out",
+  "rad_lw_in", "rad_lw_out",
+  "rad_sw_bal", "rad_lw_bal",
+  "albedo", "rad_bal",
+  "water_vol_soil", "ts1", "heatflux_soil",
+  "v1", "v2", "t_surface"
+)
 
-day_selected <- day[,sel_columns]
+day_selected <- day[, sel_columns]
 colnames(day_selected) <- new_names
 
 
@@ -39,7 +43,7 @@ colnames(day_selected) <- new_names
 day_selected$datetime <- as.POSIXlt(day$datetime)
 
 # Check for any non numeric columns
-#colnames(Filter(Negate(is.numeric), day_selected))
+# colnames(Filter(Negate(is.numeric), day_selected))
 
 # handle those columns
 day_selected$albedo <- as.numeric(day_selected$albedo)

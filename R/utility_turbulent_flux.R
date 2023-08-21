@@ -8,7 +8,7 @@
 #' @param t Air temperature in °C.
 #'
 #' @return sc coefficient for Priestley-Taylor calculations.
-sc <- function(t){
+sc <- function(t) {
   sc <- 8.5 * 10^(-7) * (t + 273.15)^2 - 0.0004479 * (t + 273.15) + 0.05919
   return(sc)
 }
@@ -23,7 +23,7 @@ sc <- function(t){
 #' @param t Air temperature in °C.
 #'
 #' @return gamma coefficient for Priestley-Taylor calculations.
-gam <- function(t){
+gam <- function(t) {
   gam <- 0.0004 + (0.00041491 - 0.0004) / (1 + (299.44 / (t + 273.15))^383.4)
   return(gam)
 }
@@ -41,10 +41,10 @@ gam <- function(t){
 #' @return Bowen-ratio
 #' @export
 #' @references p221eq9.21.
-bowen_ratio <- function(t, dpot, dah){
+bowen_ratio <- function(t, dpot, dah) {
   heat_cap <- heat_capacity(t)
   evap_heat <- hum_evap_heat(t)
-  Bow2 <- (heat_cap*dpot) / (evap_heat*dah)
+  Bow2 <- (heat_cap * dpot) / (evap_heat * dah)
   return(Bow2)
 }
 
@@ -57,7 +57,7 @@ bowen_ratio <- function(t, dpot, dah){
 #' @return Heat capacity density in J/(K*m³)
 #' @export
 #' @references p261.
-heat_capacity <- function(t){
+heat_capacity <- function(t) {
   ca <- 1005 * (1.2754298 - 0.0047219538 * t + 1.6463585 * 10^-5 * t)
   return(ca)
 }

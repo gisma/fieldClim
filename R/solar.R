@@ -6,7 +6,7 @@
 #' @return Eccentricity at the date.
 #' @export
 #'
-sol_eccentricity <- function (...) {
+sol_eccentricity <- function(...) {
   UseMethod("sol_eccentricity")
 }
 
@@ -17,15 +17,14 @@ sol_eccentricity <- function (...) {
 #' @export
 #' @references p243.
 sol_eccentricity.POSIXt <- function(datetime, ...) {
-
-  if(!inherits(datetime, "POSIXt")){
+  if (!inherits(datetime, "POSIXt")) {
     stop("datetime has to be of class POSIXt.")
   }
 
   # day of year
   doy <- as.numeric(strftime(datetime, format = "%j"))
 
-  x <- 2.0* pi * (doy - 1) / 365.0
+  x <- 2.0 * pi * (doy - 1) / 365.0
   exz <- 1.00011 + 0.034221 * cos(x) + 0.00128 * sin(x) + 0.000719 * cos(2 * x) + 0.000719 * sin(2. * x)
   return(exz)
 }
@@ -64,9 +63,8 @@ sol_angles <- function(...) {
 #' @param lon Longitude in decimal degrees.
 #' @export
 #' @references p243
-sol_angles.POSIXt <- function(datetime, lat, lon, ...){
-
-  if(!inherits(datetime, "POSIXt")){
+sol_angles.POSIXt <- function(datetime, lat, lon, ...) {
+  if (!inherits(datetime, "POSIXt")) {
     stop("datetime has to be of class POSIXt.")
   }
   # day of year
@@ -76,24 +74,24 @@ sol_angles.POSIXt <- function(datetime, lat, lon, ...){
   lt <- as.POSIXlt(datetime)
   ut <- lt$hour + lt$min / 60 + lt$sec / 3600
 
-  f <- pi / 180   # angle to radian
+  f <- pi / 180 # angle to radian
 
   # conversion latitude to degrees
-  gbr <- lat*f
-  glr <- lon*f
+  gbr <- lat * f
+  glr <- lon * f
 
   # medium sun time
   t <- ut + lon / 15. # in hours
 
   # angle in radian
   m <- 356.6 + 0.9856 * doy # in degrees
-  m <- m*f                  # in radian
+  m <- m * f # in radian
 
   # time formula
-  zt <- 0.1644 * sin(2.* glr) - 0.1277 * sin(m) # in hours
+  zt <- 0.1644 * sin(2. * glr) - 0.1277 * sin(m) # in hours
 
   # hour-angle of the sun
-  h <- (15.* f) * (t + zt - 12.)  # in radian
+  h <- (15. * f) * (t + zt - 12.) # in radian
 
   # geocentric apparent ecliptic longitude of the sun (in radian)
   del <- 279.3 * f + 0.9856 * f * doy + 1.92 * f * sin(356.6 * f + 0.9856 * f * doy)
@@ -103,19 +101,25 @@ sol_angles.POSIXt <- function(datetime, lat, lon, ...){
 
   # sun height
   shh <- sin(gbr) * sde + cos(gbr) * cos(asin(sde)) * cos(h)
-  sh  <- asin(shh) / f # (in degrees)
+  sh <- asin(shh) / f # (in degrees)
 
   # Sun azimuth
   saz <- (sde * cos(gbr) - cos(asin(sde)) * sin(gbr) * cos(h)) / cos((sh * f))
 
   saz_2 <- rep(NA, length(saz))
-  for(i in 1:length(saz_2)){
-    if(t[i] <  12){saz_2[i] <- acos(saz[i])}
-    if(t[i] >= 12){saz_2[i] <- 360 * f - acos(saz[i])}
+  for (i in 1:length(saz_2)) {
+    if (t[i] < 12) {
+      saz_2[i] <- acos(saz[i])
+    }
+    if (t[i] >= 12) {
+      saz_2[i] <- 360 * f - acos(saz[i])
+    }
   }
-  saz_deg <- saz_2/f
-  results <- data.frame(sol_azimuth = saz_deg,
-                        sol_elevation = sh)
+  saz_deg <- saz_2 / f
+  results <- data.frame(
+    sol_azimuth = saz_deg,
+    sol_elevation = sh
+  )
   return(results)
 }
 
@@ -142,7 +146,7 @@ sol_angles.weather_station <- function(weather_station, ...) {
 #' @return Solar elevation angle in degrees.
 #' @export
 #'
-sol_elevation <- function (...) {
+sol_elevation <- function(...) {
   UseMethod("sol_elevation")
 }
 
@@ -182,7 +186,7 @@ sol_elevation.weather_station <- function(weather_station, ...) {
 #' @return Solar azimuth angle in degrees.
 #' @export
 #'
-sol_azimuth <- function (...) {
+sol_azimuth <- function(...) {
   UseMethod("sol_azimuth")
 }
 

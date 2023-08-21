@@ -9,7 +9,7 @@
 #' @return Soil thermal conductivity in W/m K.
 #' @export
 #'
-soil_thermal_cond <- function (...) {
+soil_thermal_cond <- function(...) {
   UseMethod("soil_thermal_cond")
 }
 
@@ -22,20 +22,17 @@ soil_thermal_cond <- function (...) {
 #' @references p254.
 soil_thermal_cond.numeric <- function(moisture, texture = "sand", ...) {
   # convert moisture from [cubic m/cubic m] to [Vol-%]
-  moisture = moisture * 100 
-  
-  if(texture == "sand"){
-    y <- c(0.269,1.46,1.98,2.18,2.31,2.49,2.58)
-    x <- c(0, 5, 10, 15, 20, 30, 43)
+  moisture = moisture * 100
 
-  } else if(texture == "clay"){
-    y <- c(0.276,0.586,1.1,1.43,1.57,1.74,1.95)
+  if (texture == "sand") {
+    y <- c(0.269, 1.46, 1.98, 2.18, 2.31, 2.49, 2.58)
     x <- c(0, 5, 10, 15, 20, 30, 43)
-
-  } else if(texture == "peat"){
+  } else if (texture == "clay") {
+    y <- c(0.276, 0.586, 1.1, 1.43, 1.57, 1.74, 1.95)
+    x <- c(0, 5, 10, 15, 20, 30, 43)
+  } else if (texture == "peat") {
     y <- c(0.033, 0.042, 0.130, 0.276, 0.421, 0.478, 0.528)
     x <- c(0, 10, 30, 50, 70, 80, 90)
-
   } else {
     stop("Texture not available. Input has to be either 'sand', 'peat' or 'clay'")
   }
@@ -69,7 +66,7 @@ soil_thermal_cond.weather_station <- function(weather_station, ...) {
 #' @return Numeric vector with volumetric heat capacity in  MJ/ (m³ * K).
 #' @export
 #'
-soil_heat_cap <- function (...) {
+soil_heat_cap <- function(...) {
   UseMethod("soil_heat_cap")
 }
 
@@ -82,20 +79,17 @@ soil_heat_cap <- function (...) {
 #' @references p254.
 soil_heat_cap.numeric <- function(moisture, texture = "sand", ...) {
   # convert moisture from [cubic m/cubic m] to [Vol-%]
-  moisture = moisture * 100 
-  
-  if(texture == "sand"){
-    y <- c(1.17,1.38,1.59,1.8,2.0,2.42,2.97)
-    x <- c(0, 5, 10, 15, 20, 30, 43)
+  moisture = moisture * 100
 
-  } else if(texture == "clay"){
-    y <- c(1.19,1.4,1.61,1.82,2.03,2.45,2.99)
+  if (texture == "sand") {
+    y <- c(1.17, 1.38, 1.59, 1.8, 2.0, 2.42, 2.97)
     x <- c(0, 5, 10, 15, 20, 30, 43)
-
-  } else if(texture == "peat"){
+  } else if (texture == "clay") {
+    y <- c(1.19, 1.4, 1.61, 1.82, 2.03, 2.45, 2.99)
+    x <- c(0, 5, 10, 15, 20, 30, 43)
+  } else if (texture == "peat") {
     y <- c(0.25, 0.67, 1.51, 2.35, 3.19, 3.61, 4.03)
     x <- c(0, 10, 30, 50, 70, 80, 90)
-
   } else {
     stop("Texture not available. Input either 'sand', 'peat' or 'clay'")
   }
@@ -132,7 +126,7 @@ soil_heat_cap.weather_station <- function(weather_station, ...) {
 #' @return Soil heat flux in W * m^(-2).
 #' @export
 #'
-soil_heat_flux <- function (...) {
+soil_heat_flux <- function(...) {
   UseMethod("soil_heat_flux")
 }
 
@@ -147,7 +141,7 @@ soil_heat_flux <- function (...) {
 #' @references p71eq4.2.
 soil_heat_flux.numeric <- function(ts1, ts2, depth1, depth2, thermal_cond, ...) {
   soil_heat_flu <- thermal_cond * ((ts1 - ts2) / (depth1 - depth2))
-  return (soil_heat_flu)
+  return(soil_heat_flu)
 }
 
 #' @rdname soil_heat_flux
@@ -161,7 +155,7 @@ soil_heat_flux.weather_station <- function(weather_station, ...) {
   depth1 <- weather_station$properties$depth1
   depth2 <- weather_station$properties$depth2
   thermal_cond <- soil_thermal_cond(weather_station)
-  return (soil_heat_flux(ts1, ts2, depth1, depth2, thermal_cond))
+  return(soil_heat_flux(ts1, ts2, depth1, depth2, thermal_cond))
 }
 
 
@@ -174,7 +168,7 @@ soil_heat_flux.weather_station <- function(weather_station, ...) {
 #' @return Soil attenuation length in m.
 #' @export
 #'
-soil_attenuation <- function (...) {
+soil_attenuation <- function(...) {
   UseMethod("soil_attenuation")
 }
 

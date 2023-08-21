@@ -26,7 +26,7 @@ test_that("rad_lw_out", {
 })
 
 test_that("rad_lw_in", {
-  #expect_equal(rad_lw_in(0.2090643, t), 88.50861, tolerance = 1e-4)
+  # expect_equal(rad_lw_in(0.2090643, t), 88.50861, tolerance = 1e-4)
   expect_equal(rad_lw_in(hum = hum1, t = t), 334.2968946, tolerance = 1e-4)
 })
 
@@ -40,17 +40,26 @@ test_that("rad_sw_in", {
 
 test_that("rad_sw_out", {
   expect_equal(rad_sw_out(rad_sw_in = 496.5168),
-               99.30336, tolerance = 1e-3)
+    99.30336,
+    tolerance = 1e-3
+  )
 })
 
 test_that("rad_sw_radiation_balance", {
   expect_equal(rad_sw_radiation_balance(496.5168, 74.47752),
-               422.0393, tolerance = 1e-3)
+    422.0393,
+    tolerance = 1e-3
+  )
 })
 
 test_that("rad_bal_total", {
-  expect_equal(rad_bal_total(rad_sw_radiation_balance = 422.0393,
-                             rad_lw_out = 371.3726,
-                             rad_lw_in = 88.50861),
-               139.1754, tolerance = 1e-3)
+  expect_equal(
+    rad_bal_total(
+      rad_sw_radiation_balance = 422.0393,
+      rad_lw_out = 371.3726,
+      rad_lw_in = 88.50861
+    ),
+    139.1754,
+    tolerance = 1e-3
+  )
 })

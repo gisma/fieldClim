@@ -11,7 +11,7 @@
 #' @references p239.
 #' @export
 #'
-turb_roughness_length <- function (...) {
+turb_roughness_length <- function(...) {
   UseMethod("turb_roughness_length")
 }
 
@@ -21,12 +21,12 @@ turb_roughness_length <- function (...) {
 #' @param obs_height Height of obstacle in m.
 #' @export
 #' @references p239.
-turb_roughness_length.default <- function(surface_type = NULL, obs_height = NULL, ...){
+turb_roughness_length.default <- function(surface_type = NULL, obs_height = NULL, ...) {
   surface_properties <- surface_properties
-  if(!is.null(obs_height)){
+  if (!is.null(obs_height)) {
     z0 <- obs_height * 0.1
-  } else if(!is.null(surface_type)) {
-    z0 <- surface_properties[which(surface_properties$surface_type==surface_type),]$roughness_length
+  } else if (!is.null(surface_type)) {
+    z0 <- surface_properties[which(surface_properties$surface_type == surface_type), ]$roughness_length
   } else {
     z0 <- NA
     print("The input is not valid. Please check the input values.")
@@ -38,11 +38,11 @@ turb_roughness_length.default <- function(surface_type = NULL, obs_height = NULL
 #' @method turb_roughness_length weather_station
 #' @param weather_station Object of class weather_station.
 #' @export
-turb_roughness_length.weather_station <- function(weather_station, ...){
+turb_roughness_length.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "obs_height", "surface_type")
   obs_height <- weather_station$location_properties$obs_height
   surface_type <- weather_station$location_properties$surface_type
-  if(is.null(obs_height) & is.null(surface_type)){
+  if (is.null(obs_height) & is.null(surface_type)) {
     stop("Either surface_type or obs_height must be set.")
   }
   return(turb_roughness_length(surface_type, obs_height))
@@ -59,7 +59,7 @@ turb_roughness_length.weather_station <- function(weather_station, ...){
 #' @return Displacement height in m.
 #' @export
 #'
-turb_displacement <- function (...) {
+turb_displacement <- function(...) {
   UseMethod("turb_displacement")
 }
 
@@ -69,12 +69,12 @@ turb_displacement <- function (...) {
 #' @param surroundings Choose either 'vegetation' or 'city'.
 #' @export
 #' @references p241.
-turb_displacement.numeric <- function(obs_height, surroundings = "vegetation", ...){
-  if(surroundings == "vegetation"){
-    d0 <- ( 2 / 3 ) * obs_height  # for vegetation
-  }else if (surroundings == "city"){
-    d0 <- 0.8 * obs_height  # for dense housing
-  }else{
+turb_displacement.numeric <- function(obs_height, surroundings = "vegetation", ...) {
+  if (surroundings == "vegetation") {
+    d0 <- (2 / 3) * obs_height # for vegetation
+  } else if (surroundings == "city") {
+    d0 <- 0.8 * obs_height # for dense housing
+  } else {
     stop("Please set 'surroundings' to either 'vegetation' or 'city'.")
   }
   return(d0)
@@ -84,7 +84,7 @@ turb_displacement.numeric <- function(obs_height, surroundings = "vegetation", .
 #' @method turb_displacement weather_station
 #' @param weather_station Object of class weather_station
 #' @export
-turb_displacement.weather_station <- function(weather_station, surroundings = "vegetation", ...){
+turb_displacement.weather_station <- function(weather_station, surroundings = "vegetation", ...) {
   check_availability(weather_station, "obs_height")
   obs_height <- weather_station$location_properties$obs_height
   return(turb_displacement(obs_height, surroundings))
@@ -101,7 +101,7 @@ turb_displacement.weather_station <- function(weather_station, surroundings = "v
 #' @references p239
 #' @export
 #'
-turb_ustar <- function (...) {
+turb_ustar <- function(...) {
   UseMethod("turb_ustar")
 }
 
@@ -125,10 +125,10 @@ turb_ustar.numeric <- function(v, z, z0, ...) {
 #' @method turb_ustar weather_station
 #' @param weather_station Object of class weather_station.
 #' @export
-turb_ustar.weather_station <- function(weather_station, ...){
+turb_ustar.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "v1", "z1")
   v <- weather_station$measurements$v1
   z <- weather_station$properties$z1
   z0 <- turb_roughness_length(weather_station)
-  return(turb_ustar(v,z,z0))
+  return(turb_ustar(v, z, z0))
 }

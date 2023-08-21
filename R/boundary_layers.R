@@ -44,6 +44,6 @@ bound_mech_avg <- function(dist) {
 #' @export
 #'
 bound_thermal_avg <- function(ustar, v, temp_change_dist, t_pot_upwind, t_pot, lapse_rate) {
-  tib <- (ustar/v)*( (temp_change_dist*abs(t_pot_upwind-t_pot))/abs(lapse_rate) )**0.5
+  tib <- (ustar / v) * ((temp_change_dist * abs(t_pot_upwind - t_pot)) / abs(lapse_rate))**0.5
   return(tib)
 }

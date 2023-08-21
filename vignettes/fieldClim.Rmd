@@ -54,7 +54,6 @@ ws$datetime <- strptime(wrong_type, format = "%Y-%m-%d %H:%M:%S")
 
 # or with as.POSIXlt
 ws$datetime <- as.POSIXlt(wrong_type)
-
 ```
 
 It is also necessary to check if all other columns containing data are `numeric`. Most functions provided by `fieldClim` require `numeric` input. Some functions will automatically try to convert to `numeric`, however this will sometimes lead to unexpected side-effects so it is always best to ensure the proper data format for yourself.
@@ -62,7 +61,6 @@ It is also necessary to check if all other columns containing data are `numeric`
 ```{r}
 # Check if any remaining classes are not numeric
 colnames(Filter(Negate(is.numeric), ws))
-
 ```
 
 Looks like only the `datetime` column is not numeric which is appropriate. If this wasn't the case, other columns might have to be converted using `as.numeric()`.
@@ -75,25 +73,27 @@ If the dataframe is properly formatted (date column as `POSIXt`, all other neces
 You can get more info about the single parameters by calling `?build_weather_station`.
 
 ```{r}
-test_station <- build_weather_station(lat = 50.840503, # latitude
-                                      lon = 8.6833, # longitude
-                                      elev = 270, # elevation of the terrain
-                                      surface_type = "field", # type of surface
-                                      obs_height = 0.3, # obstacle height
-                                      z1 = 2, # height of lower measurement 
-                                      z2 = 10, # height of upper measurement
-                                      datetime = ws$datetime, # date of measurement
-                                      t1 = ws$t1, # temperature on 2m above ground
-                                      t2 = ws$t2, # temperature on 10m above ground
-                                      v1 = ws$v1, # windspeed on 2m above ground
-                                      v2 = ws$v2, # windspeed on 10m above ground
-                                      hum1 = ws$hum1, # humidity on 2m above ground
-                                      hum2 = ws$hum2, # humidity on 10m above ground
-                                      sw_in = ws$rad_sw_in, # incoming shortwave radiation
-                                      sw_out = ws$rad_sw_out, # reflected sw radiation
-                                      lw_in = ws$rad_lw_in, # incoming longwave radiation
-                                      lw_out = ws$rad_lw_out, # reflected longwave radiation
-                                      soil_flux = ws$heatflux_soil) # soil heat flux
+test_station <- build_weather_station(
+  lat = 50.840503, # latitude
+  lon = 8.6833, # longitude
+  elev = 270, # elevation of the terrain
+  surface_type = "field", # type of surface
+  obs_height = 0.3, # obstacle height
+  z1 = 2, # height of lower measurement
+  z2 = 10, # height of upper measurement
+  datetime = ws$datetime, # date of measurement
+  t1 = ws$t1, # temperature on 2m above ground
+  t2 = ws$t2, # temperature on 10m above ground
+  v1 = ws$v1, # windspeed on 2m above ground
+  v2 = ws$v2, # windspeed on 10m above ground
+  hum1 = ws$hum1, # humidity on 2m above ground
+  hum2 = ws$hum2, # humidity on 10m above ground
+  sw_in = ws$rad_sw_in, # incoming shortwave radiation
+  sw_out = ws$rad_sw_out, # reflected sw radiation
+  lw_in = ws$rad_lw_in, # incoming longwave radiation
+  lw_out = ws$rad_lw_out, # reflected longwave radiation
+  soil_flux = ws$heatflux_soil
+) # soil heat flux
 
 # We can see that this is indeed a weather_station object.
 class(test_station)
@@ -109,28 +109,30 @@ Below is an overview on which parameters can be omitted or estimated another way
 By default the air pressure at the measurment heights is estimated using the temperature and the elevation (using `pres_p()`). If the pressure is measured at the weather station it can be added to the call using the parameters `p1` and `p2`. 
 
 ```{r}
-test_station <- build_weather_station(lat = 50.840503,
-                                      lon = 8.6833,
-                                      elev = 270,
-                                      surface_type = "field",
-                                      obs_height = 0.3,
-                                      z1 = 2,
-                                      z2 = 10,
-                                      datetime = ws$datetime,
-                                      t1 = ws$t1,
-                                      t2 = ws$t2,
-                                      v1 = ws$v1,
-                                      v2 = ws$v2,
-                                      hum1 = ws$hum1,
-                                      hum2 = ws$hum2,
-                                      sw_in = ws$rad_sw_in,
-                                      sw_out = ws$rad_sw_out,
-                                      lw_in = ws$rad_lw_in,
-                                      lw_out = ws$rad_lw_out,
-                                      soil_flux = ws$heatflux_soil,
-                                      # ADDED PRESSURE
-                                      p1 = ws$p1,
-                                      p2 = ws$p2)
+test_station <- build_weather_station(
+  lat = 50.840503,
+  lon = 8.6833,
+  elev = 270,
+  surface_type = "field",
+  obs_height = 0.3,
+  z1 = 2,
+  z2 = 10,
+  datetime = ws$datetime,
+  t1 = ws$t1,
+  t2 = ws$t2,
+  v1 = ws$v1,
+  v2 = ws$v2,
+  hum1 = ws$hum1,
+  hum2 = ws$hum2,
+  sw_in = ws$rad_sw_in,
+  sw_out = ws$rad_sw_out,
+  lw_in = ws$rad_lw_in,
+  lw_out = ws$rad_lw_out,
+  soil_flux = ws$heatflux_soil,
+  # ADDED PRESSURE
+  p1 = ws$p1,
+  p2 = ws$p2
+)
 ```
 
 
@@ -145,31 +147,33 @@ For this the two depths of the temperature probes from the surface in meters, th
 Internally the calculations are provided by the two functions `soil_heat_flux()` and `soil_thermal_cond()`.
 
 ```{r}
-test_station <- build_weather_station(lat = 50.840503,
-                                      lon = 8.6833,
-                                      elev = 270,
-                                      surface_type = "field",
-                                      obs_height = 0.3,
-                                      z1 = 2,
-                                      z2 = 10,
-                                      datetime = ws$datetime,
-                                      t1 = ws$t1,
-                                      t2 = ws$t2,
-                                      v1 = ws$v1,
-                                      v2 = ws$v2,
-                                      hum1 = ws$hum1,
-                                      hum2 = ws$hum2,
-                                      sw_in = ws$rad_sw_in,
-                                      sw_out = ws$rad_sw_out,
-                                      lw_in = ws$rad_lw_in,
-                                      lw_out = ws$rad_lw_out,
-                                      # Alternative Soil flux:
-                                      depth1 = 0,
-                                      depth2 = 0.3,
-                                      ts1 = ws$t_surface,
-                                      ts2 = ws$ts1,
-                                      moisture = ws$water_vol_soil,
-                                      texture = "clay")
+test_station <- build_weather_station(
+  lat = 50.840503,
+  lon = 8.6833,
+  elev = 270,
+  surface_type = "field",
+  obs_height = 0.3,
+  z1 = 2,
+  z2 = 10,
+  datetime = ws$datetime,
+  t1 = ws$t1,
+  t2 = ws$t2,
+  v1 = ws$v1,
+  v2 = ws$v2,
+  hum1 = ws$hum1,
+  hum2 = ws$hum2,
+  sw_in = ws$rad_sw_in,
+  sw_out = ws$rad_sw_out,
+  lw_in = ws$rad_lw_in,
+  lw_out = ws$rad_lw_out,
+  # Alternative Soil flux:
+  depth1 = 0,
+  depth2 = 0.3,
+  ts1 = ws$t_surface,
+  ts2 = ws$ts1,
+  moisture = ws$water_vol_soil,
+  texture = "clay"
+)
 ```
 
 
@@ -182,30 +186,31 @@ This works by estimating the top of atmosphere radiation at the provided locatio
 By setting `slope`, `sky_view` and `exposition`, `sw_in` and `sw_out` will additionally be topographically corrected (see `?rad_sw_in_topo`).
 
 ```{r}
-test_station <- build_weather_station(lat = 50.840503,
-                                      lon = 8.6833,
-                                      elev = 270,
-                                      surface_type = "field",
-                                      obs_height = 0.3,
-                                      z1 = 2,
-                                      z2 = 10,
-                                      datetime = ws$datetime,
-                                      t1 = ws$t1,
-                                      t2 = ws$t2,
-                                      v1 = ws$v1,
-                                      v2 = ws$v2,
-                                      hum1 = ws$hum1,
-                                      hum2 = ws$hum2,
-                                      lw_in = ws$rad_lw_in,
-                                      lw_out = ws$rad_lw_out,
-                                      soil_flux = ws$heatflux_soil,
-                                      # Alternative shortwave radiation
-                                      albedo = ws$albedo,
-                                      # Topographic correction
-                                      slope = 10, # In degrees
-                                      exposition = 20, # North = 0, South = 180
-                                      sky_view = 0.82 # Sky view factor (0-1)
-                                      )
+test_station <- build_weather_station(
+  lat = 50.840503,
+  lon = 8.6833,
+  elev = 270,
+  surface_type = "field",
+  obs_height = 0.3,
+  z1 = 2,
+  z2 = 10,
+  datetime = ws$datetime,
+  t1 = ws$t1,
+  t2 = ws$t2,
+  v1 = ws$v1,
+  v2 = ws$v2,
+  hum1 = ws$hum1,
+  hum2 = ws$hum2,
+  lw_in = ws$rad_lw_in,
+  lw_out = ws$rad_lw_out,
+  soil_flux = ws$heatflux_soil,
+  # Alternative shortwave radiation
+  albedo = ws$albedo,
+  # Topographic correction
+  slope = 10, # In degrees
+  exposition = 20, # North = 0, South = 180
+  sky_view = 0.82 # Sky view factor (0-1)
+)
 ```
 
 
@@ -216,28 +221,29 @@ If `lw_in` is not provided, it will get estimated using the air temperature and 
 If `lw_out` is not provided, the surface temperature needs to be set as `t_surface` (see `?rad_lw_out`). The surface temperature and emissivity get combined to estimate the longwave emissions. The default emissivity used in `build_weather_station()` is the one for short grass (0.95). If a different emissivity is needed, `rad_lw_out()` can be used directly.
 
 ```{r}
-test_station <- build_weather_station(lat = 50.840503,
-                                      lon = 8.6833,
-                                      elev = 270,
-                                      surface_type = "field",
-                                      obs_height = 0.3,
-                                      z1 = 2,
-                                      z2 = 10,
-                                      datetime = ws$datetime,
-                                      t1 = ws$t1,
-                                      t2 = ws$t2,
-                                      v1 = ws$v1,
-                                      v2 = ws$v2,
-                                      hum1 = ws$hum1,
-                                      hum2 = ws$hum2,
-                                      sw_in = ws$rad_sw_in,
-                                      sw_out = ws$rad_sw_out,
-                                      soil_flux = ws$heatflux_soil,
-                                      # Alternative longwave radiation
-                                      t_surface = ws$t_surface,
-                                      # Topographic correction
-                                      sky_view = 0.82 # Sky view factor (0-1)
-                                      )
+test_station <- build_weather_station(
+  lat = 50.840503,
+  lon = 8.6833,
+  elev = 270,
+  surface_type = "field",
+  obs_height = 0.3,
+  z1 = 2,
+  z2 = 10,
+  datetime = ws$datetime,
+  t1 = ws$t1,
+  t2 = ws$t2,
+  v1 = ws$v1,
+  v2 = ws$v2,
+  hum1 = ws$hum1,
+  hum2 = ws$hum2,
+  sw_in = ws$rad_sw_in,
+  sw_out = ws$rad_sw_out,
+  soil_flux = ws$heatflux_soil,
+  # Alternative longwave radiation
+  t_surface = ws$t_surface,
+  # Topographic correction
+  sky_view = 0.82 # Sky view factor (0-1)
+)
 ```
 
 ## Calculations using the provided functions
@@ -247,14 +253,16 @@ Most functions can be called in two different ways. Either by passing all the ne
 First let's calculate it by passing the needed parameters ourselves:
 
 ```{r}
-grad_rich_manual <- turb_flux_grad_rich_no(t1 = ws$t1,
-                                           t2 = ws$t2,
-                                           z1 = 2,
-                                           z2 = 10,
-                                           v1 = ws$v1,
-                                           v2 = ws$v2,
-                                           p1 = pres_p(270+2, ws$t1),
-                                           p2 = pres_p(270+10, ws$t2))
+grad_rich_manual <- turb_flux_grad_rich_no(
+  t1 = ws$t1,
+  t2 = ws$t2,
+  z1 = 2,
+  z2 = 10,
+  v1 = ws$v1,
+  v2 = ws$v2,
+  p1 = pres_p(270 + 2, ws$t1),
+  p2 = pres_p(270 + 10, ws$t2)
+)
 
 head(grad_rich_manual)
 ```
@@ -278,25 +286,27 @@ A convenience function to calculate all the different methods for turbulent flux
 
 ```{r,warning=FALSE}
 # make a test_station object
-test_station <- build_weather_station(lat = 50.840503,
-                                      lon = 8.6833,
-                                      elev = 270,
-                                      surface_type = "field",
-                                      obs_height = 0.3,
-                                      z1 = 2,
-                                      z2 = 10,
-                                      datetime = ws$datetime,
-                                      t1 = ws$t1,
-                                      t2 = ws$t2,
-                                      v1 = ws$v1,
-                                      v2 = ws$v2,
-                                      hum1 = ws$hum1,
-                                      hum2 = ws$hum2,
-                                      sw_in = ws$rad_sw_in,
-                                      sw_out = ws$rad_sw_out,
-                                      lw_in = ws$rad_lw_in,
-                                      lw_out = ws$rad_lw_out,
-                                      soil_flux = ws$heatflux_soil)
+test_station <- build_weather_station(
+  lat = 50.840503,
+  lon = 8.6833,
+  elev = 270,
+  surface_type = "field",
+  obs_height = 0.3,
+  z1 = 2,
+  z2 = 10,
+  datetime = ws$datetime,
+  t1 = ws$t1,
+  t2 = ws$t2,
+  v1 = ws$v1,
+  v2 = ws$v2,
+  hum1 = ws$hum1,
+  hum2 = ws$hum2,
+  sw_in = ws$rad_sw_in,
+  sw_out = ws$rad_sw_out,
+  lw_in = ws$rad_lw_in,
+  lw_out = ws$rad_lw_out,
+  soil_flux = ws$heatflux_soil
+)
 
 station_turbulent <- turb_flux_calc(weather_station = test_station)
 

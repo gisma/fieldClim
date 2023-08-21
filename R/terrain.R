@@ -9,7 +9,7 @@
 #' @return Sky view factor from 0-1.
 #' @export
 #'
-terr_sky_view <- function (...) {
+terr_sky_view <- function(...) {
   UseMethod("terr_sky_view")
 }
 
@@ -20,9 +20,9 @@ terr_sky_view <- function (...) {
 #' @export
 #' @references p57eq3.12, p57eq3.13
 terr_sky_view.numeric <- function(slope, valley = F, ...) {
-  if(valley == TRUE){
+  if (valley == TRUE) {
     return(cos(slope * pi / 180))
-  }else{
+  } else {
     return((1 + cos(slope * pi / 180)) / 2.0)
   }
 }
@@ -31,7 +31,7 @@ terr_sky_view.numeric <- function(slope, valley = F, ...) {
 #' @method terr_sky_view weather_station
 #' @param weather_station Object of class weather_station.
 #' @export
-terr_sky_view.weather_station <- function (weather_station, ...) {
+terr_sky_view.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "slope", "valley")
 
   slope <- weather_station$location_properties$slope

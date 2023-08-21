@@ -7,7 +7,7 @@
 #' @param ... Additional parameters passed to later functions.
 #' @return Sensible heat flux in W/m².
 #' @export
-sensible_priestley_taylor <- function (...) {
+sensible_priestley_taylor <- function(...) {
   UseMethod("sensible_priestley_taylor")
 }
 
@@ -19,16 +19,16 @@ sensible_priestley_taylor <- function (...) {
 #' @param soil_flux Soil flux in W/m².
 #' @param surface_type Surface type, for which a Priestley-Taylor coefficient will be selected. Default is for short grass.
 #' @references Foken p220eq5.6.
-sensible_priestley_taylor.numeric <- function(t, rad_bal, soil_flux, surface_type = "field", ...){
+sensible_priestley_taylor.numeric <- function(t, rad_bal, soil_flux, surface_type = "field", ...) {
   sc <- sc(t)
   gam <- gam(t)
 
   priestley_taylor_coefficient <- priestley_taylor_coefficient
-  if(!surface_type %in% priestley_taylor_coefficient$surface_type){
+  if (!surface_type %in% priestley_taylor_coefficient$surface_type) {
     values_surface <- paste(priestley_taylor_coefficient$surface_type, collapse = " , ")
     stop("'surface_type' must be one of the following: ", values_surface)
-  } else if(!is.null(surface_type)){
-    alpha_pt <- priestley_taylor_coefficient[which(priestley_taylor_coefficient$surface_type == surface_type),]$alpha
+  } else if (!is.null(surface_type)) {
+    alpha_pt <- priestley_taylor_coefficient[which(priestley_taylor_coefficient$surface_type == surface_type), ]$alpha
   }
 
   QH_TP <- ((1 - alpha_pt) * sc + gam) * (-1 * rad_bal - soil_flux) / (sc + gam)
@@ -40,7 +40,7 @@ sensible_priestley_taylor.numeric <- function(t, rad_bal, soil_flux, surface_typ
 #' @method sensible_priestley_taylor weather_station
 #' @param weather_station Object of class weather_station.
 #' @export
-sensible_priestley_taylor.weather_station <- function(weather_station, ...){
+sensible_priestley_taylor.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "t1", "rad_bal", "soil_flux")
   t1 <- weather_station$measurements$t1
   rad_bal <- weather_station$measurements$rad_bal
@@ -58,7 +58,7 @@ sensible_priestley_taylor.weather_station <- function(weather_station, ...){
 #' @param ... Additional parameters passed to later functions.
 #' @return Sensible heat flux in W/m².
 #' @export
-sensible_monin <- function (...) {
+sensible_monin <- function(...) {
   UseMethod("sensible_monin")
 }
 
@@ -76,24 +76,22 @@ sensible_monin <- function (...) {
 #' @param grad_rich_no Gradient-Richardson-Number.
 #' @references p77eq4.6, Foken p362 Businger.
 sensible_monin.numeric <- function(t1, t2, p1, p2, z1 = 2, z2 = 10,
-                           monin, ustar, grad_rich_no, ...) {
+                                   monin, ustar, grad_rich_no, ...) {
   cp <- 1004.834
-  k  <- 0.35
+  k <- 0.35
   s1 <- z2 / monin
 
   # temperature gradient
-  t_gradient <- (temp_pot_temp(t2, p2) - temp_pot_temp(t1, p1)) / log(z2-z1)
+  t_gradient <- (temp_pot_temp(t2, p2) - temp_pot_temp(t1, p1)) / log(z2 - z1)
 
   air_density <- pres_air_density(p1, t1)
   busi <- rep(NA, length(grad_rich_no))
-  for(i in 1:length(busi)){
-    if(is.na(grad_rich_no[i])){
+  for (i in 1:length(busi)) {
+    if (is.na(grad_rich_no[i])) {
       busi[i] <- NA
-    }
-    else if(grad_rich_no[i] <= 0){
+    } else if (grad_rich_no[i] <= 0) {
       busi[i] <- 0.74 * (1 - 9 * s1[i])^(-0.5)
-    }
-    else if(grad_rich_no[i] >  0){
+    } else if (grad_rich_no[i] > 0) {
       busi[i] <- 0.74 + 4.7 * s1[i]
     }
   }
@@ -106,7 +104,7 @@ sensible_monin.numeric <- function(t1, t2, p1, p2, z1 = 2, z2 = 10,
 #' @method sensible_monin weather_station
 #' @param weather_station Object of class weather_station.
 #' @export
-sensible_monin.weather_station <- function(weather_station, ...){
+sensible_monin.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "z1", "z2", "t1", "t2", "p1", "p2")
   t1 <- weather_station$measurements$t1
   t2 <- weather_station$measurements$t2
@@ -117,8 +115,10 @@ sensible_monin.weather_station <- function(weather_station, ...){
   monin <- turb_flux_monin(weather_station)
   ustar <- turb_ustar(weather_station)
   grad_rich_no <- turb_flux_grad_rich_no(weather_station)
-  return(sensible_monin(t1, t2, p1, p2, z1, z2,
-                      monin, ustar, grad_rich_no))
+  return(sensible_monin(
+    t1, t2, p1, p2, z1, z2,
+    monin, ustar, grad_rich_no
+  ))
 }
 
 
@@ -133,7 +133,7 @@ sensible_monin.weather_station <- function(weather_station, ...){
 #' @return Sensible heat flux in W/m².
 #' @export
 #'
-sensible_bowen <- function (...) {
+sensible_bowen <- function(...) {
   UseMethod("sensible_bowen")
 }
 
@@ -152,8 +152,7 @@ sensible_bowen <- function (...) {
 #' @param soil_flux Soil flux in W/m².
 #' @references p221eq9.21.
 sensible_bowen.numeric <- function(t1, t2, hum1, hum2, p1, p2, z1 = 2, z2 = 10,
-                           rad_bal, soil_flux, ...){
-
+                                   rad_bal, soil_flux, ...) {
   # Calculating potential temperature delta
   t1_pot <- temp_pot_temp(t1, p1)
   t2_pot <- temp_pot_temp(t2, p2)
@@ -173,7 +172,7 @@ sensible_bowen.numeric <- function(t1, t2, hum1, hum2, p1, p2, z1 = 2, z2 = 10,
     warning("There are values above 600 W/m^2!")
     out[out > 600] <- 600
   }
-  if(min(out) < -600){
+  if (min(out) < -600) {
     warning("There are values below -600 W/m^2!")
     out[out < -600] <- -600
   }
@@ -185,9 +184,11 @@ sensible_bowen.numeric <- function(t1, t2, hum1, hum2, p1, p2, z1 = 2, z2 = 10,
 #' @method sensible_bowen weather_station
 #' @param weather_station Object of class weather_station
 #' @export
-sensible_bowen.weather_station <- function(weather_station, ...){
-  check_availability(weather_station, "z1", "z2", "t1", "t2", "p1", "p2",
-                     "hum1", "hum2", "rad_bal", "soil_flux")
+sensible_bowen.weather_station <- function(weather_station, ...) {
+  check_availability(
+    weather_station, "z1", "z2", "t1", "t2", "p1", "p2",
+    "hum1", "hum2", "rad_bal", "soil_flux"
+  )
   hum1 <- weather_station$measurements$hum1
   hum2 <- weather_station$measurements$hum2
   t1 <- weather_station$measurements$t1
@@ -198,6 +199,8 @@ sensible_bowen.weather_station <- function(weather_station, ...){
   p2 <- weather_station$measurements$p2
   rad_bal <- weather_station$measurements$rad_bal
   soil_flux <- weather_station$measurements$soil_flux
-  return(sensible_bowen(t1, t2, hum1, hum2, p1, p2, z1, z2,
-                      rad_bal, soil_flux))
+  return(sensible_bowen(
+    t1, t2, hum1, hum2, p1, p2, z1, z2,
+    rad_bal, soil_flux
+  ))
 }
