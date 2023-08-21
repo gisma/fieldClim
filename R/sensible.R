@@ -150,6 +150,7 @@ sensible_bowen <- function (...) {
 #' @param z2 Upper height of measurement in m.
 #' @param rad_bal Radiation balance in W/m².
 #' @param soil_flux Soil flux in W/m².
+#' @references p221eq9.21.
 sensible_bowen.numeric <- function(t1, t2, hum1, hum2, p1, p2, z1 = 2, z2 = 10,
                            rad_bal, soil_flux, ...){
 
@@ -165,7 +166,7 @@ sensible_bowen.numeric <- function(t1, t2, hum1, hum2, p1, p2, z1 = 2, z2 = 10,
 
   # Calculate bowen ratio
   bowen_ratio <- bowen_ratio(t1, dpot, dah)
-  out <- ((-1) * rad_bal - soil_flux) * (bowen_ratio / (1 + bowen_ratio))
+  out <- (-rad_bal - soil_flux) * bowen_ratio / (1 + bowen_ratio)
 
   # values of sensible bowen will be checked whether they exceed the valid data range.
   if (max(out) > 600) {
