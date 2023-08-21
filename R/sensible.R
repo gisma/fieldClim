@@ -7,7 +7,6 @@
 #' @param ... Additional parameters passed to later functions.
 #' @return Sensible heat flux in W/m².
 #' @export
-#'
 sensible_priestley_taylor <- function (...) {
   UseMethod("sensible_priestley_taylor")
 }
@@ -19,6 +18,7 @@ sensible_priestley_taylor <- function (...) {
 #' @param rad_bal Radiation balance in W/m².
 #' @param soil_flux Soil flux in W/m².
 #' @param surface_type Surface type, for which a Priestley-Taylor coefficient will be selected. Default is for short grass.
+#' @references Foken p220eq5.6.
 sensible_priestley_taylor.numeric <- function(t, rad_bal, soil_flux, surface_type = "field", ...){
   sc <- sc(t)
   gam <- gam(t)
@@ -74,10 +74,11 @@ sensible_monin <- function (...) {
 #' @param monin Monin-Obukhov-Length in m.
 #' @param ustar Friction velocity in m/s.
 #' @param grad_rich_no Gradient-Richardson-Number.
+#' @references p77eq4.6, Foken p362 Businger.
 sensible_monin.numeric <- function(t1, t2, p1, p2, z1 = 2, z2 = 10,
                            monin, ustar, grad_rich_no, ...) {
   cp <- 1004.834
-  k  <- 0.4
+  k  <- 0.35
   s1 <- z2 / monin
 
   # temperature gradient
