@@ -1,0 +1,17 @@
+datetime <- as.POSIXlt("2020-01-01")
+lat <- 57
+lon <- 5
+
+sol_eccentricity(datetime)
+sol_day_angle(datetime)
+sol_julian_day(datetime)
+sol_elevation(lat, datetime, lon)
+sol_declination(datetime)
+sol_ecliptic_length(datetime)
+sol_hour_angle(datetime, lon)
+sol_medium_suntime(datetime, lon)
+sol_time_formula(lon, datetime)
+sol_medium_anomaly(datetime)
+
+
+trans_air_mass_rel(lat, datetime, lon)
