@@ -49,10 +49,12 @@ trans_gas <- function() {
   exp(-0.0127 * air_mass_abs^0.26)
 }
 
+#' @inheritParams trans_air_mass_rel
 #' @return unitless
-trans_air_mass_abs <- function() {
-  p0 <- 1013.25
-  air_mass_abs <- air_mass_rel * (p / p0)
+trans_air_mass_abs <- function(p0 = 1013, lat, datetime, lon) {
+  air_mass_rel <- trans_air_mass_rel(lat, datetime, lon)
+  
+  air_mass_rel * (p / p0)
 }
 
 #' @inheritParams sol_elevation
@@ -63,7 +65,12 @@ trans_air_mass_rel <- function(lat, datetime, lon) {
   1 / (sin(deg2rad(elevation)) + 1.5 * elevation^-0.72)
 }
 
-
+#' @return hPa
+pres_p <- function(p0 = 1013, g = 9.81, elev, rl = 287.05, t) {
+  t <- c2k(t)
+  
+  p0 * exp(-(g * elev) / (rl * t))
+}
 
 #' @return degree
 sol_elevation <- function(lat, datetime, lon) {
@@ -160,22 +167,47 @@ sol_medium_anomaly <- function(datetime) {
 }
  <- function() {
   
-} <- function() {
-  
-} <- function() {
-  
-} <- function() {
-  
-} <- function() {
-  
-} <- function() {
-  
-} <- function() {
-  
-} <- function() {
+}
+
+ <- function() {
   
 }
 
+ <- function() {
+  
+}
+
+ <- function() {
+  
+}
+
+ <- function() {
+  
+}
+
+ <- function() {
+  
+}
+
+ <- function() {
+  
+}
+
+ <- function() {
+  
+}
+
+ <- function() {
+  
+}
+
+ <- function() {
+  
+}
+
+ <- function() {
+  
+}
 
 
 

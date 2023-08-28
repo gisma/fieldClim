@@ -1,4 +1,5 @@
-datetime <- as.POSIXlt("2020-01-01")
+datetime <- as.POSIXlt("2020-01-01 ")
+datetime <- as.POSIXlt("2020-01-01 12:00")
 lat <- 57
 lon <- 5
 

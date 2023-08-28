@@ -16,14 +16,11 @@ pres_p <- function(...) {
 #' @param elev Elevation above sea level in m.
 #' @param t Temperature in °C.
 #' @export
-#' @references Foken p51eqE2.1
-pres_p.numeric <- function(elev, t, ...) {
-  t <- t + 273.15 # to Kelvin
-  p0 <- 1013.25 # standard pressure in hPa
-  g <- 9.81 # gravity acceleration
-  rl <- 287.05 # specific gas constant
-  p <- p0 * exp(-(g * elev) / (rl * t))
-  return(p)
+#' @references Lente & Ősz 2020 eq5.
+pres_p.numeric <- function(p0 = 1013, g = 9.81, elev, rl = 287.05, t) {
+  t <- c2k(t)
+  
+  p0 * exp(-(g * elev) / (rl * t))
 }
 
 
