@@ -45,14 +45,17 @@ sol_julian_day <- function(datetime) {
 }
 
 #' @return unitless
-trans_gas <- function() {
+trans_gas <- function(lat, datetime, lon, elev, t) {
+  air_mass_abs <- trans_air_mass_abs(lat = lat, datetime = datetime, lon = lon, elev = elev, t = t)
+  
   exp(-0.0127 * air_mass_abs^0.26)
 }
 
 #' @inheritParams trans_air_mass_rel
 #' @return unitless
-trans_air_mass_abs <- function(p0 = 1013, lat, datetime, lon) {
+trans_air_mass_abs <- function(p0 = 1013, lat, datetime, lon, elev, t) {
   air_mass_rel <- trans_air_mass_rel(lat, datetime, lon)
+  p <- pres_p(p0 = p0, elev = elev, t = t)
   
   air_mass_rel * (p / p0)
 }
