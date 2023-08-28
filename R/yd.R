@@ -44,6 +44,7 @@ sol_julian_day <- function(datetime) {
   as.numeric(format(datetime, format = "%j"))
 }
 
+#' @inheritParams trans_air_mass_abs
 #' @return unitless
 trans_gas <- function(lat, datetime, lon, elev, t) {
   air_mass_abs <- trans_air_mass_abs(lat, datetime, lon, elev, t)
@@ -51,13 +52,45 @@ trans_gas <- function(lat, datetime, lon, elev, t) {
   exp(-0.0127 * air_mass_abs^0.26)
 }
 
+#' @inheritParams trans_air_mass_rel
 #' @return unitless
-trans_ozone <- function(lat, datetime, lon, ozone_column) {
-  x <- oz * air_mass_rel
-  xx <- 1 - (0.1611 * x * (1 + 139.48 * x)^(-0.3035) - 0.002715 * x * (1 + 0.044 * x + 0.0003 * x^2)^(-1))
-  return(xx)
+trans_ozone <- function(lat, datetime, lon, ozone_column = 0.35) {
+  air_mass_rel <- trans_air_mass_rel(lat, datetime, lon)
+  x <- ozone_column * air_mass_rel
+  
+  1 - (0.1611 * x * (1 + 139.48 * x)^(-0.3035) - 0.002715 * x * (1 + 0.044 * x + 0.0003 * x^2)^(-1))
 }
 
+#' @inheritParams trans_air_mass_abs
+#' @return unitless
+trans_rayleigh <- function(lat, datetime, lon, elev, t) {
+  air_mass_abs <- trans_air_mass_abs(lat, datetime, lon, elev, t)
+  
+  exp(-0.0903 * air_mass_abs^0.84 * (1 + air_mass_abs - air_mass_abs^1.01))
+}
+
+#' @inheritParams trans_air_mass_rel
+#' @inheritParams trans_precipitable_water
+#' @return unitless
+trans_vapor <- function(lat, datetime, lon, elev, t) {
+  precipitable_water <- trans_precipitable_water(elev, t)
+  air_mass_rel <- trans_air_mass_rel(lat, datetime, lon)
+  x <- precipitable_water * air_mass_rel
+  
+  1 - 2.4959 * x * ((1 + 79.034 * x)^0.6828 + 6.385 * x)^-1
+}
+
+#' @inheritParams trans_air_mass_abs
+#' @return unitless
+trans_aerosol <- function(lat, datetime, lon, elev, t, vis = 30) {
+  air_mass_abs <- trans_air_mass_abs(lat, datetime, lon, elev, t)
+  tau38 <- 3.6536 * vis^(-0.7111)
+  tau50 <- 2.4087 * vis^(-0.719)
+  
+  x <- 0.2758 * tau38 + 0.35 * tau50
+  
+  exp(-x^0.873 * (1 + x - x^0.7088) * air_mass_abs^0.9108)
+}
 
 #' @inheritParams trans_air_mass_rel
 #' @return unitless
@@ -169,8 +202,11 @@ sol_medium_anomaly <- function(datetime) {
   356.6 + 0.9856 * julian_day
 }
 
- <- function() {
-  
+trans_precipitable_water <- function(elev, t, p0 = 1013) {
+  pw_standard <- 
+  p <- pres_p(elev, t, p0)
+  temp_standard <- 
+  pw_standard * (p / p0) * (temp_standard / t)^0.5
 }
 
  <- function() {
