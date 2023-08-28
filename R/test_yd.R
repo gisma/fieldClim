@@ -18,6 +18,6 @@ sol_medium_anomaly(datetime)
 
 
 trans_gas(lat, datetime, lon, elev, t)
-trans_air_mass_abs(p0 = 1013, lat, datetime, lon, elev, t)
+trans_air_mass_abs(lat, datetime, lon, elev, t)
 trans_air_mass_rel(lat, datetime, lon)
-pres_p(p0 = 1013, g = 9.81, elev, rl = 287.05, t)
+pres_p(elev, t)

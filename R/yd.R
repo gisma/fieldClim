@@ -46,16 +46,24 @@ sol_julian_day <- function(datetime) {
 
 #' @return unitless
 trans_gas <- function(lat, datetime, lon, elev, t) {
-  air_mass_abs <- trans_air_mass_abs(lat = lat, datetime = datetime, lon = lon, elev = elev, t = t)
+  air_mass_abs <- trans_air_mass_abs(lat, datetime, lon, elev, t)
   
   exp(-0.0127 * air_mass_abs^0.26)
 }
 
+#' @return unitless
+trans_ozone <- function(lat, datetime, lon, ozone_column) {
+  x <- oz * air_mass_rel
+  xx <- 1 - (0.1611 * x * (1 + 139.48 * x)^(-0.3035) - 0.002715 * x * (1 + 0.044 * x + 0.0003 * x^2)^(-1))
+  return(xx)
+}
+
+
 #' @inheritParams trans_air_mass_rel
 #' @return unitless
-trans_air_mass_abs <- function(p0 = 1013, lat, datetime, lon, elev, t) {
+trans_air_mass_abs <- function(lat, datetime, lon, elev, t, p0 = 1013) {
   air_mass_rel <- trans_air_mass_rel(lat, datetime, lon)
-  p <- pres_p(p0 = p0, elev = elev, t = t)
+  p <- pres_p(elev, t, p0 = p0)
   
   air_mass_rel * (p / p0)
 }
@@ -69,7 +77,7 @@ trans_air_mass_rel <- function(lat, datetime, lon) {
 }
 
 #' @return hPa
-pres_p <- function(p0 = 1013, g = 9.81, elev, rl = 287.05, t) {
+pres_p <- function(elev, t, p0 = 1013, g = 9.81, rl = 287.05) {
   t <- c2k(t)
   
   p0 * exp(-(g * elev) / (rl * t))

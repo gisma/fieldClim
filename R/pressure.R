@@ -17,7 +17,7 @@ pres_p <- function(...) {
 #' @param t Temperature in °C.
 #' @export
 #' @references Lente & Ősz 2020 eq5.
-pres_p.numeric <- function(p0 = 1013, g = 9.81, elev, rl = 287.05, t) {
+pres_p.numeric <- function(elev, t, p0 = 1013, g = 9.81, rl = 287.05) {
   t <- c2k(t)
   
   p0 * exp(-(g * elev) / (rl * t))
