@@ -4,7 +4,7 @@
 \alias{rad_sw_in}
 \alias{rad_sw_in.numeric}
 \alias{rad_sw_in.weather_station}
-\title{Shortwave radiation onto a horizontal area on the ground}
+\title{Shortwave incoming radiation}
 \usage{
 rad_sw_in(...)
 
@@ -24,10 +24,18 @@ rad_sw_in(...)
 \method{rad_sw_in}{weather_station}(weather_station, trans_total = NULL, oz = 0.35, vis = 30, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{datetime}{POSIXt object (POSIXct, POSIXlt).
 See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:strptime]{base::strptime} for conversion.}
+
+\item{lat}{Latitude in decimal degrees.}
+
+\item{lon}{Longitude in decimal degrees.}
+
+\item{slope}{Slope}
+
+\item{exposition}{Exposition}
 
 \item{vis}{OPTIONAL. Needed if trans_total = NULL. Meteorological visibility in km.
 Default is the visibility on a clear day.}
@@ -38,16 +46,12 @@ Default is the visibility on a clear day.}
 
 \item{oz}{OPTIONAL. Needed if trans_total = NULL. Columnar ozone in cm.
 Default is average global value.}
-
-\item{rad_sw_toa}{Shortwave radiation at top of atmosphere in W/m².}
 }
 \value{
-Shortwave radiation on the ground onto a horizontal area in W/m².
-
-W/m²
+W/m².
 }
 \description{
-Calculation of the shortwave radiation onto a horizontal area on the ground.
+Shortwave incoming radiation
 }
 \references{
 p46eq3.3

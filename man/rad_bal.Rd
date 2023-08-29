@@ -8,7 +8,7 @@
 \usage{
 rad_bal(...)
 
-\method{rad_bal}{numeric}()
+\method{rad_bal}{numeric}(...)
 
 \method{rad_bal}{weather_station}(weather_station, ...)
 }
@@ -16,15 +16,9 @@ rad_bal(...)
 \item{...}{Additional parameters passed to later functions.}
 
 \item{weather_station}{Object of class weather_station.}
-
-\item{rad_sw_radiation_balance}{Shortwave radiation balance in W/m².}
-
-\item{rad_lw_out}{Longwave surface emissions in W/m².}
-
-\item{rad_lw_in}{Atmospheric radiation in W/m².}
 }
 \value{
-Total radiation balance in W/m².
+Total radiation balance in W/m$^{2}$.
 }
 \description{
 Calculate total radiation balance.

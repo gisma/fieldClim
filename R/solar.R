@@ -3,19 +3,23 @@
 #' Calculates the eccentricity.
 #'
 #' @param ... Additional parameters passed to later functions.
-#' @return Eccentricity at the date.
+#' @return Eccentricity at the date. unitless
 #' @export
-#'
 sol_eccentricity <- function(...) {
   UseMethod("sol_eccentricity")
 }
 
 #' @rdname sol_eccentricity
-#' @method sol_eccentricity POSIXt
-#' @param datetime POSIXt object (POSIXct, POSIXlt).
-#' See [base::as.POSIXlt] and [base::strptime] for conversion.
+#' @inheritParams sol_day_angle
 #' @export
 #' @references p243.
+sol_eccentricity.POSIXt <- function(datetime, ...) {
+  day_angle <- sol_day_angle(datetime)
+  day_angle <- deg2rad(day_angle)
+  
+  1.00011 + 0.034221 * cos(day_angle) + 0.00128 * sin(day_angle) +
+  0.000719 * cos(2 * day_angle) + 0.000719 * sin(2 * day_angle)
+}
 #sol_eccentricity.POSIXt <- function(datetime, ...) {
 #  if (!inherits(datetime, "POSIXt")) {
 #    stop("datetime has to be of class POSIXt.")
@@ -29,18 +33,7 @@ sol_eccentricity <- function(...) {
 #  return(exz)
 #}
 
-#' @inheritParams sol_julian_day
-#' @return unitless
-sol_eccentricity.POSIXt <- function(datetime) {
-  day_angle <- sol_day_angle(datetime)
-  day_angle <- deg2rad(day_angle)
-  
-  1.00011 + 0.034221 * cos(day_angle) + 0.00128 * sin(day_angle) +
-  0.000719 * cos(2 * day_angle) + 0.000719 * sin(2 * day_angle)
-}
-
 #' @rdname sol_eccentricity
-#' @method sol_eccentricity weather_station
 #' @param weather_station Object of class weather_station.
 #' @export
 sol_eccentricity.weather_station <- function(weather_station, ...) {
@@ -48,19 +41,43 @@ sol_eccentricity.weather_station <- function(weather_station, ...) {
 
   datetime <- weather_station$measurements$datetime
 
-  return(sol_eccentricity(datetime))
+  sol_eccentricity(datetime)
 }
 
+#' Day angle
+#'
+#' @param ... Additional arguments.
 #' @return degree
-sol_day_angle <- function(datetime) {
+#' @export
+sol_day_angle <- function(...) {
+  UseMethod("sol_day_angle")
+}
+
+#' @rdname sol_day_angle
+#' @inheritParams sol_julian_day
+#' @export
+#' @references
+sol_day_angle.numeric <- function(datetime) {
   julian_day <- sol_julian_day(datetime)
   
   out <- 2 * pi * (julian_day - 1) / 365
   rad2deg(out)
 }
 
+#' Julian day
+#'
+#' @param ... Additional parameters passed to later functions.
 #' @return unitless
-sol_julian_day <- function(datetime) {
+#' @export
+sol_julian_day <- function(...) {
+  UseMethod("sol_julian_day")
+}
+
+#' @rdname sol_julian_day
+#' @param datetime datetime in POSIXt
+#' @export
+#' @references p
+sol_julian_day.POSIXt <- function(datetime, ...) {
   as.numeric(format(datetime, format = "%j"))
 }
 

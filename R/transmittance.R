@@ -1,3 +1,200 @@
+#' Transmittance due to gas
+#'
+#' Calculates transmittance due to O$_{2}$ and CO$_{2}$.
+#'
+#' @param ... Additional parameters passed to later functions.
+#' @return Transmittance due to gas (0-1)
+#' @export
+trans_gas <- function(...) {
+  UseMethod("trans_gas")
+}
+
+#' @rdname trans_gas
+#' @inheritParams trans_air_mass_abs
+#' @export
+#' @references p246.
+trans_gas.numeric <- function(lat, datetime, lon, elev, temp) {
+  air_mass_abs <- trans_air_mass_abs(lat, datetime, lon, elev, temp)
+  
+  exp(-0.0127 * air_mass_abs^0.26)
+}
+#trans_gas.numeric <- function(air_mass_abs, ...) {
+#  trans_ga <- exp(-0.0127 * air_mass_abs^0.26)
+#  return(trans_ga)
+#}
+#' @inheritParams trans_air_mass_abs
+#' @return unitless
+
+#' @rdname trans_gas
+#' @method trans_gas weather_station
+#' @param weather_station Object of class weather_station.
+#' @export
+#'
+trans_gas.weather_station <- function(weather_station, ...) {
+  air_mass_abs <- trans_air_mass_abs(weather_station)
+  return(trans_gas(air_mass_abs))
+}
+
+#' Transmittance due to ozone
+#'
+#' Calculates transmittance due to ozone.
+#'
+#' @rdname trans_ozone
+#' @param ... Additional parameters passed to later functions.
+#' @return Transmittance due to ozone (0-1).
+#' @export
+#'
+trans_ozone <- function(...) {
+  UseMethod("trans_ozone")
+}
+
+#' @rdname trans_ozone
+#' @method trans_ozone numeric
+#' @param air_mass_rel Relative optical air mass.
+#' @param oz Atmospheric ozone as column in cm. Default is average value of 0.35 cm.
+#' @export
+#' @references p245.
+#trans_ozone.numeric <- function(air_mass_rel, oz = 0.35, ...) {
+#  x <- oz * air_mass_rel
+#  xx <- 1 - (0.1611 * x * (1 + 139.48 * x)^(-0.3035) - 0.002715 * x * (1 + 0.044 * x + 0.0003 * x^2)^(-1))
+#  return(xx)
+#}
+#' @inheritParams trans_air_mass_rel
+#' @return unitless
+trans_ozone.numeric <- function(lat, datetime, lon, ozone_column = 0.35) {
+  air_mass_rel <- trans_air_mass_rel(lat, datetime, lon)
+  x <- ozone_column * air_mass_rel
+  
+  1 - (0.1611 * x * (1 + 139.48 * x)^(-0.3035) - 0.002715 * x * (1 + 0.044 * x + 0.0003 * x^2)^(-1))
+}
+
+#' Transmittance due to rayleigh scattering
+#'
+#' Calculates transmittance due to rayleigh scattering.
+#'
+#' @rdname trans_rayleigh
+#' @param ... Additional parameters passed to later functions.
+#' @return Transmittance due to rayleigh scattering (0-1).
+#' @export
+#'
+trans_rayleigh <- function(...) {
+  UseMethod("trans_rayleigh")
+}
+
+#' @rdname trans_rayleigh
+#' @method trans_rayleigh numeric
+#' @param air_mass_abs Absolute optical air mass.
+#' @export
+#' @references p245.
+#trans_rayleigh.numeric <- function(air_mass_abs, ...) {
+#  x1 <- -0.0903 * air_mass_abs^(0.84) * (1.0 + air_mass_abs - air_mass_abs^(1.01))
+#  x <- exp(x1)
+#  return(x)
+#}
+#' @inheritParams trans_air_mass_abs
+#' @return unitless
+trans_rayleigh.numeric <- function(lat, datetime, lon, elev, t) {
+  air_mass_abs <- trans_air_mass_abs(lat, datetime, lon, elev, t)
+  
+  exp(-0.0903 * air_mass_abs^0.84 * (1 + air_mass_abs - air_mass_abs^1.01))
+}
+
+#' Transmittance due to water vapor
+#'
+#' Calculates transmittance due to water vapor.
+#'
+#' @rdname trans_vapor
+#' @param ... Additional parameters passed to later functions.
+#' @return Transmittance due to water vapor (0-1).
+#' @export
+#'
+trans_vapor <- function(...) {
+  UseMethod("trans_vapor")
+}
+
+#' @rdname trans_vapor
+#' @method trans_vapor numeric
+#' @param air_mass_rel Relative optical air mass.
+#' @param precipitable_water Precipitable water in cm.
+#' @export
+#' @references p245.
+#trans_vapor.numeric <- function(air_mass_rel, precipitable_water, ...) {
+#  y <- precipitable_water * air_mass_rel
+#  yy <- 1 - 2.4959 * y * ((1 + 79.034 * y)^0.6828 + 6.385 * y)^-1
+#  return(yy)
+#}
+#' @inheritParams trans_air_mass_rel
+#' @inheritParams trans_precipitable_water
+#' @return unitless
+trans_vapor.numeric <- function(lat, datetime, lon, elev, t) {
+  precipitable_water <- hum_precipitable_water(elev, t)
+  air_mass_rel <- trans_air_mass_rel(lat, datetime, lon)
+  x <- precipitable_water * air_mass_rel
+  
+  1 - 2.4959 * x * ((1 + 79.034 * x)^0.6828 + 6.385 * x)^-1
+}
+
+#' @rdname trans_vapor
+#' @method trans_vapor weather_station
+#' @param weather_station Object of class weather_station.
+#' @export
+#'
+trans_vapor.weather_station <- function(weather_station, ...) {
+  air_mass_rel <- trans_air_mass_rel(weather_station)
+  precipitable_water <- hum_precipitable_water(weather_station)
+  return(trans_vapor(air_mass_rel, precipitable_water))
+}
+
+#' Transmittance due to aerosols
+#'
+#' Calculates transmittance due to aerosols.
+#'
+#' @rdname trans_aerosol
+#' @param ... Additional parameters passed to later functions.
+#' @return Transmittance due to aerosols (0-1).
+#' @export
+#'
+trans_aerosol <- function(...) {
+  UseMethod("trans_aerosol")
+}
+
+#' @rdname trans_aerosol
+#' @method trans_aerosol numeric
+#' @param air_mass_abs Absolute optical air mass.
+#' @param vis Visibility in km.
+#' @export
+#' @references p246.
+#trans_aerosol.numeric <- function(air_mass_abs, vis = 30, ...) {
+#  tau38 <- 3.6536 * vis^(-0.7111)
+#  tau5 <- 2.4087 * vis^(-0.719)
+#  tex <- 0.2758 * tau38 + 0.35 * tau5
+#  x1 <- -tex^0.873 * (1 + tex - tex^0.7088) * air_mass_abs^0.9108
+#  x <- exp(x1)
+#  return(x)
+#}
+#' @inheritParams trans_air_mass_abs
+#' @return unitless
+trans_aerosol.numeric <- function(lat, datetime, lon, elev, t, vis = 30) {
+  air_mass_abs <- trans_air_mass_abs(lat, datetime, lon, elev, t)
+  tau38 <- 3.6536 * vis^(-0.7111)
+  tau50 <- 2.4087 * vis^(-0.719)
+  
+  x <- 0.2758 * tau38 + 0.35 * tau50
+  
+  exp(-x^0.873 * (1 + x - x^0.7088) * air_mass_abs^0.9108)
+}
+
+#' @rdname trans_aerosol
+#' @method trans_aerosol weather_station
+#' @param weather_station Object of class weather_station.
+#' @export
+#'
+trans_aerosol.weather_station <- function(weather_station, ...) {
+  air_mass_abs <- trans_air_mass_abs(weather_station)
+  return(trans_aerosol(weather_station, ...))
+}
+
+
 #' Relative optical air mass
 #'
 #' Calculates relative optical air mass. Returns NA for negative values.
@@ -87,36 +284,6 @@ trans_air_mass_abs.weather_station <- function(weather_station, ...) {
 }
 
 
-#' Transmittance due to rayleigh scattering
-#'
-#' Calculates transmittance due to rayleigh scattering.
-#'
-#' @rdname trans_rayleigh
-#' @param ... Additional parameters passed to later functions.
-#' @return Transmittance due to rayleigh scattering (0-1).
-#' @export
-#'
-trans_rayleigh <- function(...) {
-  UseMethod("trans_rayleigh")
-}
-
-#' @rdname trans_rayleigh
-#' @method trans_rayleigh numeric
-#' @param air_mass_abs Absolute optical air mass.
-#' @export
-#' @references p245.
-#trans_rayleigh.numeric <- function(air_mass_abs, ...) {
-#  x1 <- -0.0903 * air_mass_abs^(0.84) * (1.0 + air_mass_abs - air_mass_abs^(1.01))
-#  x <- exp(x1)
-#  return(x)
-#}
-#' @inheritParams trans_air_mass_abs
-#' @return unitless
-trans_rayleigh.numeric <- function(lat, datetime, lon, elev, t) {
-  air_mass_abs <- trans_air_mass_abs(lat, datetime, lon, elev, t)
-  
-  exp(-0.0903 * air_mass_abs^0.84 * (1 + air_mass_abs - air_mass_abs^1.01))
-}
 
 
 #' @rdname trans_rayleigh
@@ -130,38 +297,6 @@ trans_rayleigh.weather_station <- function(weather_station, ...) {
 }
 
 
-#' Transmittance due to ozone
-#'
-#' Calculates transmittance due to ozone.
-#'
-#' @rdname trans_ozone
-#' @param ... Additional parameters passed to later functions.
-#' @return Transmittance due to ozone (0-1).
-#' @export
-#'
-trans_ozone <- function(...) {
-  UseMethod("trans_ozone")
-}
-
-#' @rdname trans_ozone
-#' @method trans_ozone numeric
-#' @param air_mass_rel Relative optical air mass.
-#' @param oz Atmospheric ozone as column in cm. Default is average value of 0.35 cm.
-#' @export
-#' @references p245.
-#trans_ozone.numeric <- function(air_mass_rel, oz = 0.35, ...) {
-#  x <- oz * air_mass_rel
-#  xx <- 1 - (0.1611 * x * (1 + 139.48 * x)^(-0.3035) - 0.002715 * x * (1 + 0.044 * x + 0.0003 * x^2)^(-1))
-#  return(xx)
-#}
-#' @inheritParams trans_air_mass_rel
-#' @return unitless
-trans_ozone.numeric <- function(lat, datetime, lon, ozone_column = 0.35) {
-  air_mass_rel <- trans_air_mass_rel(lat, datetime, lon)
-  x <- ozone_column * air_mass_rel
-  
-  1 - (0.1611 * x * (1 + 139.48 * x)^(-0.3035) - 0.002715 * x * (1 + 0.044 * x + 0.0003 * x^2)^(-1))
-}
 
 
 #' @rdname trans_ozone
@@ -175,142 +310,9 @@ trans_ozone.weather_station <- function(weather_station, ...) {
 }
 
 
-#' Transmittance due to water vapor
-#'
-#' Calculates transmittance due to water vapor.
-#'
-#' @rdname trans_vapor
-#' @param ... Additional parameters passed to later functions.
-#' @return Transmittance due to water vapor (0-1).
-#' @export
-#'
-trans_vapor <- function(...) {
-  UseMethod("trans_vapor")
-}
-
-#' @rdname trans_vapor
-#' @method trans_vapor numeric
-#' @param air_mass_rel Relative optical air mass.
-#' @param precipitable_water Precipitable water in cm.
-#' @export
-#' @references p245.
-#trans_vapor.numeric <- function(air_mass_rel, precipitable_water, ...) {
-#  y <- precipitable_water * air_mass_rel
-#  yy <- 1 - 2.4959 * y * ((1 + 79.034 * y)^0.6828 + 6.385 * y)^-1
-#  return(yy)
-#}
-#' @inheritParams trans_air_mass_rel
-#' @inheritParams trans_precipitable_water
-#' @return unitless
-trans_vapor.numeric <- function(lat, datetime, lon, elev, t) {
-  precipitable_water <- hum_precipitable_water(elev, t)
-  air_mass_rel <- trans_air_mass_rel(lat, datetime, lon)
-  x <- precipitable_water * air_mass_rel
-  
-  1 - 2.4959 * x * ((1 + 79.034 * x)^0.6828 + 6.385 * x)^-1
-}
-
-#' @rdname trans_vapor
-#' @method trans_vapor weather_station
-#' @param weather_station Object of class weather_station.
-#' @export
-#'
-trans_vapor.weather_station <- function(weather_station, ...) {
-  air_mass_rel <- trans_air_mass_rel(weather_station)
-  precipitable_water <- hum_precipitable_water(weather_station)
-  return(trans_vapor(air_mass_rel, precipitable_water))
-}
 
 
-#' Transmittance due to aerosols
-#'
-#' Calculates transmittance due to aerosols.
-#'
-#' @rdname trans_aerosol
-#' @param ... Additional parameters passed to later functions.
-#' @return Transmittance due to aerosols (0-1).
-#' @export
-#'
-trans_aerosol <- function(...) {
-  UseMethod("trans_aerosol")
-}
 
-#' @rdname trans_aerosol
-#' @method trans_aerosol numeric
-#' @param air_mass_abs Absolute optical air mass.
-#' @param vis Visibility in km.
-#' @export
-#' @references p246.
-#trans_aerosol.numeric <- function(air_mass_abs, vis = 30, ...) {
-#  tau38 <- 3.6536 * vis^(-0.7111)
-#  tau5 <- 2.4087 * vis^(-0.719)
-#  tex <- 0.2758 * tau38 + 0.35 * tau5
-#  x1 <- -tex^0.873 * (1 + tex - tex^0.7088) * air_mass_abs^0.9108
-#  x <- exp(x1)
-#  return(x)
-#}
-#' @inheritParams trans_air_mass_abs
-#' @return unitless
-trans_aerosol.numeric <- function(lat, datetime, lon, elev, t, vis = 30) {
-  air_mass_abs <- trans_air_mass_abs(lat, datetime, lon, elev, t)
-  tau38 <- 3.6536 * vis^(-0.7111)
-  tau50 <- 2.4087 * vis^(-0.719)
-  
-  x <- 0.2758 * tau38 + 0.35 * tau50
-  
-  exp(-x^0.873 * (1 + x - x^0.7088) * air_mass_abs^0.9108)
-}
-
-#' @rdname trans_aerosol
-#' @method trans_aerosol weather_station
-#' @param weather_station Object of class weather_station.
-#' @export
-#'
-trans_aerosol.weather_station <- function(weather_station, ...) {
-  air_mass_abs <- trans_air_mass_abs(weather_station)
-  return(trans_aerosol(weather_station, ...))
-}
-
-
-#' Transmittance due to gas
-#'
-#' Calculates transmittance due to O$_{2}$ and CO$_{2}$.
-#'
-#' @rdname trans_gas
-#' @param ... Additional parameters passed to later functions.
-#' @return Transmittance due to gas (0-1)
-#' @export
-#'
-trans_gas <- function(...) {
-  UseMethod("trans_gas")
-}
-
-#' @rdname trans_gas
-#' @method trans_gas numeric
-#' @param air_mass_abs Absolute optical air mass.
-#' @export
-#' @references p246.
-#trans_gas.numeric <- function(air_mass_abs, ...) {
-#  trans_ga <- exp(-0.0127 * air_mass_abs^0.26)
-#  return(trans_ga)
-#}
-#' @inheritParams trans_air_mass_abs
-#' @return unitless
-trans_gas.numeric <- function(lat, datetime, lon, elev, t) {
-  air_mass_abs <- trans_air_mass_abs(lat, datetime, lon, elev, t)
-  
-  exp(-0.0127 * air_mass_abs^0.26)
-}
-
-#' @rdname trans_gas
-#' @method trans_gas weather_station
-#' @param weather_station Object of class weather_station.
-#' @export
-#'
-trans_gas.weather_station <- function(weather_station, ...) {
-  air_mass_abs <- trans_air_mass_abs(weather_station)
-  return(trans_gas(air_mass_abs))
-}
 
 
 #' Total transmittance
@@ -322,9 +324,9 @@ trans_gas.weather_station <- function(weather_station, ...) {
 #' @return Total transmittance (0-1)
 #' @export
 #'
-trans_total <- function(...) {
-  UseMethod("trans_total")
-}
+#trans_total <- function(...) {
+#  UseMethod("trans_total")
+#}
 
 #' @rdname trans_total
 #' @method trans_total numeric
@@ -336,22 +338,22 @@ trans_total <- function(...) {
 #' @param p OPTIONAL. Pressure in hPa. Estimated from elev and t if not available.
 #' @export
 #' @references p46.
-trans_total.numeric <- function(sol_elevation, t, elev, oz = 0.35, vis = 30,
-                                p = NULL, ...) {
-  if (is.null(p)) p <- pres_p(elev, t)
-  pw <- hum_precipitable_water(p, t, elev)
-  mr <- trans_air_mass_rel(sol_elevation)
-  ma <- trans_air_mass_abs(mr, p)
-  trans_total <- data.frame(
-    rayleigh = trans_rayleigh(ma),
-    ozone = trans_ozone(mr, oz),
-    vapor = trans_vapor(mr, pw),
-    aerosol = trans_aerosol(ma, vis),
-    gas = trans_gas(ma)
-  )
-  trans_total$total <- apply(trans_total, 1, FUN = prod)
-  return(trans_total$total)
-}
+#trans_total.numeric <- function(sol_elevation, t, elev, oz = 0.35, vis = 30,
+#                                p = NULL, ...) {
+#  if (is.null(p)) p <- pres_p(elev, t)
+#  pw <- hum_precipitable_water(p, t, elev)
+#  mr <- trans_air_mass_rel(sol_elevation)
+#  ma <- trans_air_mass_abs(mr, p)
+#  trans_total <- data.frame(
+#    rayleigh = trans_rayleigh(ma),
+#    ozone = trans_ozone(mr, oz),
+#    vapor = trans_vapor(mr, pw),
+#    aerosol = trans_aerosol(ma, vis),
+#    gas = trans_gas(ma)
+#  )
+#  trans_total$total <- apply(trans_total, 1, FUN = prod)
+#  return(trans_total$total)
+#}
 
 #' @rdname trans_total
 #' @method trans_total weather_station
@@ -362,11 +364,11 @@ trans_total.numeric <- function(sol_elevation, t, elev, oz = 0.35, vis = 30,
 #' Default is the visibility on a clear day.
 #' @export
 #'
-trans_total.weather_station <- function(weather_station, oz = 0.35, vis = 30, ...) {
-  sol_elevation <- sol_elevation(weather_station)
-  check_availability(weather_station, "t2", "z2", "elevation", "p2")
-  t <- weather_station$measurements$t2
-  elev <- weather_station$location_properties$elevation + weather_station$properties$z2
-  p2 <- weather_station$measurements$p2
-  return(trans_total(sol_elevation, t, elev, oz = oz, vis = vis, p = p2, ...))
-}
+#trans_total.weather_station <- function(weather_station, oz = 0.35, vis = 30, ...) {
+#  sol_elevation <- sol_elevation(weather_station)
+#  check_availability(weather_station, "t2", "z2", "elevation", "p2")
+#  t <- weather_station$measurements$t2
+#  elev <- weather_station$location_properties$elevation + weather_station$properties$z2
+#  p2 <- weather_station$measurements$p2
+#  return(trans_total(sol_elevation, t, elev, oz = oz, vis = vis, p = p2, ...))
+#}

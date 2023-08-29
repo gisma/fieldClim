@@ -8,7 +8,7 @@
 \usage{
 trans_gas(...)
 
-\method{trans_gas}{numeric}(lat, datetime, lon, elev, t)
+\method{trans_gas}{numeric}(lat, datetime, lon, elev, temp)
 
 \method{trans_gas}{weather_station}(weather_station, ...)
 }
@@ -23,8 +23,6 @@ See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:strptime]{base::strp
 \item{lon}{Longitude in decimal degrees.}
 
 \item{weather_station}{Object of class weather_station.}
-
-\item{air_mass_abs}{Absolute optical air mass.}
 }
 \value{
 Transmittance due to gas (0-1)

@@ -3,32 +3,26 @@
 #' Calculate total radiation balance.
 #'
 #' @param ... Additional parameters passed to later functions.
-#' @return Total radiation balance in W/m².
+#' @return Total radiation balance in W/m$^{2}$.
 #' @export
-#'
 rad_bal <- function(...) {
   UseMethod("rad_bal")
 }
 
 #' @rdname rad_bal
-#' @method rad_bal numeric
 #' @export
-#' @param rad_sw_radiation_balance Shortwave radiation balance in W/m².
-#' @param rad_lw_out Longwave surface emissions in W/m².
-#' @param rad_lw_in Atmospheric radiation in W/m².
 #' @references p45eq3.1
+rad_bal.numeric <- function(...) {
+  rad_sw_bal + rad_lw_bal
+}
 #rad_bal.numeric <- function(rad_sw_radiation_balance,
 #                                  rad_lw_in,
 #                                  rad_lw_out, ...) {
 #  radbil <- rad_sw_radiation_balance + (rad_lw_in - rad_lw_out)
 #  return(radbil)
 #}
-rad_bal.numeric <- function() {
-  rad_sw_bal + rad_lw_bal
-}
 
 #' @rdname rad_bal
-#' @method rad_bal weather_station
 #' @export
 #' @param weather_station Object of class weather_station.
 rad_bal.weather_station <- function(weather_station, ...) {
@@ -41,36 +35,40 @@ rad_bal.weather_station <- function(weather_station, ...) {
   return(rad_bal(rad_sw_radiation_balance, rad_lw_surface, rad_lw_atmospheric))
 }
 
+#' Shortwave radiation balance
+#'
+#' @param ... Additional parameters passed to later functions.
 #' @return W/m²
+#' @export
+rad_sw_bal <- function(...) {
+  UseMethod("rad_sw_bal")
+}
+
+#' @rdname rad_sw_bal
+#' @method rad_sw_bal numeric
+#' @export
+#' @references
 rad_sw_bal.numeric <- function() {
   (rad_sw_in + rad_diffuse_in) * (1 - albedo + albedo * terrain_view - albedo^2 * terrain_view)
 }
 
-#' Shortwave radiation onto a horizontal area on the ground
+#' Shortwave incoming radiation
 #'
-#' Calculation of the shortwave radiation onto a horizontal area on the ground.
-#'
-#' @param ... Additional parameters passed to later functions.
-#' @return Shortwave radiation on the ground onto a horizontal area in W/m².
+#' @param ... Additional arguments.
+#' @return W/m².
 #' @export
 rad_sw_in <- function(...) {
   UseMethod("rad_sw_in")
 }
 
 #' @rdname rad_sw_in
-#' @method rad_sw_in numeric
-#' @param rad_sw_toa Shortwave radiation at top of atmosphere in W/m².
-#' @param trans_total Total transmittance of the atmosphere (0-1).
+#' @inheritParams trans_ozone
+#' @inheritParams trans_aerosol
+#' @param slope Slope
+#' @param exposition Exposition
 #' @export
 #' @references p46eq3.3
-#rad_sw_in.numeric <- function(rad_sw_toa, trans_total, ...) {
-#  rad_sw_ground_horizontal <- rad_sw_toa * 0.9751 * trans_total
-#  return(rad_sw_ground_horizontal)
-#}
-#' @inheritParams sol_eccentricity
-#' @return W/m²
-rad_sw_in.numeric <- function(datetime, lat, lon, elev, t, slope, exposition,
-  sol_const = 1368, ozone_column = 0.35, vis = 30) {
+rad_sw_in.numeric <- function(datetime, lat, lon, elev, t, slope, exposition, sol_const = 1368, ozone_column = 0.35, vis = 30) {
   eccentricity <- sol_eccentricity(datetime)
   gas <- trans_gas(lat, datetime, lon, elev, t)
   ozone <- trans_ozone(lat, datetime, lon, ozone_column)
@@ -86,9 +84,12 @@ rad_sw_in.numeric <- function(datetime, lat, lon, elev, t, slope, exposition,
   
   sol_const * eccentricity * 0.9751 * trans_total * cos_terrain_angle
 }
+#rad_sw_in.numeric <- function(rad_sw_toa, trans_total, ...) {
+#  rad_sw_ground_horizontal <- rad_sw_toa * 0.9751 * trans_total
+#  return(rad_sw_ground_horizontal)
+#}
 
 #' @rdname rad_sw_in
-#' @method rad_sw_in weather_station
 #' @export
 #' @param weather_station Object of class weather_station.
 #' @param trans_total Total transmittance of the atmosphere.
