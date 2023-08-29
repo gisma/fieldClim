@@ -9,16 +9,24 @@ rad_sw_bal <- function() {
   (rad_sw_in + rad_diffuse_in) * (1 - albedo + albedo * terrain_view - albedo^2 * terrain_view)
 }
 
+#' @inheritParams sol_eccentricity
 #' @return W/$m^{2}$
-rad_sw_in <- function(sol_const, datetime) {
-  sol_const <- 1368
+rad_sw_in <- function(datetime, lat, lon, elev, t, slope, exposition,
+  sol_const = 1368, ozone_column = 0.35, vis = 30) {
   eccentricity <- sol_eccentricity(datetime)
+  gas <- trans_gas(lat, datetime, lon, elev, t)
+  ozone <- trans_ozone(lat, datetime, lon, ozone_column)
+  rayleigh <- trans_rayleigh(lat, datetime, lon, elev, t)
+  vapor <- trans_vapor(lat, datetime, lon, elev, t)
+  aerosol <- trans_aerosol(lat, datetime, lon, elev, t, vis)
+  elevation <- sol_elevation(lat, datetime, lon)
+  azimuth <- sol_azimuth(lat, datetime, lon)
   
-  trans_total <- trans_gas * trans_ozone * trans_rayleigh * trans_vapor * trans_aerosol
-  cos_terrain_angle <- cos(slope) * sin(sol_elevation) +
-    sin(slope) * cos(sol_elevation) * cos(sol_azimuth - exposition)
+  trans_total <- gas * ozone * rayleigh * vapor * aerosol
+  cos_terrain_angle <- cos(slope) * sin(elevation) +
+    sin(slope) * cos(elevation) * cos(azimuth - exposition)
   
-  sol_const * sol_eccentricity * 0.9751 * trans_total * cos_terrain_angle
+  sol_const * eccentricity * 0.9751 * trans_total * cos_terrain_angle
 }
 
 #' @inheritParams sol_julian_day
@@ -73,7 +81,7 @@ trans_rayleigh <- function(lat, datetime, lon, elev, t) {
 #' @inheritParams trans_precipitable_water
 #' @return unitless
 trans_vapor <- function(lat, datetime, lon, elev, t) {
-  precipitable_water <- trans_precipitable_water(elev, t)
+  precipitable_water <- hum_precipitable_water(elev, t)
   air_mass_rel <- trans_air_mass_rel(lat, datetime, lon)
   x <- precipitable_water * air_mass_rel
   
@@ -124,9 +132,9 @@ sol_elevation <- function(lat, datetime, lon) {
   hour_angle <- sol_hour_angle(datetime, lon)
   hour_angle <- deg2rad(hour_angle)
   
-  elevation <- sin(lat) * sin(declination) +
+  out <- sin(lat) * sin(declination) +
     cos(lat) * cos(declination) * cos(hour_angle)
-  rad2deg(elevation)
+  rad2deg(out)
 }
 
 #' @inheritParams sol_ecliptic_length
@@ -202,16 +210,34 @@ sol_medium_anomaly <- function(datetime) {
   356.6 + 0.9856 * julian_day
 }
 
-trans_precipitable_water <- function(elev, t, p0 = 1013) {
-  pw_standard <- 
+hum_precipitable_water <- function(elev, t, p0 = 1013) {
+  pw_standard <- 4.1167
   p <- pres_p(elev, t, p0)
-  temp_standard <- 
+  temp_standard <- 300
   pw_standard * (p / p0) * (temp_standard / t)^0.5
 }
 
- <- function() {
+#' @return degree
+sol_azimuth <- function(lat, datetime, lon) {
+  lat <- deg2rad(lat)
+  declination <- sol_declination(datetime)
+  declination <- deg2rad(declination)
+  hour_angle <- sol_hour_angle(datetime, lon)
+  hour_angle <- deg2rad(hour_angle)
+  elevation <- sol_elevation(lat, datetime, lon)
+  elevation <- deg2rad(elevation)
+  medium_suntime <- sol_medium_suntime(datetime, lon)
   
+  x <- acos((sin(declination) * cos(lat) - cos(declination) * sin(lat) * cos(hour_angle)) / cos(elevation))
+  x <- rad2deg(x)
+  
+  if(medium_suntime < 12) {
+    x
+  } else if(medium_suntime >= 12) {
+    360 - x
+  }
 }
+
  <- function() {
   
 }
