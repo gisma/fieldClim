@@ -16,10 +16,17 @@ trans_air_mass_rel <- function(...) {
 #' @param sol_elevation Solar elevation in degrees.
 #' @export
 #' @references p246.
-trans_air_mass_rel.numeric <- function(sol_elevation, ...) {
-  sol_elevation <- pi / 180 * sol_elevation
-  mr <- 1 / (sin(sol_elevation) + 1.5 * sol_elevation^-0.72)
-  return(mr)
+#trans_air_mass_rel.numeric <- function(sol_elevation, ...) {
+#  sol_elevation <- pi / 180 * sol_elevation
+#  mr <- 1 / (sin(sol_elevation) + 1.5 * sol_elevation^-0.72)
+#  return(mr)
+#}
+#' @inheritParams sol_elevation
+#' @return unitless
+trans_air_mass_rel.numeric <- function(lat, datetime, lon) {
+  elevation <- sol_elevation(lat, datetime, lon)
+  
+  1 / (sin(deg2rad(elevation)) + 1.5 * elevation^-0.72)
 }
 
 #' @rdname trans_air_mass_rel
@@ -52,10 +59,18 @@ trans_air_mass_abs <- function(...) {
 #' @param p Air pressure in hPa.
 #' @export
 #' @references p247.
-trans_air_mass_abs.numeric <- function(air_mass_rel, p, ...) {
-  p0 <- 1013.25
-  air_mass_abs <- air_mass_rel * (p / p0)
-  return(air_mass_abs)
+#trans_air_mass_abs.numeric <- function(air_mass_rel, p, ...) {
+#  p0 <- 1013.25
+#  air_mass_abs <- air_mass_rel * (p / p0)
+#  return(air_mass_abs)
+#}
+#' @inheritParams trans_air_mass_rel
+#' @return unitless
+trans_air_mass_abs.numeric <- function(lat, datetime, lon, elev, t, p0 = 1013) {
+  air_mass_rel <- trans_air_mass_rel(lat, datetime, lon)
+  p <- pres_p(elev, t, p0 = p0)
+  
+  air_mass_rel * (p / p0)
 }
 
 #' @rdname trans_air_mass_abs
@@ -90,11 +105,19 @@ trans_rayleigh <- function(...) {
 #' @param air_mass_abs Absolute optical air mass.
 #' @export
 #' @references p245.
-trans_rayleigh.numeric <- function(air_mass_abs, ...) {
-  x1 <- -0.0903 * air_mass_abs^(0.84) * (1.0 + air_mass_abs - air_mass_abs^(1.01))
-  x <- exp(x1)
-  return(x)
+#trans_rayleigh.numeric <- function(air_mass_abs, ...) {
+#  x1 <- -0.0903 * air_mass_abs^(0.84) * (1.0 + air_mass_abs - air_mass_abs^(1.01))
+#  x <- exp(x1)
+#  return(x)
+#}
+#' @inheritParams trans_air_mass_abs
+#' @return unitless
+trans_rayleigh.numeric <- function(lat, datetime, lon, elev, t) {
+  air_mass_abs <- trans_air_mass_abs(lat, datetime, lon, elev, t)
+  
+  exp(-0.0903 * air_mass_abs^0.84 * (1 + air_mass_abs - air_mass_abs^1.01))
 }
+
 
 #' @rdname trans_rayleigh
 #' @method trans_rayleigh weather_station
@@ -126,11 +149,20 @@ trans_ozone <- function(...) {
 #' @param oz Atmospheric ozone as column in cm. Default is average value of 0.35 cm.
 #' @export
 #' @references p245.
-trans_ozone.numeric <- function(air_mass_rel, oz = 0.35, ...) {
-  x <- oz * air_mass_rel
-  xx <- 1 - (0.1611 * x * (1 + 139.48 * x)^(-0.3035) - 0.002715 * x * (1 + 0.044 * x + 0.0003 * x^2)^(-1))
-  return(xx)
+#trans_ozone.numeric <- function(air_mass_rel, oz = 0.35, ...) {
+#  x <- oz * air_mass_rel
+#  xx <- 1 - (0.1611 * x * (1 + 139.48 * x)^(-0.3035) - 0.002715 * x * (1 + 0.044 * x + 0.0003 * x^2)^(-1))
+#  return(xx)
+#}
+#' @inheritParams trans_air_mass_rel
+#' @return unitless
+trans_ozone.numeric <- function(lat, datetime, lon, ozone_column = 0.35) {
+  air_mass_rel <- trans_air_mass_rel(lat, datetime, lon)
+  x <- ozone_column * air_mass_rel
+  
+  1 - (0.1611 * x * (1 + 139.48 * x)^(-0.3035) - 0.002715 * x * (1 + 0.044 * x + 0.0003 * x^2)^(-1))
 }
+
 
 #' @rdname trans_ozone
 #' @method trans_ozone weather_station
@@ -162,10 +194,20 @@ trans_vapor <- function(...) {
 #' @param precipitable_water Precipitable water in cm.
 #' @export
 #' @references p245.
-trans_vapor.numeric <- function(air_mass_rel, precipitable_water, ...) {
-  y <- precipitable_water * air_mass_rel
-  yy <- 1 - 2.4959 * y * ((1 + 79.034 * y)^0.6828 + 6.385 * y)^-1
-  return(yy)
+#trans_vapor.numeric <- function(air_mass_rel, precipitable_water, ...) {
+#  y <- precipitable_water * air_mass_rel
+#  yy <- 1 - 2.4959 * y * ((1 + 79.034 * y)^0.6828 + 6.385 * y)^-1
+#  return(yy)
+#}
+#' @inheritParams trans_air_mass_rel
+#' @inheritParams trans_precipitable_water
+#' @return unitless
+trans_vapor.numeric <- function(lat, datetime, lon, elev, t) {
+  precipitable_water <- hum_precipitable_water(elev, t)
+  air_mass_rel <- trans_air_mass_rel(lat, datetime, lon)
+  x <- precipitable_water * air_mass_rel
+  
+  1 - 2.4959 * x * ((1 + 79.034 * x)^0.6828 + 6.385 * x)^-1
 }
 
 #' @rdname trans_vapor
@@ -199,13 +241,24 @@ trans_aerosol <- function(...) {
 #' @param vis Visibility in km.
 #' @export
 #' @references p246.
-trans_aerosol.numeric <- function(air_mass_abs, vis = 30, ...) {
+#trans_aerosol.numeric <- function(air_mass_abs, vis = 30, ...) {
+#  tau38 <- 3.6536 * vis^(-0.7111)
+#  tau5 <- 2.4087 * vis^(-0.719)
+#  tex <- 0.2758 * tau38 + 0.35 * tau5
+#  x1 <- -tex^0.873 * (1 + tex - tex^0.7088) * air_mass_abs^0.9108
+#  x <- exp(x1)
+#  return(x)
+#}
+#' @inheritParams trans_air_mass_abs
+#' @return unitless
+trans_aerosol.numeric <- function(lat, datetime, lon, elev, t, vis = 30) {
+  air_mass_abs <- trans_air_mass_abs(lat, datetime, lon, elev, t)
   tau38 <- 3.6536 * vis^(-0.7111)
-  tau5 <- 2.4087 * vis^(-0.719)
-  tex <- 0.2758 * tau38 + 0.35 * tau5
-  x1 <- -tex^0.873 * (1 + tex - tex^0.7088) * air_mass_abs^0.9108
-  x <- exp(x1)
-  return(x)
+  tau50 <- 2.4087 * vis^(-0.719)
+  
+  x <- 0.2758 * tau38 + 0.35 * tau50
+  
+  exp(-x^0.873 * (1 + x - x^0.7088) * air_mass_abs^0.9108)
 }
 
 #' @rdname trans_aerosol
@@ -237,9 +290,16 @@ trans_gas <- function(...) {
 #' @param air_mass_abs Absolute optical air mass.
 #' @export
 #' @references p246.
-trans_gas.numeric <- function(air_mass_abs, ...) {
-  trans_ga <- exp(-0.0127 * air_mass_abs^0.26)
-  return(trans_ga)
+#trans_gas.numeric <- function(air_mass_abs, ...) {
+#  trans_ga <- exp(-0.0127 * air_mass_abs^0.26)
+#  return(trans_ga)
+#}
+#' @inheritParams trans_air_mass_abs
+#' @return unitless
+trans_gas.numeric <- function(lat, datetime, lon, elev, t) {
+  air_mass_abs <- trans_air_mass_abs(lat, datetime, lon, elev, t)
+  
+  exp(-0.0127 * air_mass_abs^0.26)
 }
 
 #' @rdname trans_gas

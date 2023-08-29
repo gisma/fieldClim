@@ -8,21 +8,30 @@
 \usage{
 trans_vapor(...)
 
-\method{trans_vapor}{numeric}(air_mass_rel, precipitable_water, ...)
+\method{trans_vapor}{numeric}(lat, datetime, lon, elev, t)
 
 \method{trans_vapor}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
+\item{lat}{Latitude in decimal degrees.}
+
+\item{datetime}{POSIXt object (POSIXct, POSIXlt).
+See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:strptime]{base::strptime} for conversion.}
+
+\item{lon}{Longitude in decimal degrees.}
+
+\item{weather_station}{Object of class weather_station.}
+
 \item{air_mass_rel}{Relative optical air mass.}
 
 \item{precipitable_water}{Precipitable water in cm.}
-
-\item{weather_station}{Object of class weather_station.}
 }
 \value{
 Transmittance due to water vapor (0-1).
+
+unitless
 }
 \description{
 Calculates transmittance due to water vapor.

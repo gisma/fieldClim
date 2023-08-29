@@ -8,7 +8,7 @@
 \usage{
 pres_p(...)
 
-\method{pres_p}{numeric}(elev, t, ...)
+\method{pres_p}{numeric}(elev, t, p0 = 1013, g = 9.81, rl = 287.05)
 
 \method{pres_p}{weather_station}(weather_station, height = "lower", ...)
 }
@@ -30,5 +30,5 @@ Pressure in hPa.
 Calculation of pressure as a function of the elevation above sea level.
 }
 \references{
-Foken p51eqE2.1
+Lente & Ősz 2020 eq5.
 }

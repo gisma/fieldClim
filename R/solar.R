@@ -16,17 +16,27 @@ sol_eccentricity <- function(...) {
 #' See [base::as.POSIXlt] and [base::strptime] for conversion.
 #' @export
 #' @references p243.
-sol_eccentricity.POSIXt <- function(datetime, ...) {
-  if (!inherits(datetime, "POSIXt")) {
-    stop("datetime has to be of class POSIXt.")
-  }
+#sol_eccentricity.POSIXt <- function(datetime, ...) {
+#  if (!inherits(datetime, "POSIXt")) {
+#    stop("datetime has to be of class POSIXt.")
+#  }
 
-  # day of year
-  doy <- as.numeric(strftime(datetime, format = "%j"))
+#   day of year
+#  doy <- as.numeric(strftime(datetime, format = "%j"))
 
-  x <- 2.0 * pi * (doy - 1) / 365.0
-  exz <- 1.00011 + 0.034221 * cos(x) + 0.00128 * sin(x) + 0.000719 * cos(2 * x) + 0.000719 * sin(2. * x)
-  return(exz)
+#  x <- 2.0 * pi * (doy - 1) / 365.0
+#  exz <- 1.00011 + 0.034221 * cos(x) + 0.00128 * sin(x) + 0.000719 * cos(2 * x) + 0.000719 * sin(2. * x)
+#  return(exz)
+#}
+
+#' @inheritParams sol_julian_day
+#' @return unitless
+sol_eccentricity.POSIXt <- function(datetime) {
+  day_angle <- sol_day_angle(datetime)
+  day_angle <- deg2rad(day_angle)
+  
+  1.00011 + 0.034221 * cos(day_angle) + 0.00128 * sin(day_angle) +
+  0.000719 * cos(2 * day_angle) + 0.000719 * sin(2 * day_angle)
 }
 
 #' @rdname sol_eccentricity
@@ -41,6 +51,18 @@ sol_eccentricity.weather_station <- function(weather_station, ...) {
   return(sol_eccentricity(datetime))
 }
 
+#' @return degree
+sol_day_angle <- function(datetime) {
+  julian_day <- sol_julian_day(datetime)
+  
+  out <- 2 * pi * (julian_day - 1) / 365
+  rad2deg(out)
+}
+
+#' @return unitless
+sol_julian_day <- function(datetime) {
+  as.numeric(format(datetime, format = "%j"))
+}
 
 
 #' Solar azimuth and elevation angles
@@ -157,9 +179,21 @@ sol_elevation <- function(...) {
 #' @param lat Latitude in decimal degrees.
 #' @param lon Longitude in decimal degrees.
 #' @export
-sol_elevation.POSIXt <- function(datetime, lat, lon, ...) {
-  angles <- sol_angles(datetime, lat, lon)
-  return(angles$sol_elevation)
+#sol_elevation.POSIXt <- function(datetime, lat, lon, ...) {
+#  angles <- sol_angles(datetime, lat, lon)
+#  return(angles$sol_elevation)
+#}
+#' @return degree
+sol_elevation.POSIXt <- function(lat, datetime, lon) {
+  lat <- deg2rad(lat)
+  declination <- sol_declination(datetime)
+  declination <- deg2rad(declination)
+  hour_angle <- sol_hour_angle(datetime, lon)
+  hour_angle <- deg2rad(hour_angle)
+  
+  out <- sin(lat) * sin(declination) +
+    cos(lat) * cos(declination) * cos(hour_angle)
+  rad2deg(out)
 }
 
 #' @rdname sol_elevation
@@ -176,6 +210,58 @@ sol_elevation.weather_station <- function(weather_station, ...) {
   return(sol_elevation(datetime, lat, lon))
 }
 
+#' @inheritParams sol_ecliptic_length
+#' @return degree
+sol_declination <- function(datetime) {
+  ecliptic_length <- sol_ecliptic_length(datetime)
+  ecliptic_length <- deg2rad(ecliptic_length)
+  
+  out <- asin(sin(deg2rad(23.44)) * sin(ecliptic_length))
+  rad2deg(out)
+}
+
+#' @inheritParams sol_julian_day
+#' @return degree
+sol_ecliptic_length <- function(datetime) {
+  julian_day <- sol_julian_day(datetime)
+  
+  x <- deg2rad(356.6 + 0.9856 * julian_day)
+  
+  279.3 + 0.9856 * julian_day + 1.92 * sin(x)
+}
+
+#' @return degree
+sol_hour_angle <- function(datetime, lon) {
+  medium_suntime <- sol_medium_suntime(datetime, lon)
+  time_formula <- sol_time_formula(lon, datetime)
+  
+  15 * (medium_suntime + time_formula - 12)
+}
+
+#' @return hour
+sol_medium_suntime <- function(datetime, lon) {
+  utc <- datetime$hour + datetime$min / 60 + datetime$sec / 3600
+  
+  utc + lon / 15
+}
+
+#' @inheritParams sol_julian_day
+#' @return hour
+sol_time_formula <- function(lon, datetime) {
+  lon <- deg2rad(lon)
+  medium_anomaly <- sol_medium_anomaly(datetime)
+  medium_anomaly <- deg2rad(medium_anomaly)
+  
+  0.1644 * sin(2 * lon) - 0.1277 * sin(medium_anomaly)
+}
+
+#' @inheritParams sol_julian_day
+#' @return degree
+sol_medium_anomaly <- function(datetime) {
+  julian_day <- sol_julian_day(datetime)
+  
+  356.6 + 0.9856 * julian_day
+}
 
 
 #' Solar azimuth angle
@@ -197,9 +283,29 @@ sol_azimuth <- function(...) {
 #' @param lat Latitude in decimal degrees.
 #' @param lon Longitude in decimal degrees.
 #' @export
-sol_azimuth.POSIXt <- function(datetime, lat, lon, ...) {
-  angles <- sol_angles(datetime, lat, lon)
-  return(angles$sol_azimuth)
+#sol_azimuth.POSIXt <- function(datetime, lat, lon, ...) {
+#  angles <- sol_angles(datetime, lat, lon)
+#  return(angles$sol_azimuth)
+#}
+#' @return degree
+sol_azimuth.POSIXt <- function(lat, datetime, lon) {
+  lat <- deg2rad(lat)
+  declination <- sol_declination(datetime)
+  declination <- deg2rad(declination)
+  hour_angle <- sol_hour_angle(datetime, lon)
+  hour_angle <- deg2rad(hour_angle)
+  elevation <- sol_elevation(lat, datetime, lon)
+  elevation <- deg2rad(elevation)
+  medium_suntime <- sol_medium_suntime(datetime, lon)
+  
+  x <- acos((sin(declination) * cos(lat) - cos(declination) * sin(lat) * cos(hour_angle)) / cos(elevation))
+  x <- rad2deg(x)
+  
+  if(medium_suntime < 12) {
+    x
+  } else if(medium_suntime >= 12) {
+    360 - x
+  }
 }
 
 #' @rdname sol_azimuth

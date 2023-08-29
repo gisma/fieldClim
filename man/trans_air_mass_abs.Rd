@@ -8,21 +8,30 @@
 \usage{
 trans_air_mass_abs(...)
 
-\method{trans_air_mass_abs}{numeric}(air_mass_rel, p, ...)
+\method{trans_air_mass_abs}{numeric}(lat, datetime, lon, elev, t, p0 = 1013)
 
 \method{trans_air_mass_abs}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
+\item{lat}{Latitude in decimal degrees.}
+
+\item{datetime}{POSIXt object (POSIXct, POSIXlt).
+See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:strptime]{base::strptime} for conversion.}
+
+\item{lon}{Longitude in decimal degrees.}
+
+\item{weather_station}{Object of class weather_station.}
+
 \item{air_mass_rel}{Relative optical air mass.}
 
 \item{p}{Air pressure in hPa.}
-
-\item{weather_station}{Object of class weather_station.}
 }
 \value{
 Absolute optical air mass.
+
+unitless
 }
 \description{
 Calculates absolute optical air mass.

@@ -208,14 +208,20 @@ hum_precipitable_water <- function(...) {
 #' @param t Air temperature in °C.
 #' @param elev Elevation above sea level in m.
 #' @references p246
-hum_precipitable_water.numeric <- function(p, t, elev, ...) {
-  p0 <- 1013.25 # Pressure standard atmosphere
-  t <- t + 273.15 # °C in K
-  cof <- (elev / 100) * 0.6 # average moist adiabatic T-gradient, might have to be adjusted
-  t0 <- t + cof
-  pw_st <- 0.0000004 * exp(0.0538 * t0)
-  pw <- pw_st * (p / p0) * (t0 / t)**0.5
-  return(pw)
+#hum_precipitable_water.numeric <- function(p, t, elev, ...) {
+#  p0 <- 1013.25 # Pressure standard atmosphere
+#  t <- t + 273.15 # °C in K
+#  cof <- (elev / 100) * 0.6 # average moist adiabatic T-gradient, might have to be adjusted
+#  t0 <- t + cof
+#  pw_st <- 0.0000004 * exp(0.0538 * t0)
+#  pw <- pw_st * (p / p0) * (t0 / t)**0.5
+#  return(pw)
+#}
+hum_precipitable_water.numeric <- function(elev, t, p0 = 1013) {
+  pw_standard <- 4.1167
+  p <- pres_p(elev, t, p0)
+  temp_standard <- 300
+  pw_standard * (p / p0) * (temp_standard / t)^0.5
 }
 
 #' @rdname hum_precipitable_water

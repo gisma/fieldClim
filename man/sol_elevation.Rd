@@ -8,17 +8,17 @@
 \usage{
 sol_elevation(...)
 
-\method{sol_elevation}{POSIXt}(datetime, lat, lon, ...)
+\method{sol_elevation}{POSIXt}(lat, datetime, lon)
 
 \method{sol_elevation}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
+\item{lat}{Latitude in decimal degrees.}
+
 \item{datetime}{POSIXt object (POSIXct, POSIXlt).
 See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:strptime]{base::strptime} for conversion.}
-
-\item{lat}{Latitude in decimal degrees.}
 
 \item{lon}{Longitude in decimal degrees.}
 
@@ -26,6 +26,8 @@ See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:strptime]{base::strp
 }
 \value{
 Solar elevation angle in degrees.
+
+degree
 }
 \description{
 Calculates solar elevation angle for the given date and time.

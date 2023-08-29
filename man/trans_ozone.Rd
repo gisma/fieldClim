@@ -8,21 +8,30 @@
 \usage{
 trans_ozone(...)
 
-\method{trans_ozone}{numeric}(air_mass_rel, oz = 0.35, ...)
+\method{trans_ozone}{numeric}(lat, datetime, lon, ozone_column = 0.35)
 
 \method{trans_ozone}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
+\item{lat}{Latitude in decimal degrees.}
+
+\item{datetime}{POSIXt object (POSIXct, POSIXlt).
+See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:strptime]{base::strptime} for conversion.}
+
+\item{lon}{Longitude in decimal degrees.}
+
+\item{weather_station}{Object of class weather_station.}
+
 \item{air_mass_rel}{Relative optical air mass.}
 
 \item{oz}{Atmospheric ozone as column in cm. Default is average value of 0.35 cm.}
-
-\item{weather_station}{Object of class weather_station.}
 }
 \value{
 Transmittance due to ozone (0-1).
+
+unitless
 }
 \description{
 Calculates transmittance due to ozone.

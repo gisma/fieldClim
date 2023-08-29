@@ -8,22 +8,22 @@
 \usage{
 hum_precipitable_water(...)
 
-\method{hum_precipitable_water}{numeric}(p, t, elev, ...)
+\method{hum_precipitable_water}{numeric}(elev, t, p0 = 1013)
 
 \method{hum_precipitable_water}{weather_station}(weather_station, height = "lower", ...)
 }
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{p}{Air pressure in hPa.}
+\item{elev}{Elevation above sea level in m.}
 
 \item{t}{Air temperature in °C.}
-
-\item{elev}{Elevation above sea level in m.}
 
 \item{weather_station}{Object of class weather_station.}
 
 \item{height}{Height of measurement. "lower" or "upper".}
+
+\item{p}{Air pressure in hPa.}
 }
 \value{
 Total precipitable water in cm (grams).

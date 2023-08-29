@@ -8,19 +8,28 @@
 \usage{
 trans_air_mass_rel(...)
 
-\method{trans_air_mass_rel}{numeric}(sol_elevation, ...)
+\method{trans_air_mass_rel}{numeric}(lat, datetime, lon)
 
 \method{trans_air_mass_rel}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{sol_elevation}{Solar elevation in degrees.}
+\item{lat}{Latitude in decimal degrees.}
+
+\item{datetime}{POSIXt object (POSIXct, POSIXlt).
+See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:strptime]{base::strptime} for conversion.}
+
+\item{lon}{Longitude in decimal degrees.}
 
 \item{weather_station}{Object of class weather_station.}
+
+\item{sol_elevation}{Solar elevation in degrees.}
 }
 \value{
 Relative optical air mass.
+
+unitless
 }
 \description{
 Calculates relative optical air mass. Returns NA for negative values.

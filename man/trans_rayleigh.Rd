@@ -8,19 +8,28 @@
 \usage{
 trans_rayleigh(...)
 
-\method{trans_rayleigh}{numeric}(air_mass_abs, ...)
+\method{trans_rayleigh}{numeric}(lat, datetime, lon, elev, t)
 
 \method{trans_rayleigh}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{air_mass_abs}{Absolute optical air mass.}
+\item{lat}{Latitude in decimal degrees.}
+
+\item{datetime}{POSIXt object (POSIXct, POSIXlt).
+See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:strptime]{base::strptime} for conversion.}
+
+\item{lon}{Longitude in decimal degrees.}
 
 \item{weather_station}{Object of class weather_station.}
+
+\item{air_mass_abs}{Absolute optical air mass.}
 }
 \value{
 Transmittance due to rayleigh scattering (0-1).
+
+unitless
 }
 \description{
 Calculates transmittance due to rayleigh scattering.

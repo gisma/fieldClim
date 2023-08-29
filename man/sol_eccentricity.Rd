@@ -8,7 +8,7 @@
 \usage{
 sol_eccentricity(...)
 
-\method{sol_eccentricity}{POSIXt}(datetime, ...)
+\method{sol_eccentricity}{POSIXt}(datetime)
 
 \method{sol_eccentricity}{weather_station}(weather_station, ...)
 }
@@ -22,6 +22,8 @@ See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:strptime]{base::strp
 }
 \value{
 Eccentricity at the date.
+
+unitless
 }
 \description{
 Calculates the eccentricity.

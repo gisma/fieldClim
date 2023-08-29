@@ -8,21 +8,30 @@
 \usage{
 trans_aerosol(...)
 
-\method{trans_aerosol}{numeric}(air_mass_abs, vis = 30, ...)
+\method{trans_aerosol}{numeric}(lat, datetime, lon, elev, t, vis = 30)
 
 \method{trans_aerosol}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{air_mass_abs}{Absolute optical air mass.}
+\item{lat}{Latitude in decimal degrees.}
+
+\item{datetime}{POSIXt object (POSIXct, POSIXlt).
+See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:strptime]{base::strptime} for conversion.}
+
+\item{lon}{Longitude in decimal degrees.}
 
 \item{vis}{Visibility in km.}
 
 \item{weather_station}{Object of class weather_station.}
+
+\item{air_mass_abs}{Absolute optical air mass.}
 }
 \value{
 Transmittance due to aerosols (0-1).
+
+unitless
 }
 \description{
 Calculates transmittance due to aerosols.

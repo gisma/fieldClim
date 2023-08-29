@@ -1,3 +1,115 @@
+#' Total radiation balance
+#'
+#' Calculate total radiation balance.
+#'
+#' @param ... Additional parameters passed to later functions.
+#' @return Total radiation balance in W/m².
+#' @export
+#'
+rad_bal <- function(...) {
+  UseMethod("rad_bal")
+}
+
+#' @rdname rad_bal
+#' @method rad_bal numeric
+#' @export
+#' @param rad_sw_radiation_balance Shortwave radiation balance in W/m².
+#' @param rad_lw_out Longwave surface emissions in W/m².
+#' @param rad_lw_in Atmospheric radiation in W/m².
+#' @references p45eq3.1
+#rad_bal.numeric <- function(rad_sw_radiation_balance,
+#                                  rad_lw_in,
+#                                  rad_lw_out, ...) {
+#  radbil <- rad_sw_radiation_balance + (rad_lw_in - rad_lw_out)
+#  return(radbil)
+#}
+rad_bal.numeric <- function() {
+  rad_sw_bal + rad_lw_bal
+}
+
+#' @rdname rad_bal
+#' @method rad_bal weather_station
+#' @export
+#' @param weather_station Object of class weather_station.
+rad_bal.weather_station <- function(weather_station, ...) {
+  check_availability(weather_station, "lw_in", "lw_out")
+
+  rad_lw_surface <- weather_station$measurements$lw_out
+  rad_lw_atmospheric <- weather_station$measurements$lw_in
+  rad_sw_radiation_balance <- rad_sw_radiation_balance(weather_station)
+
+  return(rad_bal(rad_sw_radiation_balance, rad_lw_surface, rad_lw_atmospheric))
+}
+
+#' @return W/m²
+rad_sw_bal.numeric <- function() {
+  (rad_sw_in + rad_diffuse_in) * (1 - albedo + albedo * terrain_view - albedo^2 * terrain_view)
+}
+
+#' Shortwave radiation onto a horizontal area on the ground
+#'
+#' Calculation of the shortwave radiation onto a horizontal area on the ground.
+#'
+#' @param ... Additional parameters passed to later functions.
+#' @return Shortwave radiation on the ground onto a horizontal area in W/m².
+#' @export
+rad_sw_in <- function(...) {
+  UseMethod("rad_sw_in")
+}
+
+#' @rdname rad_sw_in
+#' @method rad_sw_in numeric
+#' @param rad_sw_toa Shortwave radiation at top of atmosphere in W/m².
+#' @param trans_total Total transmittance of the atmosphere (0-1).
+#' @export
+#' @references p46eq3.3
+#rad_sw_in.numeric <- function(rad_sw_toa, trans_total, ...) {
+#  rad_sw_ground_horizontal <- rad_sw_toa * 0.9751 * trans_total
+#  return(rad_sw_ground_horizontal)
+#}
+#' @inheritParams sol_eccentricity
+#' @return W/m²
+rad_sw_in.numeric <- function(datetime, lat, lon, elev, t, slope, exposition,
+  sol_const = 1368, ozone_column = 0.35, vis = 30) {
+  eccentricity <- sol_eccentricity(datetime)
+  gas <- trans_gas(lat, datetime, lon, elev, t)
+  ozone <- trans_ozone(lat, datetime, lon, ozone_column)
+  rayleigh <- trans_rayleigh(lat, datetime, lon, elev, t)
+  vapor <- trans_vapor(lat, datetime, lon, elev, t)
+  aerosol <- trans_aerosol(lat, datetime, lon, elev, t, vis)
+  elevation <- sol_elevation(lat, datetime, lon)
+  azimuth <- sol_azimuth(lat, datetime, lon)
+  
+  trans_total <- gas * ozone * rayleigh * vapor * aerosol
+  cos_terrain_angle <- cos(slope) * sin(elevation) +
+    sin(slope) * cos(elevation) * cos(azimuth - exposition)
+  
+  sol_const * eccentricity * 0.9751 * trans_total * cos_terrain_angle
+}
+
+#' @rdname rad_sw_in
+#' @method rad_sw_in weather_station
+#' @export
+#' @param weather_station Object of class weather_station.
+#' @param trans_total Total transmittance of the atmosphere.
+#' @param oz OPTIONAL. Needed if trans_total = NULL. Columnar ozone in cm.
+#' Default is average global value.
+#' @param vis OPTIONAL. Needed if trans_total = NULL. Meteorological visibility in km.
+#' Default is the visibility on a clear day.
+rad_sw_in.weather_station <- function(weather_station,
+                                      trans_total = NULL,
+                                      oz = 0.35, vis = 30, ...) {
+  rad_sw_toa <- rad_sw_toa(weather_station)
+  if (is.null(trans_total)) {
+    trans_total <- trans_total(weather_station, oz = oz, vis = vis)
+  }
+  return(rad_sw_in(rad_sw_toa, trans_total))
+}
+
+
+
+
+
 #' Emissivity of the atmosphere
 #'
 #' Calculation of the emissivity of the atmosphere.
@@ -53,6 +165,10 @@ rad_emissivity_air.weather_station <- function(weather_station, height = "lower"
   hum <- weather_station$measurements[[paste0("hum", height_num)]]
 
   return(rad_emissivity_air(t, elev, p, hum))
+}
+
+rad_lw_bal <- function() {
+  rad_lw_in - rad_lw_out
 }
 
 #' Longwave radiation of the atmosphere
@@ -186,46 +302,7 @@ rad_sw_toa.weather_station <- function(weather_station, ...) {
   return(rad_sw_toa(datetime, lat, lon))
 }
 
-#' Shortwave radiation onto a horizontal area on the ground
-#'
-#' Calculation of the shortwave radiation onto a horizontal area on the ground.
-#'
-#' @param ... Additional parameters passed to later functions.
-#' @return Shortwave radiation on the ground onto a horizontal area in W/m².
-#' @export
-rad_sw_in <- function(...) {
-  UseMethod("rad_sw_in")
-}
 
-#' @rdname rad_sw_in
-#' @method rad_sw_in numeric
-#' @param rad_sw_toa Shortwave radiation at top of atmosphere in W/m².
-#' @param trans_total Total transmittance of the atmosphere (0-1).
-#' @export
-#' @references p46eq3.3
-rad_sw_in.numeric <- function(rad_sw_toa, trans_total, ...) {
-  rad_sw_ground_horizontal <- rad_sw_toa * 0.9751 * trans_total
-  return(rad_sw_ground_horizontal)
-}
-
-#' @rdname rad_sw_in
-#' @method rad_sw_in weather_station
-#' @export
-#' @param weather_station Object of class weather_station.
-#' @param trans_total Total transmittance of the atmosphere.
-#' @param oz OPTIONAL. Needed if trans_total = NULL. Columnar ozone in cm.
-#' Default is average global value.
-#' @param vis OPTIONAL. Needed if trans_total = NULL. Meteorological visibility in km.
-#' Default is the visibility on a clear day.
-rad_sw_in.weather_station <- function(weather_station,
-                                      trans_total = NULL,
-                                      oz = 0.35, vis = 30, ...) {
-  rad_sw_toa <- rad_sw_toa(weather_station)
-  if (is.null(trans_total)) {
-    trans_total <- trans_total(weather_station, oz = oz, vis = vis)
-  }
-  return(rad_sw_in(rad_sw_toa, trans_total))
-}
 
 
 
@@ -409,45 +486,7 @@ rad_sw_in_topo.weather_station <- function(weather_station, trans_total = 0.8, .
 
 
 
-#' Total radiation balance
-#'
-#' Calculate total radiation balance.
-#'
-#' @param ... Additional parameters passed to later functions.
-#' @return Total radiation balance in W/m².
-#' @export
-#'
-rad_bal_total <- function(...) {
-  UseMethod("rad_bal_total")
-}
 
-#' @rdname rad_bal_total
-#' @method rad_bal_total numeric
-#' @export
-#' @param rad_sw_radiation_balance Shortwave radiation balance in W/m².
-#' @param rad_lw_out Longwave surface emissions in W/m².
-#' @param rad_lw_in Atmospheric radiation in W/m².
-#' @references p45eq3.1
-rad_bal_total.numeric <- function(rad_sw_radiation_balance,
-                                  rad_lw_in,
-                                  rad_lw_out, ...) {
-  radbil <- rad_sw_radiation_balance + (rad_lw_in - rad_lw_out)
-  return(radbil)
-}
-
-#' @rdname rad_bal_total
-#' @method rad_bal_total weather_station
-#' @export
-#' @param weather_station Object of class weather_station.
-rad_bal_total.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "lw_in", "lw_out")
-
-  rad_lw_surface <- weather_station$measurements$lw_out
-  rad_lw_atmospheric <- weather_station$measurements$lw_in
-  rad_sw_radiation_balance <- rad_sw_radiation_balance(weather_station)
-
-  return(rad_bal_total(rad_sw_radiation_balance, rad_lw_surface, rad_lw_atmospheric))
-}
 
 
 
