@@ -48,7 +48,13 @@ rad_sw_bal <- function(...) {
 #' @method rad_sw_bal numeric
 #' @export
 #' @references p45eq3.1, p63eq3.18
-rad_sw_bal.default <- function(...) {
+rad_sw_bal.default <- function(..., valley = FALSE) {
+  sw_in <- rad_sw_in()
+  diffuse_in <- rad_diffuse_in()
+  albedo <- 0.5
+  sky_view <- terr_sky_view(slope, valley = valley)
+  terrain_view <- 1 - sky_view
+  
   (rad_sw_in + rad_diffuse_in) * (1 - albedo + albedo * terrain_view - albedo^2 * terrain_view)
 }
 
@@ -198,6 +204,120 @@ rad_diffuse_in.default <- function(datetime, lon, lat, elev, temp, ...,
   ) * sky_view * (1 + cos(terrain_angle)^2 * sin(z)^3)
 }
 
+#' Long wave radiation balance
+#'
+#' @param ... Additional arguments.
+#' @return W/m$^{2}$.
+#' @export
+rad_lw_bal <- function(...) {
+  UseMethod("rad_lw_bal")
+}
+
+#' @rdname rad_lw_bal
+#' @inheritParams rad_lw_in
+#' @inheritParams rad_lw_out
+#' @export
+#' @references p68eq3.25
+rad_lw_bal.default <- function(name, ...) {
+  rad_lw_in - rad_lw_out
+}
+
+#' Longwave radiation of the atmosphere
+#'
+#' Calculation of the longwave radiation of the atmosphere.
+#'
+#' @param ... Additional parameters passed to later functions.
+#' @return Atmospheric radiation in W/m$^{2}$.
+#' @export
+rad_lw_in <- function(...) {
+  UseMethod("rad_lw_in")
+}
+
+#' @rdname rad_lw_in
+#' @method rad_lw_in numeric
+#' @param hum relative humidity in %.
+#' @param t Air temperature in °C.
+#' @export
+#' @references p66eq3.21
+rad_lw_in.default <- function(...) {
+  sigma <- 5.6693e-8
+  temp <- c2k(temp)
+  sigma * temp^4
+}
+#rad_lw_in.default <- function(hum, t, ...) {
+#  sigma <- 5.6693e-8
+#  gs <- (0.594 + 0.0416 * sqrt(hum_vapor_pres(hum, t))) * sigma * (t + 273.15)^4
+#  return(gs)
+#}
+
+#' @rdname rad_lw_in
+#' @method rad_lw_in weather_station
+#' @export
+#' @param weather_station Object of class weather_station.
+rad_lw_in.weather_station <- function(weather_station, ...) {
+  check_availability(weather_station, "t2", "hum2")
+  hum <- weather_station$measurements$hum2
+  t <- weather_station$measurements$t2
+
+  return(rad_lw_in(hum, t))
+}
+
+#' Longwave radiation of the surface
+#'
+#' Calculates emissions of a surface.
+#'
+#' If a weather_station object is given, the lower air temperature will be used
+#' instead of the surface temperature.
+#'
+#' @param ... Additional parameters passed to later functions.
+#' @return Emissions in W/m$^{2}$.
+#' @export
+rad_lw_out <- function(...) {
+  UseMethod("rad_lw_out")
+}
+
+#' @rdname rad_lw_out
+#' @method rad_lw_out numeric
+#' @param t_surface Surface temperature in °C.
+#' @param surface_type Surface type for which a specific emissivity will be selected.
+#' Default is 'field' as surface type.
+#' @export
+#' @references p66eq3.20
+rad_lw_out.default <- function(t_surface, surface_type = "field", ...) {
+  surface_properties <- surface_properties
+  emissivity <- surface_properties[which(surface_properties$surface_type == surface_type), ]$emissivity
+  sigma <- 5.6993e-8
+  radout <- emissivity * sigma * (t_surface + 273.15)**4
+  return(radout)
+}
+
+#' @rdname rad_lw_out
+#' @method rad_lw_out weather_station
+#' @export
+#' @param weather_station Object of class weather_station.
+#' @param surface_type Surface type for which a specific emissivity will be selected.
+#' Default is 'field' as surface type.
+rad_lw_out.weather_station <- function(weather_station, surface_type = "field", ...) {
+  if (exists("weather_station$measurements$t_surface")) {
+    t <- weather_station$measurements$t_surface
+  } else {
+    t <- weather_station$measurements$t1
+    warning("There is no surface temperature available in this weather_station object. The 2 m air temperature will be used instead.")
+  }
+
+  surface_properties <- surface_properties
+  emissivity <- surface_properties[which(surface_properties$surface_type == surface_type), ]$emissivity
+
+  return(rad_lw_out(t, surface_type))
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -280,93 +400,7 @@ rad_emissivity_air.weather_station <- function(weather_station, height = "lower"
   return(rad_emissivity_air(t, elev, p, hum))
 }
 
-rad_lw_bal <- function() {
-  rad_lw_in - rad_lw_out
-}
 
-#' Longwave radiation of the atmosphere
-#'
-#' Calculation of the longwave radiation of the atmosphere.
-#'
-#' @param ... Additional parameters passed to later functions.
-#' @return Atmospheric radiation in W/m$^{2}$.
-#' @export
-rad_lw_in <- function(...) {
-  UseMethod("rad_lw_in")
-}
-
-#' @rdname rad_lw_in
-#' @method rad_lw_in numeric
-#' @param hum relative humidity in %.
-#' @param t Air temperature in °C.
-#' @export
-#' @references p66eq3.21
-rad_lw_in.default <- function(hum, t, ...) {
-  sigma <- 5.6693e-8
-  gs <- (0.594 + 0.0416 * sqrt(hum_vapor_pres(hum, t))) * sigma * (t + 273.15)^4
-  return(gs)
-}
-
-#' @rdname rad_lw_in
-#' @method rad_lw_in weather_station
-#' @export
-#' @param weather_station Object of class weather_station.
-rad_lw_in.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "t2", "hum2")
-  hum <- weather_station$measurements$hum2
-  t <- weather_station$measurements$t2
-
-  return(rad_lw_in(hum, t))
-}
-
-#' Longwave radiation of the surface
-#'
-#' Calculates emissions of a surface.
-#'
-#' If a weather_station object is given, the lower air temperature will be used
-#' instead of the surface temperature.
-#'
-#' @param ... Additional parameters passed to later functions.
-#' @return Emissions in W/m$^{2}$.
-#' @export
-rad_lw_out <- function(...) {
-  UseMethod("rad_lw_out")
-}
-
-#' @rdname rad_lw_out
-#' @method rad_lw_out numeric
-#' @param t_surface Surface temperature in °C.
-#' @param surface_type Surface type for which a specific emissivity will be selected.
-#' Default is 'field' as surface type.
-#' @export
-#' @references p66eq3.20
-rad_lw_out.default <- function(t_surface, surface_type = "field", ...) {
-  surface_properties <- surface_properties
-  emissivity <- surface_properties[which(surface_properties$surface_type == surface_type), ]$emissivity
-  sigma <- 5.6993e-8
-  radout <- emissivity * sigma * (t_surface + 273.15)**4
-  return(radout)
-}
-
-#' @rdname rad_lw_out
-#' @method rad_lw_out weather_station
-#' @export
-#' @param weather_station Object of class weather_station.
-#' @param surface_type Surface type for which a specific emissivity will be selected.
-#' Default is 'field' as surface type.
-rad_lw_out.weather_station <- function(weather_station, surface_type = "field", ...) {
-  if (exists("weather_station$measurements$t_surface")) {
-    t <- weather_station$measurements$t_surface
-  } else {
-    t <- weather_station$measurements$t1
-    warning("There is no surface temperature available in this weather_station object. The 2 m air temperature will be used instead.")
-  }
-
-  surface_properties <- surface_properties
-  emissivity <- surface_properties[which(surface_properties$surface_type == surface_type), ]$emissivity
-
-  return(rad_lw_out(t, surface_type))
-}
 
 
 
