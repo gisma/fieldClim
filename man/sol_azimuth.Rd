@@ -26,9 +26,10 @@ See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:strptime]{base::strp
 }
 \value{
 Solar azimuth angle in degrees.
-
-degree
 }
 \description{
 Calculates solar azimuth angle for the given date and time.
+}
+\references{
+p243
 }

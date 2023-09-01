@@ -8,17 +8,14 @@
 \usage{
 trans_air_mass_rel(...)
 
-\method{trans_air_mass_rel}{numeric}(lat, datetime, lon)
+\method{trans_air_mass_rel}{numeric}(datetime, lon, lat)
 
 \method{trans_air_mass_rel}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{lat}{Latitude in decimal degrees.}
-
-\item{datetime}{POSIXt object (POSIXct, POSIXlt).
-See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:strptime]{base::strptime} for conversion.}
+\item{datetime}{Datetime in POSIXt}
 
 \item{lon}{Longitude in decimal degrees.}
 

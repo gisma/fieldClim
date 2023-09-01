@@ -15,17 +15,14 @@ trans_gas(...)
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{lat}{Latitude in decimal degrees.}
-
-\item{datetime}{POSIXt object (POSIXct, POSIXlt).
-See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:strptime]{base::strptime} for conversion.}
+\item{datetime}{Datetime in POSIXt}
 
 \item{lon}{Longitude in decimal degrees.}
 
 \item{weather_station}{Object of class weather_station.}
 }
 \value{
-Transmittance due to gas (0-1)
+Transmittance due to gas (0-1), unitless
 
 unitless
 }

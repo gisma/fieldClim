@@ -22,7 +22,7 @@ rad_lw_in(...)
 \item{weather_station}{Object of class weather_station.}
 }
 \value{
-Atmospheric radiation in W/m².
+Atmospheric radiation in W/m$^{2}$.
 }
 \description{
 Calculation of the longwave radiation of the atmosphere.

@@ -7,14 +7,17 @@
 \usage{
 rad_sw_bal(...)
 
-\method{rad_sw_bal}{numeric}()
+\method{rad_sw_bal}{numeric}(...)
 }
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 }
 \value{
-W/m²
+W/m$^{2}$
 }
 \description{
 Shortwave radiation balance
+}
+\references{
+p45eq3.1, p63eq3.18
 }

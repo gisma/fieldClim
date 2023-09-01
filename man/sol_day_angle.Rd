@@ -2,21 +2,24 @@
 % Please edit documentation in R/solar.R
 \name{sol_day_angle}
 \alias{sol_day_angle}
-\alias{sol_day_angle.numeric}
+\alias{sol_day_angle.POSIXt}
 \title{Day angle}
 \usage{
 sol_day_angle(...)
 
-\method{sol_day_angle}{numeric}(datetime)
+\method{sol_day_angle}{POSIXt}(datetime, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{datetime}{datetime in POSIXt}
+\item{datetime}{Datetime in POSIXt}
 }
 \value{
 degree
 }
 \description{
 Day angle
+}
+\references{
+p243
 }

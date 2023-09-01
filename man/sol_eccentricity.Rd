@@ -15,7 +15,7 @@ sol_eccentricity(...)
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{datetime}{datetime in POSIXt}
+\item{datetime}{Datetime in POSIXt}
 
 \item{weather_station}{Object of class weather_station.}
 }

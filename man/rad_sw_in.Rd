@@ -18,7 +18,8 @@ rad_sw_in(...)
   exposition,
   sol_const = 1368,
   ozone_column = 0.35,
-  vis = 30
+  vis = 30,
+  ...
 )
 
 \method{rad_sw_in}{weather_station}(weather_station, trans_total = NULL, oz = 0.35, vis = 30, ...)
@@ -26,10 +27,7 @@ rad_sw_in(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{datetime}{POSIXt object (POSIXct, POSIXlt).
-See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:strptime]{base::strptime} for conversion.}
-
-\item{lat}{Latitude in decimal degrees.}
+\item{datetime}{Datetime in POSIXt}
 
 \item{lon}{Longitude in decimal degrees.}
 
@@ -48,11 +46,11 @@ Default is the visibility on a clear day.}
 Default is average global value.}
 }
 \value{
-W/m².
+W/m$^{2}$.
 }
 \description{
 Shortwave incoming radiation
 }
 \references{
-p46eq3.3
+p46eq3.3, p52eq3.8
 }

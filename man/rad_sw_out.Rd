@@ -15,7 +15,7 @@ rad_sw_out(...)
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{rad_sw_in}{Shortwave radiation on the ground onto a horizontal area in W/m².}
+\item{rad_sw_in}{Shortwave radiation on the ground onto a horizontal area in W/m$^{2}$.}
 
 \item{surface_type}{type of surface for which an albedo will be selected.}
 
@@ -24,7 +24,7 @@ rad_sw_out(...)
 \item{weather_station}{Object of class weather_station.}
 }
 \value{
-Reflected shortwave radiation in W/m².
+Reflected shortwave radiation in W/m$^{2}$.
 }
 \description{
 Calculation of the reflected shortwave radiation.

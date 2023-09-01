@@ -3,7 +3,7 @@
 #' Calculates transmittance due to O$_{2}$ and CO$_{2}$.
 #'
 #' @param ... Additional parameters passed to later functions.
-#' @return Transmittance due to gas (0-1)
+#' @return Transmittance due to gas (0-1), unitless
 #' @export
 trans_gas <- function(...) {
   UseMethod("trans_gas")
@@ -33,6 +33,91 @@ trans_gas.numeric <- function(lat, datetime, lon, elev, temp) {
 trans_gas.weather_station <- function(weather_station, ...) {
   air_mass_abs <- trans_air_mass_abs(weather_station)
   return(trans_gas(air_mass_abs))
+}
+
+#' Absolute optical air mass
+#'
+#' Calculates absolute optical air mass.
+#'
+#' @param ... Additional parameters passed to later functions.
+#' @return Absolute optical air mass.
+#' @export
+trans_air_mass_abs <- function(...) {
+  UseMethod("trans_air_mass_abs")
+}
+
+#' @rdname trans_air_mass_abs
+#' @method trans_air_mass_abs numeric
+#' @param air_mass_rel Relative optical air mass.
+#' @param p Air pressure in hPa.
+#' @export
+#' @references p247.
+trans_air_mass_abs.numeric <- function(lat, datetime, lon, elev, t, p0 = 1013) {
+  air_mass_rel <- trans_air_mass_rel(lat, datetime, lon)
+  p <- pres_p(elev, t, p0 = p0)
+  
+  air_mass_rel * (p / p0)
+}
+#trans_air_mass_abs.numeric <- function(air_mass_rel, p, ...) {
+#  p0 <- 1013.25
+#  air_mass_abs <- air_mass_rel * (p / p0)
+#  return(air_mass_abs)
+#}
+#' @inheritParams trans_air_mass_rel
+#' @return unitless
+
+#' @rdname trans_air_mass_abs
+#' @method trans_air_mass_abs weather_station
+#' @param weather_station Object of class weather_station.
+#' @export
+#'
+trans_air_mass_abs.weather_station <- function(weather_station, ...) {
+  check_availability(weather_station, "p2")
+
+  p <- weather_station$measurements$p2
+  air_mass_rel <- trans_air_mass_rel(weather_station)
+  return(trans_air_mass_abs(air_mass_rel, p))
+}
+
+#' Relative optical air mass
+#'
+#' Calculates relative optical air mass. Returns NA for negative values.
+#'
+#' @rdname trans_air_mass_rel
+#' @param ... Additional parameters passed to later functions.
+#' @return Relative optical air mass.
+#' @export
+trans_air_mass_rel <- function(...) {
+  UseMethod("trans_air_mass_rel")
+}
+
+#' @rdname trans_air_mass_rel
+#' @method trans_air_mass_rel numeric
+#' @param sol_elevation Solar elevation in degrees.
+#' @export
+#' @references p246.
+trans_air_mass_rel.numeric <- function(datetime, lon, lat) {
+  elevation <- sol_elevation(datetime, lon, lat)
+  
+  1 / (sin(deg2rad(elevation)) + 1.5 * elevation^-0.72)
+}
+#trans_air_mass_rel.numeric <- function(sol_elevation, ...) {
+#  sol_elevation <- pi / 180 * sol_elevation
+#  mr <- 1 / (sin(sol_elevation) + 1.5 * sol_elevation^-0.72)
+#  return(mr)
+#}
+#' @inheritParams sol_elevation
+#' @return unitless
+
+
+#' @rdname trans_air_mass_rel
+#' @method trans_air_mass_rel weather_station
+#' @param weather_station Object of class weather_station.
+#' @export
+#'
+trans_air_mass_rel.weather_station <- function(weather_station, ...) {
+  sol_elevation <- sol_elevation(weather_station)
+  return(trans_air_mass_rel(sol_elevation))
 }
 
 #' Transmittance due to ozone
@@ -68,6 +153,16 @@ trans_ozone.numeric <- function(lat, datetime, lon, ozone_column = 0.35) {
   1 - (0.1611 * x * (1 + 139.48 * x)^(-0.3035) - 0.002715 * x * (1 + 0.044 * x + 0.0003 * x^2)^(-1))
 }
 
+#' @rdname trans_ozone
+#' @method trans_ozone weather_station
+#' @param weather_station Object of class weather_station.
+#' @export
+#'
+trans_ozone.weather_station <- function(weather_station, ...) {
+  air_mass_rel <- trans_air_mass_rel(weather_station)
+  return(trans_ozone(air_mass_rel, ...))
+}
+
 #' Transmittance due to rayleigh scattering
 #'
 #' Calculates transmittance due to rayleigh scattering.
@@ -97,6 +192,16 @@ trans_rayleigh.numeric <- function(lat, datetime, lon, elev, t) {
   air_mass_abs <- trans_air_mass_abs(lat, datetime, lon, elev, t)
   
   exp(-0.0903 * air_mass_abs^0.84 * (1 + air_mass_abs - air_mass_abs^1.01))
+}
+
+#' @rdname trans_rayleigh
+#' @method trans_rayleigh weather_station
+#' @param weather_station Object of class weather_station.
+#' @export
+#'
+trans_rayleigh.weather_station <- function(weather_station, ...) {
+  air_mass_abs <- trans_air_mass_abs(weather_station)
+  return(trans_rayleigh(air_mass_abs))
 }
 
 #' Transmittance due to water vapor
@@ -195,119 +300,12 @@ trans_aerosol.weather_station <- function(weather_station, ...) {
 }
 
 
-#' Relative optical air mass
-#'
-#' Calculates relative optical air mass. Returns NA for negative values.
-#'
-#' @rdname trans_air_mass_rel
-#' @param ... Additional parameters passed to later functions.
-#' @return Relative optical air mass.
-#' @export
-#'
-trans_air_mass_rel <- function(...) {
-  UseMethod("trans_air_mass_rel")
-}
-
-#' @rdname trans_air_mass_rel
-#' @method trans_air_mass_rel numeric
-#' @param sol_elevation Solar elevation in degrees.
-#' @export
-#' @references p246.
-#trans_air_mass_rel.numeric <- function(sol_elevation, ...) {
-#  sol_elevation <- pi / 180 * sol_elevation
-#  mr <- 1 / (sin(sol_elevation) + 1.5 * sol_elevation^-0.72)
-#  return(mr)
-#}
-#' @inheritParams sol_elevation
-#' @return unitless
-trans_air_mass_rel.numeric <- function(lat, datetime, lon) {
-  elevation <- sol_elevation(lat, datetime, lon)
-  
-  1 / (sin(deg2rad(elevation)) + 1.5 * elevation^-0.72)
-}
-
-#' @rdname trans_air_mass_rel
-#' @method trans_air_mass_rel weather_station
-#' @param weather_station Object of class weather_station.
-#' @export
-#'
-trans_air_mass_rel.weather_station <- function(weather_station, ...) {
-  sol_elevation <- sol_elevation(weather_station)
-  return(trans_air_mass_rel(sol_elevation))
-}
-
-
-#' Absolute optical air mass
-#'
-#' Calculates absolute optical air mass.
-#'
-#' @rdname trans_air_mass_abs
-#' @param ... Additional parameters passed to later functions.
-#' @return Absolute optical air mass.
-#' @export
-#'
-trans_air_mass_abs <- function(...) {
-  UseMethod("trans_air_mass_abs")
-}
-
-#' @rdname trans_air_mass_abs
-#' @method trans_air_mass_abs numeric
-#' @param air_mass_rel Relative optical air mass.
-#' @param p Air pressure in hPa.
-#' @export
-#' @references p247.
-#trans_air_mass_abs.numeric <- function(air_mass_rel, p, ...) {
-#  p0 <- 1013.25
-#  air_mass_abs <- air_mass_rel * (p / p0)
-#  return(air_mass_abs)
-#}
-#' @inheritParams trans_air_mass_rel
-#' @return unitless
-trans_air_mass_abs.numeric <- function(lat, datetime, lon, elev, t, p0 = 1013) {
-  air_mass_rel <- trans_air_mass_rel(lat, datetime, lon)
-  p <- pres_p(elev, t, p0 = p0)
-  
-  air_mass_rel * (p / p0)
-}
-
-#' @rdname trans_air_mass_abs
-#' @method trans_air_mass_abs weather_station
-#' @param weather_station Object of class weather_station.
-#' @export
-#'
-trans_air_mass_abs.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "p2")
-
-  p <- weather_station$measurements$p2
-  air_mass_rel <- trans_air_mass_rel(weather_station)
-  return(trans_air_mass_abs(air_mass_rel, p))
-}
 
 
 
 
-#' @rdname trans_rayleigh
-#' @method trans_rayleigh weather_station
-#' @param weather_station Object of class weather_station.
-#' @export
-#'
-trans_rayleigh.weather_station <- function(weather_station, ...) {
-  air_mass_abs <- trans_air_mass_abs(weather_station)
-  return(trans_rayleigh(air_mass_abs))
-}
 
 
-
-
-#' @rdname trans_ozone
-#' @method trans_ozone weather_station
-#' @param weather_station Object of class weather_station.
-#' @export
-#'
-trans_ozone.weather_station <- function(weather_station, ...) {
-  air_mass_rel <- trans_air_mass_rel(weather_station)
-  return(trans_ozone(air_mass_rel, ...))
-}
 
 
 

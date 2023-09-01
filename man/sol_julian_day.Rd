@@ -12,14 +12,11 @@ sol_julian_day(...)
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{datetime}{datetime in POSIXt}
+\item{datetime}{Datetime in POSIXt}
 }
 \value{
 unitless
 }
 \description{
 Julian day
-}
-\references{
-p
 }
