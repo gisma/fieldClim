@@ -2,7 +2,7 @@
 % Please edit documentation in R/radiation.R
 \name{rad_emissivity_air}
 \alias{rad_emissivity_air}
-\alias{rad_emissivity_air.numeric}
+\alias{rad_emissivity_air.default}
 \alias{rad_emissivity_air.weather_station}
 \title{Emissivity of the atmosphere}
 \usage{

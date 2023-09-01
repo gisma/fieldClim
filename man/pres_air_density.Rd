@@ -3,7 +3,7 @@
 \name{pres_air_density}
 \alias{pres_air_density}
 \alias{pres_air_density.weather_station}
-\alias{pres_air_density.numeric}
+\alias{pres_air_density.default}
 \title{Air density}
 \usage{
 pres_air_density(...)

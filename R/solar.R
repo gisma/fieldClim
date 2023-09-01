@@ -13,14 +13,14 @@ sol_eccentricity <- function(...) {
 #' @inheritParams sol_day_angle
 #' @export
 #' @references p243.
-sol_eccentricity.POSIXt <- function(datetime, ...) {
+sol_eccentricity.default <- function(datetime, ...) {
   day_angle <- sol_day_angle(datetime)
   day_angle <- deg2rad(day_angle)
   
   1.00011 + 0.034221 * cos(day_angle) + 0.00128 * sin(day_angle) +
   0.000719 * cos(2 * day_angle) + 0.000719 * sin(2 * day_angle)
 }
-#sol_eccentricity.POSIXt <- function(datetime, ...) {
+#sol_eccentricity.default <- function(datetime, ...) {
 #  if (!inherits(datetime, "POSIXt")) {
 #    stop("datetime has to be of class POSIXt.")
 #  }
@@ -57,7 +57,7 @@ sol_day_angle <- function(...) {
 #' @inheritParams sol_julian_day
 #' @export
 #' @references p243
-sol_day_angle.POSIXt <- function(datetime, ...) {
+sol_day_angle.default <- function(datetime, ...) {
   julian_day <- sol_julian_day(datetime)
   
   out <- 2 * pi * (julian_day - 1) / 365
@@ -76,7 +76,7 @@ sol_julian_day <- function(...) {
 #' @rdname sol_julian_day
 #' @param datetime Datetime in POSIXt
 #' @export
-sol_julian_day.POSIXt <- function(datetime, ...) {
+sol_julian_day.default <- function(datetime, ...) {
   as.numeric(format(datetime, format = "%j"))
 }
 
@@ -96,7 +96,7 @@ sol_elevation <- function(...) {
 #' @param lon Longitude in decimal degrees.
 #' @export
 #' @references p243
-sol_elevation.POSIXt <- function(datetime, lon, lat, ...) {
+sol_elevation.default <- function(datetime, lon, lat, ...) {
   lat <- deg2rad(lat)
   declination <- sol_declination(datetime)
   declination <- deg2rad(declination)
@@ -107,7 +107,7 @@ sol_elevation.POSIXt <- function(datetime, lon, lat, ...) {
     cos(lat) * cos(declination) * cos(hour_angle)
   rad2deg(out)
 }
-#sol_elevation.POSIXt <- function(datetime, lat, lon, ...) {
+#sol_elevation.default <- function(datetime, lat, lon, ...) {
 #  angles <- sol_angles(datetime, lat, lon)
 #  return(angles$sol_elevation)
 #}
@@ -140,7 +140,7 @@ sol_declination <- function(...) {
 #' @inheritParams sol_ecliptic_length
 #' @export
 #' @references p243
-sol_declination.POSIXt <- function(datetime) {
+sol_declination.default <- function(datetime, ...) {
   ecliptic_length <- sol_ecliptic_length(datetime)
   ecliptic_length <- deg2rad(ecliptic_length)
   
@@ -161,7 +161,7 @@ sol_ecliptic_length <- function(...) {
 #' @inheritParams sol_julian_day
 #' @export
 #' @references p243
-sol_ecliptic_length.POSIXt <- function(datetime, ...) {
+sol_ecliptic_length.default <- function(datetime, ...) {
   julian_day <- sol_julian_day(datetime)
   medium_anomaly <- sol_medium_anomaly(datetime)
   medium_anomaly <- deg2rad(medium_anomaly)
@@ -182,7 +182,7 @@ sol_medium_anomaly <- function(...) {
 #' @inheritParams sol_julian_day
 #' @export
 #' @references p243
-sol_medium_anomaly.POSIXt <- function(datetime, ...) {
+sol_medium_anomaly.default <- function(datetime, ...) {
   julian_day <- sol_julian_day(datetime)
   
   356.6 + 0.9856 * julian_day
@@ -201,7 +201,7 @@ sol_hour_angle <- function(...) {
 #' @inheritParams sol_medium_suntime
 #' @export
 #' @references p243
-sol_hour_angle.POSIXt <- function(datetime, lon, ...) {
+sol_hour_angle.default <- function(datetime, lon, ...) {
   medium_suntime <- sol_medium_suntime(datetime, lon)
   time_formula <- sol_time_formula(datetime, lon)
   
@@ -222,7 +222,7 @@ sol_medium_suntime <- function(...) {
 #' @param lon Longitude.
 #' @export
 #' @references p243
-sol_medium_suntime.POSIXt <- function(datetime, lon, ...) {
+sol_medium_suntime.default <- function(datetime, lon, ...) {
   datetime <- as.POSIXlt(datetime, tz = "GMT")
   utc <- datetime$hour + datetime$min / 60 + datetime$sec / 3600
   
@@ -243,7 +243,7 @@ sol_time_formula <- function(...) {
 #' @param lon Longitude.
 #' @export
 #' @references p243
-sol_time_formula.POSIXt <- function(datetime, lon, ...) {
+sol_time_formula.default <- function(datetime, lon, ...) {
   lon <- deg2rad(lon)
   medium_anomaly <- sol_medium_anomaly(datetime)
   medium_anomaly <- deg2rad(medium_anomaly)
@@ -251,6 +251,57 @@ sol_time_formula.POSIXt <- function(datetime, lon, ...) {
   0.1644 * sin(2 * lon) - 0.1277 * sin(medium_anomaly)
 }
 
+#' Solar azimuth angle
+#'
+#' Calculates solar azimuth angle for the given date and time.
+#'
+#' @param ... Additional parameters passed to later functions.
+#' @return Solar azimuth angle in degrees.
+#' @export
+sol_azimuth <- function(...) {
+  UseMethod("sol_azimuth")
+}
+
+#' @rdname sol_azimuth
+#' @inheritParams sol_elevation
+#' @export
+#' @references p243
+sol_azimuth.default <- function(datetime, lon, lat, ...) {
+  declination <- sol_declination(datetime)
+  declination <- deg2rad(declination)
+  hour_angle <- sol_hour_angle(datetime, lon)
+  hour_angle <- deg2rad(hour_angle)
+  elevation <- sol_elevation(datetime, lon, lat)
+  elevation <- deg2rad(elevation)
+  medium_suntime <- sol_medium_suntime(datetime, lon)
+  lat <- deg2rad(lat)
+  
+  x <- acos((sin(declination) * cos(lat) - cos(declination) * sin(lat) * cos(hour_angle)) / cos(elevation))
+  x <- rad2deg(x)
+  
+  if(medium_suntime < 12) {
+    x
+  } else if(medium_suntime >= 12) {
+    360 - x
+  }
+}
+#sol_azimuth.default <- function(datetime, lat, lon, ...) {
+#  angles <- sol_angles(datetime, lat, lon)
+#  return(angles$sol_azimuth)
+#}
+
+#' @rdname sol_azimuth
+#' @param weather_station Object of class weather_station.
+#' @export
+sol_azimuth.weather_station <- function(weather_station, ...) {
+  check_availability(weather_station, "datetime", "latitude", "longitude")
+
+  datetime <- weather_station$measurements$datetime
+  lat <- weather_station$location_properties$latitude
+  lon <- weather_station$location_properties$longitude
+
+  return(sol_azimuth(datetime, lat, lon))
+}
 
 
 
@@ -290,7 +341,7 @@ sol_time_formula.POSIXt <- function(datetime, lon, ...) {
 # @param lon Longitude in decimal degrees.
 # @export
 # @references p243
-#sol_angles.POSIXt <- function(datetime, lat, lon, ...) {
+#sol_angles.default <- function(datetime, lat, lon, ...) {
 #  if (!inherits(datetime, "POSIXt")) {
 #    stop("datetime has to be of class POSIXt.")
 #  }
@@ -363,65 +414,3 @@ sol_time_formula.POSIXt <- function(datetime, lon, ...) {
 
 #  return(sol_angles(datetime, lat, lon))
 #}
-
-
-
-
-
-
-
-
-#' Solar azimuth angle
-#'
-#' Calculates solar azimuth angle for the given date and time.
-#'
-#' @param ... Additional parameters passed to later functions.
-#' @return Solar azimuth angle in degrees.
-#' @export
-sol_azimuth <- function(...) {
-  UseMethod("sol_azimuth")
-}
-
-#' @rdname sol_azimuth
-#' @param datetime POSIXt object (POSIXct, POSIXlt).
-#' See [base::as.POSIXlt] and [base::strptime] for conversion.
-#' @param lat Latitude in decimal degrees.
-#' @param lon Longitude in decimal degrees.
-#' @export
-#' @references p243
-sol_azimuth.POSIXt <- function(lat, datetime, lon) {
-  lat <- deg2rad(lat)
-  declination <- sol_declination(datetime)
-  declination <- deg2rad(declination)
-  hour_angle <- sol_hour_angle(datetime, lon)
-  hour_angle <- deg2rad(hour_angle)
-  elevation <- sol_elevation(lat, datetime, lon)
-  elevation <- deg2rad(elevation)
-  medium_suntime <- sol_medium_suntime(datetime, lon)
-  
-  x <- acos((sin(declination) * cos(lat) - cos(declination) * sin(lat) * cos(hour_angle)) / cos(elevation))
-  x <- rad2deg(x)
-  
-  if(medium_suntime < 12) {
-    x
-  } else if(medium_suntime >= 12) {
-    360 - x
-  }
-}
-#sol_azimuth.POSIXt <- function(datetime, lat, lon, ...) {
-#  angles <- sol_angles(datetime, lat, lon)
-#  return(angles$sol_azimuth)
-#}
-
-#' @rdname sol_azimuth
-#' @param weather_station Object of class weather_station.
-#' @export
-sol_azimuth.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "datetime", "latitude", "longitude")
-
-  datetime <- weather_station$measurements$datetime
-  lat <- weather_station$location_properties$latitude
-  lon <- weather_station$location_properties$longitude
-
-  return(sol_azimuth(datetime, lat, lon))
-}

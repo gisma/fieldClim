@@ -2,13 +2,13 @@
 % Please edit documentation in R/transmittance.R
 \name{trans_ozone}
 \alias{trans_ozone}
-\alias{trans_ozone.numeric}
+\alias{trans_ozone.default}
 \alias{trans_ozone.weather_station}
 \title{Transmittance due to ozone}
 \usage{
 trans_ozone(...)
 
-\method{trans_ozone}{numeric}(lat, datetime, lon, ozone_column = 0.35)
+\method{trans_ozone}{default}(datetime, lon, lat, ozone_column = 0.35, ...)
 
 \method{trans_ozone}{weather_station}(weather_station, ...)
 }
@@ -19,16 +19,12 @@ trans_ozone(...)
 
 \item{lon}{Longitude in decimal degrees.}
 
+\item{ozone_column}{Atmospheric ozone as column in cm. Default is average value of 0.35 cm.}
+
 \item{weather_station}{Object of class weather_station.}
-
-\item{air_mass_rel}{Relative optical air mass.}
-
-\item{oz}{Atmospheric ozone as column in cm. Default is average value of 0.35 cm.}
 }
 \value{
-Transmittance due to ozone (0-1).
-
-unitless
+Transmittance due to ozone (0-1). unitless
 }
 \description{
 Calculates transmittance due to ozone.

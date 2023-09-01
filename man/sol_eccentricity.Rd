@@ -2,13 +2,13 @@
 % Please edit documentation in R/solar.R
 \name{sol_eccentricity}
 \alias{sol_eccentricity}
-\alias{sol_eccentricity.POSIXt}
+\alias{sol_eccentricity.default}
 \alias{sol_eccentricity.weather_station}
 \title{Eccentricity}
 \usage{
 sol_eccentricity(...)
 
-\method{sol_eccentricity}{POSIXt}(datetime, ...)
+\method{sol_eccentricity}{default}(datetime, ...)
 
 \method{sol_eccentricity}{weather_station}(weather_station, ...)
 }

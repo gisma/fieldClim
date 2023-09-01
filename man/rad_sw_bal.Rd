@@ -2,7 +2,7 @@
 % Please edit documentation in R/radiation.R
 \name{rad_sw_bal}
 \alias{rad_sw_bal}
-\alias{rad_sw_bal.numeric}
+\alias{rad_sw_bal.default}
 \title{Shortwave radiation balance}
 \usage{
 rad_sw_bal(...)

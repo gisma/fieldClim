@@ -2,34 +2,30 @@
 #'
 #' Calculation of pressure as a function of the elevation above sea level.
 #'
-#' @rdname pres_p
 #' @param ... Additional parameters passed to later functions.
 #' @return Pressure in hPa.
 #' @export
-#'
 pres_p <- function(...) {
   UseMethod("pres_p")
 }
 
 #' @rdname pres_p
-#' @method pres_p numeric
 #' @param elev Elevation above sea level in m.
 #' @param t Temperature in °C.
 #' @export
 #' @references Lente & Ősz 2020 eq5.
-pres_p.numeric <- function(elev, t, p0 = 1013, g = 9.81, rl = 287.05) {
-  t <- c2k(t)
+pres_p.default <- function(elev, temp,
+  p0 = 1013, g = 9.81, rl = 287.05, ...) {
+  temp <- c2k(temp)
   
-  p0 * exp(-(g * elev) / (rl * t))
+  p0 * exp(-(g * elev) / (rl * temp))
 }
 
 
 #' @rdname pres_p
-#' @method pres_p weather_station
 #' @param weather_station Object of class weather_station.
 #' @param height 'lower' or 'upper'
 #' @export
-#'
 pres_p.weather_station <- function(weather_station, height = "lower", ...) {
   if (height == "lower") {
     check_availability(weather_station, "t1", "elevation", "z1")
@@ -83,7 +79,7 @@ pres_air_density.weather_station <- function(weather_station, height = "lower", 
 #' @param t Temperature in °C.
 #' @export
 #'
-pres_air_density.numeric <- function(p, t, ...) {
+pres_air_density.default <- function(p, t, ...) {
   ad <- (p * 100) / (287.05 * (t + 273.15))
   return(ad)
 }

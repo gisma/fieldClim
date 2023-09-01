@@ -2,13 +2,13 @@
 % Please edit documentation in R/transmittance.R
 \name{trans_air_mass_rel}
 \alias{trans_air_mass_rel}
-\alias{trans_air_mass_rel.numeric}
+\alias{trans_air_mass_rel.default}
 \alias{trans_air_mass_rel.weather_station}
 \title{Relative optical air mass}
 \usage{
 trans_air_mass_rel(...)
 
-\method{trans_air_mass_rel}{numeric}(datetime, lon, lat)
+\method{trans_air_mass_rel}{default}(datetime, lon, lat, ...)
 
 \method{trans_air_mass_rel}{weather_station}(weather_station, ...)
 }
@@ -20,8 +20,6 @@ trans_air_mass_rel(...)
 \item{lon}{Longitude in decimal degrees.}
 
 \item{weather_station}{Object of class weather_station.}
-
-\item{sol_elevation}{Solar elevation in degrees.}
 }
 \value{
 Relative optical air mass.

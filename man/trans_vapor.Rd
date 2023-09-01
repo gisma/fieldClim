@@ -2,13 +2,13 @@
 % Please edit documentation in R/transmittance.R
 \name{trans_vapor}
 \alias{trans_vapor}
-\alias{trans_vapor.numeric}
+\alias{trans_vapor.default}
 \alias{trans_vapor.weather_station}
 \title{Transmittance due to water vapor}
 \usage{
 trans_vapor(...)
 
-\method{trans_vapor}{numeric}(lat, datetime, lon, elev, t)
+\method{trans_vapor}{default}(datetime, lon, lat, elev, temp, ..., p0 = 1013)
 
 \method{trans_vapor}{weather_station}(weather_station, ...)
 }
@@ -19,16 +19,12 @@ trans_vapor(...)
 
 \item{lon}{Longitude in decimal degrees.}
 
+\item{elev}{Elevation above sea level in m.}
+
 \item{weather_station}{Object of class weather_station.}
-
-\item{air_mass_rel}{Relative optical air mass.}
-
-\item{precipitable_water}{Precipitable water in cm.}
 }
 \value{
-Transmittance due to water vapor (0-1).
-
-unitless
+Transmittance due to water vapor (0-1). unitless
 }
 \description{
 Calculates transmittance due to water vapor.

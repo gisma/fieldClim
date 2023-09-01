@@ -16,7 +16,7 @@ hum_sat_vapor_pres <- function(...) {
 #' @export
 #' @param t Air temperature in °C.
 #' @references p261.
-hum_sat_vapor_pres.numeric <- function(t, ...) {
+hum_sat_vapor_pres.default <- function(t, ...) {
   a <- 7.5
   b <- 235
   return(6.1078 * (10**((a * t) / (b + t))))
@@ -54,7 +54,7 @@ hum_vapor_pres <- function(...) {
 #' @export
 #' @param hum Relative humidity in %.
 #' @param t Air temperature in °C.
-hum_vapor_pres.numeric <- function(hum, t, ...) {
+hum_vapor_pres.default <- function(hum, t, ...) {
   sat_vapor_pres <- hum_sat_vapor_pres(t)
   return((hum / 100) * sat_vapor_pres)
 }
@@ -93,7 +93,7 @@ hum_specific <- function(...) {
 #' @param p_vapor Vapor pressure in hPa.
 #' @param p Air pressure in hPa.
 #' @references p262.
-hum_specific.numeric <- function(p_vapor, p, ...) {
+hum_specific.default <- function(p_vapor, p, ...) {
   return(0.622 * (p_vapor / p))
 }
 
@@ -131,7 +131,7 @@ hum_absolute <- function(...) {
 #' @param p_vapor Vapor pressure in hPa.
 #' @param t Temperature in °C.
 #' @references p262.
-hum_absolute.numeric <- function(p_vapor, t, ...) {
+hum_absolute.default <- function(p_vapor, t, ...) {
   t <- t + 273.15
   return((0.21668 * p_vapor) / t)
 }
@@ -167,7 +167,7 @@ hum_evap_heat <- function(...) {
 #' @export
 #' @param t Air temperature in °C.
 #' @references p261.
-hum_evap_heat.numeric <- function(t, ...) {
+hum_evap_heat.default <- function(t, ...) {
   return((2.5008 - 0.002372 * t) * 10^6)
 }
 
@@ -196,19 +196,23 @@ hum_evap_heat.weather_station <- function(weather_station, height = "lower", ...
 #' @param ... Additional parameters passed to later functions.
 #' @return Total precipitable water in cm (grams).
 #' @export
-#'
 hum_precipitable_water <- function(...) {
   UseMethod("hum_precipitable_water")
 }
 
 #' @rdname hum_precipitable_water
-#' @method hum_precipitable_water numeric
-#' @export
 #' @param p Air pressure in hPa.
 #' @param t Air temperature in °C.
 #' @param elev Elevation above sea level in m.
+#' @export
 #' @references p246
-#hum_precipitable_water.numeric <- function(p, t, elev, ...) {
+hum_precipitable_water.default <- function(elev, temp, p0 = 1013, ...) {
+  pw_standard <- 4.1167
+  p <- pres_p(elev, temp, p0 = p0)
+  temp_standard <- 300
+  pw_standard * (p / p0) * (temp_standard / temp)^0.5
+}
+#hum_precipitable_water.default <- function(p, t, elev, ...) {
 #  p0 <- 1013.25 # Pressure standard atmosphere
 #  t <- t + 273.15 # °C in K
 #  cof <- (elev / 100) * 0.6 # average moist adiabatic T-gradient, might have to be adjusted
@@ -217,12 +221,6 @@ hum_precipitable_water <- function(...) {
 #  pw <- pw_st * (p / p0) * (t0 / t)**0.5
 #  return(pw)
 #}
-hum_precipitable_water.numeric <- function(elev, t, p0 = 1013) {
-  pw_standard <- 4.1167
-  p <- pres_p(elev, t, p0)
-  temp_standard <- 300
-  pw_standard * (p / p0) * (temp_standard / t)^0.5
-}
 
 #' @rdname hum_precipitable_water
 #' @method hum_precipitable_water weather_station
@@ -265,7 +263,7 @@ hum_moisture_gradient <- function(...) {
 #' @param p2 Air pressure at lower height in hPa.
 #' @param z1 Lower measurement height in m.
 #' @param z2 Upper measurement height in m.
-hum_moisture_gradient.numeric <- function(hum1, hum2, t1, t2, p1, p2, z1 = 2, z2 = 10, ...) {
+hum_moisture_gradient.default <- function(hum1, hum2, t1, t2, p1, p2, z1 = 2, z2 = 10, ...) {
   # saturation vapor pressure
 
   # vapor pressure

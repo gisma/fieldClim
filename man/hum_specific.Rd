@@ -2,7 +2,7 @@
 % Please edit documentation in R/humidity.R
 \name{hum_specific}
 \alias{hum_specific}
-\alias{hum_specific.numeric}
+\alias{hum_specific.default}
 \alias{hum_specific.weather_station}
 \title{Specific humidity}
 \usage{

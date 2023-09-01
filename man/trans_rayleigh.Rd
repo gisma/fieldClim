@@ -2,13 +2,13 @@
 % Please edit documentation in R/transmittance.R
 \name{trans_rayleigh}
 \alias{trans_rayleigh}
-\alias{trans_rayleigh.numeric}
+\alias{trans_rayleigh.default}
 \alias{trans_rayleigh.weather_station}
 \title{Transmittance due to rayleigh scattering}
 \usage{
 trans_rayleigh(...)
 
-\method{trans_rayleigh}{numeric}(lat, datetime, lon, elev, t)
+\method{trans_rayleigh}{default}(datetime, lon, lat, elev, temp, ..., p0 = 1013)
 
 \method{trans_rayleigh}{weather_station}(weather_station, ...)
 }
@@ -19,14 +19,12 @@ trans_rayleigh(...)
 
 \item{lon}{Longitude in decimal degrees.}
 
-\item{weather_station}{Object of class weather_station.}
+\item{elev}{Elevation above sea level in m.}
 
-\item{air_mass_abs}{Absolute optical air mass.}
+\item{weather_station}{Object of class weather_station.}
 }
 \value{
-Transmittance due to rayleigh scattering (0-1).
-
-unitless
+Transmittance due to rayleigh scattering (0-1). unitless
 }
 \description{
 Calculates transmittance due to rayleigh scattering.

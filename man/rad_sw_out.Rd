@@ -2,7 +2,7 @@
 % Please edit documentation in R/radiation.R
 \name{rad_sw_out}
 \alias{rad_sw_out}
-\alias{rad_sw_out.numeric}
+\alias{rad_sw_out.default}
 \alias{rad_sw_out.weather_station}
 \title{Reflected shortwave radiation}
 \usage{

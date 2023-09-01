@@ -2,13 +2,13 @@
 % Please edit documentation in R/transmittance.R
 \name{trans_aerosol}
 \alias{trans_aerosol}
-\alias{trans_aerosol.numeric}
+\alias{trans_aerosol.default}
 \alias{trans_aerosol.weather_station}
 \title{Transmittance due to aerosols}
 \usage{
 trans_aerosol(...)
 
-\method{trans_aerosol}{numeric}(lat, datetime, lon, elev, t, vis = 30)
+\method{trans_aerosol}{default}(datetime, lon, lat, elev, temp, vis = 30, ..., p0 = 1013)
 
 \method{trans_aerosol}{weather_station}(weather_station, ...)
 }
@@ -19,16 +19,14 @@ trans_aerosol(...)
 
 \item{lon}{Longitude in decimal degrees.}
 
+\item{elev}{Elevation above sea level in m.}
+
 \item{vis}{Visibility in km.}
 
 \item{weather_station}{Object of class weather_station.}
-
-\item{air_mass_abs}{Absolute optical air mass.}
 }
 \value{
-Transmittance due to aerosols (0-1).
-
-unitless
+Transmittance due to aerosols (0-1). unitless
 }
 \description{
 Calculates transmittance due to aerosols.

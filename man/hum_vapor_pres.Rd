@@ -2,7 +2,7 @@
 % Please edit documentation in R/humidity.R
 \name{hum_vapor_pres}
 \alias{hum_vapor_pres}
-\alias{hum_vapor_pres.numeric}
+\alias{hum_vapor_pres.default}
 \alias{hum_vapor_pres.weather_station}
 \title{Vapor pressure}
 \usage{

@@ -2,13 +2,13 @@
 % Please edit documentation in R/pressure.R
 \name{pres_p}
 \alias{pres_p}
-\alias{pres_p.numeric}
+\alias{pres_p.default}
 \alias{pres_p.weather_station}
 \title{Air pressure}
 \usage{
 pres_p(...)
 
-\method{pres_p}{numeric}(elev, t, p0 = 1013, g = 9.81, rl = 287.05)
+\method{pres_p}{default}(elev, temp, p0 = 1013, g = 9.81, rl = 287.05, ...)
 
 \method{pres_p}{weather_station}(weather_station, height = "lower", ...)
 }
@@ -17,11 +17,11 @@ pres_p(...)
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{t}{Temperature in °C.}
-
 \item{weather_station}{Object of class weather_station.}
 
 \item{height}{'lower' or 'upper'}
+
+\item{t}{Temperature in °C.}
 }
 \value{
 Pressure in hPa.

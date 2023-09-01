@@ -2,7 +2,7 @@
 % Please edit documentation in R/humidity.R
 \name{hum_sat_vapor_pres}
 \alias{hum_sat_vapor_pres}
-\alias{hum_sat_vapor_pres.numeric}
+\alias{hum_sat_vapor_pres.default}
 \alias{hum_sat_vapor_pres.weather_station}
 \title{Saturation vapor pressure}
 \usage{

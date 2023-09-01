@@ -141,22 +141,38 @@ as.data.frame.weather_station <- function(x, ...,
   return(out)
 }
 
-#' @return degree
+#' Radian to degree
+#'
+#' @param rad Radian.
+#' @return degree.
+#' @export
 rad2deg <- function(rad) {
   rad * 180 / pi
 }
 
-#' @return radian
+#' Radian to degree
+#'
+#' @param deg Degree.
+#' @return radian.
+#' @export
 deg2rad <- function(deg) {
   deg * pi / 180
 }
 
+#' Radian to degree
+#'
+#' @param deg Degree.
 #' @return degree Celcius
+#' @export
 c2k <- function(celcius) {
   celcius + 273.15
 }
 
+#' Radian to degree
+#'
+#' @param deg Degree.
 #' @return Kelvin
+#' @export
 k2c <- function(kelvin) {
   kelvin - 273.15
 }

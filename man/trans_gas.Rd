@@ -2,13 +2,13 @@
 % Please edit documentation in R/transmittance.R
 \name{trans_gas}
 \alias{trans_gas}
-\alias{trans_gas.numeric}
+\alias{trans_gas.default}
 \alias{trans_gas.weather_station}
 \title{Transmittance due to gas}
 \usage{
 trans_gas(...)
 
-\method{trans_gas}{numeric}(lat, datetime, lon, elev, temp)
+\method{trans_gas}{default}(datetime, lon, lat, elev, temp, ..., p0 = 1013)
 
 \method{trans_gas}{weather_station}(weather_station, ...)
 }
@@ -18,6 +18,8 @@ trans_gas(...)
 \item{datetime}{Datetime in POSIXt}
 
 \item{lon}{Longitude in decimal degrees.}
+
+\item{elev}{Elevation above sea level in m.}
 
 \item{weather_station}{Object of class weather_station.}
 }

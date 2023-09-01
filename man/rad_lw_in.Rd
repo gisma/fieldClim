@@ -2,7 +2,7 @@
 % Please edit documentation in R/radiation.R
 \name{rad_lw_in}
 \alias{rad_lw_in}
-\alias{rad_lw_in.numeric}
+\alias{rad_lw_in.default}
 \alias{rad_lw_in.weather_station}
 \title{Longwave radiation of the atmosphere}
 \usage{

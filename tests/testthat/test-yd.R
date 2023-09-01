@@ -3,7 +3,7 @@ datetime <- as.POSIXlt("2020-01-01 12:00")
 lat <- 57
 lon <- 5
 elev <- 200
-t <- 15
+temp <- 15
 slope <- 30
 exposition <- 180
 
@@ -18,14 +18,17 @@ sol_hour_angle(datetime, lon)
 sol_medium_suntime(datetime, lon)
 sol_time_formula(datetime, lon)
 
-trans_gas(lat, datetime, lon, elev, t)
-trans_air_mass_abs(lat, datetime, lon, elev, t)
-trans_air_mass_rel(lat, datetime, lon)
-pres_p(elev, t)
-trans_ozone(lat, datetime, lon)
-
-sol_azimuth(lat, datetime, lon)
-rad_sw_in(datetime, lat, lon, elev, t, slope, exposition)
+trans_gas(datetime, lon, lat, elev, temp)
+trans_air_mass_abs(datetime, lon, lat, elev, temp, p0 = 1013)
+trans_air_mass_rel(datetime, lon, lat)
+pres_p(elev, temp)
+trans_ozone.default(datetime, lon, lat)
+trans_rayleigh.default(datetime, lon, lat, elev, temp)
+trans_vapor.default(datetime, lon, lat, elev, temp)
+trans_aerosol.default(datetime, lon, lat, elev, temp)
+hum_precipitable_water(elev, temp)
+sol_azimuth(datetime, lon, lat)
+rad_sw_in(datetime, lon, lat, elev, temp)
 
 a <- c()
 for(day_angle in seq(0, 359)) {

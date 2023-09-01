@@ -2,7 +2,7 @@
 % Please edit documentation in R/humidity.R
 \name{hum_moisture_gradient}
 \alias{hum_moisture_gradient}
-\alias{hum_moisture_gradient.numeric}
+\alias{hum_moisture_gradient.default}
 \alias{hum_moisture_gradient.weather_station}
 \title{Moisture gradient}
 \usage{

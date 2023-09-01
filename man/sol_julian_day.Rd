@@ -2,12 +2,12 @@
 % Please edit documentation in R/solar.R
 \name{sol_julian_day}
 \alias{sol_julian_day}
-\alias{sol_julian_day.POSIXt}
+\alias{sol_julian_day.default}
 \title{Julian day}
 \usage{
 sol_julian_day(...)
 
-\method{sol_julian_day}{POSIXt}(datetime, ...)
+\method{sol_julian_day}{default}(datetime, ...)
 }
 \arguments{
 \item{...}{Additional parameters passed to later functions.}

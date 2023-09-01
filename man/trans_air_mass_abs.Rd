@@ -2,13 +2,13 @@
 % Please edit documentation in R/transmittance.R
 \name{trans_air_mass_abs}
 \alias{trans_air_mass_abs}
-\alias{trans_air_mass_abs.numeric}
+\alias{trans_air_mass_abs.default}
 \alias{trans_air_mass_abs.weather_station}
 \title{Absolute optical air mass}
 \usage{
 trans_air_mass_abs(...)
 
-\method{trans_air_mass_abs}{numeric}(lat, datetime, lon, elev, t, p0 = 1013)
+\method{trans_air_mass_abs}{default}(datetime, lon, lat, elev, temp, p0 = 1013, ...)
 
 \method{trans_air_mass_abs}{weather_station}(weather_station, ...)
 }
@@ -19,11 +19,9 @@ trans_air_mass_abs(...)
 
 \item{lon}{Longitude in decimal degrees.}
 
+\item{elev}{Elevation above sea level in m.}
+
 \item{weather_station}{Object of class weather_station.}
-
-\item{air_mass_rel}{Relative optical air mass.}
-
-\item{p}{Air pressure in hPa.}
 }
 \value{
 Absolute optical air mass.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/radiation.R
 \name{rad_sw_in_topo}
 \alias{rad_sw_in_topo}
-\alias{rad_sw_in_topo.numeric}
+\alias{rad_sw_in_topo.default}
 \alias{rad_sw_in_topo.weather_station}
 \title{Incoming shortwave radiation in dependency of topography}
 \usage{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/radiation.R
 \name{rad_sw_toa}
 \alias{rad_sw_toa}
-\alias{rad_sw_toa.POSIXt}
+\alias{rad_sw_toa.default}
 \alias{rad_sw_toa.weather_station}
 \title{Shortwave radiation at top of atmosphere}
 \usage{

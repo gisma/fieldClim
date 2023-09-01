@@ -12,10 +12,10 @@ rad_bal <- function(...) {
 #' @rdname rad_bal
 #' @export
 #' @references p45eq3.1
-rad_bal.numeric <- function(...) {
+rad_bal.default <- function(...) {
   rad_sw_bal + rad_lw_bal
 }
-#rad_bal.numeric <- function(rad_sw_radiation_balance,
+#rad_bal.default <- function(rad_sw_radiation_balance,
 #                                  rad_lw_in,
 #                                  rad_lw_out, ...) {
 #  radbil <- rad_sw_radiation_balance + (rad_lw_in - rad_lw_out)
@@ -48,7 +48,7 @@ rad_sw_bal <- function(...) {
 #' @method rad_sw_bal numeric
 #' @export
 #' @references p45eq3.1, p63eq3.18
-rad_sw_bal.numeric <- function(...) {
+rad_sw_bal.default <- function(...) {
   (rad_sw_in + rad_diffuse_in) * (1 - albedo + albedo * terrain_view - albedo^2 * terrain_view)
 }
 
@@ -67,16 +67,23 @@ rad_sw_in <- function(...) {
 #' @param slope Slope
 #' @param exposition Exposition
 #' @export
-#' @references p46eq3.3, p52eq3.8
-rad_sw_in.numeric <- function(datetime, lat, lon, elev, t, slope, exposition, sol_const = 1368, ozone_column = 0.35, vis = 30, ...) {
+#' @references p46eq3.3, p52eq3.8, p52eq3.7
+rad_sw_in.default <- function(datetime, lon, lat, elev, temp,
+  slope = 0, exposition = 0, sol_const = 1368, ...,
+  p0 = 1013, ozone_column = 0.35, vis = 30) {
   eccentricity <- sol_eccentricity(datetime)
-  gas <- trans_gas(lat, datetime, lon, elev, t)
-  ozone <- trans_ozone(lat, datetime, lon, ozone_column)
-  rayleigh <- trans_rayleigh(lat, datetime, lon, elev, t)
-  vapor <- trans_vapor(lat, datetime, lon, elev, t)
-  aerosol <- trans_aerosol(lat, datetime, lon, elev, t, vis)
-  elevation <- sol_elevation(lat, datetime, lon)
-  azimuth <- sol_azimuth(lat, datetime, lon)
+  
+  gas <- trans_gas(datetime, lon, lat, elev, temp, p0 = p0)
+  ozone <- trans_ozone(datetime, lon, lat, ozone_column = ozone_column)
+  rayleigh <- trans_rayleigh(datetime, lon, lat, elev, temp)
+  vapor <- trans_vapor(datetime, lon, lat, elev, temp)
+  aerosol <- trans_aerosol(datetime, lon, lat, elev, temp, vis = vis)
+  
+  slope <- deg2rad(slope)
+  elevation <- sol_elevation(datetime, lon, lat)
+  azimuth <- sol_azimuth(datetime, lon, lat)
+  azimuth <- deg2rad(azimuth)
+  exposition <- deg2rad(exposition)
   
   trans_total <- gas * ozone * rayleigh * vapor * aerosol
   cos_terrain_angle <- cos(slope) * sin(elevation) +
@@ -84,7 +91,7 @@ rad_sw_in.numeric <- function(datetime, lat, lon, elev, t, slope, exposition, so
   
   sol_const * eccentricity * 0.9751 * trans_total * cos_terrain_angle
 }
-#rad_sw_in.numeric <- function(rad_sw_toa, trans_total, ...) {
+#rad_sw_in.default <- function(rad_sw_toa, trans_total, ...) {
 #  rad_sw_ground_horizontal <- rad_sw_toa * 0.9751 * trans_total
 #  return(rad_sw_ground_horizontal)
 #}
@@ -106,6 +113,45 @@ rad_sw_in.weather_station <- function(weather_station,
   }
   return(rad_sw_in(rad_sw_toa, trans_total))
 }
+
+#' Incoming diffused radiation
+#'
+#' @param ... Additional arguments.
+#' @return Description.
+#' @export
+rad_diffuse_in <- function(...) {
+  UseMethod("rad_diffuse_in")
+}
+
+#' @rdname rad_diffuse_in
+#' @inheritParams source_function
+#' @param name Description.
+#' @export
+#' @references reference
+rad_diffuse_in.default <- function(name, ...) {
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -130,7 +176,7 @@ rad_emissivity_air <- function(...) {
 #' @param p OPTIONAL. Air pressure in hPa.
 #' @export
 #' @references p67eq3.23
-rad_emissivity_air.numeric <- function(t, elev, hum, p = NULL, ...) {
+rad_emissivity_air.default <- function(t, elev, hum, p = NULL, ...) {
   if (is.null(p)) p <- pres_p(elev, t)
 
   # Calculate temperature adjusted to elevation (with saturated adiabatic lapse rate)
@@ -189,7 +235,7 @@ rad_lw_in <- function(...) {
 #' @param t Air temperature in °C.
 #' @export
 #' @references p66eq3.21
-rad_lw_in.numeric <- function(hum, t, ...) {
+rad_lw_in.default <- function(hum, t, ...) {
   sigma <- 5.6693e-8
   gs <- (0.594 + 0.0416 * sqrt(hum_vapor_pres(hum, t))) * sigma * (t + 273.15)^4
   return(gs)
@@ -228,7 +274,7 @@ rad_lw_out <- function(...) {
 #' Default is 'field' as surface type.
 #' @export
 #' @references p66eq3.20
-rad_lw_out.numeric <- function(t_surface, surface_type = "field", ...) {
+rad_lw_out.default <- function(t_surface, surface_type = "field", ...) {
   surface_properties <- surface_properties
   emissivity <- surface_properties[which(surface_properties$surface_type == surface_type), ]$emissivity
   sigma <- 5.6993e-8
@@ -278,7 +324,7 @@ rad_sw_toa <- function(...) {
 #' @param lon Longitude of the place of the climate station in decimal degrees.
 #' @export
 #' @references p243, p244
-rad_sw_toa.POSIXt <- function(datetime, lat, lon, ...) {
+rad_sw_toa.default <- function(datetime, lat, lon, ...) {
   if (!inherits(datetime, "POSIXt")) {
     stop("datetime has to be of class POSIXt.")
   }
@@ -326,7 +372,7 @@ rad_sw_out <- function(...) {
 #' @param albedo if albedo measurements are performed, values in decimal can be inserted here.
 #' @export
 #' @references p59eq3.15
-rad_sw_out.numeric <- function(rad_sw_in, surface_type = "field", albedo = NULL, ...) {
+rad_sw_out.default <- function(rad_sw_in, surface_type = "field", albedo = NULL, ...) {
   if (!is.null(albedo)) {
     albedo <- albedo
 
@@ -382,7 +428,7 @@ rad_sw_radiation_balance <- function(...) {
 #' @param rad_sw_reflected Reflected shortwave radiation in W/m$^{2}$.
 #' @export
 #' @references p45eq3.1
-rad_sw_radiation_balance.numeric <- function(rad_sw_ground_horizontal, rad_sw_reflected, ...) {
+rad_sw_radiation_balance.default <- function(rad_sw_ground_horizontal, rad_sw_reflected, ...) {
   rad_sw_radiation_balance <- rad_sw_ground_horizontal - rad_sw_reflected
   return(rad_sw_radiation_balance)
 }
@@ -428,7 +474,7 @@ rad_sw_in_topo <- function(...) {
 #' @param trans_ozone Transmittance due to ozone (0-1).
 #' @export
 #' @references p46eq3.3, p52eq3.8, p52eq3.7, p55eq3.9, p57eq3.11
-rad_sw_in_topo.numeric <- function(slope,
+rad_sw_in_topo.default <- function(slope,
                                    exposition = 0,
                                    terr_sky_view,
                                    sol_elevation, sol_azimuth,
@@ -511,7 +557,7 @@ rad_lw_in_topo <- function(...) {
 #' @param t Air temperature in °C.
 #' @param terr_sky_view Sky view factor from 0-1. (See [fieldClim::terr_sky_view])
 #' @references p68eq3.24
-rad_lw_in_topo.numeric <- function(rad_lw_out,
+rad_lw_in_topo.default <- function(rad_lw_out,
                                    hum,
                                    t,
                                    terr_sky_view, ...) {

@@ -2,13 +2,13 @@
 % Please edit documentation in R/solar.R
 \name{sol_elevation}
 \alias{sol_elevation}
-\alias{sol_elevation.POSIXt}
+\alias{sol_elevation.default}
 \alias{sol_elevation.weather_station}
 \title{Solar elevation angle}
 \usage{
 sol_elevation(...)
 
-\method{sol_elevation}{POSIXt}(datetime, lon, lat, ...)
+\method{sol_elevation}{default}(datetime, lon, lat, ...)
 
 \method{sol_elevation}{weather_station}(weather_station, ...)
 }

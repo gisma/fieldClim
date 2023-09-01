@@ -2,7 +2,7 @@
 % Please edit documentation in R/humidity.R
 \name{hum_absolute}
 \alias{hum_absolute}
-\alias{hum_absolute.numeric}
+\alias{hum_absolute.default}
 \alias{hum_absolute.weather_station}
 \title{Absolute humidity}
 \usage{

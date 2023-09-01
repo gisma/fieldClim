@@ -2,13 +2,13 @@
 % Please edit documentation in R/radiation.R
 \name{rad_bal}
 \alias{rad_bal}
-\alias{rad_bal.numeric}
+\alias{rad_bal.default}
 \alias{rad_bal.weather_station}
 \title{Total radiation balance}
 \usage{
 rad_bal(...)
 
-\method{rad_bal}{numeric}(...)
+\method{rad_bal}{default}(...)
 
 \method{rad_bal}{weather_station}(weather_station, ...)
 }

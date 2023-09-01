@@ -2,7 +2,7 @@
 % Please edit documentation in R/humidity.R
 \name{hum_evap_heat}
 \alias{hum_evap_heat}
-\alias{hum_evap_heat.numeric}
+\alias{hum_evap_heat.default}
 \alias{hum_evap_heat.weather_station}
 \title{Enthalpy of vaporization}
 \usage{

@@ -2,24 +2,25 @@
 % Please edit documentation in R/radiation.R
 \name{rad_sw_in}
 \alias{rad_sw_in}
-\alias{rad_sw_in.numeric}
+\alias{rad_sw_in.default}
 \alias{rad_sw_in.weather_station}
 \title{Shortwave incoming radiation}
 \usage{
 rad_sw_in(...)
 
-\method{rad_sw_in}{numeric}(
+\method{rad_sw_in}{default}(
   datetime,
-  lat,
   lon,
+  lat,
   elev,
-  t,
-  slope,
-  exposition,
+  temp,
+  slope = 0,
+  exposition = 0,
   sol_const = 1368,
+  ...,
+  p0 = 1013,
   ozone_column = 0.35,
-  vis = 30,
-  ...
+  vis = 30
 )
 
 \method{rad_sw_in}{weather_station}(weather_station, trans_total = NULL, oz = 0.35, vis = 30, ...)
@@ -31,9 +32,13 @@ rad_sw_in(...)
 
 \item{lon}{Longitude in decimal degrees.}
 
+\item{elev}{Elevation above sea level in m.}
+
 \item{slope}{Slope}
 
 \item{exposition}{Exposition}
+
+\item{ozone_column}{Atmospheric ozone as column in cm. Default is average value of 0.35 cm.}
 
 \item{vis}{OPTIONAL. Needed if trans_total = NULL. Meteorological visibility in km.
 Default is the visibility on a clear day.}
@@ -52,5 +57,5 @@ W/m$^{2}$.
 Shortwave incoming radiation
 }
 \references{
-p46eq3.3, p52eq3.8
+p46eq3.3, p52eq3.8, p52eq3.7
 }

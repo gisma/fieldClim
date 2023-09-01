@@ -2,12 +2,12 @@
 % Please edit documentation in R/solar.R
 \name{sol_day_angle}
 \alias{sol_day_angle}
-\alias{sol_day_angle.POSIXt}
+\alias{sol_day_angle.default}
 \title{Day angle}
 \usage{
 sol_day_angle(...)
 
-\method{sol_day_angle}{POSIXt}(datetime, ...)
+\method{sol_day_angle}{default}(datetime, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/radiation.R
 \name{rad_lw_in_topo}
 \alias{rad_lw_in_topo}
-\alias{rad_lw_in_topo.numeric}
+\alias{rad_lw_in_topo.default}
 \alias{rad_lw_in_topo.weather_station}
 \title{Incoming longwave radiation corrected by topography.}
 \usage{
