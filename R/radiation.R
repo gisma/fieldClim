@@ -62,34 +62,30 @@ rad_sw_in <- function(...) {
 }
 
 #' @rdname rad_sw_in
+#' @inheritParams rad_sw_toa
 #' @inheritParams trans_ozone
 #' @inheritParams trans_aerosol
-#' @param slope Slope
-#' @param exposition Exposition
 #' @export
-#' @references p46eq3.3, p52eq3.8, p52eq3.7
-rad_sw_in.default <- function(datetime, lon, lat, elev, temp,
-  slope = 0, exposition = 0, sol_const = 1368, ...,
-  p0 = 1013, ozone_column = 0.35, vis = 30) {
-  eccentricity <- sol_eccentricity(datetime)
+#' @references p46eq3.3, p52eq3.8
+rad_sw_in.default <- function(datetime, lon, lat, elev, temp, ...,
+  sol_const = 1368, p0 = 1013, ozone_column = 0.35, vis = 30,
+  slope = 0, exposition = 0) {
+  sw_toa <- rad_sw_toa(datetime, lon, lat, sol_const = sol_const)
+  elevation <- sol_elevation(datetime, lon, lat)
+  elevation <- deg2rad(elevation)
   
   gas <- trans_gas(datetime, lon, lat, elev, temp, p0 = p0)
   ozone <- trans_ozone(datetime, lon, lat, ozone_column = ozone_column)
   rayleigh <- trans_rayleigh(datetime, lon, lat, elev, temp)
   vapor <- trans_vapor(datetime, lon, lat, elev, temp)
   aerosol <- trans_aerosol(datetime, lon, lat, elev, temp, vis = vis)
-  
-  slope <- deg2rad(slope)
-  elevation <- sol_elevation(datetime, lon, lat)
-  azimuth <- sol_azimuth(datetime, lon, lat)
-  azimuth <- deg2rad(azimuth)
-  exposition <- deg2rad(exposition)
-  
   trans_total <- gas * ozone * rayleigh * vapor * aerosol
-  cos_terrain_angle <- cos(slope) * sin(elevation) +
-    sin(slope) * cos(elevation) * cos(azimuth - exposition)
   
-  sol_const * eccentricity * 0.9751 * trans_total * cos_terrain_angle
+  terrain_angle <- terr_terrain_angle(datetime, lon, lat,
+    slope = slope, exposition = exposition)
+  terrain_angle <- deg2rad(terrain_angle)
+  
+  sw_toa / sin(elevation) * 0.9751 * trans_total * cos(terrain_angle)
 }
 #rad_sw_in.default <- function(rad_sw_toa, trans_total, ...) {
 #  rad_sw_ground_horizontal <- rad_sw_toa * 0.9751 * trans_total
@@ -114,6 +110,55 @@ rad_sw_in.weather_station <- function(weather_station,
   return(rad_sw_in(rad_sw_toa, trans_total))
 }
 
+#' Shortwave radiation at top of atmosphere
+#'
+#' Calculation of the shortwave radiation at the top of the atmosphere.
+#'
+#' @param ... Additional parameters passed to later functions.
+#' @return Shortwave radiation at top of atmosphere in W/m$^{2}$.
+#' @export
+rad_sw_toa <- function(...) {
+  UseMethod("rad_sw_toa")
+}
+
+#' @rdname rad_sw_toa
+#' @inheritParams sol_elevation
+#' @param sol_const Solar constant in W/m$^{2}$
+#' @export
+#' @references p244
+rad_sw_toa.default <- function(datetime, lon, lat, sol_const = 1368, ...) {
+  eccentricity <- sol_eccentricity(datetime)
+  elevation <- sol_elevation(datetime, lon, lat)
+  elevation <- deg2rad(elevation)
+  
+  sol_const * eccentricity * sin(elevation)
+}
+#rad_sw_toa.default <- function(datetime, lat, lon, ...) {
+#  if (!inherits(datetime, "POSIXt")) {
+#    stop("datetime has to be of class POSIXt.")
+#  }
+#  sol_const <- 1368
+#  sol_eccentricity <- sol_eccentricity(datetime)
+#  sol_elevation <- sol_elevation(datetime, lat, lon)
+#  rad_sw_toa <- sol_const * sol_eccentricity * sin(sol_elevation * (pi / 180))
+#  return(rad_sw_toa)
+#}
+
+#' @rdname rad_sw_toa
+#' @method rad_sw_toa weather_station
+#' @export
+#' @param weather_station Object of class weather_station.
+rad_sw_toa.weather_station <- function(weather_station, ...) {
+  check_availability(weather_station, "datetime", "latitude", "longitude")
+
+  datetime <- weather_station$measurements$datetime
+  lat <- weather_station$location_properties$latitude
+  lon <- weather_station$location_properties$longitude
+
+  return(rad_sw_toa(datetime, lat, lon))
+}
+
+
 #' Incoming diffused radiation
 #'
 #' @param ... Additional arguments.
@@ -124,12 +169,33 @@ rad_diffuse_in <- function(...) {
 }
 
 #' @rdname rad_diffuse_in
-#' @inheritParams source_function
-#' @param name Description.
+#' @inheritParams trans_vapor
+#' @inheritParams trans_ozone
+#' @inheritParams rad_sw_toa
+#' @inheritParams terr_sky_view
+#' @inheritParams terr_terrain_angle
 #' @export
-#' @references reference
-rad_diffuse_in.default <- function(name, ...) {
+#' @references p58eq3.14, p55eq3.9
+rad_diffuse_in.default <- function(datetime, lon, lat, elev, temp, ...,
+  p0 = 1013, ozone_column = 0.35, sol_const = 1368, valley = FALSE,
+  slope = 0, exposition = 0) {
+  vapor <- trans_vapor(datetime, lon, lat, elev, temp, p0 = p0)
+  ozone <- trans_ozone(datetime, lon, lat, ozone_column = ozone_column)
+  sw_toa <- rad_sw_toa(datetime, lon, lat, sol_const = sol_const)
+  sw_in <- rad_sw_in(datetime, lon, lat, elev, temp)
+  sky_view <- terr_sky_view(slope, valley = valley)
+  terrain_angle <- terr_terrain_angle(datetime, lon, lat,
+    slope = slope, exposition = exposition)
+  terrain_angle <- deg2rad(terrain_angle)
   
+  elevation <- sol_elevation(datetime, lon, lat)
+  z <- 90 - elevation
+  z <- deg2rad(z)
+  
+  0.5 * (
+    (1 - (1 - vapor) - (1 - ozone)) *
+    sw_toa - sw_in
+  ) * sky_view * (1 + cos(terrain_angle)^2 * sin(z)^3)
 }
 
 
@@ -304,50 +370,6 @@ rad_lw_out.weather_station <- function(weather_station, surface_type = "field", 
 
 
 
-#' Shortwave radiation at top of atmosphere
-#'
-#' Calculation of the shortwave radiation at the top of the atmosphere.
-#'
-#' @param ... Additional parameters passed to later functions.
-#' @return Shortwave radiation at top of atmosphere in W/m$^{2}$.
-#' @export
-#'
-rad_sw_toa <- function(...) {
-  UseMethod("rad_sw_toa")
-}
-
-#' @rdname rad_sw_toa
-#' @method rad_sw_toa POSIXt
-#' @param datetime Date and time as POSIX type.
-#' See [base::as.POSIXlt()] and [base::strptime] for conversion.
-#' @param lat Latitude of the place of the climate station in decimal degrees.
-#' @param lon Longitude of the place of the climate station in decimal degrees.
-#' @export
-#' @references p243, p244
-rad_sw_toa.default <- function(datetime, lat, lon, ...) {
-  if (!inherits(datetime, "POSIXt")) {
-    stop("datetime has to be of class POSIXt.")
-  }
-  sol_const <- 1368
-  sol_eccentricity <- sol_eccentricity(datetime)
-  sol_elevation <- sol_elevation(datetime, lat, lon)
-  rad_sw_toa <- sol_const * sol_eccentricity * sin(sol_elevation * (pi / 180))
-  return(rad_sw_toa)
-}
-
-#' @rdname rad_sw_toa
-#' @method rad_sw_toa weather_station
-#' @export
-#' @param weather_station Object of class weather_station.
-rad_sw_toa.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "datetime", "latitude", "longitude")
-
-  datetime <- weather_station$measurements$datetime
-  lat <- weather_station$location_properties$latitude
-  lon <- weather_station$location_properties$longitude
-
-  return(rad_sw_toa(datetime, lat, lon))
-}
 
 
 

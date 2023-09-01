@@ -17,7 +17,9 @@ sol_azimuth(...)
 
 \item{datetime}{Datetime in POSIXt}
 
-\item{lon}{Longitude in decimal degrees.}
+\item{lon}{Longitude.}
+
+\item{lat}{Latitude in decimal degrees.}
 
 \item{weather_station}{Object of class weather_station.}
 }

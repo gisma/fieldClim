@@ -2,13 +2,13 @@
 % Please edit documentation in R/terrain.R
 \name{terr_sky_view}
 \alias{terr_sky_view}
-\alias{terr_sky_view.numeric}
+\alias{terr_sky_view.default}
 \alias{terr_sky_view.weather_station}
 \title{Sky view factor}
 \usage{
 terr_sky_view(...)
 
-\method{terr_sky_view}{numeric}(slope, valley = F, ...)
+\method{terr_sky_view}{default}(slope, valley = FALSE, ...)
 
 \method{terr_sky_view}{weather_station}(weather_station, ...)
 }
@@ -22,7 +22,7 @@ terr_sky_view(...)
 \item{weather_station}{Object of class weather_station.}
 }
 \value{
-Sky view factor from 0-1.
+Sky view factor from 0-1. unitless
 }
 \description{
 Calculates the sky view factor of a position only based on slope angle and

@@ -17,7 +17,9 @@ trans_rayleigh(...)
 
 \item{datetime}{Datetime in POSIXt}
 
-\item{lon}{Longitude in decimal degrees.}
+\item{lon}{Longitude.}
+
+\item{lat}{Latitude in decimal degrees.}
 
 \item{elev}{Elevation above sea level in m.}
 

@@ -17,7 +17,9 @@ trans_ozone(...)
 
 \item{datetime}{Datetime in POSIXt}
 
-\item{lon}{Longitude in decimal degrees.}
+\item{lon}{Longitude.}
+
+\item{lat}{Latitude in decimal degrees.}
 
 \item{ozone_column}{Atmospheric ozone as column in cm. Default is average value of 0.35 cm.}
 

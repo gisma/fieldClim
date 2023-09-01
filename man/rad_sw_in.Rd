@@ -14,13 +14,13 @@ rad_sw_in(...)
   lat,
   elev,
   temp,
-  slope = 0,
-  exposition = 0,
-  sol_const = 1368,
   ...,
+  sol_const = 1368,
   p0 = 1013,
   ozone_column = 0.35,
-  vis = 30
+  vis = 30,
+  slope = 0,
+  exposition = 0
 )
 
 \method{rad_sw_in}{weather_station}(weather_station, trans_total = NULL, oz = 0.35, vis = 30, ...)
@@ -30,13 +30,13 @@ rad_sw_in(...)
 
 \item{datetime}{Datetime in POSIXt}
 
-\item{lon}{Longitude in decimal degrees.}
+\item{lon}{Longitude.}
+
+\item{lat}{Latitude in decimal degrees.}
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{slope}{Slope}
-
-\item{exposition}{Exposition}
+\item{sol_const}{Solar constant in W/m$^{2}$}
 
 \item{ozone_column}{Atmospheric ozone as column in cm. Default is average value of 0.35 cm.}
 
@@ -57,5 +57,5 @@ W/m$^{2}$.
 Shortwave incoming radiation
 }
 \references{
-p46eq3.3, p52eq3.8, p52eq3.7
+p46eq3.3, p52eq3.8
 }

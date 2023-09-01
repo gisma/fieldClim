@@ -19,16 +19,22 @@ sol_medium_suntime(datetime, lon)
 sol_time_formula(datetime, lon)
 
 trans_gas(datetime, lon, lat, elev, temp)
-trans_air_mass_abs(datetime, lon, lat, elev, temp, p0 = 1013)
+trans_air_mass_abs(datetime, lon, lat, elev, temp)
 trans_air_mass_rel(datetime, lon, lat)
 pres_p(elev, temp)
 trans_ozone.default(datetime, lon, lat)
 trans_rayleigh.default(datetime, lon, lat, elev, temp)
 trans_vapor.default(datetime, lon, lat, elev, temp)
-trans_aerosol.default(datetime, lon, lat, elev, temp)
 hum_precipitable_water(elev, temp)
-sol_azimuth(datetime, lon, lat)
+trans_aerosol.default(datetime, lon, lat, elev, temp)
+
 rad_sw_in(datetime, lon, lat, elev, temp)
+sol_azimuth(datetime, lon, lat)
+
+rad_sw_toa(datetime, lon, lat)
+rad_diffuse_in(datetime, lon, lat, elev, temp)
+terr_terrain_angle(datetime, lon, lat)
+terr_sky_view(slope)
 
 a <- c()
 for(day_angle in seq(0, 359)) {

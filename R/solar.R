@@ -93,7 +93,7 @@ sol_elevation <- function(...) {
 
 #' @rdname sol_elevation
 #' @inheritParams sol_hour_angle
-#' @param lon Longitude in decimal degrees.
+#' @param lat Latitude in decimal degrees.
 #' @export
 #' @references p243
 sol_elevation.default <- function(datetime, lon, lat, ...) {
