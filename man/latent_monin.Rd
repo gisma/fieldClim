@@ -13,13 +13,12 @@ latent_monin(...)
   hum2,
   t1,
   t2,
-  p1,
-  p2,
+  v1,
+  v2,
   z1 = 2,
   z2 = 10,
-  monin,
-  ustar,
-  grad_rich_no,
+  elev,
+  surface_type = "field",
   ...
 )
 
@@ -36,19 +35,17 @@ latent_monin(...)
 
 \item{t2}{Air temperature at upper height in °C.}
 
-\item{p1}{Pressure at lower height in hPa.}
+\item{v1}{Windspeed at lower height (e.g. height of anemometer) in m/s.}
 
-\item{p2}{Pressure at upper height in hPa.}
+\item{v2}{Windspeed at upper height in m/s.}
 
 \item{z1}{Lower height of measurement in m.}
 
 \item{z2}{Upper height of measurement in m.}
 
-\item{monin}{Monin-Obukhov-Length in m.}
+\item{elev}{Elevation above sea level in m.}
 
-\item{ustar}{Friction velocity in m/s.}
-
-\item{grad_rich_no}{Gradient-Richardson-Number.}
+\item{surface_type}{Type of surface.}
 
 \item{weather_station}{Object of class weather_station.}
 }

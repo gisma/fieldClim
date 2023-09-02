@@ -8,16 +8,16 @@
 \usage{
 soil_attenuation(...)
 
-\method{soil_attenuation}{numeric}(thermal_cond, vol_heat_cap, ...)
+\method{soil_attenuation}{numeric}(moisture, texture = "sand", ...)
 
 \method{soil_attenuation}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{thermal_cond}{Thermal conductivity of soil in W/m K.}
+\item{moisture}{Soil moisture in Cubic meter/cubic meter}
 
-\item{vol_heat_cap}{Volumetric heat capacity of soil in J/(m³ * K).}
+\item{texture}{Soil texture. Either "sand", "peat" or "clay".}
 
 \item{weather_station}{Object of class weather_station.}
 }

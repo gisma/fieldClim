@@ -8,7 +8,7 @@
 \usage{
 hum_precipitable_water(...)
 
-\method{hum_precipitable_water}{default}(elev, temp, p0 = 1013, ...)
+\method{hum_precipitable_water}{default}(elev, t, p0 = 1013.25, ...)
 
 \method{hum_precipitable_water}{weather_station}(weather_station, height = "lower", ...)
 }
@@ -17,13 +17,11 @@ hum_precipitable_water(...)
 
 \item{elev}{Elevation above sea level in m.}
 
+\item{t}{Air temperature in °C.}
+
 \item{weather_station}{Object of class weather_station.}
 
 \item{height}{Height of measurement. "lower" or "upper".}
-
-\item{p}{Air pressure in hPa.}
-
-\item{t}{Air temperature in °C.}
 }
 \value{
 Total precipitable water in cm (grams).

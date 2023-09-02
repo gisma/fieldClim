@@ -25,3 +25,6 @@ Gradient-Richardson-Number.
 \description{
 Conversion of Gradient-Richardson-Number to stability string.
 }
+\references{
+Based on p.43, picture 2.10.
+}

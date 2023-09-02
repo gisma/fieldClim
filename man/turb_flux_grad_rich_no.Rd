@@ -8,7 +8,7 @@
 \usage{
 turb_flux_grad_rich_no(...)
 
-\method{turb_flux_grad_rich_no}{numeric}(t1, t2, z1 = 2, z2 = 10, v1, v2, p1, p2, ...)
+\method{turb_flux_grad_rich_no}{numeric}(t1, t2, z1 = 2, z2 = 10, v1, v2, elev, ...)
 
 \method{turb_flux_grad_rich_no}{weather_station}(weather_station, ...)
 }
@@ -27,9 +27,7 @@ turb_flux_grad_rich_no(...)
 
 \item{v2}{Windspeed at upper height in m/s.}
 
-\item{p1}{Pressure at lower height (e.g. height of anemometer) in hPa.}
-
-\item{p2}{Pressure at upper height in hPa.}
+\item{elev}{Elevation above sea level in m.}
 
 \item{weather_station}{Object of class weather_station}
 }

@@ -280,7 +280,7 @@ latent_bowen.numeric <- function(t1, t2, hum1, hum2, z1 = 2, z2 = 10, elev,
 #' @param weather_station Object of class weather_station.
 #' @export
 latent_bowen.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "z1", "z2", "t1", "t2", "hum1", "hum2", "elevation," "rad_bal", "soil_flux")
+  check_availability(weather_station, "z1", "z2", "t1", "t2", "hum1", "hum2", "elevation", "rad_bal", "soil_flux")
   hum1 <- weather_station$measurements$hum1
   hum2 <- weather_station$measurements$hum2
   t1 <- weather_station$measurements$t1

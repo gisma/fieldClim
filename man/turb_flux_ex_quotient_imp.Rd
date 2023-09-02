@@ -8,26 +8,40 @@
 \usage{
 turb_flux_ex_quotient_imp(...)
 
-\method{turb_flux_ex_quotient_imp}{numeric}(grad_rich_no, ustar, monin, z, air_density, ...)
+\method{turb_flux_ex_quotient_imp}{numeric}(
+  t1,
+  t2,
+  z1 = 2,
+  z2 = 10,
+  v1,
+  v2,
+  elev,
+  surface_type,
+  ...
+)
 
-\method{turb_flux_ex_quotient_imp}{weather_station}(weather_station, height = "lower", ...)
+\method{turb_flux_ex_quotient_imp}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{grad_rich_no}{Gradient-Richardson-Number.}
+\item{t1}{Temperature at lower height (e.g. height of anemometer) in °C.}
 
-\item{ustar}{Friction velocity in m/s.}
+\item{t2}{Temperature at upper height in degrees C.}
 
-\item{monin}{Monin-Obhukov-Length in m.}
+\item{z1}{Lower height of measurement (e.g. height of anemometer) in m.}
 
-\item{z}{Observation height in m.}
+\item{z2}{Upper height of measurement in m.}
 
-\item{air_density}{Air density in kg/m³.}
+\item{v1}{Windspeed at lower height (e.g. height of anemometer) in m/s.}
+
+\item{v2}{Windspeed at upper height in m/s.}
+
+\item{elev}{Elevation above sea level in m.}
+
+\item{surface_type}{Type of surface.}
 
 \item{weather_station}{Object of class weather_station}
-
-\item{height}{Height of measurement. Either "upper" or "lower".}
 }
 \value{
 Exchange quotient for impulse transmission in kg/(m*s).

@@ -8,7 +8,7 @@
 \usage{
 turb_ustar(...)
 
-\method{turb_ustar}{numeric}(v, z, z0, ...)
+\method{turb_ustar}{numeric}(v, z, surface_type, ...)
 
 \method{turb_ustar}{weather_station}(weather_station, ...)
 }
@@ -19,7 +19,7 @@ turb_ustar(...)
 
 \item{z}{Height of anemometer in m.}
 
-\item{z0}{Roughness length in m.}
+\item{surface_type}{Type of surface.}
 
 \item{weather_station}{Object of class weather_station.}
 }

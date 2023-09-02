@@ -8,16 +8,18 @@
 \usage{
 hum_specific(...)
 
-\method{hum_specific}{numeric}(p_vapor, p, ...)
+\method{hum_specific}{numeric}(hum, t, elev, ...)
 
 \method{hum_specific}{weather_station}(weather_station, height, ...)
 }
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{p_vapor}{Vapor pressure in hPa.}
+\item{hum}{Relative humidity in \%.}
 
-\item{p}{Air pressure in hPa.}
+\item{t}{Temperature in °C.}
+
+\item{elev}{Elevation above sea level in m.}
 
 \item{weather_station}{Object of class weather_station.}
 

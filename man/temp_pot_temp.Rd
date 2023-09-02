@@ -8,7 +8,7 @@
 \usage{
 temp_pot_temp(...)
 
-\method{temp_pot_temp}{numeric}(t, p, ...)
+\method{temp_pot_temp}{numeric}(t, elev, ...)
 
 \method{temp_pot_temp}{weather_station}(weather_station, height = "lower", ...)
 }
@@ -17,7 +17,7 @@ temp_pot_temp(...)
 
 \item{t}{Temperature in °C.}
 
-\item{p}{Pressure in hPa.}
+\item{elev}{Elevation above sea level in m.}
 
 \item{weather_station}{Object of class weather_station.}
 

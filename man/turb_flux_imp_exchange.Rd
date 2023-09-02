@@ -8,14 +8,26 @@
 \usage{
 turb_flux_imp_exchange(...)
 
-\method{turb_flux_imp_exchange}{numeric}(ex_quotient, v1, v2, z1 = 2, z2 = 10, ...)
+\method{turb_flux_imp_exchange}{numeric}(
+  t1,
+  t2,
+  v1,
+  v2,
+  z1 = 2,
+  z2 = 10,
+  elev,
+  surface_type,
+  ...
+)
 
-\method{turb_flux_imp_exchange}{weather_station}(weather_station, height = "lower", ...)
+\method{turb_flux_imp_exchange}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{ex_quotient}{Exchange quotient in kg/(m*s).}
+\item{t1}{Temperature at lower height (e.g. height of anemometer) in °C.}
+
+\item{t2}{Temperature at upper height in degrees C.}
 
 \item{v1}{Windspeed at lower height (e.g. height of anemometer) in m/s.}
 
@@ -25,9 +37,11 @@ turb_flux_imp_exchange(...)
 
 \item{z2}{Upper height of measurement in m.}
 
-\item{weather_station}{Object of class weather_station}
+\item{elev}{Elevation above sea level in m.}
 
-\item{height}{Height of measurement. Either "upper" or "lower".}
+\item{surface_type}{Type of surface.}
+
+\item{weather_station}{Object of class weather_station}
 }
 \value{
 Turbulent impulse exchange in kg/(m*s²).

@@ -2,13 +2,13 @@
 % Please edit documentation in R/humidity.R
 \name{hum_moisture_gradient}
 \alias{hum_moisture_gradient}
-\alias{hum_moisture_gradient.default}
+\alias{hum_moisture_gradient.numeric}
 \alias{hum_moisture_gradient.weather_station}
 \title{Moisture gradient}
 \usage{
 hum_moisture_gradient(...)
 
-\method{hum_moisture_gradient}{numeric}(hum1, hum2, t1, t2, p1, p2, z1 = 2, z2 = 10, ...)
+\method{hum_moisture_gradient}{numeric}(hum1, hum2, t1, t2, z1 = 2, z2 = 10, elev, ...)
 
 \method{hum_moisture_gradient}{weather_station}(weather_station, ...)
 }
@@ -23,13 +23,11 @@ hum_moisture_gradient(...)
 
 \item{t2}{Air temperature at upper height in °C.}
 
-\item{p1}{Air pressure at lower height in hPa.}
-
-\item{p2}{Air pressure at lower height in hPa.}
-
 \item{z1}{Lower measurement height in m.}
 
 \item{z2}{Upper measurement height in m.}
+
+\item{elev}{Elevation above sea level in m.}
 
 \item{weather_station}{Object of class weather_station.}
 }

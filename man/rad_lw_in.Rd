@@ -8,18 +8,18 @@
 \usage{
 rad_lw_in(...)
 
-\method{rad_lw_in}{numeric}(hum, t, ...)
+\method{rad_lw_in}{numeric}(...)
 
 \method{rad_lw_in}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
+\item{weather_station}{Object of class weather_station.}
+
 \item{hum}{relative humidity in \%.}
 
 \item{t}{Air temperature in °C.}
-
-\item{weather_station}{Object of class weather_station.}
 }
 \value{
 Atmospheric radiation in W/m$^{2}$.

@@ -8,16 +8,16 @@
 \usage{
 hum_absolute(...)
 
-\method{hum_absolute}{numeric}(p_vapor, t, ...)
+\method{hum_absolute}{numeric}(hum, t, ...)
 
 \method{hum_absolute}{weather_station}(weather_station, height, ...)
 }
 \arguments{
 \item{...}{Additional parameters passed to later functions.}
 
-\item{p_vapor}{Vapor pressure in hPa.}
+\item{hum}{Relative humidity in \%.}
 
-\item{t}{Temperature in °C.}
+\item{t}{Air temperature in °C.}
 
 \item{weather_station}{Object of class weather_station.}
 
