@@ -175,10 +175,12 @@ soil_attenuation <- function(...) {
 #' @rdname soil_attenuation
 #' @method soil_attenuation numeric
 #' @export
-#' @param thermal_cond Thermal conductivity of soil in W/m K.
-#' @param vol_heat_cap Volumetric heat capacity of soil in J/(m³ * K).
+#' @param moisture Soil moisture in Cubic meter/cubic meter
+#' @param texture Soil texture. Either "sand", "peat" or "clay".
 #' @references p253.
-soil_attenuation.numeric <- function(thermal_cond, vol_heat_cap, ...) {
+soil_attenuation.numeric <- function(moisture, texture = "sand", ...) {
+  thermal_cond <- soil_thermal_cond(moisture, texture)
+  vol_heat_cap <- soil_heat_cap(moisture, texture)
   soil_att <- sqrt(thermal_cond / (vol_heat_cap * 10^6 * pi) * 86400)
   return(soil_att)
 }
@@ -188,7 +190,8 @@ soil_attenuation.numeric <- function(thermal_cond, vol_heat_cap, ...) {
 #' @export
 #' @param weather_station Object of class weather_station.
 soil_attenuation.weather_station <- function(weather_station, ...) {
-  thermal_cond <- soil_thermal_cond(weather_station)
-  vol_heat_cap <- soil_heat_cap(weather_station)
-  return(soil_attenuation(thermal_cond, vol_heat_cap))
+  check_availability(weather_station, "moisture", "texture")
+  moisture <- weather_station$measurements$moisture
+  texture <- weather_station$location_properties$texture
+  return(soil_attenuation(moisture, texture))
 }
