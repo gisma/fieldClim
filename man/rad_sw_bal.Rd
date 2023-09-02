@@ -7,7 +7,7 @@
 \usage{
 rad_sw_bal(...)
 
-\method{rad_sw_bal}{numeric}(..., valley = FALSE)
+\method{rad_sw_bal}{default}(..., valley = FALSE)
 }
 \arguments{
 \item{...}{Additional parameters passed to later functions.}

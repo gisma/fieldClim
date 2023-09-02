@@ -45,7 +45,6 @@ rad_sw_bal <- function(...) {
 }
 
 #' @rdname rad_sw_bal
-#' @method rad_sw_bal numeric
 #' @export
 #' @references p45eq3.1, p63eq3.18
 rad_sw_bal.default <- function(..., valley = FALSE) {
@@ -60,35 +59,37 @@ rad_sw_bal.default <- function(..., valley = FALSE) {
 
 #' Shortwave incoming radiation
 #'
+#' Provide `slope` and `exposition` to perform topographic correction.
+#' 
 #' @param ... Additional arguments.
-#' @return W/m$^{2}$.
+#' @returns W/m$^{2}$.
 #' @export
 rad_sw_in <- function(...) {
   UseMethod("rad_sw_in")
 }
 
 #' @rdname rad_sw_in
-#' @inheritParams rad_sw_toa
-#' @inheritParams trans_ozone
-#' @inheritParams trans_aerosol
+#' @inheritParams trans_rayleigh
+#' @inheritDotParams rad_sw_toa.default sol_const
+#' @inheritDotParams trans_gas.default p0
+#' @inheritDotParams trans_ozone.default ozone_column
+#' @inheritDotParams trans_aerosol.default vis
+#' @inheritDotParams terr_terrain_angle.default slope exposition
 #' @export
 #' @references p46eq3.3, p52eq3.8
-rad_sw_in.default <- function(datetime, lon, lat, elev, temp, ...,
-  sol_const = 1368, p0 = 1013, ozone_column = 0.35, vis = 30,
-  slope = 0, exposition = 0) {
-  sw_toa <- rad_sw_toa(datetime, lon, lat, sol_const = sol_const)
+rad_sw_in.default <- function(datetime, lon, lat, elev, temp, ...) {
+  sw_toa <- rad_sw_toa(datetime, lon, lat, ...)
   elevation <- sol_elevation(datetime, lon, lat)
   elevation <- deg2rad(elevation)
   
-  gas <- trans_gas(datetime, lon, lat, elev, temp, p0 = p0)
-  ozone <- trans_ozone(datetime, lon, lat, ozone_column = ozone_column)
+  gas <- trans_gas(datetime, lon, lat, elev, temp, ...)
+  ozone <- trans_ozone(datetime, lon, lat, ...)
   rayleigh <- trans_rayleigh(datetime, lon, lat, elev, temp)
   vapor <- trans_vapor(datetime, lon, lat, elev, temp)
-  aerosol <- trans_aerosol(datetime, lon, lat, elev, temp, vis = vis)
+  aerosol <- trans_aerosol(datetime, lon, lat, elev, temp, ...)
   trans_total <- gas * ozone * rayleigh * vapor * aerosol
   
-  terrain_angle <- terr_terrain_angle(datetime, lon, lat,
-    slope = slope, exposition = exposition)
+  terrain_angle <- terr_terrain_angle(datetime, lon, lat, ...)
   terrain_angle <- deg2rad(terrain_angle)
   
   sw_toa / sin(elevation) * 0.9751 * trans_total * cos(terrain_angle)

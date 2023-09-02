@@ -8,25 +8,19 @@
 \usage{
 rad_sw_in(...)
 
-\method{rad_sw_in}{default}(
-  datetime,
-  lon,
-  lat,
-  elev,
-  temp,
-  ...,
-  sol_const = 1368,
-  p0 = 1013,
-  ozone_column = 0.35,
-  vis = 30,
-  slope = 0,
-  exposition = 0
-)
+\method{rad_sw_in}{default}(datetime, lon, lat, elev, temp, ...)
 
 \method{rad_sw_in}{weather_station}(weather_station, trans_total = NULL, oz = 0.35, vis = 30, ...)
 }
 \arguments{
-\item{...}{Additional arguments.}
+\item{...}{
+  Arguments passed on to \code{\link[=rad_sw_toa.default]{rad_sw_toa.default}}, \code{\link[=trans_gas.default]{trans_gas.default}}, \code{\link[=trans_ozone.default]{trans_ozone.default}}, \code{\link[=trans_aerosol.default]{trans_aerosol.default}}, \code{\link[=terr_terrain_angle.default]{terr_terrain_angle.default}}
+  \describe{
+    \item{\code{sol_const}}{Solar constant in W/m$^{2}$}
+    \item{\code{ozone_column}}{Atmospheric ozone as column in cm. Default is average value of 0.35 cm.}
+    \item{\code{slope}}{Slope in degree.}
+    \item{\code{exposition}}{Exposition in degree.}
+  }}
 
 \item{datetime}{Datetime in POSIXt}
 
@@ -36,25 +30,21 @@ rad_sw_in(...)
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{sol_const}{Solar constant in W/m$^{2}$}
-
-\item{ozone_column}{Atmospheric ozone as column in cm. Default is average value of 0.35 cm.}
-
-\item{vis}{OPTIONAL. Needed if trans_total = NULL. Meteorological visibility in km.
-Default is the visibility on a clear day.}
-
 \item{weather_station}{Object of class weather_station.}
 
 \item{trans_total}{Total transmittance of the atmosphere.}
 
 \item{oz}{OPTIONAL. Needed if trans_total = NULL. Columnar ozone in cm.
 Default is average global value.}
+
+\item{vis}{OPTIONAL. Needed if trans_total = NULL. Meteorological visibility in km.
+Default is the visibility on a clear day.}
 }
 \value{
 W/m$^{2}$.
 }
 \description{
-Shortwave incoming radiation
+Provide \code{slope} and \code{exposition} to perform topographic correction.
 }
 \references{
 p46eq3.3, p52eq3.8
