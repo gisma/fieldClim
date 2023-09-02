@@ -32,8 +32,9 @@ bound_mech_avg <- function(dist) {
 #'
 #' Calculation of the average height of the thermal internal boundary layer.
 #'
-#' @param ustar Friction velocity u* in m/s.
 #' @param v Windspeed in height of anemometer in m/s.
+#' @param z Height of anemometer in m.
+#' @param surface_type Type of surface.
 #' @param temp_change_dist Distance to point of temperature change in m.
 #' @param t_pot_upwind Potential temperature in upwind direction in °C.
 #' @param t_pot Potential temperature at site in °C.
@@ -43,7 +44,8 @@ bound_mech_avg <- function(dist) {
 #' @references p242.
 #' @export
 #'
-bound_thermal_avg <- function(ustar, v, temp_change_dist, t_pot_upwind, t_pot, lapse_rate) {
+bound_thermal_avg <- function(v, z, surface_type, temp_change_dist, t_pot_upwind, t_pot, lapse_rate) {
+  ustar <- turb_ustar(v, z, surface_type)
   tib <- (ustar / v) * ((temp_change_dist * abs(t_pot_upwind - t_pot)) / abs(lapse_rate))**0.5
   return(tib)
 }

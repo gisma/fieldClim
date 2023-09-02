@@ -67,24 +67,27 @@ sensible_monin <- function(...) {
 #' @export
 #' @param t1 Air temperature at lower height in °C.
 #' @param t2 Air temperature at upper height in °C.
-#' @param p1 Pressure at lower height in hPa.
-#' @param p2 Pressure at upper height in hPa.
 #' @param z1 Lower height of measurement in m.
 #' @param z2 Upper height of measurement in m (Use highest point of measurement as values are less disturbed).
-#' @param monin Monin-Obukhov-Length in m.
-#' @param ustar Friction velocity in m/s.
-#' @param grad_rich_no Gradient-Richardson-Number.
+#' @param v1 Windspeed at lower height (e.g. height of anemometer) in m/s.
+#' @param v2 Windspeed at upper height in m/s.
+#' @param elev Elevation above sea level in m.
+#' @param surface_type Type of surface.
 #' @references p77eq4.6, Foken p362 Businger.
-sensible_monin.numeric <- function(t1, t2, p1, p2, z1 = 2, z2 = 10,
-                                   monin, ustar, grad_rich_no, ...) {
+sensible_monin.numeric <- function(t1, t2, z1 = 2, z2 = 10, v1, v2, elev, surface_type = "field", ...) {
+  p1 <- pres_p(elev, t1)
+  p2 <- pres_p(elev, t2)
+  monin <- turb_flux_monin(z1, z2, v1, v2, t1, t2, elev, surface_type)
+  ustar <- turb_ustar(v1, z1, surface_type)
+  grad_rich_no <- turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, elev)
   cp <- 1004.834
   k <- 0.35
   s1 <- z2 / monin
 
   # temperature gradient
-  t_gradient <- (temp_pot_temp(t2, p2) - temp_pot_temp(t1, p1)) / log(z2 - z1)
+  t_gradient <- (temp_pot_temp(t2, elev) - temp_pot_temp(t1, elev)) / log(z2 - z1)
 
-  air_density <- pres_air_density(p1, t1)
+  air_density <- pres_air_density(elev, t1)
   busi <- rep(NA, length(grad_rich_no))
   for (i in 1:length(busi)) {
     if (is.na(grad_rich_no[i])) {
@@ -105,20 +108,16 @@ sensible_monin.numeric <- function(t1, t2, p1, p2, z1 = 2, z2 = 10,
 #' @param weather_station Object of class weather_station.
 #' @export
 sensible_monin.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "z1", "z2", "t1", "t2", "p1", "p2")
+  check_availability(weather_station, "t1", "t2", "z1", "z2", "v1", "v2", "elevation", "surface_type")
   t1 <- weather_station$measurements$t1
   t2 <- weather_station$measurements$t2
   z1 <- weather_station$properties$z1
   z2 <- weather_station$properties$z2
-  p1 <- weather_station$measurements$p1
-  p2 <- weather_station$measurements$p2
-  monin <- turb_flux_monin(weather_station)
-  ustar <- turb_ustar(weather_station)
-  grad_rich_no <- turb_flux_grad_rich_no(weather_station)
-  return(sensible_monin(
-    t1, t2, p1, p2, z1, z2,
-    monin, ustar, grad_rich_no
-  ))
+  v1 <- weather_station$measurements$v1
+  v2 <- weather_station$measurements$v2
+  elev <- weather_station$location_properties$elevation
+  surface_type <- weather_station$location_properties$surface_type
+  return(sensible_monin(t1, t2, z1, z2, v1, v2, elev, surface_type))
 }
 
 
@@ -144,23 +143,21 @@ sensible_bowen <- function(...) {
 #' @param t2 Temperature at upper height in °C.
 #' @param hum1 Relative humidity at lower height in %.
 #' @param hum2 Relative humidity at upper height in %.
-#' @param p1 Air pressure at lower height in hPa.
-#' @param p2 Air pressure at upper height in hPa.
 #' @param z1 Lower height of measurement in m.
 #' @param z2 Upper height of measurement in m.
+#' @param elev Elevation above sea level in m.
 #' @param rad_bal Radiation balance in W/m².
 #' @param soil_flux Soil flux in W/m².
 #' @references p221eq9.21.
-sensible_bowen.numeric <- function(t1, t2, hum1, hum2, p1, p2, z1 = 2, z2 = 10,
-                                   rad_bal, soil_flux, ...) {
+sensible_bowen.numeric <- function(t1, t2, hum1, hum2, z1 = 2, z2 = 10, elev, rad_bal, soil_flux, ...) {
   # Calculating potential temperature delta
-  t1_pot <- temp_pot_temp(t1, p1)
-  t2_pot <- temp_pot_temp(t2, p2)
+  t1_pot <- temp_pot_temp(t1, elev)
+  t2_pot <- temp_pot_temp(t2, elev)
   dpot <- (t2_pot - t1_pot) / (z2 - z1)
 
   # Calculating absolute humidity
-  af1 <- hum_absolute(hum_vapor_pres(hum1, t1), t1_pot)
-  af2 <- hum_absolute(hum_vapor_pres(hum2, t2), t2_pot)
+  af1 <- hum_absolute(hum1, t1)
+  af2 <- hum_absolute(hum2, t2)
   dah <- (af2 - af1) / (z2 - z1)
 
   # Calculate bowen ratio
@@ -185,22 +182,15 @@ sensible_bowen.numeric <- function(t1, t2, hum1, hum2, p1, p2, z1 = 2, z2 = 10,
 #' @param weather_station Object of class weather_station
 #' @export
 sensible_bowen.weather_station <- function(weather_station, ...) {
-  check_availability(
-    weather_station, "z1", "z2", "t1", "t2", "p1", "p2",
-    "hum1", "hum2", "rad_bal", "soil_flux"
-  )
+  check_availability(weather_station, "z1", "z2", "t1", "t2", "hum1", "hum2", "elevation," "rad_bal", "soil_flux")
   hum1 <- weather_station$measurements$hum1
   hum2 <- weather_station$measurements$hum2
   t1 <- weather_station$measurements$t1
   t2 <- weather_station$measurements$t2
   z1 <- weather_station$properties$z1
   z2 <- weather_station$properties$z2
-  p1 <- weather_station$measurements$p1
-  p2 <- weather_station$measurements$p2
+  elev <- weather_station$location_properties$elevation
   rad_bal <- weather_station$measurements$rad_bal
   soil_flux <- weather_station$measurements$soil_flux
-  return(sensible_bowen(
-    t1, t2, hum1, hum2, p1, p2, z1, z2,
-    rad_bal, soil_flux
-  ))
+  return(sensible_bowen(t1, t2, hum1, hum2, z1, z2, elev, rad_bal, soil_flux))
 }

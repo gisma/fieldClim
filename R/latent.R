@@ -163,18 +163,21 @@ latent_monin <- function(...) {
 #' @param hum2 Relative humidity at upper height in %.
 #' @param t1 Air temperature at lower height in °C.
 #' @param t2 Air temperature at upper height in °C.
-#' @param p1 Pressure at lower height in hPa.
-#' @param p2 Pressure at upper height in hPa.
+#' @param v1 Windspeed at lower height (e.g. height of anemometer) in m/s.
+#' @param v2 Windspeed at upper height in m/s.
 #' @param z1 Lower height of measurement in m.
 #' @param z2 Upper height of measurement in m.
-#' @param monin Monin-Obukhov-Length in m.
-#' @param ustar Friction velocity in m/s.
-#' @param grad_rich_no Gradient-Richardson-Number.
+#' @param elev Elevation above sea level in m.
+#' @param surface_type Type of surface.
 #' @references p77eq4.6, Foken p61 Tab. 2.10.
-latent_monin.numeric <- function(hum1, hum2, t1, t2, p1, p2, z1 = 2, z2 = 10,
-                                 monin, ustar, grad_rich_no, ...) {
-  moist_gradient <- hum_moisture_gradient(hum1, hum2, t1, t2, p1, p2, z1, z2)
-  air_density <- pres_air_density(p1, t1)
+latent_monin.numeric <- function(hum1, hum2, t1, t2, v1, v2, z1 = 2, z2 = 10, elev, surface_type = "field", ...) {
+  p1 <- pres_p(elev, t1)
+  p2 <- pres_p(elev, t2)
+  monin <- turb_flux_monin(z1, z2, v1, v2, t1, t2, elev, surface_type)
+  ustar <- turb_ustar(v1, z1, surface_type)
+  grad_rich_no <- turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, elev)
+  moist_gradient <- hum_moisture_gradient(hum1, hum2, t1, t2, z1, z2, elev)
+  air_density <- pres_air_density(elev, t1)
   lv <- hum_evap_heat(t1)
   k <- 0.4 # Karman constant
   s1 <- z2 / monin # s1 = variant of the greek letter sigma
@@ -199,22 +202,18 @@ latent_monin.numeric <- function(hum1, hum2, t1, t2, p1, p2, z1 = 2, z2 = 10,
 #' @param weather_station Object of class weather_station.
 #' @export
 latent_monin.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "z1", "z2", "t1", "t2", "p1", "p2", "hum1", "hum2")
+  check_availability(weather_station, "z1", "z2", "t1", "t2", "hum1", "hum2", "v1", "v2", "elevation", "surface_type")
   hum1 <- weather_station$measurements$hum1
   hum2 <- weather_station$measurements$hum2
   t1 <- weather_station$measurements$t1
   t2 <- weather_station$measurements$t2
   z1 <- weather_station$properties$z1
   z2 <- weather_station$properties$z2
-  p1 <- weather_station$measurements$p1
-  p2 <- weather_station$measurements$p2
-  monin <- turb_flux_monin(weather_station)
-  ustar <- turb_ustar(weather_station)
-  grad_rich_no <- turb_flux_grad_rich_no(weather_station)
-  return(latent_monin(
-    hum1, hum2, t1, t2, p1, p2, z1, z2,
-    monin, ustar, grad_rich_no
-  ))
+  v1 <- weather_station$measurements$v1
+  v2 <- weather_station$measurements$v2
+  elev <- weather_station$location_properties$elevation
+  surface_type <- weather_station$location_properties$surface_type
+  return(latent_monin(hum1, hum2, t1, t2, v1, v2, z1, z2, elev, surface_type))
 }
 
 
@@ -241,23 +240,22 @@ latent_bowen <- function(...) {
 #' @param t2 Temperature at upper height in °C.
 #' @param hum1 Relative humidity at lower height in %.
 #' @param hum2 Relative humidity at upper height in %.
-#' @param p1 Air pressure at lower height in hPa.
-#' @param p2 Air pressure at upper height in hPa.
 #' @param z1 Lower height of measuremen in m.
 #' @param z2 Upper height of measurement in m.
+#' @param elev Elevation above sea level in m.
 #' @param rad_bal Radiation balance in W/m².
 #' @param soil_flux Soil flux in W/m².
 #' @references p221eq9.21.
-latent_bowen.numeric <- function(t1, t2, hum1, hum2, p1, p2, z1 = 2, z2 = 10,
+latent_bowen.numeric <- function(t1, t2, hum1, hum2, z1 = 2, z2 = 10, elev,
                                  rad_bal, soil_flux, ...) {
   # Calculating potential temperature delta
-  t1_pot <- temp_pot_temp(t1, p1)
-  t2_pot <- temp_pot_temp(t2, p2)
+  t1_pot <- temp_pot_temp(t1, elev)
+  t2_pot <- temp_pot_temp(t2, elev)
   dpot <- (t2_pot - t1_pot) / (z2 - z1)
 
   # Calculating absolute humidity delta
-  af1 <- hum_absolute(hum_vapor_pres(hum1, t1), t1_pot)
-  af2 <- hum_absolute(hum_vapor_pres(hum2, t2), t2_pot)
+  af1 <- hum_absolute(hum1, t1)
+  af2 <- hum_absolute(hum2, t2)
   dah <- (af2 - af1) / (z2 - z1)
 
   # Calculate bowen ratio
@@ -282,22 +280,15 @@ latent_bowen.numeric <- function(t1, t2, hum1, hum2, p1, p2, z1 = 2, z2 = 10,
 #' @param weather_station Object of class weather_station.
 #' @export
 latent_bowen.weather_station <- function(weather_station, ...) {
-  check_availability(
-    weather_station, "z1", "z2", "t1", "t2", "p1", "p2",
-    "hum1", "hum2", "rad_bal", "soil_flux"
-  )
+  check_availability(weather_station, "z1", "z2", "t1", "t2", "hum1", "hum2", "elevation," "rad_bal", "soil_flux")
   hum1 <- weather_station$measurements$hum1
   hum2 <- weather_station$measurements$hum2
   t1 <- weather_station$measurements$t1
   t2 <- weather_station$measurements$t2
   z1 <- weather_station$properties$z1
   z2 <- weather_station$properties$z2
-  p1 <- weather_station$measurements$p1
-  p2 <- weather_station$measurements$p2
+  elev <- weather_station$location_properties$elevation
   rad_bal <- weather_station$measurements$rad_bal
   soil_flux <- weather_station$measurements$soil_flux
-  return(latent_bowen(
-    t1, t2, hum1, hum2, p1, p2, z1, z2,
-    rad_bal, soil_flux
-  ))
+  return(latent_bowen(t1, t2, hum1, hum2, z1, z2, elev, rad_bal, soil_flux))
 }

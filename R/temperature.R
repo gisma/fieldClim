@@ -14,14 +14,15 @@ temp_pot_temp <- function(...) {
 #' @rdname temp_pot_temp
 #' @method temp_pot_temp numeric
 #' @param t Temperature in °C.
-#' @param p Pressure in hPa.
+#' @param elev Elevation above sea level in m.
 #' @export
 #' @references p261.
-temp_pot_temp.numeric <- function(t, p, ...) {
+temp_pot_temp.numeric <- function(t, elev, ...) {
   p0 <- 1013.25 # standard air pressure in hPa
+  p <- pres_p(elev, t) # calculate air pressure
   air_const <- 0.286 # specific gas constant / specific heat capacity
-  pot_temp <- (t + 273.15) * (p0 / p)**air_const - 273.15
-  return(pot_temp)
+  t <- c2k(t) # to Kelvin
+  k2c(t * (p0 / p)**air_const)
 }
 
 #' @rdname temp_pot_temp
@@ -31,14 +32,14 @@ temp_pot_temp.numeric <- function(t, p, ...) {
 #' @export
 temp_pot_temp.weather_station <- function(weather_station, height = "lower", ...) {
   if (height == "lower") {
-    check_availability(weather_station, "t1", "p1")
+    check_availability(weather_station, "t1", "elevation")
     t <- weather_station$measurements$t1
-    p <- weather_station$measurements$p1
+    elev <- weather_station$location_properties$elevation
   } else if (height == "upper") {
-    check_availability(weather_station, "t2", "p2")
+    check_availability(weather_station, "t2", "elevation")
     t <- weather_station$measurements$t2
-    p <- weather_station$measurements$p2
+    elev <- weather_station$location_properties$elevation
   }
 
-  return(temp_pot_temp(t, p))
+  return(temp_pot_temp(t, elev))
 }

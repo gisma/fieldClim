@@ -109,10 +109,11 @@ turb_ustar <- function(...) {
 #' @method turb_ustar numeric
 #' @param v Windspeed in height of anemometer in m/s.
 #' @param z Height of anemometer in m.
-#' @param z0 Roughness length in m.
+#' @param surface_type Type of surface.
 #' @export
 #' @references p239.
-turb_ustar.numeric <- function(v, z, z0, ...) {
+turb_ustar.numeric <- function(v, z, surface_type, ...) {
+  z0 <- turb_roughness_length(surface_type = surface_type) # calculate roughness length in m
   ustar <- (v * 0.4) / log(z / z0)
   if (any(is.infinite(ustar))) {
     print("One or more ustar values are infinite. They are set to NA.")
@@ -129,6 +130,6 @@ turb_ustar.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "v1", "z1")
   v <- weather_station$measurements$v1
   z <- weather_station$properties$z1
-  z0 <- turb_roughness_length(weather_station)
-  return(turb_ustar(v, z, z0))
+  surface_type <- weather_station$location_properties$surface_type
+  return(turb_ustar(v, z, surface_type))
 }

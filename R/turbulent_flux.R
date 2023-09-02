@@ -18,14 +18,17 @@ turb_flux_monin <- function(...) {
 #' @param grad_rich_no Gradient-Richardson-Number.
 #' @param z1 Lower height of measurement (e.g. height of anemometer) in m.
 #' @param z2 Upper height of measurement in m.
-#' @param z0 Roughness length in m.
 #' @param v1 Windspeed at lower height (e.g. height of anemometer) in m/s.
 #' @param v2 Windspeed at upper height in m/s.
 #' @param t1 Temperature at lower height (e.g. height of anemometer) in °C.
 #' @param t2 Temperature at upper height in °C.
+#' @param elev Elevation above sea level in m.
+#' @param surface_type Type of surface.
 #' @export
 #' @references p241
-turb_flux_monin.numeric <- function(grad_rich_no, z1 = 2, z2 = 10, z0, v1, v2, t1, t2, ...) {
+turb_flux_monin.numeric <- function(z1 = 2, z2 = 10, v1, v2, t1, t2, elev, surface_type, ...) {
+  grad_rich_no <- turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, elev)
+  z0 <- turb_roughness_length(surface_type=surface_type)
   ustar <- turb_ustar(v1, z1, z0)
   monin <- rep(NA, length(grad_rich_no))
   for (i in 1:length(grad_rich_no)) {
@@ -52,16 +55,17 @@ turb_flux_monin.numeric <- function(grad_rich_no, z1 = 2, z2 = 10, z0, v1, v2, t
 #' @param weather_station Object of class weather_station
 #' @export
 turb_flux_monin.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "z1", "z2", "v1", "v2", "t1", "t2")
+  check_availability(weather_station, "z1", "z2", "v1", "v2", "t1", "t2", "elevation", "surface_type")
   grad_rich_no <- turb_flux_grad_rich_no(weather_station)
   z1 <- weather_station$properties$z1
   z2 <- weather_station$properties$z2
-  z0 <- turb_roughness_length(weather_station)
   v1 <- weather_station$measurements$v1
   v2 <- weather_station$measurements$v2
   t1 <- weather_station$measurements$t1
   t2 <- weather_station$measurements$t2
-  return(turb_flux_monin(grad_rich_no, z1, z2, z0, v1, v2, t1, t2))
+  elev <- weather_station$location_properties$elevation
+  surface_type <- weather_station$location_properties$surface_type
+  return(turb_flux_monin(z1, z2, v1, v2, t1, t2, elev, surface_type))
 }
 
 #' Gradient-Richardson-Number
@@ -88,14 +92,13 @@ turb_flux_grad_rich_no <- function(...) {
 #' @param z2 Upper height of measurement in m.
 #' @param v1 Windspeed at lower height (e.g. height of anemometer) in m/s.
 #' @param v2 Windspeed at upper height in m/s.
-#' @param p1 Pressure at lower height (e.g. height of anemometer) in hPa.
-#' @param p2 Pressure at upper height in hPa.
+#' @param elev Elevation above sea level in m.
 #' @export
-turb_flux_grad_rich_no.numeric <- function(t1, t2, z1 = 2, z2 = 10, v1, v2, p1, p2, ...) {
-  pot_temp1 <- temp_pot_temp(t1, p1)
-  pot_temp2 <- temp_pot_temp(t2, p2)
-  pot_temp1 <- pot_temp1 + 273.15
-  pot_temp2 <- pot_temp2 + 273.15
+turb_flux_grad_rich_no.numeric <- function(t1, t2, z1 = 2, z2 = 10, v1, v2, elev, ...) {
+  pot_temp1 <- temp_pot_temp(t1, elev)
+  pot_temp2 <- temp_pot_temp(t2, elev)
+  pot_temp1 <- c2k(pot_temp1)
+  pot_temp2 <- c2k(pot_temp2)
   grad_rich_no <- (9.81 / pot_temp1) * ((pot_temp2 - pot_temp1) / (z2 - z1)) * ((v2 - v1) / (z2 - z1))^-2
   grad_rich_no <- ifelse(is.nan(grad_rich_no), 0, grad_rich_no)
   return(grad_rich_no)
@@ -113,9 +116,8 @@ turb_flux_grad_rich_no.weather_station <- function(weather_station, ...) {
   z2 <- weather_station$properties$z2
   v1 <- weather_station$measurements$v1
   v2 <- weather_station$measurements$v2
-  p1 <- weather_station$measurements$p1
-  p2 <- weather_station$measurements$p2
-  return(turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, p1, p2))
+  elev <- weather_station$location_properties$elevation
+  return(turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, elev))
 }
 
 #' Stability
@@ -126,7 +128,7 @@ turb_flux_grad_rich_no.weather_station <- function(weather_station, ...) {
 #' @param ... Additional parameters passed to later functions.
 #' @return Gradient-Richardson-Number.
 #' @export
-#'
+#' @references Based on p.43, picture 2.10.
 turb_flux_stability <- function(...) {
   UseMethod("turb_flux_stability")
 }
@@ -175,24 +177,31 @@ turb_flux_ex_quotient_temp <- function(...) {
 
 #' @rdname turb_flux_ex_quotient_temp
 #' @method turb_flux_ex_quotient_temp numeric
-#' @param grad_rich_no Gradient-Richardson-Number.
-#' @param ustar Friction velocity in m/s.
-#' @param monin Monin-Obhukov-Length in m.
-#' @param z Height in m.
-#' @param air_density Air density in kg/m³.
+#' @param t1 Temperature at lower height (e.g. height of anemometer) in °C.
+#' @param t2 Temperature at upper height in degrees C.
+#' @param z1 Lower height of measurement (e.g. height of anemometer) in m.
+#' @param z2 Upper height of measurement in m.
+#' @param v1 Windspeed at lower height (e.g. height of anemometer) in m/s.
+#' @param v2 Windspeed at upper height in m/s.
+#' @param elev Elevation above sea level in m.
+#' @param surface_type Type of surface.
 #' @export
 #' @references Foken p362 Businger.
-turb_flux_ex_quotient_temp.numeric <- function(grad_rich_no, ustar, monin, z, air_density, ...) {
+turb_flux_ex_quotient_temp.numeric <- function(t1, t2, z1=2, z2=10, v1, v2, elev, surface_type, ...) {
+  grad_rich_no <- turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, elev)
+  ustar <- turb_ustar(v1, z1, surface_type)
+  monin <- turb_flux_monin(z1, z2, v1, v2, t1, t2, elev, surface_type)
+  air_density <- pres_air_density(elev, t1)
   ex <- rep(NA, length(grad_rich_no))
   for (i in 1:length(grad_rich_no)) {
     if (is.na(grad_rich_no[i])) {
       ex[i] <- NA
     } else if (grad_rich_no[i] <= -0.005) {
-      ex[i] <- (0.4 * ustar[i] * z / (0.74 * (1 - 9 * z / monin[i])^(-0.5))) * air_density[i]
+      ex[i] <- (0.4 * ustar[i] * z1 / (0.74 * (1 - 9 * z1 / monin[i])^(-0.5))) * air_density[i]
     } else if (grad_rich_no[i] > -0.005 && grad_rich_no[i] < 0.005) {
-      ex[i] <- 0.4 * ustar[i] * z
+      ex[i] <- 0.4 * ustar[i] * z1
     } else if (grad_rich_no[i] >= 0.005) {
-      ex[i] <- (0.4 * ustar[i] * z / (0.74 + 4.7 * z / monin[i])) * air_density[i]
+      ex[i] <- (0.4 * ustar[i] * z1 / (0.74 + 4.7 * z1 / monin[i])) * air_density[i]
     }
   }
   return(ex)
@@ -201,24 +210,18 @@ turb_flux_ex_quotient_temp.numeric <- function(grad_rich_no, ustar, monin, z, ai
 #' @rdname turb_flux_ex_quotient_temp
 #' @method turb_flux_ex_quotient_temp weather_station
 #' @param weather_station Object of class weather_station
-#' @param height Height of measurement. Either "upper" or "lower".
 #' @export
-turb_flux_ex_quotient_temp.weather_station <- function(weather_station, height = "lower", ...) {
-  grad_rich_no <- turb_flux_grad_rich_no(weather_station)
-  ustar <- turb_ustar(weather_station)
-  monin <- turb_flux_monin(weather_station)
-
-  if (height == "lower") {
-    check_availability(weather_station, "z1")
-    z <- weather_station$properties$z1
-  }
-  if (height == "upper") {
-    check_availability(weather_station, "z2")
-    z <- weather_station$properties$z2
-  }
-
-  air_density <- pres_air_density(weather_station, height)
-  return(grad_rich_no, ustar, monin, z, air_density)
+turb_flux_ex_quotient_temp.weather_station <- function(weather_station, ...) {
+  check_availability(weather_station, "t1", "t2", "z1", "z2", "v1", "v2", "elevation", "surface_type")
+  t1 <- weather_station$measurements$t1
+  t2 <- weather_station$measurements$t2
+  z1 <- weather_station$properties$z1
+  z2 <- weather_station$properties$z2
+  v1 <- weather_station$measurements$v1
+  v2 <- weather_station$measurements$v2
+  elev <- weather_station$location_properties$elevation
+  surface_type <- weather_station$location_properties$surface_type
+  return(turb_flux_ex_quotient_temp(t1, t2, z1, z2, v1, v2, elev, surface_type))
 }
 
 
@@ -237,22 +240,29 @@ turb_flux_ex_quotient_imp <- function(...) {
 
 #' @rdname turb_flux_ex_quotient_imp
 #' @method turb_flux_ex_quotient_imp numeric
-#' @param grad_rich_no Gradient-Richardson-Number.
-#' @param ustar Friction velocity in m/s.
-#' @param monin Monin-Obhukov-Length in m.
-#' @param z Observation height in m.
-#' @param air_density Air density in kg/m³.
+#' @param t1 Temperature at lower height (e.g. height of anemometer) in °C.
+#' @param t2 Temperature at upper height in degrees C.
+#' @param z1 Lower height of measurement (e.g. height of anemometer) in m.
+#' @param z2 Upper height of measurement in m.
+#' @param v1 Windspeed at lower height (e.g. height of anemometer) in m/s.
+#' @param v2 Windspeed at upper height in m/s.
+#' @param elev Elevation above sea level in m.
+#' @param surface_type Type of surface.
 #' @export
 #' @references Foken p361 Businger.
-turb_flux_ex_quotient_imp.numeric <- function(grad_rich_no, ustar, monin, z, air_density, ...) {
+turb_flux_ex_quotient_imp.numeric <- function(t1, t2, z1=2, z2=10, v1, v2, elev, surface_type, ...) {
+  grad_rich_no <- turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, elev)
+  ustar <- turb_ustar(v1, z1, surface_type)
+  monin <- turb_flux_monin(z1, z2, v1, v2, t1, t2, elev, surface_type)
+  air_density <- pres_air_density(elev, t1)
   ex <- rep(NA, length(grad_rich_no))
   for (i in 1:length(grad_rich_no)) {
     if (is.na(grad_rich_no[i])) {
       ex[i] <- NA
     } else if (grad_rich_no[i] <= -0.005) {
-      ex[i] <- (0.4 * ustar[i] * z / ((1 - 15 * z / monin[i])^(-0.25))) * air_density[i]
+      ex[i] <- (0.4 * ustar[i] * z1 / ((1 - 15 * z1 / monin[i])^(-0.25))) * air_density[i]
     } else if (grad_rich_no[i] > -0.005 && grad_rich_no[i] < 0.005) {
-      ex[i] <- (0.4 * ustar[i] * z) * air_density[i]
+      ex[i] <- (0.4 * ustar[i] * z1) * air_density[i]
     } else if (grad_rich_no[i] >= 0.005) {
       ex[i] <- (0.4 * ustar[i] * monin[i] / 4.7) * air_density[i]
     }
@@ -263,24 +273,18 @@ turb_flux_ex_quotient_imp.numeric <- function(grad_rich_no, ustar, monin, z, air
 #' @rdname turb_flux_ex_quotient_imp
 #' @method turb_flux_ex_quotient_imp weather_station
 #' @param weather_station Object of class weather_station
-#' @param height Height of measurement. Either "upper" or "lower".
 #' @export
-turb_flux_ex_quotient_imp.weather_station <- function(weather_station, height = "lower", ...) {
-  grad_rich_no <- turb_flux_grad_rich_no(weather_station)
-  ustar <- turb_ustar(weather_station)
-  monin <- turb_flux_monin(weather_station)
-
-  if (height == "lower") {
-    check_availability(weather_station, "z1")
-    z <- weather_station$properties$z1
-  }
-  if (height == "upper") {
-    check_availability(weather_station, "z2")
-    z <- weather_station$properties$z2
-  }
-
-  air_density <- pres_air_density(weather_station, height)
-  return(grad_rich_no, ustar, monin, z, air_density)
+turb_flux_ex_quotient_imp.weather_station <- function(weather_station, ...) {
+  check_availability(weather_station, "t1", "t2", "z1", "z2", "v1", "v2", "elevation", "surface_type")
+  t1 <- weather_station$measurements$t1
+  t2 <- weather_station$measurements$t2
+  z1 <- weather_station$properties$z1
+  z2 <- weather_station$properties$z2
+  v1 <- weather_station$measurements$v1
+  v2 <- weather_station$measurements$v2
+  elev <- weather_station$location_properties$elevation
+  surface_type <- weather_station$location_properties$surface_type
+  return(turb_flux_ex_quotient_imp(t1, t2, z1, z2, v1, v2, elev, surface_type))
 }
 
 
@@ -299,13 +303,17 @@ turb_flux_imp_exchange <- function(...) {
 
 #' @rdname turb_flux_imp_exchange
 #' @method turb_flux_imp_exchange numeric
-#' @param ex_quotient Exchange quotient in kg/(m*s).
+#' @param t1 Temperature at lower height (e.g. height of anemometer) in °C.
+#' @param t2 Temperature at upper height in degrees C.
 #' @param v1 Windspeed at lower height (e.g. height of anemometer) in m/s.
 #' @param v2 Windspeed at upper height in m/s.
 #' @param z1 Lower height of measurement (e.g. height of anemometer) in m.
 #' @param z2 Upper height of measurement in m.
+#' @param elev Elevation above sea level in m.
+#' @param surface_type Type of surface.
 #' @export
-turb_flux_imp_exchange.numeric <- function(ex_quotient, v1, v2, z1 = 2, z2 = 10, ...) {
+turb_flux_imp_exchange.numeric <- function(t1, t2, v1, v2, z1 = 2, z2 = 10, elev, surface_type, ...) {
+  ex_quotient <- turb_flux_ex_quotient_imp(t1, t2, z1, z2, v1, v2, elev, surface_type)
   ia <- ex_quotient * (v2 - v1) / (z2 - z1)
   return(ia)
 }
@@ -313,16 +321,18 @@ turb_flux_imp_exchange.numeric <- function(ex_quotient, v1, v2, z1 = 2, z2 = 10,
 #' @rdname turb_flux_imp_exchange
 #' @method turb_flux_imp_exchange weather_station
 #' @param weather_station Object of class weather_station
-#' @param height Height of measurement. Either "upper" or "lower".
 #' @export
-turb_flux_imp_exchange.weather_station <- function(weather_station, height = "lower", ...) {
-  check_availability(weather_station, "z1", "z2", "v1", "v2")
-  ex_quotient <- turb_flux_ex_quotient_imp(weather_station, height)
-  v1 <- weather_station$measurements$v1
-  v2 <- weather_station$measurements$v2
+turb_flux_imp_exchange.weather_station <- function(weather_station, ...) {
+  check_availability(weather_station, "t1", "t2", "z1", "z2", "v1", "v2", "elevation", "surface_type")
+  t1 <- weather_station$measurements$t1
+  t2 <- weather_station$measurements$t2
   z1 <- weather_station$properties$z1
   z2 <- weather_station$properties$z2
-  return(turb_flux_imp_exchange(ex_quotient, v1, v2, z1, z2))
+  v1 <- weather_station$measurements$v1
+  v2 <- weather_station$measurements$v2
+  elev <- weather_station$location_properties$elevation
+  surface_type <- weather_station$location_properties$surface_type
+  return(turb_flux_imp_exchange(t1, t2, v1, v2, z1, z2, elev, surface_type))
 }
 
 
