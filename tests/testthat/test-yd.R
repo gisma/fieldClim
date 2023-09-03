@@ -75,3 +75,20 @@ for (i in seq(length(vis_cal))) {
 lines(vis_cal, tau50_cal, lty = "dashed")
 
 legend("topright", c("tau38", "tau50", "tau38_cal", "tau50_cal"), lty = c(0, 0, 1, 2), pch = c(1, 0, NA, NA))
+
+
+y <- c(0.269, 1.46, 1.98, 2.18, 2.31, 2.49, 2.58)
+x <- c(0, 5, 10, 15, 20, 30, 43)
+plot(x, y)
+y_cal <- c()
+for (i in seq(length(x))) {
+  y_cal[i] <- approx(x, y, xout = moisture, yleft = NA, yright = y[7])$y
+}
+
+y <- c(0.276, 0.586, 1.1, 1.43, 1.57, 1.74, 1.95)
+x <- c(0, 5, 10, 15, 20, 30, 43)
+plot(x, y)
+
+y <- c(0.033, 0.042, 0.130, 0.276, 0.421, 0.478, 0.528)
+x <- c(0, 10, 30, 50, 70, 80, 90)
+plot(x, y)

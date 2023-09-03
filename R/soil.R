@@ -4,23 +4,19 @@
 #'
 #' Works by linearly interpolating thermal conductivity based on measured data.
 #'
-#' @rdname soil_thermal_cond
 #' @param ... Additional parameters passed to later functions.
-#' @return Soil thermal conductivity in W/m K.
+#' @returns Soil thermal conductivity in W/m K.
 #' @export
-#'
 soil_thermal_cond <- function(...) {
   UseMethod("soil_thermal_cond")
 }
 
 #' @rdname soil_thermal_cond
-#' @method soil_thermal_cond numeric
+#' @param texture Soil texture. Either `"sand"` (default), `"peat"` or `"clay"`.
 #' @param moisture Soil moisture in Cubic meter/cubic meter
-#' @param texture Soil texture. Either "sand", "peat" or "clay".
-#' @importFrom stats approx
 #' @export
 #' @references p254.
-soil_thermal_cond.default <- function(moisture, texture = "sand", ...) {
+soil_thermal_cond.default <- function(texture = "sand", moisture = 0, ...) {
   # convert moisture from [cubic m/cubic m] to [Vol-%]
   moisture <- moisture * 100
 
@@ -38,15 +34,12 @@ soil_thermal_cond.default <- function(moisture, texture = "sand", ...) {
   }
 
   # linear interpolation of values
-  therm_cond <- approx(x, y, xout = moisture, yleft = NA, yright = y[7])
-  therm_cond$y
+  approx(x, y, moisture)$y
 }
 
 #' @rdname soil_thermal_cond
-#' @method soil_thermal_cond weather_station
 #' @param weather_station Object of class weather_station.
 #' @export
-#'
 soil_thermal_cond.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "moisture", "texture")
   moisture <- weather_station$measurements$moisture
