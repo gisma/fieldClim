@@ -8,7 +8,7 @@
 \usage{
 hum_precipitable_water(...)
 
-\method{hum_precipitable_water}{default}(elev, temp, ...)
+\method{hum_precipitable_water}{default}(elev, temp, p0 = 1013, ...)
 
 \method{hum_precipitable_water}{weather_station}(weather_station, height = "lower", ...)
 }
@@ -18,6 +18,8 @@ hum_precipitable_water(...)
 \item{elev}{Elevation above sea level in m.}
 
 \item{temp}{Temperature in °C.}
+
+\item{p0}{Standard pressure}
 
 \item{weather_station}{Object of class weather_station.}
 

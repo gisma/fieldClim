@@ -162,12 +162,14 @@ hum_precipitable_water <- function(...) {
 
 #' @rdname hum_precipitable_water
 #' @inheritParams pres_p
+#' @param p0 Standard pressure
 #' @export
 #' @references p246
-hum_precipitable_water.default <- function(elev, temp, ...) {
+hum_precipitable_water.default <- function(elev, temp, p0 = 1013, ...) {
   pw_standard <- 4.1167
   p <- pres_p(elev, temp, ...)
   temp_standard <- 300
+  
   pw_standard * (p / p0) * (temp_standard / temp)^0.5
 }
 #hum_precipitable_water.default <- function(p, t, elev, ...) {
