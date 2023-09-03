@@ -251,8 +251,8 @@ trans_aerosol <- function(...) {
 #' @references p246.
 trans_aerosol.default <- function(datetime, lon, lat, elev, temp, vis = 30, ..., p0 = 1013) {
   air_mass_abs <- trans_air_mass_abs(datetime, lon, lat, elev, temp, p0 = p0)
-  tau38 <- 0.33
-  tau50 <- 0.21
+  tau38 <- 3.6536 * vis^-0.7111
+  tau5 <- 2.4087 * vis^-0.719
   
   x <- 0.2758 * tau38 + 0.35 * tau50
   

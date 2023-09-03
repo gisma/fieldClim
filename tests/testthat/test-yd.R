@@ -48,3 +48,30 @@ for(elevation in seq(0, 359)) {
   a[elevation+1] = 1 / (sin(deg2rad(elevation)) + 1.5 * elevation^-0.72)
 }
 plot(a, type = "l")
+
+T0 <- c(300, 294, 272.2, 287, 257.1)
+pwst <- c(4.1167, 2.9243, 0.8539, 2.0852, 0.4176)
+plot(T0, pwst)
+
+vis <- seq(10, 60, 10)
+tau38 <- c(0.71, 0.43, 0.33, 0.27, 0.22, 0.20)
+tau50 <- c(0.46, 0.28, 0.21, 0.17, 0.14, 0.13)
+plot(vis, tau38, ylim = c(min(tau50), max(tau38)), ylab = "tau")
+points(vis, tau50, pch = 0)
+
+vis_cal <- seq(10, 60, 1)
+mod38 <- lm(log(tau38)~log(vis))
+tau38_cal <- c()
+for (i in seq(length(vis_cal))) {
+  tau38_cal[i] <- exp(mod38$coefficients[1]) * vis_cal[i]^mod38$coefficients[2]
+}
+lines(vis_cal, tau38_cal)
+
+mod50 <- lm(log(tau50)~log(vis))
+tau50_cal <- c()
+for (i in seq(length(vis_cal))) {
+  tau50_cal[i] <- exp(mod50$coefficients[1]) * vis_cal[i]^mod50$coefficients[2]
+}
+lines(vis_cal, tau50_cal, lty = "dashed")
+
+legend("topright", c("tau38", "tau50", "tau38_cal", "tau50_cal"), lty = c(0, 0, 1, 2), pch = c(1, 0, NA, NA))
