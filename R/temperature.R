@@ -17,7 +17,7 @@ temp_pot_temp <- function(...) {
 #' @param elev Elevation above sea level in m.
 #' @export
 #' @references p261.
-temp_pot_temp.numeric <- function(t, elev, ...) {
+temp_pot_temp.default <- function(t, elev, ...) {
   p0 <- 1013.25 # standard air pressure in hPa
   p <- pres_p(elev, t) # calculate air pressure
   air_const <- 0.286 # specific gas constant / specific heat capacity
@@ -40,6 +40,5 @@ temp_pot_temp.weather_station <- function(weather_station, height = "lower", ...
     t <- weather_station$measurements$t2
     elev <- weather_station$location_properties$elevation
   }
-
   return(temp_pot_temp(t, elev))
 }

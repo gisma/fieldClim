@@ -9,8 +9,7 @@
 #' @export
 #'
 bound_mech_low <- function(dist) {
-  mib <- 0.3 * sqrt(dist)
-  return(mib)
+  0.3 * sqrt(dist)
 }
 
 #' Mechanical internal boundary layer; average height.
@@ -24,8 +23,7 @@ bound_mech_low <- function(dist) {
 #' @export
 #'
 bound_mech_avg <- function(dist) {
-  mib <- 0.43 * dist**0.5
-  return(mib)
+  0.43 * dist**0.5
 }
 
 #' Thermal internal boundary layer.
@@ -46,6 +44,5 @@ bound_mech_avg <- function(dist) {
 #'
 bound_thermal_avg <- function(v, z, surface_type, temp_change_dist, t_pot_upwind, t_pot, lapse_rate) {
   ustar <- turb_ustar(v, z, surface_type)
-  tib <- (ustar / v) * ((temp_change_dist * abs(t_pot_upwind - t_pot)) / abs(lapse_rate))**0.5
-  return(tib)
+  (ustar / v) * ((temp_change_dist * abs(t_pot_upwind - t_pot)) / abs(lapse_rate))**0.5
 }

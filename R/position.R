@@ -20,7 +20,7 @@ pos_min_dist <- function(...) {
 #' @export
 #' @return Minimal distance between measurement point and obstacle for undisturbed measurement in m.
 #' @references p189eq9.1.
-pos_min_dist.numeric <- function(obs_width, obs_height, ring = F, obs_radius = NULL, ...) {
+pos_min_dist.default <- function(obs_width, obs_height, ring = F, obs_radius = NULL, ...) {
   # if climate station is positioned on a clearing:
   if (ring == TRUE) {
     min_dist <- pi * obs_radius + 10 * obs_height
