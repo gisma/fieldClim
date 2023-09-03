@@ -83,6 +83,5 @@ pres_air_density.weather_station <- function(weather_station, height = "lower", 
 #' @export
 #'
 pres_air_density.default <- function(p, t, ...) {
-  ad <- (p * 100) / (287.05 * (t + 273.15))
-  return(ad)
+  (p * 100) / (287.05 * (t + 273.15))
 }

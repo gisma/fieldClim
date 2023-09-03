@@ -26,7 +26,7 @@ turb_flux_monin <- function(...) {
 #' @param surface_type Type of surface.
 #' @export
 #' @references p241
-turb_flux_monin.numeric <- function(z1 = 2, z2 = 10, v1, v2, t1, t2, elev, surface_type, ...) {
+turb_flux_monin.default <- function(z1 = 2, z2 = 10, v1, v2, t1, t2, elev, surface_type, ...) {
   grad_rich_no <- turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, elev)
   z0 <- turb_roughness_length(surface_type=surface_type)
   ustar <- turb_ustar(v1, z1, z0)
@@ -46,8 +46,7 @@ turb_flux_monin.numeric <- function(z1 = 2, z2 = 10, v1, v2, t1, t2, elev, surfa
   if (any(is.na(monin))) {
     warning("NAs were introduced, due to a either small friction velocity (ustar < 0.2), or missing Gradient-Richardson numbers.")
   }
-
-  return(monin)
+  monin
 }
 
 #' @rdname turb_flux_monin
@@ -94,14 +93,14 @@ turb_flux_grad_rich_no <- function(...) {
 #' @param v2 Windspeed at upper height in m/s.
 #' @param elev Elevation above sea level in m.
 #' @export
-turb_flux_grad_rich_no.numeric <- function(t1, t2, z1 = 2, z2 = 10, v1, v2, elev, ...) {
+turb_flux_grad_rich_no.default <- function(t1, t2, z1 = 2, z2 = 10, v1, v2, elev, ...) {
   pot_temp1 <- temp_pot_temp(t1, elev)
   pot_temp2 <- temp_pot_temp(t2, elev)
   pot_temp1 <- c2k(pot_temp1)
   pot_temp2 <- c2k(pot_temp2)
   grad_rich_no <- (9.81 / pot_temp1) * ((pot_temp2 - pot_temp1) / (z2 - z1)) * ((v2 - v1) / (z2 - z1))^-2
   grad_rich_no <- ifelse(is.nan(grad_rich_no), 0, grad_rich_no)
-  return(grad_rich_no)
+  grad_rich_no
 }
 
 #' @rdname turb_flux_grad_rich_no
@@ -137,7 +136,7 @@ turb_flux_stability <- function(...) {
 #' @method turb_flux_stability numeric
 #' @param grad_rich_no Gradient-Richardson-Number
 #' @export
-turb_flux_stability.numeric <- function(grad_rich_no, ...) {
+turb_flux_stability.default <- function(grad_rich_no, ...) {
   stability <- rep(NA, length(grad_rich_no))
   for (i in 1:length(grad_rich_no)) {
     if (is.na(grad_rich_no[i])) {
@@ -150,7 +149,7 @@ turb_flux_stability.numeric <- function(grad_rich_no, ...) {
       stability[i] <- "stable"
     }
   }
-  return(stability)
+  stability
 }
 
 #' @rdname turb_flux_stability
@@ -187,7 +186,7 @@ turb_flux_ex_quotient_temp <- function(...) {
 #' @param surface_type Type of surface.
 #' @export
 #' @references Foken p362 Businger.
-turb_flux_ex_quotient_temp.numeric <- function(t1, t2, z1=2, z2=10, v1, v2, elev, surface_type, ...) {
+turb_flux_ex_quotient_temp.default <- function(t1, t2, z1=2, z2=10, v1, v2, elev, surface_type, ...) {
   grad_rich_no <- turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, elev)
   ustar <- turb_ustar(v1, z1, surface_type)
   monin <- turb_flux_monin(z1, z2, v1, v2, t1, t2, elev, surface_type)
@@ -204,7 +203,7 @@ turb_flux_ex_quotient_temp.numeric <- function(t1, t2, z1=2, z2=10, v1, v2, elev
       ex[i] <- (0.4 * ustar[i] * z1 / (0.74 + 4.7 * z1 / monin[i])) * air_density[i]
     }
   }
-  return(ex)
+  ex
 }
 
 #' @rdname turb_flux_ex_quotient_temp
@@ -250,7 +249,7 @@ turb_flux_ex_quotient_imp <- function(...) {
 #' @param surface_type Type of surface.
 #' @export
 #' @references Foken p361 Businger.
-turb_flux_ex_quotient_imp.numeric <- function(t1, t2, z1=2, z2=10, v1, v2, elev, surface_type, ...) {
+turb_flux_ex_quotient_imp.default <- function(t1, t2, z1=2, z2=10, v1, v2, elev, surface_type, ...) {
   grad_rich_no <- turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, elev)
   ustar <- turb_ustar(v1, z1, surface_type)
   monin <- turb_flux_monin(z1, z2, v1, v2, t1, t2, elev, surface_type)
@@ -267,7 +266,7 @@ turb_flux_ex_quotient_imp.numeric <- function(t1, t2, z1=2, z2=10, v1, v2, elev,
       ex[i] <- (0.4 * ustar[i] * monin[i] / 4.7) * air_density[i]
     }
   }
-  return(ex)
+  ex
 }
 
 #' @rdname turb_flux_ex_quotient_imp
@@ -312,10 +311,10 @@ turb_flux_imp_exchange <- function(...) {
 #' @param elev Elevation above sea level in m.
 #' @param surface_type Type of surface.
 #' @export
-turb_flux_imp_exchange.numeric <- function(t1, t2, v1, v2, z1 = 2, z2 = 10, elev, surface_type, ...) {
+turb_flux_imp_exchange.default <- function(t1, t2, v1, v2, z1 = 2, z2 = 10, elev, surface_type, ...) {
   ex_quotient <- turb_flux_ex_quotient_imp(t1, t2, z1, z2, v1, v2, elev, surface_type)
   ia <- ex_quotient * (v2 - v1) / (z2 - z1)
-  return(ia)
+  ia
 }
 
 #' @rdname turb_flux_imp_exchange

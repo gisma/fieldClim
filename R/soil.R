@@ -20,7 +20,7 @@ soil_thermal_cond <- function(...) {
 #' @importFrom stats approx
 #' @export
 #' @references p254.
-soil_thermal_cond.numeric <- function(moisture, texture = "sand", ...) {
+soil_thermal_cond.default <- function(moisture, texture = "sand", ...) {
   # convert moisture from [cubic m/cubic m] to [Vol-%]
   moisture <- moisture * 100
 
@@ -39,7 +39,7 @@ soil_thermal_cond.numeric <- function(moisture, texture = "sand", ...) {
 
   # linear interpolation of values
   therm_cond <- approx(x, y, xout = moisture, yleft = NA, yright = y[7])
-  return(therm_cond$y)
+  therm_cond$y
 }
 
 #' @rdname soil_thermal_cond
@@ -77,7 +77,7 @@ soil_heat_cap <- function(...) {
 #' @importFrom stats approx
 #' @export
 #' @references p254.
-soil_heat_cap.numeric <- function(moisture, texture = "sand", ...) {
+soil_heat_cap.default <- function(moisture, texture = "sand", ...) {
   # convert moisture from [cubic m/cubic m] to [Vol-%]
   moisture <- moisture * 100
 
@@ -96,7 +96,7 @@ soil_heat_cap.numeric <- function(moisture, texture = "sand", ...) {
 
   # linear interpolation of values
   vol_heat <- approx(x, y, xout = moisture, yleft = NA, yright = y[7])
-  return(vol_heat$y)
+  vol_heat$y
 }
 
 
@@ -139,7 +139,7 @@ soil_heat_flux <- function(...) {
 #' @param depth2 Depth of lower measurement in m.
 #' @param thermal_cond Thermal conductivity of soil in W/(m K).
 #' @references p71eq4.2.
-soil_heat_flux.numeric <- function(ts1, ts2, depth1, depth2, thermal_cond, ...) {
+soil_heat_flux.default <- function(ts1, ts2, depth1, depth2, thermal_cond, ...) {
   soil_heat_flu <- thermal_cond * ((ts1 - ts2) / (depth1 - depth2))
   return(soil_heat_flu)
 }
@@ -178,11 +178,11 @@ soil_attenuation <- function(...) {
 #' @param moisture Soil moisture in Cubic meter/cubic meter
 #' @param texture Soil texture. Either "sand", "peat" or "clay".
 #' @references p253.
-soil_attenuation.numeric <- function(moisture, texture = "sand", ...) {
+soil_attenuation.default <- function(moisture, texture = "sand", ...) {
   thermal_cond <- soil_thermal_cond(moisture, texture)
   vol_heat_cap <- soil_heat_cap(moisture, texture)
   soil_att <- sqrt(thermal_cond / (vol_heat_cap * 10^6 * pi) * 86400)
-  return(soil_att)
+  soil_att
 }
 
 #' @rdname soil_attenuation

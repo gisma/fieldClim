@@ -31,7 +31,7 @@ turb_roughness_length.default <- function(surface_type = NULL, obs_height = NULL
     z0 <- NA
     print("The input is not valid. Please check the input values.")
   }
-  return(z0)
+  z0
 }
 
 #' @rdname turb_roughness_length
@@ -69,7 +69,7 @@ turb_displacement <- function(...) {
 #' @param surroundings Choose either 'vegetation' or 'city'.
 #' @export
 #' @references p241.
-turb_displacement.numeric <- function(obs_height, surroundings = "vegetation", ...) {
+turb_displacement.default <- function(obs_height, surroundings = "vegetation", ...) {
   if (surroundings == "vegetation") {
     d0 <- (2 / 3) * obs_height # for vegetation
   } else if (surroundings == "city") {
@@ -77,7 +77,7 @@ turb_displacement.numeric <- function(obs_height, surroundings = "vegetation", .
   } else {
     stop("Please set 'surroundings' to either 'vegetation' or 'city'.")
   }
-  return(d0)
+  d0
 }
 
 #' @rdname turb_displacement
@@ -112,14 +112,14 @@ turb_ustar <- function(...) {
 #' @param surface_type Type of surface.
 #' @export
 #' @references p239.
-turb_ustar.numeric <- function(v, z, surface_type, ...) {
+turb_ustar.default <- function(v, z, surface_type, ...) {
   z0 <- turb_roughness_length(surface_type = surface_type) # calculate roughness length in m
   ustar <- (v * 0.4) / log(z / z0)
   if (any(is.infinite(ustar))) {
     print("One or more ustar values are infinite. They are set to NA.")
     ustar[is.infinite(ustar)] <- NA
   }
-  return(ustar)
+  ustar
 }
 
 #' @rdname turb_ustar

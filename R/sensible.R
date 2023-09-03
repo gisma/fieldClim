@@ -19,7 +19,7 @@ sensible_priestley_taylor <- function(...) {
 #' @param soil_flux Soil flux in W/m².
 #' @param surface_type Surface type, for which a Priestley-Taylor coefficient will be selected. Default is for short grass.
 #' @references Foken p220eq5.6.
-sensible_priestley_taylor.numeric <- function(t, rad_bal, soil_flux, surface_type = "field", ...) {
+sensible_priestley_taylor.default <- function(t, rad_bal, soil_flux, surface_type = "field", ...) {
   sc <- sc(t)
   gam <- gam(t)
 
@@ -31,9 +31,7 @@ sensible_priestley_taylor.numeric <- function(t, rad_bal, soil_flux, surface_typ
     alpha_pt <- priestley_taylor_coefficient[which(priestley_taylor_coefficient$surface_type == surface_type), ]$alpha
   }
 
-  QH_TP <- ((1 - alpha_pt) * sc + gam) * (-1 * rad_bal - soil_flux) / (sc + gam)
-
-  return(QH_TP)
+  ((1 - alpha_pt) * sc + gam) * (-1 * rad_bal - soil_flux) / (sc + gam)
 }
 
 #' @rdname sensible_priestley_taylor
@@ -74,7 +72,7 @@ sensible_monin <- function(...) {
 #' @param elev Elevation above sea level in m.
 #' @param surface_type Type of surface.
 #' @references p77eq4.6, Foken p362 Businger.
-sensible_monin.numeric <- function(t1, t2, z1 = 2, z2 = 10, v1, v2, elev, surface_type = "field", ...) {
+sensible_monin.default <- function(t1, t2, z1 = 2, z2 = 10, v1, v2, elev, surface_type = "field", ...) {
   p1 <- pres_p(elev, t1)
   p2 <- pres_p(elev, t2)
   monin <- turb_flux_monin(z1, z2, v1, v2, t1, t2, elev, surface_type)
@@ -98,9 +96,7 @@ sensible_monin.numeric <- function(t1, t2, z1 = 2, z2 = 10, v1, v2, elev, surfac
       busi[i] <- 0.74 + 4.7 * s1[i]
     }
   }
-  QH <- (-1) * air_density * cp * (k * ustar * z2 / busi) * t_gradient
-
-  return(QH)
+  (-1) * air_density * cp * (k * ustar * z2 / busi) * t_gradient
 }
 
 #' @rdname sensible_monin
@@ -149,7 +145,7 @@ sensible_bowen <- function(...) {
 #' @param rad_bal Radiation balance in W/m².
 #' @param soil_flux Soil flux in W/m².
 #' @references p221eq9.21.
-sensible_bowen.numeric <- function(t1, t2, hum1, hum2, z1 = 2, z2 = 10, elev, rad_bal, soil_flux, ...) {
+sensible_bowen.default <- function(t1, t2, hum1, hum2, z1 = 2, z2 = 10, elev, rad_bal, soil_flux, ...) {
   # Calculating potential temperature delta
   t1_pot <- temp_pot_temp(t1, elev)
   t2_pot <- temp_pot_temp(t2, elev)

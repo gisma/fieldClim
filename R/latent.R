@@ -19,7 +19,7 @@ latent_priestley_taylor <- function(...) {
 #' @param soil_flux Soil flux in W/m².
 #' @param surface_type Surface type, for which a Priestley-Taylor coefficient will be selected. Default is for short grass.
 #' @references Foken p220eq5.7.
-latent_priestley_taylor.numeric <- function(t, rad_bal, soil_flux, surface_type = "field", ...) {
+latent_priestley_taylor.default <- function(t, rad_bal, soil_flux, surface_type = "field", ...) {
   priestley_taylor_coefficient <- priestley_taylor_coefficient
 
   if (!surface_type %in% priestley_taylor_coefficient$surface_type) {
@@ -32,9 +32,7 @@ latent_priestley_taylor.numeric <- function(t, rad_bal, soil_flux, surface_type 
   sc <- sc(t)
   gam <- gam(t)
 
-  QE_TP <- alpha_pt * sc * (-rad_bal - soil_flux) / (sc + gam)
-
-  return(QE_TP)
+  alpha_pt * sc * (-rad_bal - soil_flux) / (sc + gam)
 }
 
 #' @rdname latent_priestley_taylor
@@ -77,7 +75,7 @@ latent_penman <- function(...) {
 #' @param elev Elevation above sea level in m.
 #' @param lat Latitude in decimal degrees.
 #' @param lon Longitude in decimal degrees.
-latent_penman.POSIXt <- function(datetime,
+latent_penman.default <- function(datetime,
                                  v,
                                  t,
                                  hum,
@@ -112,9 +110,7 @@ latent_penman.POSIXt <- function(datetime,
   )
 
   lv <- hum_evap_heat(t) # specific evaporation heat
-  QE_PM <- lv * (water::hourlyET(WeatherStation, hours = ut, DOY = doy) / 3600) * (-1)
-
-  return(QE_PM)
+  lv * (water::hourlyET(WeatherStation, hours = ut, DOY = doy) / 3600) * (-1)
 }
 
 #' @rdname latent_penman
@@ -170,7 +166,7 @@ latent_monin <- function(...) {
 #' @param elev Elevation above sea level in m.
 #' @param surface_type Type of surface.
 #' @references p77eq4.6, Foken p61 Tab. 2.10.
-latent_monin.numeric <- function(hum1, hum2, t1, t2, v1, v2, z1 = 2, z2 = 10, elev, surface_type = "field", ...) {
+latent_monin.default <- function(hum1, hum2, t1, t2, v1, v2, z1 = 2, z2 = 10, elev, surface_type = "field", ...) {
   p1 <- pres_p(elev, t1)
   p2 <- pres_p(elev, t2)
   monin <- turb_flux_monin(z1, z2, v1, v2, t1, t2, elev, surface_type)
@@ -192,9 +188,7 @@ latent_monin.numeric <- function(hum1, hum2, t1, t2, v1, v2, z1 = 2, z2 = 10, el
       busi[i] <- 0.95 + (7.8 * s1[i])
     }
   }
-  QL <- (-1) * air_density * lv * ((k * ustar) / busi) * schmidt * moist_gradient
-
-  return(QL)
+  (-1) * air_density * lv * ((k * ustar) / busi) * schmidt * moist_gradient
 }
 
 #' @rdname latent_monin
@@ -246,7 +240,7 @@ latent_bowen <- function(...) {
 #' @param rad_bal Radiation balance in W/m².
 #' @param soil_flux Soil flux in W/m².
 #' @references p221eq9.21.
-latent_bowen.numeric <- function(t1, t2, hum1, hum2, z1 = 2, z2 = 10, elev,
+latent_bowen.default <- function(t1, t2, hum1, hum2, z1 = 2, z2 = 10, elev,
                                  rad_bal, soil_flux, ...) {
   # Calculating potential temperature delta
   t1_pot <- temp_pot_temp(t1, elev)

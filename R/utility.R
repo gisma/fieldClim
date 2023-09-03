@@ -137,8 +137,7 @@ as.data.frame.weather_station <- function(x, ...,
       names(out)[names(out) == important[i]] <- replacement[i]
     }
   }
-
-  return(out)
+  out
 }
 
 #' Radian to degree

@@ -19,7 +19,7 @@ hum_sat_vapor_pres <- function(...) {
 hum_sat_vapor_pres.default <- function(t, ...) {
   a <- 7.5
   b <- 235
-  return(6.1078 * (10**((a * t) / (b + t))))
+  6.1078 * (10**((a * t) / (b + t)))
 }
 
 #' @rdname hum_sat_vapor_pres
@@ -56,7 +56,7 @@ hum_vapor_pres <- function(...) {
 #' @param t Air temperature in °C.
 hum_vapor_pres.default <- function(hum, t, ...) {
   sat_vapor_pres <- hum_sat_vapor_pres(t)
-  return((hum / 100) * sat_vapor_pres)
+  (hum / 100) * sat_vapor_pres
 }
 
 #' @rdname hum_vapor_pres
@@ -97,7 +97,7 @@ hum_specific <- function(...) {
 hum_specific.default <- function(hum, t, elev, ...) {
   p_vapor <- hum_vapor_pres(hum, t)
   p <- pres_p(elev, t)
-  return(0.622 * (p_vapor / p))
+  0.622 * (p_vapor / p)
 }
 
 #' @rdname hum_specific
@@ -139,7 +139,7 @@ hum_absolute <- function(...) {
 hum_absolute.default <- function(hum, t, ...) {
   p_vapor <- hum_vapor_pres(hum, t)
   t <- c2k(t)
-  return((0.21668 * p_vapor) / t)
+  (0.21668 * p_vapor) / t
 }
 
 #' @rdname hum_absolute
@@ -176,7 +176,7 @@ hum_evap_heat <- function(...) {
 #' @param t Air temperature in °C.
 #' @references p261.
 hum_evap_heat.default <- function(t, ...) {
-  return((2.5008 - 0.002372 * t) * 10^6)
+  (2.5008 - 0.002372 * t) * 10^6
 }
 
 #' @rdname hum_evap_heat
@@ -268,11 +268,11 @@ hum_moisture_gradient <- function(...) {
 #' @param z1 Lower measurement height in m.
 #' @param z2 Upper measurement height in m.
 #' @param elev Elevation above sea level in m.
-hum_moisture_gradient.numeric <- function(hum1, hum2, t1, t2, z1 = 2, z2 = 10, elev, ...) {
+hum_moisture_gradient.default <- function(hum1, hum2, t1, t2, z1 = 2, z2 = 10, elev, ...) {
   # specific humidity
   sh1 <- hum_specific(hum1, t1, elev)
   sh2 <- hum_specific(hum2, t2, elev)
-  return((sh2 - sh1) / (z2 - z1))
+  (sh2 - sh1) / (z2 - z1)
 }
 
 #' @rdname hum_moisture_gradient

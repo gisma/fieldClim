@@ -53,14 +53,14 @@ rad_sw_bal.default <- function(..., valley = FALSE) {
   albedo <- 0.5
   sky_view <- terr_sky_view(slope, valley = valley)
   terrain_view <- 1 - sky_view
-  
+
   (rad_sw_in + rad_diffuse_in) * (1 - albedo + albedo * terrain_view - albedo^2 * terrain_view)
 }
 
 #' Shortwave incoming radiation
 #'
 #' Provide `slope` and `exposition` to perform topographic correction.
-#' 
+#'
 #' @param ... Additional arguments.
 #' @returns W/m$^{2}$.
 #' @export
@@ -81,17 +81,17 @@ rad_sw_in.default <- function(datetime, lon, lat, elev, temp, ...) {
   sw_toa <- rad_sw_toa(datetime, lon, lat, ...)
   elevation <- sol_elevation(datetime, lon, lat)
   elevation <- deg2rad(elevation)
-  
+
   gas <- trans_gas(datetime, lon, lat, elev, temp, ...)
   ozone <- trans_ozone(datetime, lon, lat, ...)
   rayleigh <- trans_rayleigh(datetime, lon, lat, elev, temp)
   vapor <- trans_vapor(datetime, lon, lat, elev, temp)
   aerosol <- trans_aerosol(datetime, lon, lat, elev, temp, ...)
   trans_total <- gas * ozone * rayleigh * vapor * aerosol
-  
+
   terrain_angle <- terr_terrain_angle(datetime, lon, lat, ...)
   terrain_angle <- deg2rad(terrain_angle)
-  
+
   sw_toa / sin(elevation) * 0.9751 * trans_total * cos(terrain_angle)
 }
 #rad_sw_in.default <- function(rad_sw_toa, trans_total, ...) {
@@ -137,7 +137,7 @@ rad_sw_toa.default <- function(datetime, lon, lat, sol_const = 1368, ...) {
   eccentricity <- sol_eccentricity(datetime)
   elevation <- sol_elevation(datetime, lon, lat)
   elevation <- deg2rad(elevation)
-  
+
   sol_const * eccentricity * sin(elevation)
 }
 #rad_sw_toa.default <- function(datetime, lat, lon, ...) {
@@ -194,11 +194,11 @@ rad_diffuse_in.default <- function(datetime, lon, lat, elev, temp, ...,
   terrain_angle <- terr_terrain_angle(datetime, lon, lat,
     slope = slope, exposition = exposition)
   terrain_angle <- deg2rad(terrain_angle)
-  
+
   elevation <- sol_elevation(datetime, lon, lat)
   z <- 90 - elevation
   z <- deg2rad(z)
-  
+
   0.5 * (
     (1 - (1 - vapor) - (1 - ozone)) *
     sw_toa - sw_in
@@ -288,8 +288,7 @@ rad_lw_out.default <- function(t_surface, surface_type = "field", ...) {
   surface_properties <- surface_properties
   emissivity <- surface_properties[which(surface_properties$surface_type == surface_type), ]$emissivity
   sigma <- 5.6993e-8
-  radout <- emissivity * sigma * (t_surface + 273.15)**4
-  return(radout)
+  emissivity * sigma * (t_surface + 273.15)**4
 }
 
 #' @rdname rad_lw_out
@@ -621,8 +620,7 @@ rad_lw_in_topo.default <- function(rad_lw_out,
   # Calculate incoming longwave radiation
   rad_lw_in <- rad_lw_in(hum, t)
   # Longwave component:
-  rad_lw_in_topo <- rad_lw_in * terr_sky_view + rad_lw_out * (1 - terr_sky_view)
-  return(rad_lw_in_topo)
+  rad_lw_in * terr_sky_view + rad_lw_out * (1 - terr_sky_view)
 }
 
 #' @rdname rad_lw_in_topo
