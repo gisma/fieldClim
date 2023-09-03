@@ -2,18 +2,18 @@
 % Please edit documentation in R/latent.R
 \name{latent_penman}
 \alias{latent_penman}
-\alias{latent_penman.POSIXt}
+\alias{latent_penman.default}
 \alias{latent_penman.weather_station}
 \title{Latent Heat Penman Method}
 \usage{
 latent_penman(...)
 
-\method{latent_penman}{POSIXt}(datetime, v, t, hum, z = 2, rad_bal, elev, lat, lon, ...)
+\method{latent_penman}{default}(datetime, v, t, hum, z = 2, rad_bal, elev, lat, lon, ...)
 
 \method{latent_penman}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{datetime}{POSIXt object (POSIXct, POSIXlt).
 See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:strptime]{base::strptime} for conversion.}

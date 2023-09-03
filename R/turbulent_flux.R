@@ -5,8 +5,8 @@
 #' This value will be taken from the Gradient-Richardson-Number.
 #'
 #' @rdname turb_flux_monin
-#' @param ... Additional parameters passed to later functions.
-#' @return Monin-Obhukov-Length in m.
+#' @param ... Additional arguments.
+#' @returns Monin-Obhukov-Length in m.
 #' @export
 #'
 turb_flux_monin <- function(...) {
@@ -14,8 +14,6 @@ turb_flux_monin <- function(...) {
 }
 
 #' @rdname turb_flux_monin
-#' @method turb_flux_monin numeric
-#' @param grad_rich_no Gradient-Richardson-Number.
 #' @param z1 Lower height of measurement (e.g. height of anemometer) in m.
 #' @param z2 Upper height of measurement in m.
 #' @param v1 Windspeed at lower height (e.g. height of anemometer) in m/s.
@@ -50,7 +48,6 @@ turb_flux_monin.default <- function(z1 = 2, z2 = 10, v1, v2, t1, t2, elev, surfa
 }
 
 #' @rdname turb_flux_monin
-#' @method turb_flux_monin weather_station
 #' @param weather_station Object of class weather_station
 #' @export
 turb_flux_monin.weather_station <- function(weather_station, ...) {
@@ -75,8 +72,8 @@ turb_flux_monin.weather_station <- function(weather_station, ...) {
 #' neutral conditions.
 #'
 #' @rdname turb_flux_grad_rich_no
-#' @param ... Additional parameters passed to later functions.
-#' @return Gradient-Richardson-Number.
+#' @param ... Additional arguments.
+#' @returns Gradient-Richardson-Number.
 #' @export
 #' @references p43eq2.5.
 turb_flux_grad_rich_no <- function(...) {
@@ -84,7 +81,6 @@ turb_flux_grad_rich_no <- function(...) {
 }
 
 #' @rdname turb_flux_grad_rich_no
-#' @method turb_flux_grad_rich_no numeric
 #' @param t1 Temperature at lower height (e.g. height of anemometer) in °C.
 #' @param t2 Temperature at upper height in degrees C.
 #' @param z1 Lower height of measurement (e.g. height of anemometer) in m.
@@ -104,7 +100,6 @@ turb_flux_grad_rich_no.default <- function(t1, t2, z1 = 2, z2 = 10, v1, v2, elev
 }
 
 #' @rdname turb_flux_grad_rich_no
-#' @method turb_flux_grad_rich_no weather_station
 #' @param weather_station Object of class weather_station
 #' @export
 turb_flux_grad_rich_no.weather_station <- function(weather_station, ...) {
@@ -124,8 +119,8 @@ turb_flux_grad_rich_no.weather_station <- function(weather_station, ...) {
 #' Conversion of Gradient-Richardson-Number to stability string.
 #'
 #' @rdname turb_flux_stability
-#' @param ... Additional parameters passed to later functions.
-#' @return Gradient-Richardson-Number.
+#' @param ... Additional arguments.
+#' @returns Gradient-Richardson-Number.
 #' @export
 #' @references Based on p.43, picture 2.10.
 turb_flux_stability <- function(...) {
@@ -133,7 +128,6 @@ turb_flux_stability <- function(...) {
 }
 
 #' @rdname turb_flux_stability
-#' @method turb_flux_stability numeric
 #' @param grad_rich_no Gradient-Richardson-Number
 #' @export
 turb_flux_stability.default <- function(grad_rich_no, ...) {
@@ -153,7 +147,6 @@ turb_flux_stability.default <- function(grad_rich_no, ...) {
 }
 
 #' @rdname turb_flux_stability
-#' @method turb_flux_stability weather_station
 #' @param weather_station Object of class weather_station
 #' @export
 turb_flux_stability.weather_station <- function(weather_station, ...) {
@@ -167,15 +160,14 @@ turb_flux_stability.weather_station <- function(weather_station, ...) {
 #' Calculation of the exchange quotient of the turbulent heat transmission.
 #'
 #' @rdname turb_flux_ex_quotient_temp
-#' @param ... Additional parameters passed to later functions.
-#' @return Exchange quotient for heat transmission in kg/(m*s).
+#' @param ... Additional arguments.
+#' @returns Exchange quotient for heat transmission in kg/(m*s).
 #' @export
 turb_flux_ex_quotient_temp <- function(...) {
   UseMethod("turb_flux_ex_quotient_temp")
 }
 
 #' @rdname turb_flux_ex_quotient_temp
-#' @method turb_flux_ex_quotient_temp numeric
 #' @param t1 Temperature at lower height (e.g. height of anemometer) in °C.
 #' @param t2 Temperature at upper height in degrees C.
 #' @param z1 Lower height of measurement (e.g. height of anemometer) in m.
@@ -207,7 +199,6 @@ turb_flux_ex_quotient_temp.default <- function(t1, t2, z1=2, z2=10, v1, v2, elev
 }
 
 #' @rdname turb_flux_ex_quotient_temp
-#' @method turb_flux_ex_quotient_temp weather_station
 #' @param weather_station Object of class weather_station
 #' @export
 turb_flux_ex_quotient_temp.weather_station <- function(weather_station, ...) {
@@ -229,8 +220,8 @@ turb_flux_ex_quotient_temp.weather_station <- function(weather_station, ...) {
 #' Calculation of the exchange quotient of the turbulent impulse transmission.
 #'
 #' @rdname turb_flux_ex_quotient_imp
-#' @param ... Additional parameters passed to later functions.
-#' @return Exchange quotient for impulse transmission in kg/(m*s).
+#' @param ... Additional arguments.
+#' @returns Exchange quotient for impulse transmission in kg/(m*s).
 #' @export
 #'
 turb_flux_ex_quotient_imp <- function(...) {
@@ -238,7 +229,6 @@ turb_flux_ex_quotient_imp <- function(...) {
 }
 
 #' @rdname turb_flux_ex_quotient_imp
-#' @method turb_flux_ex_quotient_imp numeric
 #' @param t1 Temperature at lower height (e.g. height of anemometer) in °C.
 #' @param t2 Temperature at upper height in degrees C.
 #' @param z1 Lower height of measurement (e.g. height of anemometer) in m.
@@ -270,7 +260,6 @@ turb_flux_ex_quotient_imp.default <- function(t1, t2, z1=2, z2=10, v1, v2, elev,
 }
 
 #' @rdname turb_flux_ex_quotient_imp
-#' @method turb_flux_ex_quotient_imp weather_station
 #' @param weather_station Object of class weather_station
 #' @export
 turb_flux_ex_quotient_imp.weather_station <- function(weather_station, ...) {
@@ -292,8 +281,8 @@ turb_flux_ex_quotient_imp.weather_station <- function(weather_station, ...) {
 #' Calculation of the turbulent impulse exchange.
 #'
 #' @rdname turb_flux_imp_exchange
-#' @param ... Additional parameters passed to later functions.
-#' @return Turbulent impulse exchange in kg/(m*s²).
+#' @param ... Additional arguments.
+#' @returns Turbulent impulse exchange in kg/(m*s²).
 #' @export
 #'
 turb_flux_imp_exchange <- function(...) {
@@ -301,7 +290,6 @@ turb_flux_imp_exchange <- function(...) {
 }
 
 #' @rdname turb_flux_imp_exchange
-#' @method turb_flux_imp_exchange numeric
 #' @param t1 Temperature at lower height (e.g. height of anemometer) in °C.
 #' @param t2 Temperature at upper height in degrees C.
 #' @param v1 Windspeed at lower height (e.g. height of anemometer) in m/s.
@@ -318,7 +306,6 @@ turb_flux_imp_exchange.default <- function(t1, t2, v1, v2, z1 = 2, z2 = 10, elev
 }
 
 #' @rdname turb_flux_imp_exchange
-#' @method turb_flux_imp_exchange weather_station
 #' @param weather_station Object of class weather_station
 #' @export
 turb_flux_imp_exchange.weather_station <- function(weather_station, ...) {
@@ -342,7 +329,7 @@ turb_flux_imp_exchange.weather_station <- function(weather_station, ...) {
 #'
 #' @param weather_station Object of class weather_station
 #'
-#' @return Object of class weather_station
+#' @returns Object of class weather_station
 #' @export
 turb_flux_calc <- function(weather_station) {
   stability <- turb_flux_stability(weather_station)

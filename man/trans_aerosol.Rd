@@ -13,7 +13,7 @@ trans_aerosol(...)
 \method{trans_aerosol}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{datetime}{Datetime in POSIXt}
 
@@ -23,7 +23,11 @@ trans_aerosol(...)
 
 \item{elev}{Elevation above sea level in m.}
 
+\item{temp}{Temperature in °C.}
+
 \item{vis}{Visibility in km.}
+
+\item{p0}{Standard pressure in hPa.}
 
 \item{weather_station}{Object of class weather_station.}
 }

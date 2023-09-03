@@ -13,7 +13,7 @@ rad_bal(...)
 \method{rad_bal}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{weather_station}{Object of class weather_station.}
 }

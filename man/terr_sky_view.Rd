@@ -13,7 +13,7 @@ terr_sky_view(...)
 \method{terr_sky_view}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{slope}{Inclination of slope in degrees.}
 

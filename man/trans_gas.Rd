@@ -13,7 +13,7 @@ trans_gas(...)
 \method{trans_gas}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{datetime}{Datetime in POSIXt}
 
@@ -22,6 +22,10 @@ trans_gas(...)
 \item{lat}{Latitude in decimal degrees.}
 
 \item{elev}{Elevation above sea level in m.}
+
+\item{temp}{Temperature in °C.}
+
+\item{p0}{Standard pressure in hPa.}
 
 \item{weather_station}{Object of class weather_station.}
 }

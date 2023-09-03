@@ -4,15 +4,14 @@
 #' heat flux signifies flux away from the surface, positive values signify flux
 #' towards the surface.
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return Latent heat flux in W/m².
+#' @param ... Additional arguments.
+#' @returns Latent heat flux in W/m².
 #' @export
 latent_priestley_taylor <- function(...) {
   UseMethod("latent_priestley_taylor")
 }
 
 #' @rdname latent_priestley_taylor
-#' @method latent_priestley_taylor numeric
 #' @export
 #' @param t Air temperature in °C.
 #' @param rad_bal Radiation balance in W/m².
@@ -36,7 +35,6 @@ latent_priestley_taylor.default <- function(t, rad_bal, soil_flux, surface_type 
 }
 
 #' @rdname latent_priestley_taylor
-#' @method latent_priestley_taylor weather_station
 #' @param weather_station Object of class weather_station
 #' @export
 latent_priestley_taylor.weather_station <- function(weather_station, ...) {
@@ -54,8 +52,8 @@ latent_priestley_taylor.weather_station <- function(weather_station, ...) {
 #' heat flux signifies flux away from the surface, positive values signify flux
 #' towards the surface.
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return Latent heat flux in W/m².
+#' @param ... Additional arguments.
+#' @returns Latent heat flux in W/m².
 #' @export
 #'
 latent_penman <- function(...) {
@@ -63,7 +61,6 @@ latent_penman <- function(...) {
 }
 
 #' @rdname latent_penman
-#' @method latent_penman POSIXt
 #' @export
 #' @param datetime POSIXt object (POSIXct, POSIXlt).
 #' See [base::as.POSIXlt] and [base::strptime] for conversion.
@@ -114,7 +111,6 @@ latent_penman.default <- function(datetime,
 }
 
 #' @rdname latent_penman
-#' @method latent_penman weather_station
 #' @param weather_station Object of class weather_station.
 #' @export
 latent_penman.weather_station <- function(weather_station, ...) {
@@ -145,15 +141,14 @@ latent_penman.weather_station <- function(weather_station, ...) {
 #' flux signifies flux away from the surface, positive values signify flux
 #' towards the surface.
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return Latent heat flux in W/m².
+#' @param ... Additional arguments.
+#' @returns Latent heat flux in W/m².
 #' @export
 latent_monin <- function(...) {
   UseMethod("latent_monin")
 }
 
 #' @rdname latent_monin
-#' @method latent_monin numeric
 #' @export
 #' @param hum1 Relative humidity at lower height in %.
 #' @param hum2 Relative humidity at upper height in %.
@@ -192,7 +187,6 @@ latent_monin.default <- function(hum1, hum2, t1, t2, v1, v2, z1 = 2, z2 = 10, el
 }
 
 #' @rdname latent_monin
-#' @method latent_monin weather_station
 #' @param weather_station Object of class weather_station.
 #' @export
 latent_monin.weather_station <- function(weather_station, ...) {
@@ -219,8 +213,8 @@ latent_monin.weather_station <- function(weather_station, ...) {
 #' Values above 600 W/m² and below -600 W/m² will be recognized
 #' as measurement mistakes and smoothed respectively.
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return Latent heat flux in W/m².
+#' @param ... Additional arguments.
+#' @returns Latent heat flux in W/m².
 #' @export
 #'
 latent_bowen <- function(...) {
@@ -228,7 +222,6 @@ latent_bowen <- function(...) {
 }
 
 #' @rdname latent_bowen
-#' @method latent_bowen numeric
 #' @export
 #' @param t1 Temperature at lower height in °C.
 #' @param t2 Temperature at upper height in °C.
@@ -270,7 +263,6 @@ latent_bowen.default <- function(t1, t2, hum1, hum2, z1 = 2, z2 = 10, elev,
 }
 
 #' @rdname latent_bowen
-#' @method latent_bowen weather_station
 #' @param weather_station Object of class weather_station.
 #' @export
 latent_bowen.weather_station <- function(weather_station, ...) {

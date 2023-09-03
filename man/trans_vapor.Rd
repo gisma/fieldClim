@@ -8,12 +8,12 @@
 \usage{
 trans_vapor(...)
 
-\method{trans_vapor}{default}(datetime, lon, lat, elev, temp, ..., p0 = 1013)
+\method{trans_vapor}{default}(datetime, lon, lat, elev, temp, ...)
 
 \method{trans_vapor}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{datetime}{Datetime in POSIXt}
 
@@ -22,6 +22,8 @@ trans_vapor(...)
 \item{lat}{Latitude in decimal degrees.}
 
 \item{elev}{Elevation above sea level in m.}
+
+\item{temp}{Temperature in °C.}
 
 \item{weather_station}{Object of class weather_station.}
 }

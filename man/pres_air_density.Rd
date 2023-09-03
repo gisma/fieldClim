@@ -10,10 +10,10 @@ pres_air_density(...)
 
 \method{pres_air_density}{weather_station}(weather_station, height = "lower", ...)
 
-\method{pres_air_density}{numeric}(p, t, ...)
+\method{pres_air_density}{default}(p, t, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{weather_station}{Object of class weather_station.}
 

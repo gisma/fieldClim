@@ -8,7 +8,7 @@
 \usage{
 rad_sw_in_topo(...)
 
-\method{rad_sw_in_topo}{numeric}(
+\method{rad_sw_in_topo}{default}(
   slope,
   exposition = 0,
   terr_sky_view,
@@ -25,7 +25,7 @@ rad_sw_in_topo(...)
 \method{rad_sw_in_topo}{weather_station}(weather_station, trans_total = 0.8, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{slope}{Slope in degrees.}
 

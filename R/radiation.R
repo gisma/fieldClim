@@ -2,8 +2,8 @@
 #'
 #' Calculate total radiation balance.
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return Total radiation balance in W/m$^{2}$.
+#' @param ... Additional arguments.
+#' @returns Total radiation balance in W/m$^{2}$.
 #' @export
 rad_bal <- function(...) {
   UseMethod("rad_bal")
@@ -37,8 +37,8 @@ rad_bal.weather_station <- function(weather_station, ...) {
 
 #' Shortwave radiation balance
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return W/m$^{2}$
+#' @param ... Additional arguments.
+#' @returns W/m$^{2}$
 #' @export
 rad_sw_bal <- function(...) {
   UseMethod("rad_sw_bal")
@@ -47,14 +47,14 @@ rad_sw_bal <- function(...) {
 #' @rdname rad_sw_bal
 #' @export
 #' @references p45eq3.1, p63eq3.18
-rad_sw_bal.default <- function(..., valley = FALSE) {
+rad_sw_bal.default <- function(...) {
   sw_in <- rad_sw_in()
   diffuse_in <- rad_diffuse_in()
   albedo <- 0.5
-  sky_view <- terr_sky_view(slope, valley = valley)
+  sky_view <- terr_sky_view()
   terrain_view <- 1 - sky_view
 
-  (rad_sw_in + rad_diffuse_in) * (1 - albedo + albedo * terrain_view - albedo^2 * terrain_view)
+  (sw_in + diffuse_in) * (1 - albedo + albedo * terrain_view - albedo^2 * terrain_view)
 }
 
 #' Shortwave incoming radiation
@@ -121,8 +121,8 @@ rad_sw_in.weather_station <- function(weather_station,
 #'
 #' Calculation of the shortwave radiation at the top of the atmosphere.
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return Shortwave radiation at top of atmosphere in W/m$^{2}$.
+#' @param ... Additional arguments.
+#' @returns Shortwave radiation at top of atmosphere in W/m$^{2}$.
 #' @export
 rad_sw_toa <- function(...) {
   UseMethod("rad_sw_toa")
@@ -152,7 +152,6 @@ rad_sw_toa.default <- function(datetime, lon, lat, sol_const = 1368, ...) {
 #}
 
 #' @rdname rad_sw_toa
-#' @method rad_sw_toa weather_station
 #' @export
 #' @param weather_station Object of class weather_station.
 rad_sw_toa.weather_station <- function(weather_station, ...) {
@@ -169,7 +168,7 @@ rad_sw_toa.weather_station <- function(weather_station, ...) {
 #' Incoming diffused radiation
 #'
 #' @param ... Additional arguments.
-#' @return Description.
+#' @returns Description.
 #' @export
 rad_diffuse_in <- function(...) {
   UseMethod("rad_diffuse_in")
@@ -177,22 +176,20 @@ rad_diffuse_in <- function(...) {
 
 #' @rdname rad_diffuse_in
 #' @inheritParams trans_vapor
-#' @inheritParams trans_ozone
-#' @inheritParams rad_sw_toa
-#' @inheritParams terr_sky_view
-#' @inheritParams terr_terrain_angle
+#' @inheritDotParams trans_vapor
+#' @inheritDotParams trans_ozone
+#' @inheritDotParams rad_sw_toa
+#' @inheritDotParams terr_sky_view
+#' @inheritDotParams terr_terrain_angle
 #' @export
 #' @references p58eq3.14, p55eq3.9
-rad_diffuse_in.default <- function(datetime, lon, lat, elev, temp, ...,
-  p0 = 1013, ozone_column = 0.35, sol_const = 1368, valley = FALSE,
-  slope = 0, exposition = 0) {
-  vapor <- trans_vapor(datetime, lon, lat, elev, temp, p0 = p0)
-  ozone <- trans_ozone(datetime, lon, lat, ozone_column = ozone_column)
-  sw_toa <- rad_sw_toa(datetime, lon, lat, sol_const = sol_const)
+rad_diffuse_in.default <- function(datetime, lon, lat, elev, temp, ...) {
+  vapor <- trans_vapor(datetime, lon, lat, elev, temp, ...)
+  ozone <- trans_ozone(datetime, lon, lat, ...)
+  sw_toa <- rad_sw_toa(datetime, lon, lat, ...)
   sw_in <- rad_sw_in(datetime, lon, lat, elev, temp)
-  sky_view <- terr_sky_view(slope, valley = valley)
-  terrain_angle <- terr_terrain_angle(datetime, lon, lat,
-    slope = slope, exposition = exposition)
+  sky_view <- terr_sky_view(...)
+  terrain_angle <- terr_terrain_angle(datetime, lon, lat, ...)
   terrain_angle <- deg2rad(terrain_angle)
 
   elevation <- sol_elevation(datetime, lon, lat)
@@ -208,7 +205,7 @@ rad_diffuse_in.default <- function(datetime, lon, lat, elev, temp, ...,
 #' Long wave radiation balance
 #'
 #' @param ... Additional arguments.
-#' @return W/m$^{2}$.
+#' @returns W/m$^{2}$.
 #' @export
 rad_lw_bal <- function(...) {
   UseMethod("rad_lw_bal")
@@ -217,33 +214,44 @@ rad_lw_bal <- function(...) {
 #' @rdname rad_lw_bal
 #' @inheritParams rad_lw_in
 #' @inheritParams rad_lw_out
+#' @inheritDotParams rad_lw_in.default sigma
+#' @inheritDotParams rad_lw_out.default surface_type
 #' @export
 #' @references p68eq3.25
-rad_lw_bal.default <- function(name, ...) {
-  rad_lw_in - rad_lw_out
+rad_lw_bal.default <- function(temp, rh, surface_temp, ...) {
+  lw_in <- rad_lw_in(temp, rh, ...)
+  lw_out <- rad_lw_out(surface_temp, ...)
+  
+  lw_in - lw_out
 }
 
 #' Longwave radiation of the atmosphere
 #'
 #' Calculation of the longwave radiation of the atmosphere.
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return Atmospheric radiation in W/m$^{2}$.
+#' The second part of the equation related to the surrounding terrain is not included.
+#'
+#' @param ... Additional arguments.
+#' @returns Atmospheric radiation in W/m$^{2}$.
 #' @export
 rad_lw_in <- function(...) {
   UseMethod("rad_lw_in")
 }
 
 #' @rdname rad_lw_in
-#' @method rad_lw_in numeric
-#' @param hum relative humidity in %.
-#' @param t Air temperature in °C.
+#' @inheritParams rad_emissivity_air
+#' @inheritDotParams rad_emissivity_air.default elev p p0
+#' @inheritDotParams terr_sky_view.default slope valley
+#' @param sigma Stefan-Boltzmann constant
+#'   with the default 5.6993e-8 W/m$^{2}$/K$^{4}$
 #' @export
-#' @references p66eq3.21
-rad_lw_in.default <- function(...) {
-  sigma <- 5.6693e-8
+#' @references p66eq3.24
+rad_lw_in.default <- function(temp, rh, sigma = 5.6993e-8, ...) {
+  emissivity_air <- rad_emissivity_air(temp, rh, ...)
+  sky_view <- terr_sky_view(...)
   temp <- c2k(temp)
-  sigma * temp^4
+  
+  emissivity_air * sigma * temp^4 * sky_view
 }
 #rad_lw_in.default <- function(hum, t, ...) {
 #  sigma <- 5.6693e-8
@@ -252,7 +260,6 @@ rad_lw_in.default <- function(...) {
 #}
 
 #' @rdname rad_lw_in
-#' @method rad_lw_in weather_station
 #' @export
 #' @param weather_station Object of class weather_station.
 rad_lw_in.weather_station <- function(weather_station, ...) {
@@ -263,6 +270,70 @@ rad_lw_in.weather_station <- function(weather_station, ...) {
   return(rad_lw_in(hum, t))
 }
 
+#' Emissivity of the atmosphere
+#'
+#' Calculation of the emissivity of the atmosphere.
+#'
+#' @param ... Additional arguments.
+#' @returns Emissivity of the atmosphere (0-1).
+#' @export
+rad_emissivity_air <- function(...) {
+  UseMethod("rad_emissivity_air")
+}
+
+#' @rdname rad_emissivity_air
+#' @param temp Air temperature in °C.
+#' @param rh relative humidity.
+#' @param elev Meters above sea level in m.
+#' @param p OPTIONAL. Air pressure in hPa.
+#' @param p0 Standard air pressure in hPa.
+#' @export
+#' @references p67eq3.23, 3.24, 3.25
+rad_emissivity_air.default <- function(temp, rh,
+    elev = 0, p = p0, p0 = 1013, ...) {
+  temp <- c2k(temp) - 0.0065 * elev
+  sat_vapor_p <- pres_sat_vapor_p(temp, ...)
+  vapor_p <- rh * sat_vapor_p
+  
+  (1.24 * vapor_p / temp)^(1 / 7) * p / p0
+}
+#rad_emissivity_air.default <- function(t, elev, hum, p = NULL, ...) {
+#  if (is.null(p)) p <- pres_p(elev, t)
+
+#   Calculate temperature adjusted to elevation (with saturated adiabatic lapse rate)
+#  t_adj <- t * (0.0065 * elev)
+
+#   Calculate saturated vapor pressure with adjusted temperature
+#  svp <- hum_sat_vapor_pres(t_adj)
+
+#   Calculate vapor pressure with saturated vapor pressure and measured humidity
+#  e <- hum * svp
+
+#   Calculate emissivity
+#  eat <- ((1.24 * e / (t_adj + 273.15))**1 / 7) * (p / 1013.25)
+
+#  return(eat)
+#}
+
+#' @rdname rad_emissivity_air
+#' @export
+#' @param weather_station Object of class weather_station.
+#' @param height Height of measurement. "lower" or "upper".
+rad_emissivity_air.weather_station <- function(weather_station, height = "lower", ...) {
+  check_availability(weather_station, "t1", "t2", "elevation", "p1", "p2", "hum1", "hum2")
+  if (!height %in% c("upper", "lower")) {
+    stop("'height' must be either 'lower' or 'upper'.")
+  }
+
+  height_num <- which(height == c("lower", "upper"))
+  t <- weather_station$measurements[[paste0("t", height_num)]]
+  p <- weather_station$measurements[[paste0("p", height_num)]]
+  elev <- weather_station$location_properties$elevation
+  hum <- weather_station$measurements[[paste0("hum", height_num)]]
+
+  return(rad_emissivity_air(t, elev, p, hum))
+}
+
 #' Longwave radiation of the surface
 #'
 #' Calculates emissions of a surface.
@@ -270,29 +341,30 @@ rad_lw_in.weather_station <- function(weather_station, ...) {
 #' If a weather_station object is given, the lower air temperature will be used
 #' instead of the surface temperature.
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return Emissions in W/m$^{2}$.
+#' @param ... Additional arguments.
+#' @returns Emissions in W/m$^{2}$.
 #' @export
 rad_lw_out <- function(...) {
   UseMethod("rad_lw_out")
 }
 
 #' @rdname rad_lw_out
-#' @method rad_lw_out numeric
-#' @param t_surface Surface temperature in °C.
+#' @param surface_temp Surface temperature in °C.
 #' @param surface_type Surface type for which a specific emissivity will be selected.
+#' @param sigma Stefan-Boltzmann constant
+#'   with the default 5.6993e-8 W/m$^{2}$/K$^{4}$
 #' Default is 'field' as surface type.
 #' @export
 #' @references p66eq3.20
-rad_lw_out.default <- function(t_surface, surface_type = "field", ...) {
+rad_lw_out.default <- function(surface_temp, surface_type = "field", sigma = 5.6993e-8, ...) {
   surface_properties <- surface_properties
   emissivity <- surface_properties[which(surface_properties$surface_type == surface_type), ]$emissivity
-  sigma <- 5.6993e-8
-  emissivity * sigma * (t_surface + 273.15)**4
+  surface_temp <- c2k(surface_temp)
+  
+  emissivity * sigma * surface_temp^4
 }
 
 #' @rdname rad_lw_out
-#' @method rad_lw_out weather_station
 #' @export
 #' @param weather_station Object of class weather_station.
 #' @param surface_type Surface type for which a specific emissivity will be selected.
@@ -343,62 +415,6 @@ rad_lw_out.weather_station <- function(weather_station, surface_type = "field", 
 
 
 
-#' Emissivity of the atmosphere
-#'
-#' Calculation of the emissivity of the atmosphere.
-#'
-#' @param ... Additional parameters passed to later functions.
-#' @return Emissivity of the atmosphere (0-1).
-#' @export
-rad_emissivity_air <- function(...) {
-  UseMethod("rad_emissivity_air")
-}
-
-#' @rdname rad_emissivity_air
-#' @method rad_emissivity_air numeric
-#' @param t Air temperature in °C.
-#' @param elev Meters above sea level in m.
-#' @param hum humidity.
-#' @param p OPTIONAL. Air pressure in hPa.
-#' @export
-#' @references p67eq3.23
-rad_emissivity_air.default <- function(t, elev, hum, p = NULL, ...) {
-  if (is.null(p)) p <- pres_p(elev, t)
-
-  # Calculate temperature adjusted to elevation (with saturated adiabatic lapse rate)
-  t_adj <- t * (0.0065 * elev)
-
-  # Calculate saturated vapor pressure with adjusted temperature
-  svp <- hum_sat_vapor_pres(t_adj)
-
-  # Calculate vapor pressure with saturated vapor pressure and measured humidity
-  e <- hum * svp
-
-  # Calculate emissivity
-  eat <- ((1.24 * e / (t_adj + 273.15))**1 / 7) * (p / 1013.25)
-
-  return(eat)
-}
-
-#' @rdname rad_emissivity_air
-#' @method rad_emissivity_air weather_station
-#' @export
-#' @param weather_station Object of class weather_station.
-#' @param height Height of measurement. "lower" or "upper".
-rad_emissivity_air.weather_station <- function(weather_station, height = "lower", ...) {
-  check_availability(weather_station, "t1", "t2", "elevation", "p1", "p2", "hum1", "hum2")
-  if (!height %in% c("upper", "lower")) {
-    stop("'height' must be either 'lower' or 'upper'.")
-  }
-
-  height_num <- which(height == c("lower", "upper"))
-  t <- weather_station$measurements[[paste0("t", height_num)]]
-  p <- weather_station$measurements[[paste0("p", height_num)]]
-  elev <- weather_station$location_properties$elevation
-  hum <- weather_station$measurements[[paste0("hum", height_num)]]
-
-  return(rad_emissivity_air(t, elev, p, hum))
-}
 
 
 
@@ -413,8 +429,8 @@ rad_emissivity_air.weather_station <- function(weather_station, height = "lower"
 #'
 #' Calculation of the reflected shortwave radiation.
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return Reflected shortwave radiation in W/m$^{2}$.
+#' @param ... Additional arguments.
+#' @returns Reflected shortwave radiation in W/m$^{2}$.
 #' @export
 #'
 rad_sw_out <- function(...) {
@@ -422,7 +438,6 @@ rad_sw_out <- function(...) {
 }
 
 #' @rdname rad_sw_out
-#' @method rad_sw_out numeric
 #' @param rad_sw_in Shortwave radiation on the ground onto a horizontal area in W/m$^{2}$.
 #' @param surface_type type of surface for which an albedo will be selected.
 #' @param albedo if albedo measurements are performed, values in decimal can be inserted here.
@@ -445,7 +460,6 @@ rad_sw_out.default <- function(rad_sw_in, surface_type = "field", albedo = NULL,
 }
 
 #' @rdname rad_sw_out
-#' @method rad_sw_out weather_station
 #' @export
 #' @param weather_station Object of class weather_station.
 #' @param surface_type type of surface for which an albedo will be selected.
@@ -470,8 +484,8 @@ rad_sw_out.weather_station <- function(weather_station, surface_type = "field", 
 #'
 #' Calculation of the shortwave radiation balance.
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return Shortwave radiation balance in W/m$^{2}$.
+#' @param ... Additional arguments.
+#' @returns Shortwave radiation balance in W/m$^{2}$.
 #' @export
 #'
 rad_sw_radiation_balance <- function(...) {
@@ -479,7 +493,6 @@ rad_sw_radiation_balance <- function(...) {
 }
 
 #' @rdname rad_sw_radiation_balance
-#' @method rad_sw_radiation_balance numeric
 #' @param rad_sw_ground_horizontal Shortwave radiation on the ground onto a horizontal area in W/m^2.
 #' @param rad_sw_reflected Reflected shortwave radiation in W/m$^{2}$.
 #' @export
@@ -490,7 +503,6 @@ rad_sw_radiation_balance.default <- function(rad_sw_ground_horizontal, rad_sw_re
 }
 
 #' @rdname rad_sw_radiation_balance
-#' @method rad_sw_radiation_balance weather_station
 #' @export
 #' @param weather_station Object of class weather_station.
 rad_sw_radiation_balance.weather_station <- function(weather_station, ...) {
@@ -507,8 +519,8 @@ rad_sw_radiation_balance.weather_station <- function(weather_station, ...) {
 #'
 #' Calculate shortwave radiation balance in dependency of topography.
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return Shortwave radiation balance in dependency of topography in W/m$^{2}$.
+#' @param ... Additional arguments.
+#' @returns Shortwave radiation balance in dependency of topography in W/m$^{2}$.
 #' @export
 #'
 rad_sw_in_topo <- function(...) {
@@ -516,7 +528,6 @@ rad_sw_in_topo <- function(...) {
 }
 
 #' @rdname rad_sw_in_topo
-#' @method rad_sw_in_topo numeric
 #' @param slope Slope in degrees.
 #' @param sol_elevation Sun elevation in degrees.
 #' @param sol_azimuth Sun azimuth in degrees.
@@ -539,7 +550,7 @@ rad_sw_in_topo.default <- function(slope,
                                    trans_vapor = 0.5,
                                    trans_ozone = 0.5, ...) {
   sol_dir <- rad_sw_toa * 0.9751 * trans_total
-  sol_dif <- 0.5 * ((1 - (1 - trans_vapor) - (1 - trans_ozone)) * rad_sw_tao - sol_dir)
+  sol_dif <- 0.5 * ((1 - (1 - trans_vapor) - (1 - trans_ozone)) * rad_sw_toa - sol_dir)
   f <- (pi / 180)
 
   if (slope > 0) {
@@ -558,7 +569,6 @@ rad_sw_in_topo.default <- function(slope,
 }
 
 #' @rdname rad_sw_in_topo
-#' @method rad_sw_in_topo weather_station
 #' @export
 #' @param weather_station Object of class weather_station.
 rad_sw_in_topo.weather_station <- function(weather_station, trans_total = 0.8, ...) {
@@ -571,7 +581,7 @@ rad_sw_in_topo.weather_station <- function(weather_station, trans_total = 0.8, .
   valley <- weather_station$location_properties$valley
   terr_sky_view <- weather_station$location_properties$sky_view
   exposition <- weather_station$location_properties$exposition
-  rad_sw_tao <- weather_station$measurements$sw_in # need to be changed!!
+  rad_sw_toa <- weather_station$measurements$sw_in # need to be changed!!
   datetime <- weather_station$measurements$datetime
   albedo <- weather_station$location_properties$albedo
   sol_elevation <- sol_elevation(weather_station)
@@ -582,7 +592,7 @@ rad_sw_in_topo.weather_station <- function(weather_station, trans_total = 0.8, .
     exposition,
     terr_sky_view,
     sol_elevation, sol_azimuth,
-    rad_sw_tao, albedo,
+    rad_sw_toa, albedo,
     trans_total
   ))
 }
@@ -597,8 +607,8 @@ rad_sw_in_topo.weather_station <- function(weather_station, trans_total = 0.8, .
 #'
 #' Corrects the incoming longwave radiation using the sky view factor.
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return Incoming longwave radiation with topography in W/m$^{2}$.
+#' @param ... Additional arguments.
+#' @returns Incoming longwave radiation with topography in W/m$^{2}$.
 #' @export
 #'
 rad_lw_in_topo <- function(...) {
@@ -606,7 +616,6 @@ rad_lw_in_topo <- function(...) {
 }
 
 #' @rdname rad_lw_in_topo
-#' @method rad_lw_in_topo numeric
 #' @export
 #' @param rad_lw_out Longwave surface emissions in W/m$^{2}$.
 #' @param hum relative humidity in %.
@@ -624,7 +633,6 @@ rad_lw_in_topo.default <- function(rad_lw_out,
 }
 
 #' @rdname rad_lw_in_topo
-#' @method rad_lw_in_topo weather_station
 #' @export
 #' @param weather_station Object of class weather_station.
 rad_lw_in_topo.weather_station <- function(weather_station, ...) {

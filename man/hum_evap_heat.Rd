@@ -8,12 +8,12 @@
 \usage{
 hum_evap_heat(...)
 
-\method{hum_evap_heat}{numeric}(t, ...)
+\method{hum_evap_heat}{default}(t, ...)
 
 \method{hum_evap_heat}{weather_station}(weather_station, height = "lower", ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{t}{Air temperature in °C.}
 

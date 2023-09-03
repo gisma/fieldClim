@@ -8,12 +8,12 @@
 \usage{
 hum_absolute(...)
 
-\method{hum_absolute}{numeric}(hum, t, ...)
+\method{hum_absolute}{default}(hum, t, ...)
 
 \method{hum_absolute}{weather_station}(weather_station, height, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{hum}{Relative humidity in \%.}
 

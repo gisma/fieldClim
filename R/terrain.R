@@ -5,8 +5,8 @@
 #'
 #' Terrain view factor can be calculated by 1-terr_sky_view.
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return Sky view factor from 0-1. unitless
+#' @param ... Additional arguments.
+#' @returns Sky view factor from 0-1. unitless
 #' @export
 terr_sky_view <- function(...) {
   UseMethod("terr_sky_view")
@@ -42,7 +42,7 @@ terr_sky_view.weather_station <- function(weather_station, ...) {
 #' Title
 #'
 #' @param ... Additional arguments.
-#' @return degree.
+#' @returns degree.
 #' @export
 terr_terrain_angle <- function(...) {
   UseMethod("terr_terrain_angle")

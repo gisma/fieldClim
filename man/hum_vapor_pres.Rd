@@ -8,12 +8,12 @@
 \usage{
 hum_vapor_pres(...)
 
-\method{hum_vapor_pres}{numeric}(hum, t, ...)
+\method{hum_vapor_pres}{default}(hum, t, ...)
 
 \method{hum_vapor_pres}{weather_station}(weather_station, height = "lower", ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{hum}{Relative humidity in \%.}
 

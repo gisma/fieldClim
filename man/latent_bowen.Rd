@@ -2,13 +2,13 @@
 % Please edit documentation in R/latent.R
 \name{latent_bowen}
 \alias{latent_bowen}
-\alias{latent_bowen.numeric}
+\alias{latent_bowen.default}
 \alias{latent_bowen.weather_station}
 \title{Latent Heat using Bowen Method}
 \usage{
 latent_bowen(...)
 
-\method{latent_bowen}{numeric}(
+\method{latent_bowen}{default}(
   t1,
   t2,
   hum1,
@@ -24,7 +24,7 @@ latent_bowen(...)
 \method{latent_bowen}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{t1}{Temperature at lower height in °C.}
 

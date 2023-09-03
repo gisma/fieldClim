@@ -7,10 +7,23 @@
 \usage{
 rad_lw_bal(...)
 
-\method{rad_lw_bal}{default}(name, ...)
+\method{rad_lw_bal}{default}(temp, rh, surface_temp, ...)
 }
 \arguments{
-\item{...}{Additional arguments.}
+\item{...}{
+  Arguments passed on to \code{\link[=rad_lw_in.default]{rad_lw_in.default}}, \code{\link[=rad_lw_out.default]{rad_lw_out.default}}
+  \describe{
+    \item{\code{sigma}}{Stefan-Boltzmann constant
+with the default 5.6993e-8 W/m$^{2}$/K$^{4}$}
+    \item{\code{surface_type}}{Surface type for which a specific emissivity will be selected.
+Default is 'field' as surface type.}
+  }}
+
+\item{temp}{Air temperature in °C.}
+
+\item{rh}{relative humidity.}
+
+\item{surface_temp}{Surface temperature in °C.}
 }
 \value{
 W/m$^{2}$.

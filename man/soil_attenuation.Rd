@@ -2,18 +2,18 @@
 % Please edit documentation in R/soil.R
 \name{soil_attenuation}
 \alias{soil_attenuation}
-\alias{soil_attenuation.numeric}
+\alias{soil_attenuation.default}
 \alias{soil_attenuation.weather_station}
 \title{Soil attenuation length}
 \usage{
 soil_attenuation(...)
 
-\method{soil_attenuation}{numeric}(moisture, texture = "sand", ...)
+\method{soil_attenuation}{default}(moisture, texture = "sand", ...)
 
 \method{soil_attenuation}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{moisture}{Soil moisture in Cubic meter/cubic meter}
 

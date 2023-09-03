@@ -2,18 +2,18 @@
 % Please edit documentation in R/humidity.R
 \name{hum_moisture_gradient}
 \alias{hum_moisture_gradient}
-\alias{hum_moisture_gradient.numeric}
+\alias{hum_moisture_gradient.default}
 \alias{hum_moisture_gradient.weather_station}
 \title{Moisture gradient}
 \usage{
 hum_moisture_gradient(...)
 
-\method{hum_moisture_gradient}{numeric}(hum1, hum2, t1, t2, z1 = 2, z2 = 10, elev, ...)
+\method{hum_moisture_gradient}{default}(hum1, hum2, t1, t2, z1 = 2, z2 = 10, elev, ...)
 
 \method{hum_moisture_gradient}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{hum1}{Relative humidity at lower height in \%.}
 

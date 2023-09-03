@@ -2,13 +2,13 @@
 % Please edit documentation in R/sensible.R
 \name{sensible_bowen}
 \alias{sensible_bowen}
-\alias{sensible_bowen.numeric}
+\alias{sensible_bowen.default}
 \alias{sensible_bowen.weather_station}
 \title{Sensible Heat using Bowen Method}
 \usage{
 sensible_bowen(...)
 
-\method{sensible_bowen}{numeric}(
+\method{sensible_bowen}{default}(
   t1,
   t2,
   hum1,
@@ -24,7 +24,7 @@ sensible_bowen(...)
 \method{sensible_bowen}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{t1}{Temperature at lower height in °C.}
 

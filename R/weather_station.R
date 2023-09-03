@@ -56,7 +56,7 @@
 #' @param valley Does the weather station locate in a valley?
 #' @param ... Additional parameters, see details for usage.
 #'
-#' @return List of class "weather_station", that contains:
+#' @returns List of class "weather_station", that contains:
 #' 1) list of location properties
 #' 2) list of weather station properties
 #' 3) list of measurements, which will contain NULLs if they were not defined in the input
@@ -358,7 +358,7 @@ build_weather_station <- function(lat,
   out_list$measurements$lw_bal <- out_list$measurements$lw_in - out_list$measurements$lw_out
 
   # calculate rad_bal
-  out_list$measurements$rad_bal <- rad_bal_total(out_list)
+  out_list$measurements$rad_bal <- rad_bal(out_list)
 
 
   # ---- Soil Flux ----

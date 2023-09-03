@@ -2,18 +2,18 @@
 % Please edit documentation in R/turbulent_flux.R
 \name{turb_flux_grad_rich_no}
 \alias{turb_flux_grad_rich_no}
-\alias{turb_flux_grad_rich_no.numeric}
+\alias{turb_flux_grad_rich_no.default}
 \alias{turb_flux_grad_rich_no.weather_station}
 \title{Gradient-Richardson-Number}
 \usage{
 turb_flux_grad_rich_no(...)
 
-\method{turb_flux_grad_rich_no}{numeric}(t1, t2, z1 = 2, z2 = 10, v1, v2, elev, ...)
+\method{turb_flux_grad_rich_no}{default}(t1, t2, z1 = 2, z2 = 10, v1, v2, elev, ...)
 
 \method{turb_flux_grad_rich_no}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{t1}{Temperature at lower height (e.g. height of anemometer) in °C.}
 

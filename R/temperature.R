@@ -3,8 +3,8 @@
 #' Calculation of the potential air temperature.
 #'
 #' @rdname temp_pot_temp
-#' @param ... Additional parameters passed to later functions.
-#' @return Potential temperature in °C.
+#' @param ... Additional arguments.
+#' @returns Potential temperature in °C.
 #' @export
 #'
 temp_pot_temp <- function(...) {
@@ -12,7 +12,6 @@ temp_pot_temp <- function(...) {
 }
 
 #' @rdname temp_pot_temp
-#' @method temp_pot_temp numeric
 #' @param t Temperature in °C.
 #' @param elev Elevation above sea level in m.
 #' @export
@@ -26,7 +25,6 @@ temp_pot_temp.default <- function(t, elev, ...) {
 }
 
 #' @rdname temp_pot_temp
-#' @method temp_pot_temp weather_station
 #' @param weather_station Object of class weather_station.
 #' @param height Height of measurement, either "upper" or "lower".
 #' @export

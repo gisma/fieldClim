@@ -4,15 +4,14 @@
 #' heat flux signifies flux away from the surface, positive values signify flux
 #' towards the surface.
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return Sensible heat flux in W/m².
+#' @param ... Additional arguments.
+#' @returns Sensible heat flux in W/m².
 #' @export
 sensible_priestley_taylor <- function(...) {
   UseMethod("sensible_priestley_taylor")
 }
 
 #' @rdname sensible_priestley_taylor
-#' @method sensible_priestley_taylor numeric
 #' @export
 #' @param t Air temperature in °C.
 #' @param rad_bal Radiation balance in W/m².
@@ -35,7 +34,6 @@ sensible_priestley_taylor.default <- function(t, rad_bal, soil_flux, surface_typ
 }
 
 #' @rdname sensible_priestley_taylor
-#' @method sensible_priestley_taylor weather_station
 #' @param weather_station Object of class weather_station.
 #' @export
 sensible_priestley_taylor.weather_station <- function(weather_station, ...) {
@@ -53,15 +51,14 @@ sensible_priestley_taylor.weather_station <- function(weather_station, ...) {
 #' flux signifies flux away from the surface, positive values signify flux
 #' towards the surface.
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return Sensible heat flux in W/m².
+#' @param ... Additional arguments.
+#' @returns Sensible heat flux in W/m².
 #' @export
 sensible_monin <- function(...) {
   UseMethod("sensible_monin")
 }
 
 #' @rdname sensible_monin
-#' @method sensible_monin numeric
 #' @export
 #' @param t1 Air temperature at lower height in °C.
 #' @param t2 Air temperature at upper height in °C.
@@ -100,7 +97,6 @@ sensible_monin.default <- function(t1, t2, z1 = 2, z2 = 10, v1, v2, elev, surfac
 }
 
 #' @rdname sensible_monin
-#' @method sensible_monin weather_station
 #' @param weather_station Object of class weather_station.
 #' @export
 sensible_monin.weather_station <- function(weather_station, ...) {
@@ -124,8 +120,8 @@ sensible_monin.weather_station <- function(weather_station, ...) {
 #' flux signifies flux away from the surface, positive values signify flux
 #' towards the surface.
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return Sensible heat flux in W/m².
+#' @param ... Additional arguments.
+#' @returns Sensible heat flux in W/m².
 #' @export
 #'
 sensible_bowen <- function(...) {
@@ -133,7 +129,6 @@ sensible_bowen <- function(...) {
 }
 
 #' @rdname sensible_bowen
-#' @method sensible_bowen numeric
 #' @export
 #' @param t1 Temperature at lower height in °C.
 #' @param t2 Temperature at upper height in °C.
@@ -174,7 +169,6 @@ sensible_bowen.default <- function(t1, t2, hum1, hum2, z1 = 2, z2 = 10, elev, ra
 }
 
 #' @rdname sensible_bowen
-#' @method sensible_bowen weather_station
 #' @param weather_station Object of class weather_station
 #' @export
 sensible_bowen.weather_station <- function(weather_station, ...) {

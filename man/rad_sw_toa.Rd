@@ -13,7 +13,7 @@ rad_sw_toa(...)
 \method{rad_sw_toa}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{datetime}{Datetime in POSIXt}
 

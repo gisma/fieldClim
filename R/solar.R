@@ -2,8 +2,8 @@
 #'
 #' Calculates the eccentricity.
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return Eccentricity at the date. unitless
+#' @param ... Additional arguments.
+#' @returns Eccentricity at the date. unitless
 #' @export
 sol_eccentricity <- function(...) {
   UseMethod("sol_eccentricity")
@@ -47,7 +47,7 @@ sol_eccentricity.weather_station <- function(weather_station, ...) {
 #' Day angle
 #'
 #' @param ... Additional arguments.
-#' @return degree
+#' @returns degree
 #' @export
 sol_day_angle <- function(...) {
   UseMethod("sol_day_angle")
@@ -66,8 +66,8 @@ sol_day_angle.default <- function(datetime, ...) {
 
 #' Julian day
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return unitless
+#' @param ... Additional arguments.
+#' @returns unitless
 #' @export
 sol_julian_day <- function(...) {
   UseMethod("sol_julian_day")
@@ -84,8 +84,8 @@ sol_julian_day.default <- function(datetime, ...) {
 #'
 #' Calculates solar elevation angle for the given date and time.
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return Solar elevation angle in degrees.
+#' @param ... Additional arguments.
+#' @returns Solar elevation angle in degrees.
 #' @export
 sol_elevation <- function(...) {
   UseMethod("sol_elevation")
@@ -111,7 +111,7 @@ sol_elevation.default <- function(datetime, lon, lat, ...) {
 #  angles <- sol_angles(datetime, lat, lon)
 #  return(angles$sol_elevation)
 #}
-#' @return degree
+#' @returns degree
 
 #' @rdname sol_elevation
 #' @method sol_elevation weather_station
@@ -130,7 +130,7 @@ sol_elevation.weather_station <- function(weather_station, ...) {
 #' Solar declination
 #'
 #' @param ... Additional arguments.
-#' @return degree
+#' @returns degree
 #' @export
 sol_declination <- function(...) {
   UseMethod("sol_declination")
@@ -151,7 +151,7 @@ sol_declination.default <- function(datetime, ...) {
 #' Solar ecliptic length
 #'
 #' @param ... Additional arguments.
-#' @return degree
+#' @returns degree
 #' @export
 sol_ecliptic_length <- function(...) {
   UseMethod("sol_ecliptic_length")
@@ -172,7 +172,7 @@ sol_ecliptic_length.default <- function(datetime, ...) {
 #' Solar medium anomaly
 #'
 #' @param ... Additional arguments.
-#' @return degree
+#' @returns degree
 #' @export
 sol_medium_anomaly <- function(...) {
   UseMethod("sol_medium_anomaly")
@@ -191,7 +191,7 @@ sol_medium_anomaly.default <- function(datetime, ...) {
 #' Solar hour angle
 #'
 #' @param ... Additional arguments.
-#' @return degree
+#' @returns degree
 #' @export
 sol_hour_angle <- function(...) {
   UseMethod("sol_hour_angle")
@@ -211,7 +211,7 @@ sol_hour_angle.default <- function(datetime, lon, ...) {
 #' Solar medium suntime
 #'
 #' @param ... Additional arguments.
-#' @return hour
+#' @returns hour
 #' @export
 sol_medium_suntime <- function(...) {
   UseMethod("sol_medium_suntime")
@@ -232,7 +232,7 @@ sol_medium_suntime.default <- function(datetime, lon, ...) {
 #' Solar time formula
 #'
 #' @param ... Additional arguments.
-#' @return hour
+#' @returns hour
 #' @export
 sol_time_formula <- function(...) {
   UseMethod("sol_time_formula")
@@ -255,8 +255,8 @@ sol_time_formula.default <- function(datetime, lon, ...) {
 #'
 #' Calculates solar azimuth angle for the given date and time.
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return Solar azimuth angle in degrees.
+#' @param ... Additional arguments.
+#' @returns Solar azimuth angle in degrees.
 #' @export
 sol_azimuth <- function(...) {
   UseMethod("sol_azimuth")
@@ -326,7 +326,7 @@ sol_azimuth.weather_station <- function(weather_station, ...) {
 # Calculates solar azimuth and solar elevation angle.
 #
 # @param ... Additional parameters passed to later functions.
-# @return data.frame with two columns: sol_azimuth and sol_elevation.
+# @returns data.frame with two columns: sol_azimuth and sol_elevation.
 # @export
 #
 #sol_angles <- function(...) {

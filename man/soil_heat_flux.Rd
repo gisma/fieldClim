@@ -2,18 +2,23 @@
 % Please edit documentation in R/soil.R
 \name{soil_heat_flux}
 \alias{soil_heat_flux}
-\alias{soil_heat_flux.numeric}
+\alias{soil_heat_flux.default}
 \alias{soil_heat_flux.weather_station}
 \title{Soil heat flux}
 \usage{
 soil_heat_flux(...)
 
-\method{soil_heat_flux}{numeric}(ts1, ts2, depth1, depth2, thermal_cond, ...)
+\method{soil_heat_flux}{default}(ts1, ts2, depth1, depth2, ...)
 
 \method{soil_heat_flux}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{
+  Arguments passed on to \code{\link[=soil_thermal_cond.default]{soil_thermal_cond.default}}
+  \describe{
+    \item{\code{texture}}{Soil texture. Either \code{sand} (default), \code{peat} or \code{clay}.}
+    \item{\code{moisture}}{Soil moisture in Cubic meter/cubic meter}
+  }}
 
 \item{ts1}{Upper soil temperature (closest to the surface) in °C.}
 
@@ -22,8 +27,6 @@ soil_heat_flux(...)
 \item{depth1}{Depth of upper measurement (closest to the surface) in m.}
 
 \item{depth2}{Depth of lower measurement in m.}
-
-\item{thermal_cond}{Thermal conductivity of soil in W/(m K).}
 
 \item{weather_station}{Object of class weather_station.}
 }

@@ -7,23 +7,14 @@
 \usage{
 rad_diffuse_in(...)
 
-\method{rad_diffuse_in}{default}(
-  datetime,
-  lon,
-  lat,
-  elev,
-  temp,
-  ...,
-  p0 = 1013,
-  ozone_column = 0.35,
-  sol_const = 1368,
-  valley = FALSE,
-  slope = 0,
-  exposition = 0
-)
+\method{rad_diffuse_in}{default}(datetime, lon, lat, elev, temp, ...)
 }
 \arguments{
-\item{...}{Additional arguments.}
+\item{...}{
+  Arguments passed on to \code{\link[=trans_vapor]{trans_vapor}}, \code{\link[=trans_ozone]{trans_ozone}}, \code{\link[=rad_sw_toa]{rad_sw_toa}}, \code{\link[=terr_sky_view]{terr_sky_view}}, \code{\link[=terr_terrain_angle]{terr_terrain_angle}}
+  \describe{
+    \item{\code{}}{}
+  }}
 
 \item{datetime}{Datetime in POSIXt}
 
@@ -33,15 +24,7 @@ rad_diffuse_in(...)
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{ozone_column}{Atmospheric ozone as column in cm. Default is average value of 0.35 cm.}
-
-\item{sol_const}{Solar constant in W/m$^{2}$}
-
-\item{valley}{If the position is in a valley (TRUE) or on a slope (FALSE).}
-
-\item{slope}{Inclination of slope in degrees.}
-
-\item{exposition}{Exposition in degree.}
+\item{temp}{Temperature in °C.}
 }
 \value{
 Description.

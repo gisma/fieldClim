@@ -10,7 +10,7 @@ sol_julian_day(...)
 \method{sol_julian_day}{default}(datetime, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{datetime}{Datetime in POSIXt}
 }

@@ -4,10 +4,10 @@
 \alias{rad2deg}
 \title{Radian to degree}
 \usage{
-rad2deg(rad)
+rad2deg(angle)
 }
 \arguments{
-\item{rad}{Radian.}
+\item{angle}{Angle in radian.}
 }
 \value{
 degree.

@@ -8,16 +8,22 @@
 \usage{
 pres_p(...)
 
-\method{pres_p}{numeric}(elev, t, p0 = 1013.25, g = 9.81, rl = 287.05, ...)
+\method{pres_p}{default}(elev, temp, p0 = 1013.25, g = 9.81, rl = 287.05, ...)
 
 \method{pres_p}{weather_station}(weather_station, height = "lower", ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{t}{Temperature in °C.}
+\item{temp}{Temperature in °C.}
+
+\item{p0}{Standard pressure in hPa.}
+
+\item{g}{Gravitational acceleration in m/s${2}$.}
+
+\item{rl}{Specific gas constant for air in j/kg/K.}
 
 \item{weather_station}{Object of class weather_station.}
 

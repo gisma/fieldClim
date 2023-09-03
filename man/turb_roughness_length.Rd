@@ -13,7 +13,7 @@ turb_roughness_length(...)
 \method{turb_roughness_length}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{surface_type}{Type of surface.}
 

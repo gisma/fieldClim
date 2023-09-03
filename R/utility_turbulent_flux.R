@@ -7,7 +7,7 @@
 #'
 #' @param t Air temperature in °C.
 #'
-#' @return sc coefficient for Priestley-Taylor calculations.
+#' @returns sc coefficient for Priestley-Taylor calculations.
 sc <- function(t) {
   8.5 * 10^(-7) * (t + 273.15)^2 - 0.0004479 * (t + 273.15) + 0.05919
 }
@@ -21,7 +21,7 @@ sc <- function(t) {
 #'
 #' @param t Air temperature in °C.
 #'
-#' @return gamma coefficient for Priestley-Taylor calculations.
+#' @returns gamma coefficient for Priestley-Taylor calculations.
 gam <- function(t) {
   0.0004 + (0.00041491 - 0.0004) / (1 + (299.44 / (t + 273.15))^383.4)
 }
@@ -36,7 +36,7 @@ gam <- function(t) {
 #' heights in °C.
 #' @param dah Difference in absolute humidity (kg/m³) between the two measurement heights.
 #'
-#' @return Bowen-ratio
+#' @returns Bowen-ratio
 #' @export
 #' @references p221eq9.21.
 bowen_ratio <- function(t, dpot, dah) {
@@ -51,7 +51,7 @@ bowen_ratio <- function(t, dpot, dah) {
 #'
 #' @param t Air temperature in °C.
 #'
-#' @return Heat capacity density in J/(K*m³)
+#' @returns Heat capacity density in J/(K*m³)
 #' @export
 #' @references p261.
 heat_capacity <- function(t) {

@@ -2,16 +2,16 @@
 % Please edit documentation in R/utility.R
 \name{c2k}
 \alias{c2k}
-\title{Radian to degree}
+\title{Degree Celcius to Kelvin}
 \usage{
-c2k(celcius)
+c2k(temp)
 }
 \arguments{
-\item{deg}{Degree.}
+\item{temp}{Temperature in degree Celcius.}
 }
 \value{
-degree Celcius
+Kelvin
 }
 \description{
-Radian to degree
+Degree Celcius to Kelvin
 }

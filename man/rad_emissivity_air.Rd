@@ -8,20 +8,22 @@
 \usage{
 rad_emissivity_air(...)
 
-\method{rad_emissivity_air}{numeric}(t, elev, hum, p = NULL, ...)
+\method{rad_emissivity_air}{default}(temp, rh, elev = 0, p = p0, p0 = 1013, ...)
 
 \method{rad_emissivity_air}{weather_station}(weather_station, height = "lower", ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
-\item{t}{Air temperature in °C.}
+\item{temp}{Air temperature in °C.}
+
+\item{rh}{relative humidity.}
 
 \item{elev}{Meters above sea level in m.}
 
-\item{hum}{humidity.}
-
 \item{p}{OPTIONAL. Air pressure in hPa.}
+
+\item{p0}{Standard air pressure in hPa.}
 
 \item{weather_station}{Object of class weather_station.}
 
@@ -34,5 +36,5 @@ Emissivity of the atmosphere (0-1).
 Calculation of the emissivity of the atmosphere.
 }
 \references{
-p67eq3.23
+p67eq3.23, 3.24, 3.25
 }

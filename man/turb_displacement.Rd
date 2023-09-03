@@ -2,18 +2,18 @@
 % Please edit documentation in R/turbulence.R
 \name{turb_displacement}
 \alias{turb_displacement}
-\alias{turb_displacement.numeric}
+\alias{turb_displacement.default}
 \alias{turb_displacement.weather_station}
 \title{Displacement height}
 \usage{
 turb_displacement(...)
 
-\method{turb_displacement}{numeric}(obs_height, surroundings = "vegetation", ...)
+\method{turb_displacement}{default}(obs_height, surroundings = "vegetation", ...)
 
 \method{turb_displacement}{weather_station}(weather_station, surroundings = "vegetation", ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{obs_height}{Height of vegetation in m.}
 

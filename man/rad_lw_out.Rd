@@ -8,16 +8,20 @@
 \usage{
 rad_lw_out(...)
 
-\method{rad_lw_out}{numeric}(t_surface, surface_type = "field", ...)
+\method{rad_lw_out}{default}(surface_temp, surface_type = "field", sigma = 5.6993e-08, ...)
 
 \method{rad_lw_out}{weather_station}(weather_station, surface_type = "field", ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
-\item{t_surface}{Surface temperature in °C.}
+\item{surface_temp}{Surface temperature in °C.}
 
 \item{surface_type}{Surface type for which a specific emissivity will be selected.
+Default is 'field' as surface type.}
+
+\item{sigma}{Stefan-Boltzmann constant
+with the default 5.6993e-8 W/m$^{2}$/K$^{4}$
 Default is 'field' as surface type.}
 
 \item{weather_station}{Object of class weather_station.}

@@ -8,12 +8,12 @@
 \usage{
 rad_sw_out(...)
 
-\method{rad_sw_out}{numeric}(rad_sw_in, surface_type = "field", albedo = NULL, ...)
+\method{rad_sw_out}{default}(rad_sw_in, surface_type = "field", albedo = NULL, ...)
 
 \method{rad_sw_out}{weather_station}(weather_station, surface_type = "field", ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{rad_sw_in}{Shortwave radiation on the ground onto a horizontal area in W/m$^{2}$.}
 

@@ -2,18 +2,18 @@
 % Please edit documentation in R/turbulent_flux.R
 \name{turb_flux_monin}
 \alias{turb_flux_monin}
-\alias{turb_flux_monin.numeric}
+\alias{turb_flux_monin.default}
 \alias{turb_flux_monin.weather_station}
 \title{Monin-Obhukov-Length}
 \usage{
 turb_flux_monin(...)
 
-\method{turb_flux_monin}{numeric}(z1 = 2, z2 = 10, v1, v2, t1, t2, elev, surface_type, ...)
+\method{turb_flux_monin}{default}(z1 = 2, z2 = 10, v1, v2, t1, t2, elev, surface_type, ...)
 
 \method{turb_flux_monin}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{z1}{Lower height of measurement (e.g. height of anemometer) in m.}
 
@@ -32,8 +32,6 @@ turb_flux_monin(...)
 \item{surface_type}{Type of surface.}
 
 \item{weather_station}{Object of class weather_station}
-
-\item{grad_rich_no}{Gradient-Richardson-Number.}
 }
 \value{
 Monin-Obhukov-Length in m.

@@ -8,12 +8,12 @@
 \usage{
 rad_sw_radiation_balance(...)
 
-\method{rad_sw_radiation_balance}{numeric}(rad_sw_ground_horizontal, rad_sw_reflected, ...)
+\method{rad_sw_radiation_balance}{default}(rad_sw_ground_horizontal, rad_sw_reflected, ...)
 
 \method{rad_sw_radiation_balance}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{rad_sw_ground_horizontal}{Shortwave radiation on the ground onto a horizontal area in W/m^2.}
 

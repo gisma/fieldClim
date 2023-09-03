@@ -8,12 +8,12 @@
 \usage{
 rad_lw_in_topo(...)
 
-\method{rad_lw_in_topo}{numeric}(rad_lw_out, hum, t, terr_sky_view, ...)
+\method{rad_lw_in_topo}{default}(rad_lw_out, hum, t, terr_sky_view, ...)
 
 \method{rad_lw_in_topo}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{rad_lw_out}{Longwave surface emissions in W/m$^{2}$.}
 

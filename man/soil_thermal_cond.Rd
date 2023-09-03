@@ -2,22 +2,22 @@
 % Please edit documentation in R/soil.R
 \name{soil_thermal_cond}
 \alias{soil_thermal_cond}
-\alias{soil_thermal_cond.numeric}
+\alias{soil_thermal_cond.default}
 \alias{soil_thermal_cond.weather_station}
 \title{Soil thermal conductivity}
 \usage{
 soil_thermal_cond(...)
 
-\method{soil_thermal_cond}{numeric}(moisture, texture = "sand", ...)
+\method{soil_thermal_cond}{default}(texture = "sand", moisture = 0, ...)
 
 \method{soil_thermal_cond}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
+
+\item{texture}{Soil texture. Either \code{sand} (default), \code{peat} or \code{clay}.}
 
 \item{moisture}{Soil moisture in Cubic meter/cubic meter}
-
-\item{texture}{Soil texture. Either "sand", "peat" or "clay".}
 
 \item{weather_station}{Object of class weather_station.}
 }

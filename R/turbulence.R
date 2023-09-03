@@ -6,8 +6,8 @@
 #' You need to specify only one, "surface_type" OR "obs_height".
 #'
 #' @rdname turb_roughness_length
-#' @param ... Additional parameters passed to later functions.
-#' @return roughness length in m.
+#' @param ... Additional arguments.
+#' @returns roughness length in m.
 #' @references p239.
 #' @export
 #'
@@ -16,7 +16,6 @@ turb_roughness_length <- function(...) {
 }
 
 #' @rdname turb_roughness_length
-#' @method turb_roughness_length default
 #' @param surface_type Type of surface.
 #' @param obs_height Height of obstacle in m.
 #' @export
@@ -35,7 +34,6 @@ turb_roughness_length.default <- function(surface_type = NULL, obs_height = NULL
 }
 
 #' @rdname turb_roughness_length
-#' @method turb_roughness_length weather_station
 #' @param weather_station Object of class weather_station.
 #' @export
 turb_roughness_length.weather_station <- function(weather_station, ...) {
@@ -55,8 +53,8 @@ turb_roughness_length.weather_station <- function(weather_station, ...) {
 #' Works for vegetation only.
 #'
 #' @rdname turb_displacement
-#' @param ... Additional parameters passed to later functions.
-#' @return Displacement height in m.
+#' @param ... Additional arguments.
+#' @returns Displacement height in m.
 #' @export
 #'
 turb_displacement <- function(...) {
@@ -64,7 +62,6 @@ turb_displacement <- function(...) {
 }
 
 #' @rdname turb_displacement
-#' @method turb_displacement numeric
 #' @param obs_height Height of vegetation in m.
 #' @param surroundings Choose either 'vegetation' or 'city'.
 #' @export
@@ -81,7 +78,6 @@ turb_displacement.default <- function(obs_height, surroundings = "vegetation", .
 }
 
 #' @rdname turb_displacement
-#' @method turb_displacement weather_station
 #' @param weather_station Object of class weather_station
 #' @export
 turb_displacement.weather_station <- function(weather_station, surroundings = "vegetation", ...) {
@@ -96,8 +92,8 @@ turb_displacement.weather_station <- function(weather_station, surroundings = "v
 #' Calculate the friction velocity of the surface.
 #'
 #' @rdname turb_ustar
-#' @param ... Additional parameters passed to later functions.
-#' @return Friction velocity in m/s.
+#' @param ... Additional arguments.
+#' @returns Friction velocity in m/s.
 #' @references p239
 #' @export
 #'
@@ -106,7 +102,6 @@ turb_ustar <- function(...) {
 }
 
 #' @rdname turb_ustar
-#' @method turb_ustar numeric
 #' @param v Windspeed in height of anemometer in m/s.
 #' @param z Height of anemometer in m.
 #' @param surface_type Type of surface.
@@ -123,7 +118,6 @@ turb_ustar.default <- function(v, z, surface_type, ...) {
 }
 
 #' @rdname turb_ustar
-#' @method turb_ustar weather_station
 #' @param weather_station Object of class weather_station.
 #' @export
 turb_ustar.weather_station <- function(weather_station, ...) {

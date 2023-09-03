@@ -5,8 +5,8 @@
 #'
 #' Negative values signify flux towards the atmosphere, positive values signify flux into the soil.
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return Soil heat flux in W * m^(-2).
+#' @param ... Additional arguments.
+#' @returns Soil heat flux in W * m^(-2).
 #' @export
 soil_heat_flux <- function(...) {
   UseMethod("soil_heat_flux")
@@ -27,7 +27,6 @@ soil_heat_flux.default <- function(ts1, ts2, depth1, depth2, ...) {
 }
 
 #' @rdname soil_heat_flux
-#' @method soil_heat_flux weather_station
 #' @export
 #' @param weather_station Object of class weather_station.
 soil_heat_flux.weather_station <- function(weather_station, ...) {
@@ -46,7 +45,7 @@ soil_heat_flux.weather_station <- function(weather_station, ...) {
 #'
 #' Works by linearly interpolating thermal conductivity based on measured data.
 #'
-#' @param ... Additional parameters passed to later functions.
+#' @param ... Additional arguments.
 #' @returns Soil thermal conductivity in W/m K.
 #' @export
 soil_thermal_cond <- function(...) {
@@ -109,8 +108,8 @@ soil_thermal_cond.weather_station <- function(weather_station, ...) {
 #' Works by linearly interpolating volumetric heat capacity based on measured data.
 #'
 #' @rdname soil_heat_cap
-#' @param ... Additional parameters passed to later functions.
-#' @return Numeric vector with volumetric heat capacity in  MJ/ (m³ * K).
+#' @param ... Additional arguments.
+#' @returns Numeric vector with volumetric heat capacity in  MJ/ (m³ * K).
 #' @export
 #'
 soil_heat_cap <- function(...) {
@@ -118,7 +117,6 @@ soil_heat_cap <- function(...) {
 }
 
 #' @rdname soil_heat_cap
-#' @method soil_heat_cap numeric
 #' @param moisture Soil moisture in Cubic meter/cubic meter
 #' @param texture Soil texture. Either "sand", "peat" or "clay".
 #' @importFrom stats approx
@@ -149,7 +147,6 @@ soil_heat_cap.default <- function(moisture, texture = "sand", ...) {
 
 
 #' @rdname soil_heat_cap
-#' @method soil_heat_cap weather_station
 #' @param weather_station Object of class weather_station.
 #' @export
 #'
@@ -165,8 +162,8 @@ soil_heat_cap.weather_station <- function(weather_station, ...) {
 #' Calculates soil attenuation length.
 #'
 #' @rdname soil_attenuation
-#' @param ... Additional parameters passed to later functions.
-#' @return Soil attenuation length in m.
+#' @param ... Additional arguments.
+#' @returns Soil attenuation length in m.
 #' @export
 #'
 soil_attenuation <- function(...) {
@@ -174,7 +171,6 @@ soil_attenuation <- function(...) {
 }
 
 #' @rdname soil_attenuation
-#' @method soil_attenuation numeric
 #' @export
 #' @param moisture Soil moisture in Cubic meter/cubic meter
 #' @param texture Soil texture. Either "sand", "peat" or "clay".
@@ -187,7 +183,6 @@ soil_attenuation.default <- function(moisture, texture = "sand", ...) {
 }
 
 #' @rdname soil_attenuation
-#' @method soil_attenuation weather_station
 #' @export
 #' @param weather_station Object of class weather_station.
 soil_attenuation.weather_station <- function(weather_station, ...) {

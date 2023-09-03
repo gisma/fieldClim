@@ -13,7 +13,7 @@ sol_eccentricity(...)
 \method{sol_eccentricity}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{datetime}{Datetime in POSIXt}
 

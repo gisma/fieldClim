@@ -2,13 +2,13 @@
 % Please edit documentation in R/latent.R
 \name{latent_monin}
 \alias{latent_monin}
-\alias{latent_monin.numeric}
+\alias{latent_monin.default}
 \alias{latent_monin.weather_station}
 \title{Latent Heat using Monin-Obukhov length}
 \usage{
 latent_monin(...)
 
-\method{latent_monin}{numeric}(
+\method{latent_monin}{default}(
   hum1,
   hum2,
   t1,
@@ -25,7 +25,7 @@ latent_monin(...)
 \method{latent_monin}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{hum1}{Relative humidity at lower height in \%.}
 

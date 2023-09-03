@@ -2,18 +2,18 @@
 % Please edit documentation in R/soil.R
 \name{soil_heat_cap}
 \alias{soil_heat_cap}
-\alias{soil_heat_cap.numeric}
+\alias{soil_heat_cap.default}
 \alias{soil_heat_cap.weather_station}
 \title{Soil volumetric heat capacity}
 \usage{
 soil_heat_cap(...)
 
-\method{soil_heat_cap}{numeric}(moisture, texture = "sand", ...)
+\method{soil_heat_cap}{default}(moisture, texture = "sand", ...)
 
 \method{soil_heat_cap}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{moisture}{Soil moisture in Cubic meter/cubic meter}
 

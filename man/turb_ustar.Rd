@@ -2,18 +2,18 @@
 % Please edit documentation in R/turbulence.R
 \name{turb_ustar}
 \alias{turb_ustar}
-\alias{turb_ustar.numeric}
+\alias{turb_ustar.default}
 \alias{turb_ustar.weather_station}
 \title{Friction velocity}
 \usage{
 turb_ustar(...)
 
-\method{turb_ustar}{numeric}(v, z, surface_type, ...)
+\method{turb_ustar}{default}(v, z, surface_type, ...)
 
 \method{turb_ustar}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{v}{Windspeed in height of anemometer in m/s.}
 

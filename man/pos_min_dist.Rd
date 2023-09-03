@@ -2,15 +2,15 @@
 % Please edit documentation in R/position.R
 \name{pos_min_dist}
 \alias{pos_min_dist}
-\alias{pos_min_dist.numeric}
+\alias{pos_min_dist.default}
 \title{Minimum Distance between climate station and obstacle}
 \usage{
 pos_min_dist(...)
 
-\method{pos_min_dist}{numeric}(obs_width, obs_height, ring = F, obs_radius = NULL, ...)
+\method{pos_min_dist}{default}(obs_width, obs_height, ring = F, obs_radius = NULL, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{obs_width}{Width of obstacle in m.}
 

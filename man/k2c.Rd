@@ -2,16 +2,16 @@
 % Please edit documentation in R/utility.R
 \name{k2c}
 \alias{k2c}
-\title{Radian to degree}
+\title{Kelvin to degree Celcius}
 \usage{
-k2c(kelvin)
+k2c(temp)
 }
 \arguments{
-\item{deg}{Degree.}
+\item{temp}{Temperature in Kelvin.}
 }
 \value{
-Kelvin
+degree Celcius
 }
 \description{
-Radian to degree
+Kelvin to degree Celcius
 }

@@ -2,18 +2,18 @@
 % Please edit documentation in R/sensible.R
 \name{sensible_priestley_taylor}
 \alias{sensible_priestley_taylor}
-\alias{sensible_priestley_taylor.numeric}
+\alias{sensible_priestley_taylor.default}
 \alias{sensible_priestley_taylor.weather_station}
 \title{Sensible Heat Priestley-Taylor Method}
 \usage{
 sensible_priestley_taylor(...)
 
-\method{sensible_priestley_taylor}{numeric}(t, rad_bal, soil_flux, surface_type = "field", ...)
+\method{sensible_priestley_taylor}{default}(t, rad_bal, soil_flux, surface_type = "field", ...)
 
 \method{sensible_priestley_taylor}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{t}{Air temperature in °C.}
 

@@ -2,18 +2,18 @@
 % Please edit documentation in R/turbulent_flux.R
 \name{turb_flux_stability}
 \alias{turb_flux_stability}
-\alias{turb_flux_stability.numeric}
+\alias{turb_flux_stability.default}
 \alias{turb_flux_stability.weather_station}
 \title{Stability}
 \usage{
 turb_flux_stability(...)
 
-\method{turb_flux_stability}{numeric}(grad_rich_no, ...)
+\method{turb_flux_stability}{default}(grad_rich_no, ...)
 
 \method{turb_flux_stability}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{grad_rich_no}{Gradient-Richardson-Number}
 

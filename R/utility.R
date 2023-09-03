@@ -5,7 +5,7 @@
 #'
 #' @param weather_station Object of class weather_station.
 #' @param ... Strings of properties to check.
-#' @return Absolutely nothing
+#' @returns Absolutely nothing
 #' @export
 #'
 check_availability <- function(weather_station, ...) {
@@ -34,7 +34,7 @@ check_availability <- function(weather_station, ...) {
 #' @param unit TRUE, to generate longer column labels with units.
 #' @param ... Not used.
 #'
-#' @return data.frame
+#' @returns data.frame
 #' The columns of the data frame depend on `reduced` and `unit`.
 #' If `reduced = F`, the data.frame contains all columns of the `measurements` list in `weather_station`.
 #' If `reduced = T`, the data.frame contains: "datetime", "t1", "t2", "v1", "v2", "p1", "p2", "hum1", "hum2", "soil_flux", "sw_in", "sw_out", "lw_in", "lw_out", "sw_bal", "lw_bal", "rad_bal", "stability", "sensible_priestley_taylor", "latent_priestley_taylor","sensible_bowen", "latent_bowen","sensible_monin", "latent_monin","latent_penman"
@@ -142,36 +142,36 @@ as.data.frame.weather_station <- function(x, ...,
 
 #' Radian to degree
 #'
-#' @param rad Radian.
-#' @return degree.
+#' @param angle Angle in radian.
+#' @returns degree.
 #' @export
-rad2deg <- function(rad) {
-  rad * 180 / pi
+rad2deg <- function(angle) {
+  angle * 180 / pi
 }
 
-#' Radian to degree
+#' Degree to radian
 #'
-#' @param deg Degree.
-#' @return radian.
+#' @param angle Angle in degree.
+#' @returns radian.
 #' @export
-deg2rad <- function(deg) {
-  deg * pi / 180
+deg2rad <- function(angle) {
+  angle * pi / 180
 }
 
-#' Radian to degree
+#' Degree Celcius to Kelvin
 #'
-#' @param deg Degree.
-#' @return degree Celcius
+#' @param temp Temperature in degree Celcius.
+#' @returns Kelvin
 #' @export
-c2k <- function(celcius) {
-  celcius + 273.15
+c2k <- function(temp) {
+  temp + 273.15
 }
 
-#' Radian to degree
+#' Kelvin to degree Celcius
 #'
-#' @param deg Degree.
-#' @return Kelvin
+#' @param temp Temperature in Kelvin.
+#' @returns degree Celcius
 #' @export
-k2c <- function(kelvin) {
-  kelvin - 273.15
+k2c <- function(temp) {
+  temp - 273.15
 }

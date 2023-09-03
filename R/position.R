@@ -3,8 +3,8 @@
 #' Calculate the needed minimum distance between climate station and obstacle (e.g. forest), to ensure independence of measurements.
 #'
 #' @rdname pos_min_dist
-#' @param ... Additional parameters passed to later functions.
-#' @return Minimum distance in m.
+#' @param ... Additional arguments.
+#' @returns Minimum distance in m.
 #' @export
 #'
 pos_min_dist <- function(...) {
@@ -12,13 +12,12 @@ pos_min_dist <- function(...) {
 }
 
 #' @rdname pos_min_dist
-#' @method pos_min_dist numeric
 #' @param obs_width Width of obstacle in m.
 #' @param obs_height Height of obstacle in m.
 #' @param ring True, if obstacle is circularly surrounded by the obstacle.
 #' @param obs_radius If ring == T: radius of the ring in m.
 #' @export
-#' @return Minimal distance between measurement point and obstacle for undisturbed measurement in m.
+#' @returns Minimal distance between measurement point and obstacle for undisturbed measurement in m.
 #' @references p189eq9.1.
 pos_min_dist.default <- function(obs_width, obs_height, ring = F, obs_radius = NULL, ...) {
   # if climate station is positioned on a clearing:
@@ -52,7 +51,7 @@ pos_min_dist.default <- function(obs_width, obs_height, ring = F, obs_radius = N
 #' @param obs_height Height of obstacle in m.
 #' @param ring True, if obstacle is circularly surrounded by the obstacle.
 #'
-#' @return Message, that tells you if climate station is well positioned or, if not, in which distance to the obstacle it needs to be placed instead.
+#' @returns Message, that tells you if climate station is well positioned or, if not, in which distance to the obstacle it needs to be placed instead.
 #' @export
 #' @references p189eq9.1.
 pos_max_dist <- function(dist, obs_width, obs_height, ring = F) {
@@ -96,7 +95,7 @@ pos_max_dist <- function(dist, obs_width, obs_height, ring = F) {
 #' @param min_dist Minimum distance between climate station and obstacle, that is needed to ensure independency of measurements, in m.
 #' @param obs_height Height of obstacle in m.
 #'
-#' @return Message, that tells you if climate station is well positioned or, if not, in which height the anemometer needs to be positioned to ensure independency of measurements.
+#' @returns Message, that tells you if climate station is well positioned or, if not, in which height the anemometer needs to be positioned to ensure independency of measurements.
 #' @export
 pos_anemometer_height <- function(dist, min_dist, obs_height) {
   if (dist >= min_dist) {

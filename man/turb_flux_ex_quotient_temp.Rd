@@ -2,13 +2,13 @@
 % Please edit documentation in R/turbulent_flux.R
 \name{turb_flux_ex_quotient_temp}
 \alias{turb_flux_ex_quotient_temp}
-\alias{turb_flux_ex_quotient_temp.numeric}
+\alias{turb_flux_ex_quotient_temp.default}
 \alias{turb_flux_ex_quotient_temp.weather_station}
 \title{Exchange quotient for heat transmission}
 \usage{
 turb_flux_ex_quotient_temp(...)
 
-\method{turb_flux_ex_quotient_temp}{numeric}(
+\method{turb_flux_ex_quotient_temp}{default}(
   t1,
   t2,
   z1 = 2,
@@ -23,7 +23,7 @@ turb_flux_ex_quotient_temp(...)
 \method{turb_flux_ex_quotient_temp}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{t1}{Temperature at lower height (e.g. height of anemometer) in °C.}
 

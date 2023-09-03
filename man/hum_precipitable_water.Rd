@@ -8,16 +8,16 @@
 \usage{
 hum_precipitable_water(...)
 
-\method{hum_precipitable_water}{default}(elev, t, p0 = 1013.25, ...)
+\method{hum_precipitable_water}{default}(elev, temp, ...)
 
 \method{hum_precipitable_water}{weather_station}(weather_station, height = "lower", ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{t}{Air temperature in °C.}
+\item{temp}{Temperature in °C.}
 
 \item{weather_station}{Object of class weather_station.}
 

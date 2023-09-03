@@ -8,18 +8,29 @@
 \usage{
 rad_lw_in(...)
 
-\method{rad_lw_in}{numeric}(...)
+\method{rad_lw_in}{default}(temp, rh, sigma = 5.6993e-08, ...)
 
 \method{rad_lw_in}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{
+  Arguments passed on to \code{\link[=rad_emissivity_air.default]{rad_emissivity_air.default}}, \code{\link[=terr_sky_view.default]{terr_sky_view.default}}
+  \describe{
+    \item{\code{elev}}{Meters above sea level in m.}
+    \item{\code{p}}{OPTIONAL. Air pressure in hPa.}
+    \item{\code{p0}}{Standard air pressure in hPa.}
+    \item{\code{slope}}{Inclination of slope in degrees.}
+    \item{\code{valley}}{If the position is in a valley (TRUE) or on a slope (FALSE).}
+  }}
+
+\item{temp}{Air temperature in °C.}
+
+\item{rh}{relative humidity.}
+
+\item{sigma}{Stefan-Boltzmann constant
+with the default 5.6993e-8 W/m$^{2}$/K$^{4}$}
 
 \item{weather_station}{Object of class weather_station.}
-
-\item{hum}{relative humidity in \%.}
-
-\item{t}{Air temperature in °C.}
 }
 \value{
 Atmospheric radiation in W/m$^{2}$.
@@ -27,6 +38,9 @@ Atmospheric radiation in W/m$^{2}$.
 \description{
 Calculation of the longwave radiation of the atmosphere.
 }
+\details{
+The second part of the equation related to the surrounding terrain is not included.
+}
 \references{
-p66eq3.21
+p66eq3.24
 }

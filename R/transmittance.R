@@ -2,8 +2,8 @@
 #'
 #' Calculates transmittance due to O$_{2}$ and CO$_{2}$.
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return Transmittance due to gas (0-1), unitless
+#' @param ... Additional arguments.
+#' @returns Transmittance due to gas (0-1), unitless
 #' @export
 trans_gas <- function(...) {
   UseMethod("trans_gas")
@@ -23,10 +23,9 @@ trans_gas.default <- function(datetime, lon, lat, elev, temp, ..., p0 = 1013) {
 #  return(trans_ga)
 #}
 #' @inheritParams trans_air_mass_abs
-#' @return unitless
+#' @returns unitless
 
 #' @rdname trans_gas
-#' @method trans_gas weather_station
 #' @param weather_station Object of class weather_station.
 #' @export
 #'
@@ -39,8 +38,8 @@ trans_gas.weather_station <- function(weather_station, ...) {
 #'
 #' Calculates absolute optical air mass.
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return Absolute optical air mass.
+#' @param ... Additional arguments.
+#' @returns Absolute optical air mass.
 #' @export
 trans_air_mass_abs <- function(...) {
   UseMethod("trans_air_mass_abs")
@@ -63,10 +62,9 @@ trans_air_mass_abs.default <- function(datetime, lon, lat, elev, temp, p0 = 1013
 #  return(air_mass_abs)
 #}
 #' @inheritParams trans_air_mass_rel
-#' @return unitless
+#' @returns unitless
 
 #' @rdname trans_air_mass_abs
-#' @method trans_air_mass_abs weather_station
 #' @param weather_station Object of class weather_station.
 #' @export
 #'
@@ -82,8 +80,8 @@ trans_air_mass_abs.weather_station <- function(weather_station, ...) {
 #'
 #' Calculates relative optical air mass. Returns NA for negative values.
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return Relative optical air mass.
+#' @param ... Additional arguments.
+#' @returns Relative optical air mass.
 #' @export
 trans_air_mass_rel <- function(...) {
   UseMethod("trans_air_mass_rel")
@@ -104,11 +102,10 @@ trans_air_mass_rel.default <- function(datetime, lon, lat, ...) {
 #  return(mr)
 #}
 #' @inheritParams sol_elevation
-#' @return unitless
+#' @returns unitless
 
 
 #' @rdname trans_air_mass_rel
-#' @method trans_air_mass_rel weather_station
 #' @param weather_station Object of class weather_station.
 #' @export
 #'
@@ -121,8 +118,8 @@ trans_air_mass_rel.weather_station <- function(weather_station, ...) {
 #'
 #' Calculates transmittance due to ozone.
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return Transmittance due to ozone (0-1). unitless
+#' @param ... Additional arguments.
+#' @returns Transmittance due to ozone (0-1). unitless
 #' @export
 trans_ozone <- function(...) {
   UseMethod("trans_ozone")
@@ -161,8 +158,8 @@ trans_ozone.weather_station <- function(weather_station, ...) {
 #'
 #' Calculates transmittance due to rayleigh scattering.
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return Transmittance due to rayleigh scattering (0-1). unitless
+#' @param ... Additional arguments.
+#' @returns Transmittance due to rayleigh scattering (0-1). unitless
 #' @export
 trans_rayleigh <- function(...) {
   UseMethod("trans_rayleigh")
@@ -197,20 +194,20 @@ trans_rayleigh.weather_station <- function(weather_station, ...) {
 #' Calculates transmittance due to water vapor.
 #'
 #' @rdname trans_vapor
-#' @param ... Additional parameters passed to later functions.
-#' @return Transmittance due to water vapor (0-1). unitless
+#' @param ... Additional arguments.
+#' @returns Transmittance due to water vapor (0-1). unitless
 #' @export
 trans_vapor <- function(...) {
   UseMethod("trans_vapor")
 }
 
 #' @rdname trans_vapor
-#' @inheritParams trans_air_mass_rel
 #' @inheritParams hum_precipitable_water
+#' @inheritParams trans_air_mass_rel
 #' @export
 #' @references p245.
-trans_vapor.default <- function(datetime, lon, lat, elev, temp, ...,p0 = 1013) {
-  precipitable_water <- hum_precipitable_water(elev, temp, p0 = p0)
+trans_vapor.default <- function(datetime, lon, lat, elev, temp, ...) {
+  precipitable_water <- hum_precipitable_water(elev, temp, ...)
   air_mass_rel <- trans_air_mass_rel(datetime, lon, lat)
   x <- precipitable_water * air_mass_rel
   
@@ -223,7 +220,6 @@ trans_vapor.default <- function(datetime, lon, lat, elev, temp, ...,p0 = 1013) {
 #}
 
 #' @rdname trans_vapor
-#' @method trans_vapor weather_station
 #' @param weather_station Object of class weather_station.
 #' @export
 #'
@@ -237,8 +233,8 @@ trans_vapor.weather_station <- function(weather_station, ...) {
 #'
 #' Calculates transmittance due to aerosols.
 #'
-#' @param ... Additional parameters passed to later functions.
-#' @return Transmittance due to aerosols (0-1). unitless
+#' @param ... Additional arguments.
+#' @returns Transmittance due to aerosols (0-1). unitless
 #' @export
 trans_aerosol <- function(...) {
   UseMethod("trans_aerosol")
@@ -252,7 +248,7 @@ trans_aerosol <- function(...) {
 trans_aerosol.default <- function(datetime, lon, lat, elev, temp, vis = 30, ..., p0 = 1013) {
   air_mass_abs <- trans_air_mass_abs(datetime, lon, lat, elev, temp, p0 = p0)
   tau38 <- 3.6536 * vis^-0.7111
-  tau5 <- 2.4087 * vis^-0.719
+  tau50 <- 2.4087 * vis^-0.719
   
   x <- 0.2758 * tau38 + 0.35 * tau50
   
@@ -294,8 +290,8 @@ trans_aerosol.weather_station <- function(weather_station, ...) {
 #' Calculates total transmittance of the atmosphere.
 #'
 #' @rdname trans_total
-#' @param ... Additional parameters passed to later functions.
-#' @return Total transmittance (0-1)
+#' @param ... Additional arguments.
+#' @returns Total transmittance (0-1)
 #' @export
 #'
 #trans_total <- function(...) {
@@ -303,7 +299,6 @@ trans_aerosol.weather_station <- function(weather_station, ...) {
 #}
 
 #' @rdname trans_total
-#' @method trans_total numeric
 #' @param sol_elevation Solar elevation in degrees.
 #' @param t Air temperature in °C.
 #' @param elev Altitude above sea level in m.
@@ -330,7 +325,6 @@ trans_aerosol.weather_station <- function(weather_station, ...) {
 #}
 
 #' @rdname trans_total
-#' @method trans_total weather_station
 #' @param weather_station Object of class weather_station.
 #' @param oz OPTIONAL. Columnar ozone in cm.
 #' Default is average global value.

@@ -2,13 +2,13 @@
 % Please edit documentation in R/sensible.R
 \name{sensible_monin}
 \alias{sensible_monin}
-\alias{sensible_monin.numeric}
+\alias{sensible_monin.default}
 \alias{sensible_monin.weather_station}
 \title{Sensible Heat using Monin-Obukhov length}
 \usage{
 sensible_monin(...)
 
-\method{sensible_monin}{numeric}(
+\method{sensible_monin}{default}(
   t1,
   t2,
   z1 = 2,
@@ -23,7 +23,7 @@ sensible_monin(...)
 \method{sensible_monin}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{t1}{Air temperature at lower height in °C.}
 

@@ -2,18 +2,18 @@
 % Please edit documentation in R/temperature.R
 \name{temp_pot_temp}
 \alias{temp_pot_temp}
-\alias{temp_pot_temp.numeric}
+\alias{temp_pot_temp.default}
 \alias{temp_pot_temp.weather_station}
 \title{Potential Temperature}
 \usage{
 temp_pot_temp(...)
 
-\method{temp_pot_temp}{numeric}(t, elev, ...)
+\method{temp_pot_temp}{default}(t, elev, ...)
 
 \method{temp_pot_temp}{weather_station}(weather_station, height = "lower", ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{t}{Temperature in °C.}
 

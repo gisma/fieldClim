@@ -2,18 +2,18 @@
 % Please edit documentation in R/latent.R
 \name{latent_priestley_taylor}
 \alias{latent_priestley_taylor}
-\alias{latent_priestley_taylor.numeric}
+\alias{latent_priestley_taylor.default}
 \alias{latent_priestley_taylor.weather_station}
 \title{Latent Heat Priestley-Taylor Method}
 \usage{
 latent_priestley_taylor(...)
 
-\method{latent_priestley_taylor}{numeric}(t, rad_bal, soil_flux, surface_type = "field", ...)
+\method{latent_priestley_taylor}{default}(t, rad_bal, soil_flux, surface_type = "field", ...)
 
 \method{latent_priestley_taylor}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional parameters passed to later functions.}
+\item{...}{Additional arguments.}
 
 \item{t}{Air temperature in °C.}
 

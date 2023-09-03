@@ -2,16 +2,16 @@
 % Please edit documentation in R/utility.R
 \name{deg2rad}
 \alias{deg2rad}
-\title{Radian to degree}
+\title{Degree to radian}
 \usage{
-deg2rad(deg)
+deg2rad(angle)
 }
 \arguments{
-\item{deg}{Degree.}
+\item{angle}{Angle in degree.}
 }
 \value{
 radian.
 }
 \description{
-Radian to degree
+Degree to radian
 }
