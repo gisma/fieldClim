@@ -1,3 +1,45 @@
+#' Soil heat flux
+#'
+#' Calculates soil heat flux from measurements in two different
+#' depths and thermal conductivity of the soil.
+#'
+#' Negative values signify flux towards the atmosphere, positive values signify flux into the soil.
+#'
+#' @param ... Additional parameters passed to later functions.
+#' @return Soil heat flux in W * m^(-2).
+#' @export
+soil_heat_flux <- function(...) {
+  UseMethod("soil_heat_flux")
+}
+
+#' @rdname soil_heat_flux
+#' @inheritDotParams soil_thermal_cond.default 
+#' @param ts1 Upper soil temperature (closest to the surface) in °C.
+#' @param ts2 Lower soil temperature in °C.
+#' @param depth1 Depth of upper measurement (closest to the surface) in m.
+#' @param depth2 Depth of lower measurement in m.
+#' @export
+#' @references p71eq4.2.
+soil_heat_flux.default <- function(ts1, ts2, depth1, depth2, ...) {
+  thermal_cond <- soil_thermal_cond(...)
+  
+  thermal_cond * ((ts1 - ts2) / (depth1 - depth2))
+}
+
+#' @rdname soil_heat_flux
+#' @method soil_heat_flux weather_station
+#' @export
+#' @param weather_station Object of class weather_station.
+soil_heat_flux.weather_station <- function(weather_station, ...) {
+  check_availability(weather_station, "ts1", "ts2", "depth1", "depth2")
+  ts1 <- weather_station$measurements$ts1
+  ts2 <- weather_station$measurements$ts2
+  depth1 <- weather_station$properties$depth1
+  depth2 <- weather_station$properties$depth2
+  thermal_cond <- soil_thermal_cond(weather_station)
+  return(soil_heat_flux(ts1, ts2, depth1, depth2, thermal_cond))
+}
+
 #' Soil thermal conductivity
 #'
 #' Calculates soil thermal conductivity (W/m K) from soil moisture (Cubic meter/cubic meter) and texture.
@@ -12,7 +54,7 @@ soil_thermal_cond <- function(...) {
 }
 
 #' @rdname soil_thermal_cond
-#' @param texture Soil texture. Either `"sand"` (default), `"peat"` or `"clay"`.
+#' @param texture Soil texture. Either `sand` (default), `peat` or `clay`.
 #' @param moisture Soil moisture in Cubic meter/cubic meter
 #' @export
 #' @references p254.
@@ -46,6 +88,18 @@ soil_thermal_cond.weather_station <- function(weather_station, ...) {
   texture <- weather_station$location_properties$texture
   return(soil_thermal_cond(moisture, texture))
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #' Soil volumetric heat capacity
@@ -105,52 +159,6 @@ soil_heat_cap.weather_station <- function(weather_station, ...) {
   texture <- weather_station$location_properties$texture
   return(soil_heat_cap(moisture, texture))
 }
-
-
-#' Soil heat flux
-#'
-#' Calculates soil heat flux from measurements in two different
-#' depths and thermal conductivity of the soil.
-#'
-#' Negative values signify flux towards the atmosphere, positive values signify flux into the soil.
-#'
-#' @rdname soil_heat_flux
-#' @param ... Additional parameters passed to later functions.
-#' @return Soil heat flux in W * m^(-2).
-#' @export
-#'
-soil_heat_flux <- function(...) {
-  UseMethod("soil_heat_flux")
-}
-
-#' @rdname soil_heat_flux
-#' @method soil_heat_flux numeric
-#' @export
-#' @param ts1 Upper soil temperature (closest to the surface) in °C.
-#' @param ts2 Lower soil temperature in °C.
-#' @param depth1 Depth of upper measurement (closest to the surface) in m.
-#' @param depth2 Depth of lower measurement in m.
-#' @param thermal_cond Thermal conductivity of soil in W/(m K).
-#' @references p71eq4.2.
-soil_heat_flux.default <- function(ts1, ts2, depth1, depth2, thermal_cond, ...) {
-  soil_heat_flu <- thermal_cond * ((ts1 - ts2) / (depth1 - depth2))
-  return(soil_heat_flu)
-}
-
-#' @rdname soil_heat_flux
-#' @method soil_heat_flux weather_station
-#' @export
-#' @param weather_station Object of class weather_station.
-soil_heat_flux.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "ts1", "ts2", "depth1", "depth2")
-  ts1 <- weather_station$measurements$ts1
-  ts2 <- weather_station$measurements$ts2
-  depth1 <- weather_station$properties$depth1
-  depth2 <- weather_station$properties$depth2
-  thermal_cond <- soil_thermal_cond(weather_station)
-  return(soil_heat_flux(ts1, ts2, depth1, depth2, thermal_cond))
-}
-
 
 #' Soil attenuation length
 #'

@@ -80,10 +80,12 @@ legend("topright", c("tau38", "tau50", "tau38_cal", "tau50_cal"), lty = c(0, 0, 
 y <- c(0.269, 1.46, 1.98, 2.18, 2.31, 2.49, 2.58)
 x <- c(0, 5, 10, 15, 20, 30, 43)
 plot(x, y)
+x_cal <- seq(min(x), max(x), 1)
 y_cal <- c()
-for (i in seq(length(x))) {
-  y_cal[i] <- approx(x, y, xout = moisture, yleft = NA, yright = y[7])$y
+for (i in seq(length(x_cal))) {
+  y_cal[i] <- approx(x, y, xout = x_cal[i], yleft = NA, yright = y[7])$y
 }
+lines(x_cal, y_cal)
 
 y <- c(0.276, 0.586, 1.1, 1.43, 1.57, 1.74, 1.95)
 x <- c(0, 5, 10, 15, 20, 30, 43)
