@@ -282,7 +282,7 @@ turb_flux_ex_quotient_imp.weather_station <- function(weather_station, ...) {
 #'
 #' @rdname turb_flux_imp_exchange
 #' @param ... Additional arguments.
-#' @returns Turbulent impulse exchange in kg/(m*s²).
+#' @returns Turbulent impulse exchange in kg/(m*s\eqn{^2}).
 #' @export
 #'
 turb_flux_imp_exchange <- function(...) {

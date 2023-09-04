@@ -48,11 +48,11 @@
 #' @param hum2 Vector containing humidity data in % of the upper point of measurement.
 #' @param p1 Vector containing pressure data in hPa of the lower point of measurement.
 #' @param p2 Vector containing pressure data in hPa of the upper point of measurement.
-#' @param sw_in Vector containing incoming shortwave radiation in W/m².
-#' @param sw_out Vector containing outgoing shortwave radiation in W/m².
-#' @param lw_in Vector containing incoming longwave radiation in W/m².
-#' @param lw_out Vector containing outgoing shortwave radiation in W/m².
-#' @param soil_flux Vector containing soil flux in W/m².
+#' @param sw_in Vector containing incoming shortwave radiation in W/m\eqn{^2}.
+#' @param sw_out Vector containing outgoing shortwave radiation in W/m\eqn{^2}.
+#' @param lw_in Vector containing incoming longwave radiation in W/m\eqn{^2}.
+#' @param lw_out Vector containing outgoing shortwave radiation in W/m\eqn{^2}.
+#' @param soil_flux Vector containing soil flux in W/m\eqn{^2}.
 #' @param valley Does the weather station locate in a valley?
 #' @param ... Additional parameters, see details for usage.
 #'

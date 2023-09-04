@@ -44,7 +44,7 @@ hum_specific.weather_station <- function(weather_station, height, ...) {
 #' Calculates absolute humidity from vapor pressure and air temperature.
 #'
 #' @param ... Additional arguments.
-#' @returns Absolute humidity in kg/m³.
+#' @returns Absolute humidity in kg/m\eqn{^3}.
 #' @export
 #'
 hum_absolute <- function(...) {

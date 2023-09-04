@@ -104,13 +104,13 @@ soil_thermal_cond.weather_station <- function(weather_station, ...) {
 
 #' Soil volumetric heat capacity
 #'
-#' Calculates soil volumetric heat capacity (MJ / (m³ * K)) from soil moisture (Cubic meter/cubic meter) and texture.
+#' Calculates soil volumetric heat capacity (MJ / (m\eqn{^3} * K)) from soil moisture (Cubic meter/cubic meter) and texture.
 #'
 #' Works by linearly interpolating volumetric heat capacity based on measured data.
 #'
 #' @rdname soil_heat_cap
 #' @param ... Additional arguments.
-#' @returns Numeric vector with volumetric heat capacity in  MJ/ (m³ * K).
+#' @returns Numeric vector with volumetric heat capacity in  MJ/ (m\eqn{^3} * K).
 #' @export
 #'
 soil_heat_cap <- function(...) {

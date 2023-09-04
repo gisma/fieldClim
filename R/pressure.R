@@ -19,7 +19,7 @@ pres_p <- function(...) {
 #' @export
 #' @references Lente & Ősz 2020 eq5.
 pres_p.default <- function(elev, temp,
-  p0 = 1013.25, g = 9.81, rl = 287.05, ...) {
+  p0 = p0_default, g = g_default, rl = rl_default, ...) {
   temp <- c2k(temp)
 
   p0 * exp(-(g * elev) / (rl * temp))
@@ -119,7 +119,7 @@ pres_sat_vapor_p.weather_station <- function(weather_station, height = "lower", 
 #'
 #' @rdname pres_air_density
 #' @param ... Additional arguments.
-#' @returns Air density in kg/m³.
+#' @returns Air density in kg/m\eqn{^3}.
 #' @export
 #'
 pres_air_density <- function(...) {

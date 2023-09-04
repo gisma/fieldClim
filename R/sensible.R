@@ -5,7 +5,7 @@
 #' towards the surface.
 #'
 #' @param ... Additional arguments.
-#' @returns Sensible heat flux in W/m².
+#' @returns Sensible heat flux in W/m\eqn{^2}.
 #' @export
 sensible_priestley_taylor <- function(...) {
   UseMethod("sensible_priestley_taylor")
@@ -14,8 +14,8 @@ sensible_priestley_taylor <- function(...) {
 #' @rdname sensible_priestley_taylor
 #' @export
 #' @param t Air temperature in °C.
-#' @param rad_bal Radiation balance in W/m².
-#' @param soil_flux Soil flux in W/m².
+#' @param rad_bal Radiation balance in W/m\eqn{^2}.
+#' @param soil_flux Soil flux in W/m\eqn{^2}.
 #' @param surface_type Surface type, for which a Priestley-Taylor coefficient will be selected. Default is for short grass.
 #' @references Foken p220eq5.6.
 sensible_priestley_taylor.default <- function(t, rad_bal, soil_flux, surface_type = "field", ...) {
@@ -52,7 +52,7 @@ sensible_priestley_taylor.weather_station <- function(weather_station, ...) {
 #' towards the surface.
 #'
 #' @param ... Additional arguments.
-#' @returns Sensible heat flux in W/m².
+#' @returns Sensible heat flux in W/m\eqn{^2}.
 #' @export
 sensible_monin <- function(...) {
   UseMethod("sensible_monin")
@@ -121,7 +121,7 @@ sensible_monin.weather_station <- function(weather_station, ...) {
 #' towards the surface.
 #'
 #' @param ... Additional arguments.
-#' @returns Sensible heat flux in W/m².
+#' @returns Sensible heat flux in W/m\eqn{^2}.
 #' @export
 #'
 sensible_bowen <- function(...) {
@@ -137,8 +137,8 @@ sensible_bowen <- function(...) {
 #' @param z1 Lower height of measurement in m.
 #' @param z2 Upper height of measurement in m.
 #' @param elev Elevation above sea level in m.
-#' @param rad_bal Radiation balance in W/m².
-#' @param soil_flux Soil flux in W/m².
+#' @param rad_bal Radiation balance in W/m\eqn{^2}.
+#' @param soil_flux Soil flux in W/m\eqn{^2}.
 #' @references p221eq9.21.
 sensible_bowen.default <- function(t1, t2, hum1, hum2, z1 = 2, z2 = 10, elev, rad_bal, soil_flux, ...) {
   # Calculating potential temperature delta

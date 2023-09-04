@@ -5,7 +5,7 @@
 #' towards the surface.
 #'
 #' @param ... Additional arguments.
-#' @returns Latent heat flux in W/m².
+#' @returns Latent heat flux in W/m\eqn{^2}.
 #' @export
 latent_priestley_taylor <- function(...) {
   UseMethod("latent_priestley_taylor")
@@ -14,8 +14,8 @@ latent_priestley_taylor <- function(...) {
 #' @rdname latent_priestley_taylor
 #' @export
 #' @param t Air temperature in °C.
-#' @param rad_bal Radiation balance in W/m².
-#' @param soil_flux Soil flux in W/m².
+#' @param rad_bal Radiation balance in W/m\eqn{^2}.
+#' @param soil_flux Soil flux in W/m\eqn{^2}.
 #' @param surface_type Surface type, for which a Priestley-Taylor coefficient will be selected. Default is for short grass.
 #' @references Foken p220eq5.7.
 latent_priestley_taylor.default <- function(t, rad_bal, soil_flux, surface_type = "field", ...) {
@@ -53,7 +53,7 @@ latent_priestley_taylor.weather_station <- function(weather_station, ...) {
 #' towards the surface.
 #'
 #' @param ... Additional arguments.
-#' @returns Latent heat flux in W/m².
+#' @returns Latent heat flux in W/m\eqn{^2}.
 #' @export
 #'
 latent_penman <- function(...) {
@@ -68,7 +68,7 @@ latent_penman <- function(...) {
 #' @param t Temperature in °C
 #' @param hum Relative humidity in %.
 #' @param z Height of measurement for t, v in m.
-#' @param rad_bal Radiation balance in W/m².
+#' @param rad_bal Radiation balance in W/m\eqn{^2}.
 #' @param elev Elevation above sea level in m.
 #' @param lat Latitude in decimal degrees.
 #' @param lon Longitude in decimal degrees.
@@ -142,7 +142,7 @@ latent_penman.weather_station <- function(weather_station, ...) {
 #' towards the surface.
 #'
 #' @param ... Additional arguments.
-#' @returns Latent heat flux in W/m².
+#' @returns Latent heat flux in W/m\eqn{^2}.
 #' @export
 latent_monin <- function(...) {
   UseMethod("latent_monin")
@@ -208,11 +208,11 @@ latent_monin.weather_station <- function(weather_station, ...) {
 #' Calculates the latent heat flux using the Bowen Method. Negative
 #' flux signifies flux away from the surface, positive values signify flux
 #' towards the surface.
-#' Values above 600 W/m² and below -600 W/m² will be recognized
+#' Values above 600 W/m\eqn{^2} and below -600 W/m\eqn{^2} will be recognized
 #' as measurement mistakes and smoothed respectively.
 #'
 #' @param ... Additional arguments.
-#' @returns Latent heat flux in W/m².
+#' @returns Latent heat flux in W/m\eqn{^2}.
 #' @export
 #'
 latent_bowen <- function(...) {
@@ -228,8 +228,8 @@ latent_bowen <- function(...) {
 #' @param z1 Lower height of measurement in m.
 #' @param z2 Upper height of measurement in m.
 #' @param elev Elevation above sea level in m.
-#' @param rad_bal Radiation balance in W/m².
-#' @param soil_flux Soil flux in W/m².
+#' @param rad_bal Radiation balance in W/m\eqn{^2}.
+#' @param soil_flux Soil flux in W/m\eqn{^2}.
 #' @references p221eq9.21.
 latent_bowen.default <- function(t1, t2, hum1, hum2, z1 = 2, z2 = 10, elev,
                                  rad_bal, soil_flux, ...) {
