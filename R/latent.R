@@ -225,7 +225,7 @@ latent_bowen <- function(...) {
 #' @param t2 Temperature at upper height in °C.
 #' @param hum1 Relative humidity at lower height in %.
 #' @param hum2 Relative humidity at upper height in %.
-#' @param z1 Lower height of measuremen in m.
+#' @param z1 Lower height of measurement in m.
 #' @param z2 Upper height of measurement in m.
 #' @param elev Elevation above sea level in m.
 #' @param rad_bal Radiation balance in W/m².
