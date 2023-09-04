@@ -27,7 +27,7 @@ turb_flux_monin <- function(...) {
 turb_flux_monin.default <- function(z1 = 2, z2 = 10, v1, v2, t1, t2, elev, surface_type, ...) {
   grad_rich_no <- turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, elev)
   z0 <- turb_roughness_length(surface_type=surface_type)
-  ustar <- turb_ustar(v1, z1, z0)
+  ustar <- turb_ustar(v1, z1, surface_type=surface_type)
   monin <- rep(NA, length(grad_rich_no))
   for (i in 1:length(grad_rich_no)) {
     if (is.na(grad_rich_no[i])) {

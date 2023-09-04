@@ -34,7 +34,7 @@ latent_bowen(...)
 
 \item{hum2}{Relative humidity at upper height in \%.}
 
-\item{z1}{Lower height of measuremen in m.}
+\item{z1}{Lower height of measurement in m.}
 
 \item{z2}{Upper height of measurement in m.}
 
