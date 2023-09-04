@@ -255,7 +255,7 @@ rad_lw_in.default <- function(temp, rh, sigma = 5.6993e-8, ...) {
 }
 #rad_lw_in.default <- function(hum, t, ...) {
 #  sigma <- 5.6693e-8
-#  gs <- (0.594 + 0.0416 * sqrt(hum_vapor_pres(hum, t))) * sigma * (t + 273.15)^4
+#  gs <- (0.594 + 0.0416 * sqrt(pres_vapor_p(hum, t))) * sigma * (t + 273.15)^4
 #  return(gs)
 #}
 

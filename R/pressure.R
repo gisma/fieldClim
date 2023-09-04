@@ -25,7 +25,6 @@ pres_p.default <- function(elev, temp,
   p0 * exp(-(g * elev) / (rl * temp))
 }
 
-
 #' @rdname pres_p
 #' @param weather_station Object of class weather_station.
 #' @param height 'lower' or 'upper'
@@ -41,6 +40,41 @@ pres_p.weather_station <- function(weather_station, height = "lower", ...) {
     elev <- weather_station$location_properties$elevation + weather_station$properties$z2
   }
   return(pres_p(elev, t))
+}
+
+#' Vapor pressure
+#'
+#' Calculates vapor pressure from relative humidity and saturation vapor pressure.
+#'
+#' @param ... Additional arguments.
+#' @returns Vapor pressure in hPa.
+#' @export
+pres_vapor_p <- function(...) {
+  UseMethod("pres_vapor_p")
+}
+
+#' @rdname pres_vapor_p
+#' @export
+#' @param hum Relative humidity in %.
+#' @param t Air temperature in °C.
+pres_vapor_p.default <- function(hum, t, ...) {
+  sat_vapor_p <- pres_sat_vapor_p(t)
+  (hum / 100) * sat_vapor_p
+}
+
+#' @rdname pres_vapor_p
+#' @export
+#' @param weather_station Object of class weather_station.
+#' @param height Height of measurement. "lower" or "upper".
+pres_vapor_p.weather_station <- function(weather_station, height = "lower", ...) {
+  check_availability(weather_station, "t1", "t2", "hum1", "hum2")
+  if (!height %in% c("upper", "lower")) {
+    stop("'height' must be either 'lower' or 'upper'.")
+  }
+  height_num <- which(height == c("lower", "upper"))
+  t <- weather_station$measurements[[paste0("t", height_num)]]
+  hum <- weather_station$measurements[[paste0("hum", height_num)]]
+  return(pres_vapor_p(hum, t))
 }
 
 #' Saturated vapor pressure

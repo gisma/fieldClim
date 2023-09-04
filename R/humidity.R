@@ -1,38 +1,3 @@
-#' Vapor pressure
-#'
-#' Calculates vapor pressure from relative humidity and saturation vapor pressure.
-#'
-#' @param ... Additional arguments.
-#' @returns Vapor pressure in hPa.
-#' @export
-hum_vapor_pres <- function(...) {
-  UseMethod("hum_vapor_pres")
-}
-
-#' @rdname hum_vapor_pres
-#' @export
-#' @param hum Relative humidity in %.
-#' @param t Air temperature in °C.
-hum_vapor_pres.default <- function(hum, t, ...) {
-  sat_vapor_p <- pres_sat_vapor_p(t)
-  (hum / 100) * sat_vapor_p
-}
-
-#' @rdname hum_vapor_pres
-#' @export
-#' @param weather_station Object of class weather_station.
-#' @param height Height of measurement. "lower" or "upper".
-hum_vapor_pres.weather_station <- function(weather_station, height = "lower", ...) {
-  check_availability(weather_station, "t1", "t2", "hum1", "hum2")
-  if (!height %in% c("upper", "lower")) {
-    stop("'height' must be either 'lower' or 'upper'.")
-  }
-  height_num <- which(height == c("lower", "upper"))
-  t <- weather_station$measurements[[paste0("t", height_num)]]
-  hum <- weather_station$measurements[[paste0("hum", height_num)]]
-  return(hum_vapor_pres(hum, t))
-}
-
 #' Specific humidity
 #'
 #' Calculates specific humidity from vapor pressure and air pressure.
@@ -52,7 +17,7 @@ hum_specific <- function(...) {
 #' @export
 #' @references p262.
 hum_specific.default <- function(hum, t, elev, ...) {
-  p_vapor <- hum_vapor_pres(hum, t)
+  p_vapor <- pres_vapor_p(hum, t)
   p <- pres_p(elev, t)
   0.622 * (p_vapor / p)
 }
@@ -92,7 +57,7 @@ hum_absolute <- function(...) {
 #' @export
 #' @references p262.
 hum_absolute.default <- function(hum, t, ...) {
-  p_vapor <- hum_vapor_pres(hum, t)
+  p_vapor <- pres_vapor_p(hum, t)
   t <- c2k(t)
   (0.21668 * p_vapor) / t
 }
