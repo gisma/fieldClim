@@ -1,3 +1,6 @@
+# Constants and default values
+p0_default <- 1013
+
 #' Check Availability
 #'
 #' Checks availability of passed properties in the weather station object.

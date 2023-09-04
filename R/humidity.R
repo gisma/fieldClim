@@ -162,13 +162,49 @@ hum_precipitable_water <- function(...) {
 
 #' @rdname hum_precipitable_water
 #' @inheritParams pres_p
+#' @param datetime Datetime
+#' @param lat Latitude
 #' @param p0 Standard pressure
 #' @export
 #' @references p246
-hum_precipitable_water.default <- function(elev, temp, p0 = 1013, ...) {
-  pw_standard <- 4.1167
+hum_precipitable_water.default <- function(datetime, lat, elev, temp, p0 = p0_default, ...) {
+  if (abs(lat) <= 30) { # tropic
+    temp_standard <- 300
+    pw_standard <- 4.1167
+  } else if ((abs(lat) <= 60) && (lat > 0)) { # temperate, north hemisphere
+    if (datetime$mon + 1 %in% seq(4, 9)) {
+      temp_standard <- 294
+      pw_standard <- 2.9243
+    } else {
+      temp_standard <- 272.2
+      pw_standard <- 0.8539
+    }
+  } else if ((abs(lat) <= 60) && (lat < 0)) { # temperate, south hemisphere
+    if (datetime$mon + 1 %in% seq(4, 9)) {
+      temp_standard <- 272.2
+      pw_standard <- 0.8539
+    } else {
+      temp_standard <- 294
+      pw_standard <- 2.9243
+    }
+  } else if (lat > 0) { # subarctic, north hemisphere
+    if (datetime$mon + 1 %in% seq(4, 9)) {
+      temp_standard <- 287
+      pw_standard <- 2.0852
+    } else {
+      temp_standard <- 257.1
+      pw_standard <- 0.4176
+    }
+  } else if (lat > 0) { # subarctic, south hemisphere
+    if (datetime$mon + 1 %in% seq(4, 9)) {
+      temp_standard <- 257.1
+      pw_standard <- 0.4176
+    } else {
+      temp_standard <- 287
+      pw_standard <- 2.0852
+    }
+  }
   p <- pres_p(elev, temp, ...)
-  temp_standard <- 300
   
   pw_standard * (p / p0) * (temp_standard / temp)^0.5
 }

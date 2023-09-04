@@ -13,7 +13,7 @@ soil_heat_flux <- function(...) {
 }
 
 #' @rdname soil_heat_flux
-#' @inheritDotParams soil_thermal_cond.default 
+#' @inheritDotParams soil_thermal_cond.default
 #' @param ts1 Upper soil temperature (closest to the surface) in °C.
 #' @param ts2 Lower soil temperature in °C.
 #' @param depth1 Depth of upper measurement (closest to the surface) in m.
@@ -23,7 +23,7 @@ soil_heat_flux <- function(...) {
 soil_heat_flux.default <- function(ts1, ts2, depth1, depth2, ...) {
   thermal_cond <- soil_thermal_cond(...)
   
-  thermal_cond * ((ts1 - ts2) / (depth1 - depth2))
+  thermal_cond * (ts1 - ts2) / (depth1 - depth2)
 }
 
 #' @rdname soil_heat_flux
@@ -35,8 +35,8 @@ soil_heat_flux.weather_station <- function(weather_station, ...) {
   ts2 <- weather_station$measurements$ts2
   depth1 <- weather_station$properties$depth1
   depth2 <- weather_station$properties$depth2
-  thermal_cond <- soil_thermal_cond(weather_station)
-  return(soil_heat_flux(ts1, ts2, depth1, depth2, thermal_cond))
+  
+  soil_heat_flux(ts1, ts2, depth1, depth2, ...)
 }
 
 #' Soil thermal conductivity
@@ -82,10 +82,11 @@ soil_thermal_cond.default <- function(texture = "sand", moisture = 0, ...) {
 #' @param weather_station Object of class weather_station.
 #' @export
 soil_thermal_cond.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "moisture", "texture")
-  moisture <- weather_station$measurements$moisture
+  check_availability(weather_station, "texture", "moisture")
   texture <- weather_station$location_properties$texture
-  return(soil_thermal_cond(moisture, texture))
+  moisture <- weather_station$measurements$moisture
+  
+  soil_thermal_cond(moisture, texture, ...)
 }
 
 

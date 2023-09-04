@@ -16,11 +16,11 @@ rad_diffuse_in(...)
     \item{\code{}}{}
   }}
 
-\item{datetime}{Datetime in POSIXt}
+\item{datetime}{Datetime}
 
 \item{lon}{Longitude.}
 
-\item{lat}{Latitude in decimal degrees.}
+\item{lat}{Latitude}
 
 \item{elev}{Elevation above sea level in m.}
 

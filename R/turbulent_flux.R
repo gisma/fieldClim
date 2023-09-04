@@ -90,7 +90,7 @@ turb_flux_grad_rich_no <- function(...) {
 #' @param elev Elevation above sea level in m.
 #' @export
 turb_flux_grad_rich_no.default <- function(t1, t2, z1 = 2, z2 = 10, v1, v2, elev, ...) {
-  pot_temp1 <- temp_pot_temp(t1, elev)
+  pot_temp1 <- temp_pot_temp(t1, elev, ...)
   pot_temp2 <- temp_pot_temp(t2, elev)
   pot_temp1 <- c2k(pot_temp1)
   pot_temp2 <- c2k(pot_temp2)
