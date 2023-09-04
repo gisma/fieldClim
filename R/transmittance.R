@@ -13,7 +13,7 @@ trans_gas <- function(...) {
 #' @inheritParams trans_air_mass_abs
 #' @export
 #' @references p246.
-trans_gas.default <- function(datetime, lon, lat, elev, temp, ..., p0 = 1013) {
+trans_gas.default <- function(datetime, lon, lat, elev, temp, ..., p0 = p0_default) {
   air_mass_abs <- trans_air_mass_abs(datetime, lon, lat, elev, temp, p0 = p0)
   
   exp(-0.0127 * air_mass_abs^0.26)
@@ -50,7 +50,7 @@ trans_air_mass_abs <- function(...) {
 #' @inheritParams pres_p
 #' @export
 #' @references p247.
-trans_air_mass_abs.default <- function(datetime, lon, lat, elev, temp, p0 = 1013, ...) {
+trans_air_mass_abs.default <- function(datetime, lon, lat, elev, temp, p0 = p0_default, ...) {
   air_mass_rel <- trans_air_mass_rel(datetime, lon, lat)
   p <- pres_p(elev, temp, p0 = p0)
   
@@ -169,7 +169,7 @@ trans_rayleigh <- function(...) {
 #' @inheritParams trans_air_mass_abs
 #' @export
 #' @references p245.
-trans_rayleigh.default <- function(datetime, lon, lat, elev, temp, ..., p0 = 1013) {
+trans_rayleigh.default <- function(datetime, lon, lat, elev, temp, ..., p0 = p0_default) {
   air_mass_abs <- trans_air_mass_abs(datetime, lon, lat, elev, temp, p0 = p0)
   
   exp(-0.0903 * air_mass_abs^0.84 * (1 + air_mass_abs - air_mass_abs^1.01))
@@ -245,7 +245,7 @@ trans_aerosol <- function(...) {
 #' @param vis Visibility in km.
 #' @export
 #' @references p246.
-trans_aerosol.default <- function(datetime, lon, lat, elev, temp, vis = 30, ..., p0 = 1013) {
+trans_aerosol.default <- function(datetime, lon, lat, elev, temp, vis = 30, ..., p0 = p0_default) {
   air_mass_abs <- trans_air_mass_abs(datetime, lon, lat, elev, temp, p0 = p0)
   tau38 <- 3.6536 * vis^-0.7111
   tau50 <- 2.4087 * vis^-0.719

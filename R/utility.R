@@ -1,3 +1,10 @@
+# Constants
+p0_default <- 1013.25
+g_default <- 9.81
+rl_default <- 287.05
+c2k_default <- 273.15
+sigma_default <- 5.6704 * 10^-8
+
 #' Check Availability
 #'
 #' Checks availability of passed properties in the weather station object.
@@ -164,7 +171,7 @@ deg2rad <- function(angle) {
 #' @returns Kelvin
 #' @export
 c2k <- function(temp) {
-  temp + 273.15
+  temp + c2k_default
 }
 
 #' Kelvin to degree Celcius
@@ -173,5 +180,5 @@ c2k <- function(temp) {
 #' @returns degree Celcius
 #' @export
 k2c <- function(temp) {
-  temp - 273.15
+  temp - c2k_default
 }

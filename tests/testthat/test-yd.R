@@ -1,5 +1,6 @@
 #datetime <- as.POSIXlt("2020-01-01 ")
 datetime <- as.POSIXlt("2020-01-01 12:00")
+datetime <- as.POSIXlt("2020-01-01 12:00", tz="GMT")
 lat <- 57
 lon <- 5
 elev <- 200
@@ -94,3 +95,8 @@ plot(x, y)
 y <- c(0.033, 0.042, 0.130, 0.276, 0.421, 0.478, 0.528)
 x <- c(0, 10, 30, 50, 70, 80, 90)
 plot(x, y)
+
+
+
+weather_station <- weather_station_example_data
+soil_thermal_cond(weather_station)

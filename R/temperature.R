@@ -17,7 +17,7 @@ temp_pot_temp <- function(...) {
 #' @export
 #' @references p261.
 temp_pot_temp.default <- function(t, elev, ...) {
-  p0 <- 1013.25 # standard air pressure in hPa
+  p0 <- p0_default # standard air pressure in hPa
   p <- pres_p(elev, t) # calculate air pressure
   air_const <- 0.286 # specific gas constant / specific heat capacity
   t <- c2k(t) # to Kelvin

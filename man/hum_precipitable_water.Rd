@@ -8,16 +8,22 @@
 \usage{
 hum_precipitable_water(...)
 
-\method{hum_precipitable_water}{default}(elev, temp, ...)
+\method{hum_precipitable_water}{default}(datetime, lat, elev, temp, p0 = p0_default, ...)
 
 \method{hum_precipitable_water}{weather_station}(weather_station, height = "lower", ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
 
+\item{datetime}{Datetime}
+
+\item{lat}{Latitude}
+
 \item{elev}{Elevation above sea level in m.}
 
 \item{temp}{Temperature in °C.}
+
+\item{p0}{Standard pressure}
 
 \item{weather_station}{Object of class weather_station.}
 
