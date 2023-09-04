@@ -162,8 +162,6 @@ latent_monin <- function(...) {
 #' @param surface_type Type of surface.
 #' @references p77eq4.6, Foken p61 Tab. 2.10.
 latent_monin.default <- function(hum1, hum2, t1, t2, v1, v2, z1 = 2, z2 = 10, elev, surface_type = "field", ...) {
-  p1 <- pres_p(elev, t1)
-  p2 <- pres_p(elev, t2)
   monin <- turb_flux_monin(z1, z2, v1, v2, t1, t2, elev, surface_type)
   ustar <- turb_ustar(v1, z1, surface_type)
   grad_rich_no <- turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, elev)
