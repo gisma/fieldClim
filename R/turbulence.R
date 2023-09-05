@@ -23,14 +23,12 @@ turb_roughness_length <- function(...) {
 turb_roughness_length.default <- function(surface_type = NULL, obs_height = NULL, ...) {
   surface_properties <- surface_properties
   if (!is.null(obs_height)) {
-    z0 <- obs_height * 0.1
+    obs_height * 0.1
   } else if (!is.null(surface_type)) {
-    z0 <- surface_properties[which(surface_properties$surface_type == surface_type), ]$roughness_length
+    surface_properties[which(surface_properties$surface_type == surface_type), ]$roughness_length
   } else {
-    z0 <- NA
     print("The input is not valid. Please check the input values.")
   }
-  z0
 }
 
 #' @rdname turb_roughness_length
