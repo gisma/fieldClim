@@ -16,7 +16,7 @@ rad_diffuse_in(...)
     \item{\code{}}{}
   }}
 
-\item{datetime}{Datetime}
+\item{datetime}{Datetime in POSIXt}
 
 \item{lon}{Longitude.}
 

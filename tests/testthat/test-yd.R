@@ -1,6 +1,21 @@
-#datetime <- as.POSIXlt("2020-01-01 ")
-datetime <- as.POSIXlt("2020-01-01 12:00")
-datetime <- as.POSIXlt("2020-01-01 12:00", tz="GMT")
+#https://www.r-bloggers.com/2016/07/timezone-conversion-in-r/
+#datetime <- as.POSIXct(strptime("2018-08-19 13:15:00", format = "%Y-%m-%d %H:%M:%S", tz = "CET"), tz = "CET")
+#datetime <- format(datetime, tz = "GMT", usetz = TRUE)
+
+#datetime <- as.POSIXct("2018-08-19 13:15:00", tz = "CET")
+#datetime <- format(datetime, tz = "GMT", usetz = TRUE)
+#datetime
+#as.POSIXlt(datetime, tz = "GMT")
+#datetime <- as.POSIXlt("2018-08-19 13:15:00", tz = "CET")
+#datetime <- format(datetime, tz = "GMT", usetz = TRUE)
+#datetime
+
+#https://stackoverflow.com/questions/28996355/differences-between-subsetting-posixlt-and-posixct-in-r
+#    POSIXlt is a 'list type' with components you can access as you do
+#    POSIXct is a 'compact type' that is essentially just a number
+
+
+datetime <- as.POSIXlt("2018-08-19 13:15:00", tz = "GMT")
 lat <- 57
 lon <- 5
 elev <- 200
@@ -8,34 +23,104 @@ temp <- 15
 slope <- 30
 exposition <- 180
 
-sol_eccentricity(datetime)
-sol_day_angle(datetime)
-sol_julian_day(datetime)
-sol_elevation(datetime, lon, lat)
-sol_declination(datetime)
-sol_ecliptic_length(datetime)
-sol_medium_anomaly(datetime)
-sol_hour_angle(datetime, lon)
-sol_medium_suntime(datetime, lon)
-sol_time_formula(datetime, lon)
+# structure
+## 1 bound
+bound_mech_low
+bound_mech_avg
+bound_thermal_avg
+  turb_ustar
+  turb_roughness_length
+  surface_properties
+  temp_pot_temp
+  pres_p
 
-trans_gas(datetime, lon, lat, elev, temp)
-trans_air_mass_abs(datetime, lon, lat, elev, temp)
-trans_air_mass_rel(datetime, lon, lat)
-pres_p(elev, temp)
-trans_ozone.default(datetime, lon, lat)
-trans_rayleigh.default(datetime, lon, lat, elev, temp)
-trans_vapor.default(datetime, lon, lat, elev, temp)
-hum_precipitable_water(elev, temp)
-trans_aerosol.default(datetime, lon, lat, elev, temp)
+## 2 rad
+rad_bal
+  rad_sw_bal
+    rad_sw_in(datetime, lon, lat, elev, temp)
+      rad_sw_toa(datetime, lon, lat)
+        sol_eccentricity(datetime)
+          sol_day_angle(datetime)
+            sol_julian_day(datetime)
+        sol_elevation(datetime, lon, lat)
+          sol_declination(datetime)
+            sol_ecliptic_length(datetime)
+              sol_medium_anomaly(datetime)
+          sol_hour_angle(datetime, lon)
+            sol_medium_suntime(datetime, lon)
+            sol_time_formula(datetime, lon)
+      trans_gas(datetime, lon, lat, elev, temp)
+        trans_air_mass_abs(datetime, lon, lat, elev, temp)
+          trans_air_mass_rel(datetime, lon, lat)
+          pres_p(elev, temp)
+      trans_ozone(datetime, lon, lat)
+      trans_rayleigh(datetime, lon, lat, elev, temp)
+      trans_vapor(datetime, lon, lat, elev, temp)
+        hum_precipitable_water(datetime, lat, elev, temp)
+      trans_aerosol(datetime, lon, lat, elev, temp)
+      terr_terrain_angle(datetime, lon, lat)
+        sol_azimuth(datetime, lon, lat)
+    rad_diffuse_in(datetime, lon, lat, elev, temp)
+      terr_sky_view(slope)
+  rad_lw_bal
+    rad_lw_in
+      rad_emissivity_air
+        pres_sat_vapor_p
+      terr_sky_view
+    rad_lw_out
 
-rad_sw_in(datetime, lon, lat, elev, temp)
-sol_azimuth(datetime, lon, lat)
 
-rad_sw_toa(datetime, lon, lat)
-rad_diffuse_in(datetime, lon, lat, elev, temp)
-terr_terrain_angle(datetime, lon, lat)
-terr_sky_view(slope)
+## 3 Wärmestrom
+turb_flux_imp_exchange
+  turb_flux_ex_quotient_imp
+  grad_rich_no
+    temp_pot_temp
+      pres_p
+  ustar
+    turb_roughness_length.default
+    surface_properties
+  monin
+  air_density
+  turb_flux_ex_quotient_temp
+
+  turb_flux_stability
+
+sensible_priestley_taylor
+  rad_bal
+  sc
+  gam
+  soil_flux
+  priestley_taylor_coefficient
+
+sensible_monin
+
+sensible_bowen
+
+latent
+
+## 4. soil
+
+out <- c()
+a <- seq(as.Date("2020-01-01"), as.Date("2020-12-31"), by = 1)
+for (i in seq(length(a))) {
+  out[i] <- sol_julian_day(a[i])
+}
+plot(out, type = "l")
+
+out <- c()
+a <- seq(as.Date("2020-01-01"), as.Date("2020-12-31"), by = 1)
+for (i in seq(length(a))) {
+  out[i] <- sol_day_angle(a[i])
+}
+plot(out, type = "l")
+
+
+out <- c()
+a <- seq(as.Date("2020-01-01"), as.Date("2020-12-31"), by = 1)
+for (i in seq(length(a))) {
+  out[i] <- sol_eccentricity(a[i])
+}
+plot(out, type = "l")
 
 a <- c()
 for(day_angle in seq(0, 359)) {
@@ -49,10 +134,6 @@ for(elevation in seq(0, 359)) {
   a[elevation+1] = 1 / (sin(deg2rad(elevation)) + 1.5 * elevation^-0.72)
 }
 plot(a, type = "l")
-
-T0 <- c(300, 294, 272.2, 287, 257.1)
-pwst <- c(4.1167, 2.9243, 0.8539, 2.0852, 0.4176)
-plot(T0, pwst)
 
 vis <- seq(10, 60, 10)
 tau38 <- c(0.71, 0.43, 0.33, 0.27, 0.22, 0.20)

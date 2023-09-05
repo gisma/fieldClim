@@ -19,11 +19,11 @@ pres_p(...)
 
 \item{temp}{Temperature in °C.}
 
-\item{p0}{Standard pressure in hPa.}
+\item{p0}{Standard pressure in hPa, default 1013.25.}
 
-\item{g}{Gravitational acceleration in m/s${2}$.}
+\item{g}{Gravitational acceleration in m/s\eqn{^2}, default 9.81.}
 
-\item{rl}{Specific gas constant for air in j/kg/K.}
+\item{rl}{Specific gas constant for air in m\eqn{^2}/s\eqn{^2}/K, default 287.05.}
 
 \item{weather_station}{Object of class weather_station.}
 

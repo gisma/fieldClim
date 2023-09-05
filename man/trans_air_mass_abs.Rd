@@ -8,12 +8,17 @@
 \usage{
 trans_air_mass_abs(...)
 
-\method{trans_air_mass_abs}{default}(datetime, lon, lat, elev, temp, p0 = p0_default, ...)
+\method{trans_air_mass_abs}{default}(datetime, lon, lat, elev, temp, ...)
 
 \method{trans_air_mass_abs}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional arguments.}
+\item{...}{
+  Arguments passed on to \code{\link[=pres_p.default]{pres_p.default}}
+  \describe{
+    \item{\code{g}}{Gravitational acceleration in m/s\eqn{^2}, default 9.81.}
+    \item{\code{rl}}{Specific gas constant for air in m\eqn{^2}/s\eqn{^2}/K, default 287.05.}
+  }}
 
 \item{datetime}{Datetime in POSIXt}
 
@@ -25,14 +30,10 @@ trans_air_mass_abs(...)
 
 \item{temp}{Temperature in °C.}
 
-\item{p0}{Standard pressure in hPa.}
-
 \item{weather_station}{Object of class weather_station.}
 }
 \value{
 Absolute optical air mass.
-
-unitless
 }
 \description{
 Calculates absolute optical air mass.

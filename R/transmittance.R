@@ -13,17 +13,11 @@ trans_gas <- function(...) {
 #' @inheritParams trans_air_mass_abs
 #' @export
 #' @references p246.
-trans_gas.default <- function(datetime, lon, lat, elev, temp, ..., p0 = p0_default) {
-  air_mass_abs <- trans_air_mass_abs(datetime, lon, lat, elev, temp, p0 = p0)
+trans_gas.default <- function(datetime, lon, lat, elev, temp, ...) {
+  air_mass_abs <- trans_air_mass_abs(datetime, lon, lat, elev, temp)
   
   exp(-0.0127 * air_mass_abs^0.26)
 }
-#trans_gas.numeric <- function(air_mass_abs, ...) {
-#  trans_ga <- exp(-0.0127 * air_mass_abs^0.26)
-#  return(trans_ga)
-#}
-#' @inheritParams trans_air_mass_abs
-#' @returns unitless
 
 #' @rdname trans_gas
 #' @param weather_station Object of class weather_station.
@@ -48,21 +42,16 @@ trans_air_mass_abs <- function(...) {
 #' @rdname trans_air_mass_abs
 #' @inheritParams trans_air_mass_rel
 #' @inheritParams pres_p
+#' @inheritDotParams pres_p.default g rl
 #' @export
 #' @references p247.
-trans_air_mass_abs.default <- function(datetime, lon, lat, elev, temp, p0 = p0_default, ...) {
+trans_air_mass_abs.default <- function(datetime, lon, lat, elev, temp, ...) {
   air_mass_rel <- trans_air_mass_rel(datetime, lon, lat)
-  p <- pres_p(elev, temp, p0 = p0)
+  p <- pres_p(elev, temp, ...)
+  p0 <- p0_default # will be cancled in pres_p
   
   air_mass_rel * (p / p0)
 }
-#trans_air_mass_abs.default <- function(air_mass_rel, p, ...) {
-#  p0 <- 1013.25
-#  air_mass_abs <- air_mass_rel * (p / p0)
-#  return(air_mass_abs)
-#}
-#' @inheritParams trans_air_mass_rel
-#' @returns unitless
 
 #' @rdname trans_air_mass_abs
 #' @param weather_station Object of class weather_station.
@@ -96,14 +85,6 @@ trans_air_mass_rel.default <- function(datetime, lon, lat, ...) {
   
   1 / (sin(deg2rad(elevation)) + 1.5 * elevation^-0.72)
 }
-#trans_air_mass_rel.default <- function(sol_elevation, ...) {
-#  sol_elevation <- pi / 180 * sol_elevation
-#  mr <- 1 / (sin(sol_elevation) + 1.5 * sol_elevation^-0.72)
-#  return(mr)
-#}
-#' @inheritParams sol_elevation
-#' @returns unitless
-
 
 #' @rdname trans_air_mass_rel
 #' @param weather_station Object of class weather_station.
@@ -139,11 +120,6 @@ trans_ozone.default <- function(datetime, lon, lat, ozone_column = 0.35, ...) {
     0.002715 * x * (1 + 0.044 * x + 0.0003 * x^2)^-1
   )
 }
-#trans_ozone.default <- function(air_mass_rel, oz = 0.35, ...) {
-#  x <- oz * air_mass_rel
-#  xx <- 1 - (0.1611 * x * (1 + 139.48 * x)^(-0.3035) - 0.002715 * x * (1 + 0.044 * x + 0.0003 * x^2)^(-1))
-#  return(xx)
-#}
 
 #' @rdname trans_ozone
 #' @param weather_station Object of class weather_station.
@@ -169,16 +145,11 @@ trans_rayleigh <- function(...) {
 #' @inheritParams trans_air_mass_abs
 #' @export
 #' @references p245.
-trans_rayleigh.default <- function(datetime, lon, lat, elev, temp, ..., p0 = p0_default) {
-  air_mass_abs <- trans_air_mass_abs(datetime, lon, lat, elev, temp, p0 = p0)
+trans_rayleigh.default <- function(datetime, lon, lat, elev, temp, ...) {
+  air_mass_abs <- trans_air_mass_abs(datetime, lon, lat, elev, temp)
   
   exp(-0.0903 * air_mass_abs^0.84 * (1 + air_mass_abs - air_mass_abs^1.01))
 }
-#trans_rayleigh.default <- function(air_mass_abs, ...) {
-#  x1 <- -0.0903 * air_mass_abs^(0.84) * (1.0 + air_mass_abs - air_mass_abs^(1.01))
-#  x <- exp(x1)
-#  return(x)
-#}
 
 #' @rdname trans_rayleigh
 #' @param weather_station Object of class weather_station.
@@ -207,17 +178,12 @@ trans_vapor <- function(...) {
 #' @export
 #' @references p245.
 trans_vapor.default <- function(datetime, lon, lat, elev, temp, ...) {
-  precipitable_water <- hum_precipitable_water(elev, temp, ...)
+  precipitable_water <- hum_precipitable_water(datetime, lat, elev, temp)
   air_mass_rel <- trans_air_mass_rel(datetime, lon, lat)
   x <- precipitable_water * air_mass_rel
   
   1 - 2.4959 * x * ((1 + 79.034 * x)^0.6828 + 6.385 * x)^-1
 }
-#trans_vapor.default <- function(air_mass_rel, precipitable_water, ...) {
-#  y <- precipitable_water * air_mass_rel
-#  yy <- 1 - 2.4959 * y * ((1 + 79.034 * y)^0.6828 + 6.385 * y)^-1
-#  return(yy)
-#}
 
 #' @rdname trans_vapor
 #' @param weather_station Object of class weather_station.
@@ -245,23 +211,24 @@ trans_aerosol <- function(...) {
 #' @param vis Visibility in km.
 #' @export
 #' @references p246.
-trans_aerosol.default <- function(datetime, lon, lat, elev, temp, vis = 30, ..., p0 = p0_default) {
-  air_mass_abs <- trans_air_mass_abs(datetime, lon, lat, elev, temp, p0 = p0)
-  tau38 <- 3.6536 * vis^-0.7111
-  tau50 <- 2.4087 * vis^-0.719
+trans_aerosol.default <- function(datetime, lon, lat, elev, temp, vis = 30, ...) {
+  air_mass_abs <- trans_air_mass_abs(datetime, lon, lat, elev, temp)
+  
+  df <- data.frame(
+    vis = seq(10, 60, 10),
+    tau38 = c(0.71, 0.43, 0.33, 0.27, 0.22, 0.20),
+    tau50 = c(0.46, 0.28, 0.21, 0.17, 0.14, 0.13)
+  )
+  mod38 <- lm(log(df$tau38)~log(df$vis))
+  mod50 <- lm(log(df$tau50)~log(df$vis))
+  
+  tau38 <- exp(mod38$coefficients[[1]]) * vis^mod38$coefficients[[2]]
+  tau50 <- exp(mod50$coefficients[[1]]) * vis^mod50$coefficients[[2]]
   
   x <- 0.2758 * tau38 + 0.35 * tau50
   
   exp(-x^0.873 * (1 + x - x^0.7088) * air_mass_abs^0.9108)
 }
-#trans_aerosol.default <- function(air_mass_abs, vis = 30, ...) {
-#  tau38 <- 3.6536 * vis^(-0.7111)
-#  tau5 <- 2.4087 * vis^(-0.719)
-#  tex <- 0.2758 * tau38 + 0.35 * tau5
-#  x1 <- -tex^0.873 * (1 + tex - tex^0.7088) * air_mass_abs^0.9108
-#  x <- exp(x1)
-#  return(x)
-#}
 
 #' @rdname trans_aerosol
 #' @param weather_station Object of class weather_station.
