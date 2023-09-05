@@ -8,7 +8,7 @@
 #' @rdname turb_roughness_length
 #' @param ... Additional arguments.
 #' @returns roughness length in m.
-#' @references p239.
+#' @references Bendix 2004, p. 239
 #' @export
 #'
 turb_roughness_length <- function(...) {
@@ -19,7 +19,6 @@ turb_roughness_length <- function(...) {
 #' @param surface_type Type of surface.
 #' @param obs_height Height of obstacle in m.
 #' @export
-#' @references p239.
 turb_roughness_length.default <- function(surface_type = NULL, obs_height = NULL, ...) {
   surface_properties <- surface_properties
   if (!is.null(obs_height)) {
