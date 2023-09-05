@@ -102,11 +102,17 @@ turb_ustar <- function(...) {
 #' @rdname turb_ustar
 #' @param v Windspeed in height of anemometer in m/s.
 #' @param z Height of anemometer in m.
-#' @param surface_type Type of surface.
+#' @inheritDotParams turb_roughness_length
 #' @export
 #' @references p239.
-turb_ustar.default <- function(v, z, surface_type, ...) {
-  z0 <- turb_roughness_length(surface_type = surface_type) # calculate roughness length in m
+turb_ustar.default <- function(v, z, ...) {
+  if (!is.null(obs_height)) {
+    z0 <- turb_roughness_length(obs_height=obs_height)
+  } else if (!is.null(surface_type)) {
+    z0 <- turb_roughness_length(surface_type=surface_type)
+  } else {
+    print("The input is not valid. Either obs_height or surface_type has to be defined.")
+  }
   ustar <- (v * 0.4) / log(z / z0)
   if (any(is.infinite(ustar))) {
     print("One or more ustar values are infinite. They are set to NA.")
