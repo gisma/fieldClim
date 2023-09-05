@@ -7,19 +7,18 @@
 bound_thermal_avg(
   v,
   z,
-  surface_type,
   temp_change_dist,
   t_pot_upwind,
   t_pot,
-  lapse_rate
+  lapse_rate,
+  surface_type = NULL,
+  obs_height = NULL
 )
 }
 \arguments{
 \item{v}{Windspeed in height of anemometer in m/s.}
 
 \item{z}{Height of anemometer in m.}
-
-\item{surface_type}{Type of surface.}
 
 \item{temp_change_dist}{Distance to point of temperature change in m.}
 
@@ -28,6 +27,10 @@ bound_thermal_avg(
 \item{t_pot}{Potential temperature at site in °C.}
 
 \item{lapse_rate}{Lapse rate in °C/m.}
+
+\item{surface_type}{Type of surface.}
+
+\item{obs_height}{Height of obstacle in m.}
 }
 \value{
 Average height of the thermal boundary layer in m.
