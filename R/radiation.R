@@ -65,7 +65,6 @@ rad_sw_in <- function(...) {
 #' @rdname rad_sw_in
 #' @inheritParams trans_rayleigh
 #' @inheritDotParams rad_sw_toa.default sol_const
-#' @inheritDotParams trans_gas.default p0
 #' @inheritDotParams trans_ozone.default ozone_column
 #' @inheritDotParams trans_aerosol.default vis
 #' @inheritDotParams terr_terrain_angle.default slope exposition
@@ -76,7 +75,7 @@ rad_sw_in.default <- function(datetime, lon, lat, elev, temp, ...) {
   elevation <- sol_elevation(datetime, lon, lat)
   elevation <- deg2rad(elevation)
 
-  gas <- trans_gas(datetime, lon, lat, elev, temp, ...)
+  gas <- trans_gas(datetime, lon, lat, elev, temp)
   ozone <- trans_ozone(datetime, lon, lat, ...)
   rayleigh <- trans_rayleigh(datetime, lon, lat, elev, temp)
   vapor <- trans_vapor(datetime, lon, lat, elev, temp)

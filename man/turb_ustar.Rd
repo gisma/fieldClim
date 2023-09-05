@@ -8,18 +8,20 @@
 \usage{
 turb_ustar(...)
 
-\method{turb_ustar}{default}(v, z, surface_type, ...)
+\method{turb_ustar}{default}(v, z, ...)
 
 \method{turb_ustar}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional arguments.}
+\item{...}{
+  Arguments passed on to \code{\link[=turb_roughness_length]{turb_roughness_length}}
+  \describe{
+    \item{\code{}}{}
+  }}
 
 \item{v}{Windspeed in height of anemometer in m/s.}
 
 \item{z}{Height of anemometer in m.}
-
-\item{surface_type}{Type of surface.}
 
 \item{weather_station}{Object of class weather_station.}
 }

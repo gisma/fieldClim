@@ -129,9 +129,9 @@ hum_precipitable_water <- function(...) {
 }
 
 #' @rdname hum_precipitable_water
-#' @inheritParams sol_julian_day
+#' @inheritParams sol_julian_day.default
 #' @inheritParams pres_p
-#' @inheritDotParams pres_p g rl
+#' @inheritDotParams pres_p.default g rl
 #' @param lat Latitude
 #' @export
 #' @references p246. Column name "subarctic_summer" and "subarctic_winter" were switched.

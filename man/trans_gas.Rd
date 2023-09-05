@@ -8,7 +8,7 @@
 \usage{
 trans_gas(...)
 
-\method{trans_gas}{default}(datetime, lon, lat, elev, temp, ..., p0 = p0_default)
+\method{trans_gas}{default}(datetime, lon, lat, elev, temp, ...)
 
 \method{trans_gas}{weather_station}(weather_station, ...)
 }
@@ -29,8 +29,6 @@ trans_gas(...)
 }
 \value{
 Transmittance due to gas (0-1), unitless
-
-unitless
 }
 \description{
 Calculates transmittance due to O$\emph{{2}$ and CO$}{2}$.

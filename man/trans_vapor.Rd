@@ -15,7 +15,7 @@ trans_vapor(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{datetime}{Datetime}
+\item{datetime}{Datetime in POSIXt}
 
 \item{lon}{Longitude.}
 

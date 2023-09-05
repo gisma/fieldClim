@@ -8,7 +8,7 @@
 \usage{
 trans_rayleigh(...)
 
-\method{trans_rayleigh}{default}(datetime, lon, lat, elev, temp, ..., p0 = p0_default)
+\method{trans_rayleigh}{default}(datetime, lon, lat, elev, temp, ...)
 
 \method{trans_rayleigh}{weather_station}(weather_station, ...)
 }

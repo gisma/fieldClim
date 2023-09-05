@@ -23,14 +23,12 @@ turb_roughness_length <- function(...) {
 turb_roughness_length.default <- function(surface_type = NULL, obs_height = NULL, ...) {
   surface_properties <- surface_properties
   if (!is.null(obs_height)) {
-    z0 <- obs_height * 0.1
+    obs_height * 0.1
   } else if (!is.null(surface_type)) {
-    z0 <- surface_properties[which(surface_properties$surface_type == surface_type), ]$roughness_length
+    surface_properties[which(surface_properties$surface_type == surface_type), ]$roughness_length
   } else {
-    z0 <- NA
     print("The input is not valid. Please check the input values.")
   }
-  z0
 }
 
 #' @rdname turb_roughness_length
@@ -104,11 +102,17 @@ turb_ustar <- function(...) {
 #' @rdname turb_ustar
 #' @param v Windspeed in height of anemometer in m/s.
 #' @param z Height of anemometer in m.
-#' @param surface_type Type of surface.
+#' @inheritDotParams turb_roughness_length
 #' @export
 #' @references p239.
-turb_ustar.default <- function(v, z, surface_type, ...) {
-  z0 <- turb_roughness_length(surface_type = surface_type) # calculate roughness length in m
+turb_ustar.default <- function(v, z, ...) {
+  if (!is.null(obs_height)) {
+    z0 <- turb_roughness_length(obs_height=obs_height)
+  } else if (!is.null(surface_type)) {
+    z0 <- turb_roughness_length(surface_type=surface_type)
+  } else {
+    print("The input is not valid. Either obs_height or surface_type has to be defined.")
+  }
   ustar <- (v * 0.4) / log(z / z0)
   if (any(is.infinite(ustar))) {
     print("One or more ustar values are infinite. They are set to NA.")
@@ -121,7 +125,7 @@ turb_ustar.default <- function(v, z, surface_type, ...) {
 #' @param weather_station Object of class weather_station.
 #' @export
 turb_ustar.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "v1", "z1")
+  check_availability(weather_station, "v1", "z1", "surface_type")
   v <- weather_station$measurements$v1
   z <- weather_station$properties$z1
   surface_type <- weather_station$location_properties$surface_type
