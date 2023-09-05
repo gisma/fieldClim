@@ -8,7 +8,7 @@
 \usage{
 rad_lw_in(...)
 
-\method{rad_lw_in}{default}(temp, rh, sigma = 5.6993e-08, ...)
+\method{rad_lw_in}{default}(temp, rh, sigma = sigma_default, ...)
 
 \method{rad_lw_in}{weather_station}(weather_station, ...)
 }
@@ -28,12 +28,12 @@ rad_lw_in(...)
 \item{rh}{relative humidity.}
 
 \item{sigma}{Stefan-Boltzmann constant
-with the default 5.6993e-8 W/m$^{2}$/K$^{4}$}
+with the default 5.6993e-8 W/m\eqn{^2}/K$^{4}$}
 
 \item{weather_station}{Object of class weather_station.}
 }
 \value{
-Atmospheric radiation in W/m$^{2}$.
+Atmospheric radiation in W/m\eqn{^2}.
 }
 \description{
 Calculation of the longwave radiation of the atmosphere.

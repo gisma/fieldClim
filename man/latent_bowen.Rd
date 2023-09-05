@@ -40,20 +40,20 @@ latent_bowen(...)
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{rad_bal}{Radiation balance in W/m².}
+\item{rad_bal}{Radiation balance in W/m\eqn{^2}.}
 
-\item{soil_flux}{Soil flux in W/m².}
+\item{soil_flux}{Soil flux in W/m\eqn{^2}.}
 
 \item{weather_station}{Object of class weather_station.}
 }
 \value{
-Latent heat flux in W/m².
+Latent heat flux in W/m\eqn{^2}.
 }
 \description{
 Calculates the latent heat flux using the Bowen Method. Negative
 flux signifies flux away from the surface, positive values signify flux
 towards the surface.
-Values above 600 W/m² and below -600 W/m² will be recognized
+Values above 600 W/m\eqn{^2} and below -600 W/m\eqn{^2} will be recognized
 as measurement mistakes and smoothed respectively.
 }
 \references{

@@ -8,7 +8,7 @@
 \usage{
 trans_gas(...)
 
-\method{trans_gas}{default}(datetime, lon, lat, elev, temp, ..., p0 = 1013)
+\method{trans_gas}{default}(datetime, lon, lat, elev, temp, ..., p0 = p0_default)
 
 \method{trans_gas}{weather_station}(weather_station, ...)
 }

@@ -64,15 +64,15 @@ Form: POSIX-Object (See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:
 
 \item{p2}{Vector containing pressure data in hPa of the upper point of measurement.}
 
-\item{sw_in}{Vector containing incoming shortwave radiation in W/m².}
+\item{sw_in}{Vector containing incoming shortwave radiation in W/m\eqn{^2}.}
 
-\item{sw_out}{Vector containing outgoing shortwave radiation in W/m².}
+\item{sw_out}{Vector containing outgoing shortwave radiation in W/m\eqn{^2}.}
 
-\item{lw_in}{Vector containing incoming longwave radiation in W/m².}
+\item{lw_in}{Vector containing incoming longwave radiation in W/m\eqn{^2}.}
 
-\item{lw_out}{Vector containing outgoing shortwave radiation in W/m².}
+\item{lw_out}{Vector containing outgoing shortwave radiation in W/m\eqn{^2}.}
 
-\item{soil_flux}{Vector containing soil flux in W/m².}
+\item{soil_flux}{Vector containing soil flux in W/m\eqn{^2}.}
 
 \item{valley}{Does the weather station locate in a valley?}
 

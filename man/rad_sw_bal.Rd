@@ -13,7 +13,7 @@ rad_sw_bal(...)
 \item{...}{Additional arguments.}
 }
 \value{
-W/m$^{2}$
+W/m\eqn{^2}
 }
 \description{
 Shortwave radiation balance

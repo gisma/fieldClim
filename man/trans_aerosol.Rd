@@ -8,7 +8,7 @@
 \usage{
 trans_aerosol(...)
 
-\method{trans_aerosol}{default}(datetime, lon, lat, elev, temp, vis = 30, ..., p0 = 1013)
+\method{trans_aerosol}{default}(datetime, lon, lat, elev, temp, vis = 30, ..., p0 = p0_default)
 
 \method{trans_aerosol}{weather_station}(weather_station, ...)
 }

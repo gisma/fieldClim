@@ -8,7 +8,7 @@
 \usage{
 trans_air_mass_abs(...)
 
-\method{trans_air_mass_abs}{default}(datetime, lon, lat, elev, temp, p0 = 1013, ...)
+\method{trans_air_mass_abs}{default}(datetime, lon, lat, elev, temp, p0 = p0_default, ...)
 
 \method{trans_air_mass_abs}{weather_station}(weather_station, ...)
 }

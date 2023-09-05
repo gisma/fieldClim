@@ -10,7 +10,7 @@ heat_capacity(t)
 \item{t}{Air temperature in °C.}
 }
 \value{
-Heat capacity density in J/(K*m³)
+Heat capacity density in J/(K*m\eqn{^3})
 }
 \description{
 Calculates volumetric heat capacity

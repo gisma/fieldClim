@@ -8,7 +8,7 @@
 \usage{
 pres_p(...)
 
-\method{pres_p}{default}(elev, temp, p0 = 1013.25, g = 9.81, rl = 287.05, ...)
+\method{pres_p}{default}(elev, temp, p0 = p0_default, g = g_default, rl = rl_default, ...)
 
 \method{pres_p}{weather_station}(weather_station, height = "lower", ...)
 }

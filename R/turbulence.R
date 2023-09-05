@@ -125,7 +125,7 @@ turb_ustar.default <- function(v, z, ...) {
 #' @param weather_station Object of class weather_station.
 #' @export
 turb_ustar.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "v1", "z1")
+  check_availability(weather_station, "v1", "z1", "surface_type")
   v <- weather_station$measurements$v1
   z <- weather_station$properties$z1
   surface_type <- weather_station$location_properties$surface_type

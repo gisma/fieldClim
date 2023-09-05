@@ -18,7 +18,7 @@ rad_bal(...)
 \item{weather_station}{Object of class weather_station.}
 }
 \value{
-Total radiation balance in W/m$^{2}$.
+Total radiation balance in W/m\eqn{^2}.
 }
 \description{
 Calculate total radiation balance.

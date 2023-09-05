@@ -26,7 +26,7 @@ See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:strptime]{base::strp
 
 \item{z}{Height of measurement for t, v in m.}
 
-\item{rad_bal}{Radiation balance in W/m².}
+\item{rad_bal}{Radiation balance in W/m\eqn{^2}.}
 
 \item{elev}{Elevation above sea level in m.}
 
@@ -37,7 +37,7 @@ See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:strptime]{base::strp
 \item{weather_station}{Object of class weather_station.}
 }
 \value{
-Latent heat flux in W/m².
+Latent heat flux in W/m\eqn{^2}.
 }
 \description{
 Calculates the latent heat flux using the Penman-Monteith equation. Negative
