@@ -21,13 +21,30 @@ turb_flux_monin <- function(...) {
 #' @param t1 Temperature at lower height (e.g. height of anemometer) in °C.
 #' @param t2 Temperature at upper height in °C.
 #' @param elev Elevation above sea level in m.
-#' @param surface_type Type of surface.
+#' @inheritDotParams turb_roughness_length
 #' @export
-#' @references p241
-turb_flux_monin.default <- function(z1 = 2, z2 = 10, v1, v2, t1, t2, elev, surface_type, ...) {
+#' @references Bendix 2004, p. 241
+turb_flux_monin.default <- function(z1 = 2, z2 = 10, v1, v2, t1, t2, elev, ...) {
   grad_rich_no <- turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, elev)
-  z0 <- turb_roughness_length(surface_type=surface_type)
-  ustar <- turb_ustar(v1, z1, surface_type=surface_type)
+
+  # calculate z0
+  if (!is.null(obs_height)) {
+    z0 <- turb_roughness_length(obs_height=obs_height)
+  } else if (!is.null(surface_type)) {
+    z0 <- turb_roughness_length(surface_type=surface_type)
+  } else {
+    print("The input is not valid. Either obs_height or surface_type has to be defined.")
+  }
+
+  # calculate ustar
+  if (!is.null(obs_height)) {
+    ustar <- turb_ustar(v=v1, z=z1, obs_height=obs_height)
+  } else if (!is.null(surface_type)) {
+    ustar <- turb_ustar(v=v1, z=z1, surface_type=surface_type)
+  } else {
+    print("The input is not valid. Either obs_height or surface_type has to be defined.")
+  }
+
   monin <- rep(NA, length(grad_rich_no))
   for (i in 1:length(grad_rich_no)) {
     if (is.na(grad_rich_no[i])) {
@@ -61,7 +78,7 @@ turb_flux_monin.weather_station <- function(weather_station, ...) {
   t2 <- weather_station$measurements$t2
   elev <- weather_station$location_properties$elevation
   surface_type <- weather_station$location_properties$surface_type
-  return(turb_flux_monin(z1, z2, v1, v2, t1, t2, elev, surface_type))
+  return(turb_flux_monin(z1, z2, v1, v2, t1, t2, elev, surface_type = surface_type))
 }
 
 #' Gradient-Richardson-Number
@@ -175,13 +192,30 @@ turb_flux_ex_quotient_temp <- function(...) {
 #' @param v1 Windspeed at lower height (e.g. height of anemometer) in m/s.
 #' @param v2 Windspeed at upper height in m/s.
 #' @param elev Elevation above sea level in m.
-#' @param surface_type Type of surface.
+#' @inheritDotParams turb_roughness_length
 #' @export
 #' @references Foken p362 Businger.
-turb_flux_ex_quotient_temp.default <- function(t1, t2, z1=2, z2=10, v1, v2, elev, surface_type, ...) {
+turb_flux_ex_quotient_temp.default <- function(t1, t2, z1=2, z2=10, v1, v2, elev, ...) {
   grad_rich_no <- turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, elev)
-  ustar <- turb_ustar(v1, z1, surface_type)
-  monin <- turb_flux_monin(z1, z2, v1, v2, t1, t2, elev, surface_type)
+
+  # calculate ustar
+  if (!is.null(obs_height)) {
+    ustar <- turb_ustar(v=v1, z=z1, obs_height=obs_height)
+  } else if (!is.null(surface_type)) {
+    ustar <- turb_ustar(v=v1, z=z1, surface_type=surface_type)
+  } else {
+    print("The input is not valid. Either obs_height or surface_type has to be defined.")
+  }
+
+  # calculate Monin-Obhukov-Length
+  if (!is.null(obs_height)) {
+    monin <- turb_flux_monin(z1=z1, z2=z2, v1=v1, v2=v2, t1=t1, t2=t2, elev=elev, obs_height=obs_height)
+  } else if (!is.null(surface_type)) {
+    monin <- turb_flux_monin(z1=z1, z2=z2, v1=v1, v2=v2, t1=t1, t2=t2, elev=elev, surface_type=surface_type)
+  } else {
+    print("The input is not valid. Either obs_height or surface_type has to be defined.")
+  }
+
   air_density <- pres_air_density(elev, t1)
   ex <- rep(NA, length(grad_rich_no))
   for (i in 1:length(grad_rich_no)) {
@@ -211,7 +245,7 @@ turb_flux_ex_quotient_temp.weather_station <- function(weather_station, ...) {
   v2 <- weather_station$measurements$v2
   elev <- weather_station$location_properties$elevation
   surface_type <- weather_station$location_properties$surface_type
-  return(turb_flux_ex_quotient_temp(t1, t2, z1, z2, v1, v2, elev, surface_type))
+  return(turb_flux_ex_quotient_temp(t1, t2, z1, z2, v1, v2, elev, surface_type=surface_type))
 }
 
 
@@ -236,13 +270,30 @@ turb_flux_ex_quotient_imp <- function(...) {
 #' @param v1 Windspeed at lower height (e.g. height of anemometer) in m/s.
 #' @param v2 Windspeed at upper height in m/s.
 #' @param elev Elevation above sea level in m.
-#' @param surface_type Type of surface.
+#' @inheritDotParams turb_roughness_length
 #' @export
 #' @references Foken p361 Businger.
-turb_flux_ex_quotient_imp.default <- function(t1, t2, z1=2, z2=10, v1, v2, elev, surface_type, ...) {
+turb_flux_ex_quotient_imp.default <- function(t1, t2, z1=2, z2=10, v1, v2, elev, ...) {
   grad_rich_no <- turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, elev)
-  ustar <- turb_ustar(v1, z1, surface_type)
-  monin <- turb_flux_monin(z1, z2, v1, v2, t1, t2, elev, surface_type)
+
+  # calculate ustar
+  if (!is.null(obs_height)) {
+    ustar <- turb_ustar(v=v1, z=z1, obs_height=obs_height)
+  } else if (!is.null(surface_type)) {
+    ustar <- turb_ustar(v=v1, z=z1, surface_type=surface_type)
+  } else {
+    print("The input is not valid. Either obs_height or surface_type has to be defined.")
+  }
+
+  # calculate Monin-Obhukov-Length
+  if (!is.null(obs_height)) {
+    monin <- turb_flux_monin(z1=z1, z2=z2, v1=v1, v2=v2, t1=t1, t2=t2, elev=elev, obs_height=obs_height)
+  } else if (!is.null(surface_type)) {
+    monin <- turb_flux_monin(z1=z1, z2=z2, v1=v1, v2=v2, t1=t1, t2=t2, elev=elev, surface_type=surface_type)
+  } else {
+    print("The input is not valid. Either obs_height or surface_type has to be defined.")
+  }
+
   air_density <- pres_air_density(elev, t1)
   ex <- rep(NA, length(grad_rich_no))
   for (i in 1:length(grad_rich_no)) {
@@ -272,7 +323,7 @@ turb_flux_ex_quotient_imp.weather_station <- function(weather_station, ...) {
   v2 <- weather_station$measurements$v2
   elev <- weather_station$location_properties$elevation
   surface_type <- weather_station$location_properties$surface_type
-  return(turb_flux_ex_quotient_imp(t1, t2, z1, z2, v1, v2, elev, surface_type))
+  return(turb_flux_ex_quotient_imp(t1, t2, z1, z2, v1, v2, elev, surface_type=surface_type))
 }
 
 
@@ -297,10 +348,17 @@ turb_flux_imp_exchange <- function(...) {
 #' @param z1 Lower height of measurement (e.g. height of anemometer) in m.
 #' @param z2 Upper height of measurement in m.
 #' @param elev Elevation above sea level in m.
-#' @param surface_type Type of surface.
+#' @inheritDotParams turb_roughness_length
 #' @export
-turb_flux_imp_exchange.default <- function(t1, t2, v1, v2, z1 = 2, z2 = 10, elev, surface_type, ...) {
-  ex_quotient <- turb_flux_ex_quotient_imp(t1, t2, z1, z2, v1, v2, elev, surface_type)
+turb_flux_imp_exchange.default <- function(t1, t2, v1, v2, z1 = 2, z2 = 10, elev, ...) {
+  # calculate quotient
+  if (!is.null(obs_height)) {
+    ex_quotient <- turb_flux_ex_quotient_imp(t1, t2, z1, z2, v1, v2, elev, obs_height=obs_height)
+  } else if (!is.null(surface_type)) {
+    ex_quotient <- turb_flux_ex_quotient_imp(t1, t2, z1, z2, v1, v2, elev, surface_type=surface_type)
+  } else {
+    print("The input is not valid. Either obs_height or surface_type has to be defined.")
+  }
   ia <- ex_quotient * (v2 - v1) / (z2 - z1)
   ia
 }
@@ -318,7 +376,7 @@ turb_flux_imp_exchange.weather_station <- function(weather_station, ...) {
   v2 <- weather_station$measurements$v2
   elev <- weather_station$location_properties$elevation
   surface_type <- weather_station$location_properties$surface_type
-  return(turb_flux_imp_exchange(t1, t2, v1, v2, z1, z2, elev, surface_type))
+  return(turb_flux_imp_exchange(t1, t2, v1, v2, z1, z2, elev, surface_tyoe = surface_type))
 }
 
 
