@@ -15,7 +15,7 @@ rad_lw_in_topo(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{rad_lw_out}{Longwave surface emissions in W/m$^{2}$.}
+\item{rad_lw_out}{Longwave surface emissions in W/m\eqn{^2}.}
 
 \item{hum}{relative humidity in \%.}
 
@@ -26,7 +26,7 @@ rad_lw_in_topo(...)
 \item{weather_station}{Object of class weather_station.}
 }
 \value{
-Incoming longwave radiation with topography in W/m$^{2}$.
+Incoming longwave radiation with topography in W/m\eqn{^2}.
 }
 \description{
 Corrects the incoming longwave radiation using the sky view factor.

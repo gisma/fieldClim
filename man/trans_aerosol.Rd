@@ -8,7 +8,7 @@
 \usage{
 trans_aerosol(...)
 
-\method{trans_aerosol}{default}(datetime, lon, lat, elev, temp, vis = 30, ..., p0 = 1013)
+\method{trans_aerosol}{default}(datetime, lon, lat, elev, temp, vis = 30, ..., p0 = p0_default)
 
 \method{trans_aerosol}{weather_station}(weather_station, ...)
 }
@@ -26,8 +26,6 @@ trans_aerosol(...)
 \item{temp}{Temperature in °C.}
 
 \item{vis}{Visibility in km.}
-
-\item{p0}{Standard pressure in hPa.}
 
 \item{weather_station}{Object of class weather_station.}
 }

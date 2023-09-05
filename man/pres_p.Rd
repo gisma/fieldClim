@@ -8,7 +8,7 @@
 \usage{
 pres_p(...)
 
-\method{pres_p}{default}(elev, temp, p0 = 1013.25, g = 9.81, rl = 287.05, ...)
+\method{pres_p}{default}(elev, temp, p0 = p0_default, g = g_default, rl = rl_default, ...)
 
 \method{pres_p}{weather_station}(weather_station, height = "lower", ...)
 }
@@ -19,11 +19,11 @@ pres_p(...)
 
 \item{temp}{Temperature in °C.}
 
-\item{p0}{Standard pressure in hPa.}
+\item{p0}{Standard pressure in hPa, default 1013.25.}
 
-\item{g}{Gravitational acceleration in m/s${2}$.}
+\item{g}{Gravitational acceleration in m/s\eqn{^2}, default 9.81.}
 
-\item{rl}{Specific gas constant for air in j/kg/K.}
+\item{rl}{Specific gas constant for air in m\eqn{^2}/s\eqn{^2}/K, default 287.05.}
 
 \item{weather_station}{Object of class weather_station.}
 

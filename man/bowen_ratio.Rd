@@ -12,7 +12,7 @@ bowen_ratio(t, dpot, dah)
 \item{dpot}{Difference in potential temperature between the two measurement
 heights in °C.}
 
-\item{dah}{Difference in absolute humidity (kg/m³) between the two measurement heights.}
+\item{dah}{Difference in absolute humidity (kg/m\eqn{^3}) between the two measurement heights.}
 }
 \value{
 Bowen-ratio

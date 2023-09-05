@@ -44,7 +44,7 @@ turb_flux_imp_exchange(...)
 \item{weather_station}{Object of class weather_station}
 }
 \value{
-Turbulent impulse exchange in kg/(m*s²).
+Turbulent impulse exchange in kg/(m*s\eqn{^2}).
 }
 \description{
 Calculation of the turbulent impulse exchange.

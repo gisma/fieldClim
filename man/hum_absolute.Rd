@@ -24,7 +24,7 @@ hum_absolute(...)
 \item{height}{Height of measurement. "lower" or "upper".}
 }
 \value{
-Absolute humidity in kg/m³.
+Absolute humidity in kg/m\eqn{^3}.
 }
 \description{
 Calculates absolute humidity from vapor pressure and air temperature.

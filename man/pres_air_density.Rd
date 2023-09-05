@@ -24,7 +24,7 @@ pres_air_density(...)
 \item{t}{Temperature in °C.}
 }
 \value{
-Air density in kg/m³.
+Air density in kg/m\eqn{^3}.
 }
 \description{
 Calculation of the air density.

@@ -8,7 +8,7 @@
 \usage{
 rad_lw_out(...)
 
-\method{rad_lw_out}{default}(surface_temp, surface_type = "field", sigma = 5.6993e-08, ...)
+\method{rad_lw_out}{default}(surface_temp, surface_type = "field", sigma = sigma_default, ...)
 
 \method{rad_lw_out}{weather_station}(weather_station, surface_type = "field", ...)
 }
@@ -21,13 +21,13 @@ rad_lw_out(...)
 Default is 'field' as surface type.}
 
 \item{sigma}{Stefan-Boltzmann constant
-with the default 5.6993e-8 W/m$^{2}$/K$^{4}$
+with the default 5.6993e-8 W/m\eqn{^2}/K$^{4}$
 Default is 'field' as surface type.}
 
 \item{weather_station}{Object of class weather_station.}
 }
 \value{
-Emissions in W/m$^{2}$.
+Emissions in W/m\eqn{^2}.
 }
 \description{
 Calculates emissions of a surface.

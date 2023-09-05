@@ -21,12 +21,12 @@ rad_sw_toa(...)
 
 \item{lat}{Latitude in decimal degrees.}
 
-\item{sol_const}{Solar constant in W/m$^{2}$}
+\item{sol_const}{Solar constant in W/m\eqn{^2}}
 
 \item{weather_station}{Object of class weather_station.}
 }
 \value{
-Shortwave radiation at top of atmosphere in W/m$^{2}$.
+Shortwave radiation at top of atmosphere in W/m\eqn{^2}.
 }
 \description{
 Calculation of the shortwave radiation at the top of the atmosphere.

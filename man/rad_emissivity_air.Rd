@@ -8,7 +8,7 @@
 \usage{
 rad_emissivity_air(...)
 
-\method{rad_emissivity_air}{default}(temp, rh, elev = 0, p = p0, p0 = 1013, ...)
+\method{rad_emissivity_air}{default}(temp, rh, elev = 0, p = p0_default, p0 = p0_default, ...)
 
 \method{rad_emissivity_air}{weather_station}(weather_station, height = "lower", ...)
 }

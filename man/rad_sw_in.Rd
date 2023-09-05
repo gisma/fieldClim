@@ -16,8 +16,7 @@ rad_sw_in(...)
 \item{...}{
   Arguments passed on to \code{\link[=rad_sw_toa.default]{rad_sw_toa.default}}, \code{\link[=trans_gas.default]{trans_gas.default}}, \code{\link[=trans_ozone.default]{trans_ozone.default}}, \code{\link[=trans_aerosol.default]{trans_aerosol.default}}, \code{\link[=terr_terrain_angle.default]{terr_terrain_angle.default}}
   \describe{
-    \item{\code{sol_const}}{Solar constant in W/m$^{2}$}
-    \item{\code{p0}}{Standard pressure in hPa.}
+    \item{\code{sol_const}}{Solar constant in W/m\eqn{^2}}
     \item{\code{ozone_column}}{Atmospheric ozone as column in cm. Default is average value of 0.35 cm.}
     \item{\code{slope}}{Slope in degree.}
     \item{\code{exposition}}{Exposition in degree.}
@@ -44,7 +43,7 @@ Default is average global value.}
 Default is the visibility on a clear day.}
 }
 \value{
-W/m$^{2}$.
+W/m\eqn{^2}.
 }
 \description{
 Provide \code{slope} and \code{exposition} to perform topographic correction.

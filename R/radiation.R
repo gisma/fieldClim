@@ -15,16 +15,10 @@ rad_bal <- function(...) {
 rad_bal.default <- function(...) {
   rad_sw_bal + rad_lw_bal
 }
-#rad_bal.default <- function(rad_sw_radiation_balance,
-#                                  rad_lw_in,
-#                                  rad_lw_out, ...) {
-#  radbil <- rad_sw_radiation_balance + (rad_lw_in - rad_lw_out)
-#  return(radbil)
-#}
 
 #' @rdname rad_bal
-#' @export
 #' @param weather_station Object of class weather_station.
+#' @export
 rad_bal.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "lw_in", "lw_out")
 
@@ -32,7 +26,7 @@ rad_bal.weather_station <- function(weather_station, ...) {
   rad_lw_atmospheric <- weather_station$measurements$lw_in
   rad_sw_radiation_balance <- rad_sw_radiation_balance(weather_station)
 
-  return(rad_bal(rad_sw_radiation_balance, rad_lw_surface, rad_lw_atmospheric))
+  rad_bal(rad_sw_radiation_balance, rad_lw_surface, rad_lw_atmospheric)
 }
 
 #' Shortwave radiation balance
@@ -92,12 +86,8 @@ rad_sw_in.default <- function(datetime, lon, lat, elev, temp, ...) {
   terrain_angle <- terr_terrain_angle(datetime, lon, lat, ...)
   terrain_angle <- deg2rad(terrain_angle)
 
-  sw_toa / sin(elevation) * 0.9751 * trans_total * cos(terrain_angle)
+  sw_toa * 0.9751 * trans_total / sin(elevation) * cos(terrain_angle)
 }
-#rad_sw_in.default <- function(rad_sw_toa, trans_total, ...) {
-#  rad_sw_ground_horizontal <- rad_sw_toa * 0.9751 * trans_total
-#  return(rad_sw_ground_horizontal)
-#}
 
 #' @rdname rad_sw_in
 #' @export

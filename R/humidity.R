@@ -118,6 +118,9 @@ hum_evap_heat.weather_station <- function(weather_station, height = "lower", ...
 #' It uses a moist adiabatic temperature gradient which might not be
 #' suitable for every application.
 #'
+#' Latitude <= 30 degrees are defined as tropic; <= 60 are temperate; others are subarctic.
+#' Summer is defined as April to September in the northern hemisphere.
+#'
 #' @param ... Additional arguments.
 #' @returns Total precipitable water in cm (grams).
 #' @export
@@ -126,62 +129,60 @@ hum_precipitable_water <- function(...) {
 }
 
 #' @rdname hum_precipitable_water
+#' @inheritParams sol_julian_day
 #' @inheritParams pres_p
-#' @param datetime Datetime
+#' @inheritDotParams pres_p g rl
 #' @param lat Latitude
-#' @param p0 Standard pressure
 #' @export
-#' @references p246
-hum_precipitable_water.default <- function(datetime, lat, elev, temp, p0 = p0_default, ...) {
+#' @references p246. Column name "subarctic_summer" and "subarctic_winter" were switched.
+hum_precipitable_water.default <- function(datetime, lat, elev, temp, ...) {
+  df <- data.frame(
+    t0 = c(300, 294, 272.2, 287, 257.1),
+    pwst = c(4.1167, 2.9243, 0.8539, 2.0852, 0.4176),
+    row.names = c("tropic", "temperate_summer", "temperate_winter", "subarctic_summer", "subarctic_winter")
+  )
+  
   if (abs(lat) <= 30) { # tropic
-    temp_standard <- 300
-    pw_standard <- 4.1167
-  } else if ((abs(lat) <= 60) && (lat > 0)) { # temperate, north hemisphere
+    temp_standard <- df["tropic", "t0"]
+    pw_standard <- df["tropic", "pwst"]
+  } else if ((abs(lat) <= 60) && (lat > 0)) { # temperate, northern hemisphere
     if (datetime$mon + 1 %in% seq(4, 9)) {
-      temp_standard <- 294
-      pw_standard <- 2.9243
+      temp_standard <- df["temperate_summer", "t0"]
+      pw_standard <- df["temperate_summer", "pwst"]
     } else {
-      temp_standard <- 272.2
-      pw_standard <- 0.8539
+      temp_standard <- df["temperate_winter", "t0"]
+      pw_standard <- df["temperate_winter", "pwst"]
     }
-  } else if ((abs(lat) <= 60) && (lat < 0)) { # temperate, south hemisphere
+  } else if ((abs(lat) <= 60) && (lat < 0)) { # temperate, southern hemisphere
     if (datetime$mon + 1 %in% seq(4, 9)) {
-      temp_standard <- 272.2
-      pw_standard <- 0.8539
+      temp_standard <- df["temperate_winter", "t0"]
+      pw_standard <- df["temperate_winter", "pwst"]
     } else {
-      temp_standard <- 294
-      pw_standard <- 2.9243
+      temp_standard <- df["temperate_summer", "t0"]
+      pw_standard <- df["temperate_summer", "pwst"]
     }
-  } else if (lat > 0) { # subarctic, north hemisphere
+  } else if (lat > 0) { # subarctic, northern hemisphere
     if (datetime$mon + 1 %in% seq(4, 9)) {
-      temp_standard <- 287
-      pw_standard <- 2.0852
+      temp_standard <- df["subarctic_summer", "t0"]
+      pw_standard <- df["subarctic_summer", "pwst"]
     } else {
-      temp_standard <- 257.1
-      pw_standard <- 0.4176
+      temp_standard <- df["subarctic_winter", "t0"]
+      pw_standard <- df["subarctic_winter", "pwst"]
     }
-  } else if (lat > 0) { # subarctic, south hemisphere
+  } else if (lat > 0) { # subarctic, southern hemisphere
     if (datetime$mon + 1 %in% seq(4, 9)) {
-      temp_standard <- 257.1
-      pw_standard <- 0.4176
+      temp_standard <- df["subarctic_winter", "t0"]
+      pw_standard <- df["subarctic_winter", "pwst"]
     } else {
-      temp_standard <- 287
-      pw_standard <- 2.0852
+      temp_standard <- df["subarctic_summer", "t0"]
+      pw_standard <- df["subarctic_summer", "pwst"]
     }
   }
-  p <- pres_p(elev, temp, ...)
+  p <- pres_p(elev, temp)
+  p0 <- p0_default
   
   pw_standard * (p / p0) * (temp_standard / temp)^0.5
 }
-#hum_precipitable_water.default <- function(p, t, elev, ...) {
-#  p0 <- 1013.25 # Pressure standard atmosphere
-#  t <- t + 273.15 # °C in K
-#  cof <- (elev / 100) * 0.6 # average moist adiabatic T-gradient, might have to be adjusted
-#  t0 <- t + cof
-#  pw_st <- 0.0000004 * exp(0.0538 * t0)
-#  pw <- pw_st * (p / p0) * (t0 / t)**0.5
-#  return(pw)
-#}
 
 #' @rdname hum_precipitable_water
 #' @export

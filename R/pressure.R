@@ -13,9 +13,9 @@ pres_p <- function(...) {
 #' @rdname pres_p
 #' @param elev Elevation above sea level in m.
 #' @param temp Temperature in °C.
-#' @param p0 Standard pressure in hPa.
-#' @param g Gravitational acceleration in m/s${2}$.
-#' @param rl Specific gas constant for air in j/kg/K.
+#' @param p0 Standard pressure in hPa, default `r p0_default`.
+#' @param g Gravitational acceleration in m/s\eqn{^2}, default `r g_default`.
+#' @param rl Specific gas constant for air in m\eqn{^2}/s\eqn{^2}/K, default `r rl_default`.
 #' @export
 #' @references Lente & Ősz 2020 eq5.
 pres_p.default <- function(elev, temp,

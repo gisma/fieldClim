@@ -25,8 +25,6 @@ trans_air_mass_rel(...)
 }
 \value{
 Relative optical air mass.
-
-unitless
 }
 \description{
 Calculates relative optical air mass. Returns NA for negative values.

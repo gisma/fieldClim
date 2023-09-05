@@ -14,7 +14,7 @@ rad_lw_bal(...)
   Arguments passed on to \code{\link[=rad_lw_in.default]{rad_lw_in.default}}, \code{\link[=rad_lw_out.default]{rad_lw_out.default}}
   \describe{
     \item{\code{sigma}}{Stefan-Boltzmann constant
-with the default 5.6993e-8 W/m$^{2}$/K$^{4}$}
+with the default 5.6993e-8 W/m\eqn{^2}/K$^{4}$}
     \item{\code{surface_type}}{Surface type for which a specific emissivity will be selected.
 Default is 'field' as surface type.}
   }}
@@ -26,7 +26,7 @@ Default is 'field' as surface type.}
 \item{surface_temp}{Surface temperature in °C.}
 }
 \value{
-W/m$^{2}$.
+W/m\eqn{^2}.
 }
 \description{
 Long wave radiation balance

@@ -37,7 +37,7 @@ rad_sw_in_topo(...)
 
 \item{sol_azimuth}{Sun azimuth in degrees.}
 
-\item{rad_sw_toa}{Shortwave radiation at top of atmosphere in W/m$^{2}$.}
+\item{rad_sw_toa}{Shortwave radiation at top of atmosphere in W/m\eqn{^2}.}
 
 \item{albedo}{Albedo of surface.}
 
@@ -51,7 +51,7 @@ Default is average atmospheric transmittance.}
 \item{weather_station}{Object of class weather_station.}
 }
 \value{
-Shortwave radiation balance in dependency of topography in W/m$^{2}$.
+Shortwave radiation balance in dependency of topography in W/m\eqn{^2}.
 }
 \description{
 Calculate shortwave radiation balance in dependency of topography.

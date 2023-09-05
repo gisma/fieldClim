@@ -55,10 +55,12 @@ terr_terrain_angle <- function(...) {
 #' @export
 #' @references p52eq3.7
 terr_terrain_angle.default <- function(datetime, lon, lat,
-  slope = 0, exposition = 0, ...) {
-  slope <- deg2rad(slope)
+    slope = 0, exposition = 0, ...) {
   elevation <- sol_elevation(datetime, lon, lat)
   azimuth <- sol_azimuth(datetime, lon, lat)
+  
+  slope <- deg2rad(slope)
+  elevation <- deg2rad(elevation)
   azimuth <- deg2rad(azimuth)
   exposition <- deg2rad(exposition)
   

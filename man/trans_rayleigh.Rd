@@ -8,7 +8,7 @@
 \usage{
 trans_rayleigh(...)
 
-\method{trans_rayleigh}{default}(datetime, lon, lat, elev, temp, ..., p0 = 1013)
+\method{trans_rayleigh}{default}(datetime, lon, lat, elev, temp, ..., p0 = p0_default)
 
 \method{trans_rayleigh}{weather_station}(weather_station, ...)
 }
@@ -24,8 +24,6 @@ trans_rayleigh(...)
 \item{elev}{Elevation above sea level in m.}
 
 \item{temp}{Temperature in °C.}
-
-\item{p0}{Standard pressure in hPa.}
 
 \item{weather_station}{Object of class weather_station.}
 }

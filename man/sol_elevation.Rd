@@ -25,8 +25,6 @@ sol_elevation(...)
 }
 \value{
 Solar elevation angle in degrees.
-
-degree
 }
 \description{
 Calculates solar elevation angle for the given date and time.
