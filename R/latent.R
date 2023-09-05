@@ -196,8 +196,6 @@ latent_monin.default <- function(hum1, hum2, t1, t2, v1, v2, z1 = 2, z2 = 10, el
   } else {
     print("The input is not valid. Either obs_height or surface_type has to be defined.")
   }
-  monin <- turb_flux_monin(z1, z2, v1, v2, t1, t2, elev, surface_type)
-  ustar <- turb_ustar(v1, z1, surface_type)
   grad_rich_no <- turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, elev)
   moist_gradient <- hum_moisture_gradient(hum1, hum2, t1, t2, z1, z2, elev)
   air_density <- pres_air_density(elev, t1)

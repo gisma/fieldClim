@@ -65,13 +65,12 @@ turb_displacement <- function(...) {
 #' @references p241.
 turb_displacement.default <- function(obs_height, surroundings = "vegetation", ...) {
   if (surroundings == "vegetation") {
-    d0 <- (2 / 3) * obs_height # for vegetation
+    (2 / 3) * obs_height # for vegetation
   } else if (surroundings == "city") {
-    d0 <- 0.8 * obs_height # for dense housing
+    0.8 * obs_height # for dense housing
   } else {
     stop("Please set 'surroundings' to either 'vegetation' or 'city'.")
   }
-  d0
 }
 
 #' @rdname turb_displacement
