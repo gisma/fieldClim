@@ -31,7 +31,16 @@ latent_priestley_taylor.default <- function(t, rad_bal, soil_flux, surface_type 
   sc <- sc(t)
   gam <- gam(t)
 
-  alpha_pt * sc * (-rad_bal - soil_flux) / (sc + gam)
+  out <- alpha_pt * sc * (-rad_bal - soil_flux) / (sc + gam)
+
+  # values of sensible bowen will be checked whether they exceed the valid data range.
+  if (max(out) > 600) {
+    warning("There are values above 600 W/m^2!")
+  }
+  if (min(out) < -600) {
+    warning("There are values below -600 W/m^2!")
+  }
+  out
 }
 
 #' @rdname latent_priestley_taylor
@@ -107,7 +116,15 @@ latent_penman.default <- function(datetime,
   )
 
   lv <- hum_evap_heat(t) # specific evaporation heat
-  lv * (water::hourlyET(WeatherStation, hours = ut, DOY = doy) / 3600) * (-1)
+  out <- lv * (water::hourlyET(WeatherStation, hours = ut, DOY = doy) / 3600) * (-1)
+  # values of sensible bowen will be checked whether they exceed the valid data range.
+  if (max(out) > 600) {
+    warning("There are values above 600 W/m^2!")
+  }
+  if (min(out) < -600) {
+    warning("There are values below -600 W/m^2!")
+  }
+  out
 }
 
 #' @rdname latent_penman
@@ -181,7 +198,16 @@ latent_monin.default <- function(hum1, hum2, t1, t2, v1, v2, z1 = 2, z2 = 10, el
       busi[i] <- 0.95 + (7.8 * s1[i])
     }
   }
-  (-1) * air_density * lv * ((k * ustar) / busi) * schmidt * moist_gradient
+  out <- (-1) * air_density * lv * ((k * ustar) / busi) * schmidt * moist_gradient
+
+  # values of sensible bowen will be checked whether they exceed the valid data range.
+  if (max(out) > 600) {
+    warning("There are values above 600 W/m^2!")
+  }
+  if (min(out) < -600) {
+    warning("There are values below -600 W/m^2!")
+  }
+  out
 }
 
 #' @rdname latent_monin
@@ -250,14 +276,12 @@ latent_bowen.default <- function(t1, t2, hum1, hum2, z1 = 2, z2 = 10, elev,
   # values of latent bowen will be checked whether they exceed the valid data range.
   if (max(out) > 600) {
     warning("There are values above 600 W/m^2!")
-    out[out > 600] <- 600
   }
 
   if (min(out) < -600) {
     warning("There are values below -600 W/m^2!")
-    out[out < -600] <- -600
   }
-  return(out)
+  out
 }
 
 #' @rdname latent_bowen
