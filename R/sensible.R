@@ -46,11 +46,12 @@ sensible_priestley_taylor.default <- function(t, rad_bal, soil_flux, surface_typ
 #' @param weather_station Object of class weather_station.
 #' @export
 sensible_priestley_taylor.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "t1", "rad_bal", "soil_flux")
+  check_availability(weather_station, "t1", "rad_bal", "soil_flux", "surface_type")
   t1 <- weather_station$measurements$t1
   rad_bal <- weather_station$measurements$rad_bal
   soil_flux <- weather_station$measurements$soil_flux
-  return(sensible_priestley_taylor(t1, rad_bal, soil_flux))
+  surface_type <- weather_station$location_properties$surface_type
+  return(sensible_priestley_taylor(t1, rad_bal, soil_flux, surface_type = surface_type))
 }
 
 
@@ -132,9 +133,10 @@ sensible_monin.default <- function(t1, t2, z1 = 2, z2 = 10, v1, v2, elev, surfac
 
 #' @rdname sensible_monin
 #' @param weather_station Object of class weather_station.
+#' @param obs_height Height of obstacle in m.
 #' @export
-sensible_monin.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "t1", "t2", "z1", "z2", "v1", "v2", "elevation", "surface_type")
+sensible_monin.weather_station <- function(weather_station, obs_height = NULL, ...) {
+  check_availability(weather_station, "t1", "t2", "z1", "z2", "v1", "v2", "elevation")
   t1 <- weather_station$measurements$t1
   t2 <- weather_station$measurements$t2
   z1 <- weather_station$properties$z1
@@ -142,8 +144,13 @@ sensible_monin.weather_station <- function(weather_station, ...) {
   v1 <- weather_station$measurements$v1
   v2 <- weather_station$measurements$v2
   elev <- weather_station$location_properties$elevation
-  surface_type <- weather_station$location_properties$surface_type
-  return(sensible_monin(t1, t2, z1, z2, v1, v2, elev, surface_type = surface_type))
+  if (!is.null(obs_height)) {
+    return(sensible_monin(t1, t2, z1, z2, v1, v2, elev, obs_height = obs_height))
+  } else {
+    check_availability(weather_station, "surface_type")
+    surface_type <- weather_station$location_properties$surface_type
+    return(sensible_monin(t1, t2, z1, z2, v1, v2, elev, surface_type = surface_type))
+  }
 }
 
 

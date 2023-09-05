@@ -120,11 +120,17 @@ turb_ustar.default <- function(v, z, surface_type = NULL, obs_height = NULL, ...
 
 #' @rdname turb_ustar
 #' @param weather_station Object of class weather_station.
+#' @param obs_height Height of obstacle in m.
 #' @export
-turb_ustar.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "v1", "z1", "surface_type")
+turb_ustar.weather_station <- function(weather_station, obs_height = NULL, ...) {
+  check_availability(weather_station, "v1", "z1")
   v <- weather_station$measurements$v1
   z <- weather_station$properties$z1
-  surface_type <- weather_station$location_properties$surface_type
-  return(turb_ustar(v, z, surface_type))
+  if (!is.null(obs_height)) {
+    return(turb_ustar(v, z, obs_height = obs_height))
+  } else {
+    check_availability(weather_station, "surface_type")
+    surface_type <- weather_station$location_properties$surface_type
+    return(turb_ustar(v, z, surface_type = surface_type))
+  }
 }

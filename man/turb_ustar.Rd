@@ -10,7 +10,7 @@ turb_ustar(...)
 
 \method{turb_ustar}{default}(v, z, surface_type = NULL, obs_height = NULL, ...)
 
-\method{turb_ustar}{weather_station}(weather_station, ...)
+\method{turb_ustar}{weather_station}(weather_station, obs_height = NULL, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}

@@ -23,7 +23,7 @@ latent_monin(...)
   ...
 )
 
-\method{latent_monin}{weather_station}(weather_station, ...)
+\method{latent_monin}{weather_station}(weather_station, obs_height = NULL, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}

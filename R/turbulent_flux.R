@@ -66,10 +66,10 @@ turb_flux_monin.default <- function(z1 = 2, z2 = 10, v1, v2, t1, t2, elev, surfa
 
 #' @rdname turb_flux_monin
 #' @param weather_station Object of class weather_station
+#' @param obs_height Height of obstacle in m.
 #' @export
-turb_flux_monin.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "z1", "z2", "v1", "v2", "t1", "t2", "elevation", "surface_type")
-  grad_rich_no <- turb_flux_grad_rich_no(weather_station)
+turb_flux_monin.weather_station <- function(weather_station, obs_height = NULL, ...) {
+  check_availability(weather_station, "z1", "z2", "v1", "v2", "t1", "t2", "elevation")
   z1 <- weather_station$properties$z1
   z2 <- weather_station$properties$z2
   v1 <- weather_station$measurements$v1
@@ -77,8 +77,13 @@ turb_flux_monin.weather_station <- function(weather_station, ...) {
   t1 <- weather_station$measurements$t1
   t2 <- weather_station$measurements$t2
   elev <- weather_station$location_properties$elevation
-  surface_type <- weather_station$location_properties$surface_type
-  return(turb_flux_monin(z1, z2, v1, v2, t1, t2, elev, surface_type = surface_type))
+  if (!is.null(obs_height)) {
+    return(turb_flux_monin(z1, z2, v1, v2, t1, t2, elev, obs_height = obs_height))
+  } else {
+    check_availability(weather_station, "surface_type")
+    surface_type <- weather_station$location_properties$surface_type
+    return(turb_flux_monin(z1, z2, v1, v2, t1, t2, elev, surface_type = surface_type))
+  }
 }
 
 #' Gradient-Richardson-Number
@@ -120,7 +125,7 @@ turb_flux_grad_rich_no.default <- function(t1, t2, z1 = 2, z2 = 10, v1, v2, elev
 #' @param weather_station Object of class weather_station
 #' @export
 turb_flux_grad_rich_no.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "z1", "z2", "v1", "v2", "t1", "t2", "p1", "p2")
+  check_availability(weather_station, "z1", "z2", "v1", "v2", "t1", "t2", "elev")
   t1 <- weather_station$measurements$t1
   t2 <- weather_station$measurements$t2
   z1 <- weather_station$properties$z1
@@ -234,9 +239,10 @@ turb_flux_ex_quotient_temp.default <- function(t1, t2, z1=2, z2=10, v1, v2, elev
 
 #' @rdname turb_flux_ex_quotient_temp
 #' @param weather_station Object of class weather_station
+#' @param obs_height Height of obstacle in m.
 #' @export
-turb_flux_ex_quotient_temp.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "t1", "t2", "z1", "z2", "v1", "v2", "elevation", "surface_type")
+turb_flux_ex_quotient_temp.weather_station <- function(weather_station, obs_height = NULL, ...) {
+  check_availability(weather_station, "t1", "t2", "z1", "z2", "v1", "v2", "elevation")
   t1 <- weather_station$measurements$t1
   t2 <- weather_station$measurements$t2
   z1 <- weather_station$properties$z1
@@ -244,8 +250,13 @@ turb_flux_ex_quotient_temp.weather_station <- function(weather_station, ...) {
   v1 <- weather_station$measurements$v1
   v2 <- weather_station$measurements$v2
   elev <- weather_station$location_properties$elevation
-  surface_type <- weather_station$location_properties$surface_type
-  return(turb_flux_ex_quotient_temp(t1, t2, z1, z2, v1, v2, elev, surface_type=surface_type))
+  if (!is.null(obs_height)) {
+    return(turb_flux_ex_quotient_temp(t1, t2, z1, z2, v1, v2, elev, obs_height = obs_height))
+  } else {
+    check_availability(weather_station, "surface_type")
+    surface_type <- weather_station$location_properties$surface_type
+    return(turb_flux_ex_quotient_temp(t1, t2, z1, z2, v1, v2, elev, surface_type = surface_type))
+  }
 }
 
 
@@ -312,9 +323,10 @@ turb_flux_ex_quotient_imp.default <- function(t1, t2, z1=2, z2=10, v1, v2, elev,
 
 #' @rdname turb_flux_ex_quotient_imp
 #' @param weather_station Object of class weather_station
+#' @param obs_height Height of obstacle in m.
 #' @export
-turb_flux_ex_quotient_imp.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "t1", "t2", "z1", "z2", "v1", "v2", "elevation", "surface_type")
+turb_flux_ex_quotient_imp.weather_station <- function(weather_station, obs_height = NULL, ...) {
+  check_availability(weather_station, "t1", "t2", "z1", "z2", "v1", "v2", "elevation")
   t1 <- weather_station$measurements$t1
   t2 <- weather_station$measurements$t2
   z1 <- weather_station$properties$z1
@@ -322,8 +334,13 @@ turb_flux_ex_quotient_imp.weather_station <- function(weather_station, ...) {
   v1 <- weather_station$measurements$v1
   v2 <- weather_station$measurements$v2
   elev <- weather_station$location_properties$elevation
-  surface_type <- weather_station$location_properties$surface_type
-  return(turb_flux_ex_quotient_imp(t1, t2, z1, z2, v1, v2, elev, surface_type=surface_type))
+  if (!is.null(obs_height)) {
+    return(turb_flux_ex_quotient_imp(t1, t2, z1, z2, v1, v2, elev, obs_height = obs_height))
+  } else {
+    check_availability(weather_station, "surface_type")
+    surface_type <- weather_station$location_properties$surface_type
+    return(turb_flux_ex_quotient_imp(t1, t2, z1, z2, v1, v2, elev, surface_type = surface_type))
+  }
 }
 
 
@@ -365,9 +382,10 @@ turb_flux_imp_exchange.default <- function(t1, t2, v1, v2, z1 = 2, z2 = 10, elev
 
 #' @rdname turb_flux_imp_exchange
 #' @param weather_station Object of class weather_station
+#' @param obs_height Height of obstacle in m.
 #' @export
-turb_flux_imp_exchange.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "t1", "t2", "z1", "z2", "v1", "v2", "elevation", "surface_type")
+turb_flux_imp_exchange.weather_station <- function(weather_station, obs_height = NULL, ...) {
+  check_availability(weather_station, "t1", "t2", "z1", "z2", "v1", "v2", "elevation")
   t1 <- weather_station$measurements$t1
   t2 <- weather_station$measurements$t2
   z1 <- weather_station$properties$z1
@@ -375,8 +393,13 @@ turb_flux_imp_exchange.weather_station <- function(weather_station, ...) {
   v1 <- weather_station$measurements$v1
   v2 <- weather_station$measurements$v2
   elev <- weather_station$location_properties$elevation
-  surface_type <- weather_station$location_properties$surface_type
-  return(turb_flux_imp_exchange(t1, t2, v1, v2, z1, z2, elev, surface_tyoe = surface_type))
+  if (!is.null(obs_height)) {
+    return(turb_flux_imp_exchange(t1, t2, v1, v2, z1, z2, elev, obs_height = obs_height))
+  } else {
+    check_availability(weather_station, "surface_type")
+    surface_type <- weather_station$location_properties$surface_type
+    return(turb_flux_imp_exchange(t1, t2, v1, v2, z1, z2, elev, surface_type = surface_type))
+  }
 }
 
 

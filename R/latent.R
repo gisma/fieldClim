@@ -47,11 +47,12 @@ latent_priestley_taylor.default <- function(t, rad_bal, soil_flux, surface_type 
 #' @param weather_station Object of class weather_station
 #' @export
 latent_priestley_taylor.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "t1", "rad_bal", "soil_flux")
+  check_availability(weather_station, "t1", "rad_bal", "soil_flux", "surface_type")
   t1 <- weather_station$measurements$t1
   rad_bal <- weather_station$measurements$rad_bal
   soil_flux <- weather_station$measurements$soil_flux
-  return(latent_priestley_taylor(t1, rad_bal, soil_flux))
+  surface_type <- weather_station$location_properties$surface_type
+  return(latent_priestley_taylor(t1, rad_bal, soil_flux, surface_type = surface_type))
 }
 
 
@@ -228,9 +229,10 @@ latent_monin.default <- function(hum1, hum2, t1, t2, v1, v2, z1 = 2, z2 = 10, el
 
 #' @rdname latent_monin
 #' @param weather_station Object of class weather_station.
+#' @param obs_height Height of obstacle in m.
 #' @export
-latent_monin.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "z1", "z2", "t1", "t2", "hum1", "hum2", "v1", "v2", "elevation", "surface_type")
+latent_monin.weather_station <- function(weather_station, obs_height = NULL, ...) {
+  check_availability(weather_station, "z1", "z2", "t1", "t2", "hum1", "hum2", "v1", "v2", "elevation")
   hum1 <- weather_station$measurements$hum1
   hum2 <- weather_station$measurements$hum2
   t1 <- weather_station$measurements$t1
@@ -240,8 +242,13 @@ latent_monin.weather_station <- function(weather_station, ...) {
   v1 <- weather_station$measurements$v1
   v2 <- weather_station$measurements$v2
   elev <- weather_station$location_properties$elevation
-  surface_type <- weather_station$location_properties$surface_type
-  return(latent_monin(hum1, hum2, t1, t2, v1, v2, z1, z2, elev, surface_type))
+  if (!is.null(obs_height)) {
+    return(latent_monin(hum1, hum2, t1, t2, v1, v2, z1, z2, elev, obs_height = obs_height))
+  } else {
+    check_availability(weather_station, "surface_type")
+    surface_type <- weather_station$location_properties$surface_type
+    return(latent_monin(hum1, hum2, t1, t2, v1, v2, z1, z2, elev, surface_type = surface_type))
+  }
 }
 
 
