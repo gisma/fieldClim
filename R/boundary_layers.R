@@ -37,12 +37,20 @@ bound_mech_avg <- function(dist) {
 #' @param t_pot_upwind Potential temperature in upwind direction in °C.
 #' @param t_pot Potential temperature at site in °C.
 #' @param lapse_rate Lapse rate in °C/m.
-#'
+#' @inheritParams turb_roughness_length
 #' @returns Average height of the thermal boundary layer in m.
 #' @references p242.
 #' @export
 #'
-bound_thermal_avg <- function(v, z, surface_type, temp_change_dist, t_pot_upwind, t_pot, lapse_rate) {
-  ustar <- turb_ustar(v, z, surface_type)
+bound_thermal_avg <- function(v, z, temp_change_dist, t_pot_upwind, t_pot, lapse_rate,
+                              surface_type = NULL, obs_height = NULL) {
+  # Calculate ustar
+  if (!is.null(obs_height)) {
+    ustar <- turb_ustar(v=v1, z=z1, obs_height=obs_height)
+  } else if (!is.null(surface_type)) {
+    ustar <- turb_ustar(v=v1, z=z1, surface_type=surface_type)
+  } else {
+    print("The input is not valid. Either obs_height or surface_type has to be defined.")
+  }
   (ustar / v) * ((temp_change_dist * abs(t_pot_upwind - t_pot)) / abs(lapse_rate))**0.5
 }
