@@ -32,7 +32,5 @@ Friction velocity in m/s.
 Calculate the friction velocity of the surface.
 }
 \references{
-p239
-
-p239.
+Bendix 2004, p. 239
 }

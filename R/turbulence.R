@@ -8,7 +8,7 @@
 #' @rdname turb_roughness_length
 #' @param ... Additional arguments.
 #' @returns roughness length in m.
-#' @references p239.
+#' @references Bendix 2004, p. 239
 #' @export
 #'
 turb_roughness_length <- function(...) {
@@ -19,7 +19,6 @@ turb_roughness_length <- function(...) {
 #' @param surface_type Type of surface.
 #' @param obs_height Height of obstacle in m.
 #' @export
-#' @references p239.
 turb_roughness_length.default <- function(surface_type = NULL, obs_height = NULL, ...) {
   surface_properties <- surface_properties
   if (!is.null(obs_height)) {
@@ -92,7 +91,7 @@ turb_displacement.weather_station <- function(weather_station, surroundings = "v
 #' @rdname turb_ustar
 #' @param ... Additional arguments.
 #' @returns Friction velocity in m/s.
-#' @references p239
+#' @references Bendix 2004, p. 239
 #' @export
 #'
 turb_ustar <- function(...) {
@@ -104,7 +103,6 @@ turb_ustar <- function(...) {
 #' @param z Height of anemometer in m.
 #' @inheritDotParams turb_roughness_length
 #' @export
-#' @references p239.
 turb_ustar.default <- function(v, z, ...) {
   if (!is.null(obs_height)) {
     z0 <- turb_roughness_length(obs_height=obs_height)
