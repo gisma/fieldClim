@@ -17,7 +17,7 @@ sensible_priestley_taylor <- function(...) {
 #' @param rad_bal Radiation balance in W/m\eqn{^2}.
 #' @param soil_flux Soil flux in W/m\eqn{^2}.
 #' @param surface_type Surface type, for which a Priestley-Taylor coefficient will be selected. Default is for short grass.
-#' @references Foken p220eq5.6.
+#' @references Foken 2016, p. 220, eq. 5.6
 sensible_priestley_taylor.default <- function(t, rad_bal, soil_flux, surface_type = "field", ...) {
   sc <- sc(t)
   gam <- gam(t)
@@ -77,7 +77,8 @@ sensible_monin <- function(...) {
 #' @param v2 Windspeed at upper height in m/s.
 #' @param elev Elevation above sea level in m.
 #' @inheritParams turb_roughness_length
-#' @references p77eq4.6, Foken p362 Businger.
+#' @references Bendix 2004, p. 77, eq. 4.6,
+#' @references Foken 2016, p. 362: Businger
 sensible_monin.default <- function(t1, t2, z1 = 2, z2 = 10, v1, v2, elev, surface_type = NULL, obs_height = NULL, ...) {
   # calculate ustar
   if (!is.null(obs_height)) {
@@ -172,7 +173,7 @@ sensible_bowen <- function(...) {
 #' @param elev Elevation above sea level in m.
 #' @param rad_bal Radiation balance in W/m\eqn{^2}.
 #' @param soil_flux Soil flux in W/m\eqn{^2}.
-#' @references p221eq9.21.
+#' @references Bendix 2004, p. 221, eq. 9.21
 sensible_bowen.default <- function(t1, t2, hum1, hum2, z1 = 2, z2 = 10, elev, rad_bal, soil_flux, ...) {
   # Calculating potential temperature delta
   t1_pot <- temp_pot_temp(t1, elev)

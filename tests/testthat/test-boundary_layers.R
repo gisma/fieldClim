@@ -28,3 +28,4 @@ test_that("bound_thermal_avg", {
                tolerance = 1e-2
   )
 })
+

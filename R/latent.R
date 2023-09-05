@@ -17,7 +17,7 @@ latent_priestley_taylor <- function(...) {
 #' @param rad_bal Radiation balance in W/m\eqn{^2}.
 #' @param soil_flux Soil flux in W/m\eqn{^2}.
 #' @param surface_type Surface type, for which a Priestley-Taylor coefficient will be selected. Default is for short grass.
-#' @references Foken p220eq5.7.
+#' @references Foken 2016, p. 220, eq. 5.7.
 latent_priestley_taylor.default <- function(t, rad_bal, soil_flux, surface_type = "field", ...) {
   priestley_taylor_coefficient <- priestley_taylor_coefficient
 
@@ -177,7 +177,8 @@ latent_monin <- function(...) {
 #' @param z2 Upper height of measurement in m.
 #' @param elev Elevation above sea level in m.
 #' @inheritParams turb_roughness_length
-#' @references p77eq4.6, Foken p61 Tab. 2.10.
+#' @references Bendix 2004, p. 77, eq.4.6
+#' @references Foken 2016, p. 61, Tab. 2.10
 latent_monin.default <- function(hum1, hum2, t1, t2, v1, v2, z1 = 2, z2 = 10, elev, surface_type = NULL, obs_height = NULL, ...) {
   # calculate ustar
   if (!is.null(obs_height)) {
@@ -271,7 +272,7 @@ latent_bowen <- function(...) {
 #' @param elev Elevation above sea level in m.
 #' @param rad_bal Radiation balance in W/m\eqn{^2}.
 #' @param soil_flux Soil flux in W/m\eqn{^2}.
-#' @references p221eq9.21.
+#' @references Bendix 2004, p. 221, eq. 9.21
 latent_bowen.default <- function(t1, t2, hum1, hum2, z1 = 2, z2 = 10, elev,
                                  rad_bal, soil_flux, ...) {
   # Calculating potential temperature delta

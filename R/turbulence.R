@@ -62,7 +62,7 @@ turb_displacement <- function(...) {
 #' @param obs_height Height of vegetation in m.
 #' @param surroundings Choose either 'vegetation' or 'city'.
 #' @export
-#' @references p241.
+#' @references Bendix 2004, p. 241
 turb_displacement.default <- function(obs_height, surroundings = "vegetation", ...) {
   if (surroundings == "vegetation") {
     (2 / 3) * obs_height # for vegetation

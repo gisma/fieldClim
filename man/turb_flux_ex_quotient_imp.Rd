@@ -53,5 +53,5 @@ Exchange quotient for impulse transmission in kg/(m*s).
 Calculation of the exchange quotient of the turbulent impulse transmission.
 }
 \references{
-Foken p361 Businger.
+Foken 2016, p. 361: Businger.
 }

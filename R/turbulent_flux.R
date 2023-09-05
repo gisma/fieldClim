@@ -92,7 +92,7 @@ turb_flux_monin.weather_station <- function(weather_station, ...) {
 #' @param ... Additional arguments.
 #' @returns Gradient-Richardson-Number.
 #' @export
-#' @references p43eq2.5.
+#' @references Bendix 2004, p. 43, eq. 2.5
 turb_flux_grad_rich_no <- function(...) {
   UseMethod("turb_flux_grad_rich_no")
 }
@@ -139,7 +139,7 @@ turb_flux_grad_rich_no.weather_station <- function(weather_station, ...) {
 #' @param ... Additional arguments.
 #' @returns Gradient-Richardson-Number.
 #' @export
-#' @references Based on p.43, picture 2.10.
+#' @references Based on Bendix 2004, p.43, picture 2.10
 turb_flux_stability <- function(...) {
   UseMethod("turb_flux_stability")
 }
@@ -194,7 +194,7 @@ turb_flux_ex_quotient_temp <- function(...) {
 #' @param elev Elevation above sea level in m.
 #' @inheritParams turb_roughness_length
 #' @export
-#' @references Foken p362 Businger.
+#' @references Foken 2016, p. 362: Businger.
 turb_flux_ex_quotient_temp.default <- function(t1, t2, z1=2, z2=10, v1, v2, elev, surface_type = NULL, obs_height = NULL, ...) {
   grad_rich_no <- turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, elev)
 
@@ -272,7 +272,7 @@ turb_flux_ex_quotient_imp <- function(...) {
 #' @param elev Elevation above sea level in m.
 #' @inheritParams turb_roughness_length
 #' @export
-#' @references Foken p361 Businger.
+#' @references Foken 2016, p. 361: Businger.
 turb_flux_ex_quotient_imp.default <- function(t1, t2, z1=2, z2=10, v1, v2, elev, surface_type = NULL, obs_height = NULL, ...) {
   grad_rich_no <- turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, elev)
 

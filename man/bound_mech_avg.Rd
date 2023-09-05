@@ -16,5 +16,5 @@ medium height of boundary layer in m.
 Calculation of the average height of the mechanical internal boundary layer.
 }
 \references{
-p242.
+Bendix 2004, p. 242
 }

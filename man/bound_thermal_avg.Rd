@@ -39,5 +39,5 @@ Average height of the thermal boundary layer in m.
 Calculation of the average height of the thermal internal boundary layer.
 }
 \references{
-p242.
+Bendix 2004, p. 242
 }

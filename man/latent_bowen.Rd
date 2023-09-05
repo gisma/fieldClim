@@ -57,5 +57,5 @@ Values above 600 W/m\eqn{^2} and below -600 W/m\eqn{^2} will be recognized
 as measurement mistakes and smoothed respectively.
 }
 \references{
-p221eq9.21.
+Bendix 2004, p. 221, eq. 9.21
 }

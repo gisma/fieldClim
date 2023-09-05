@@ -5,7 +5,7 @@
 #' @param dist Distance to point of roughness change in m.
 #'
 #' @returns Height of boundary layer in m.
-#' @references p242.
+#' @references Bendix 2004, p. 242
 #' @export
 #'
 bound_mech_low <- function(dist) {
@@ -19,7 +19,7 @@ bound_mech_low <- function(dist) {
 #' @param dist Distance to point of roughness change in m.
 #'
 #' @returns medium height of boundary layer in m.
-#' @references p242.
+#' @references Bendix 2004, p. 242
 #' @export
 #'
 bound_mech_avg <- function(dist) {
@@ -39,7 +39,7 @@ bound_mech_avg <- function(dist) {
 #' @param lapse_rate Lapse rate in °C/m.
 #' @inheritParams turb_roughness_length
 #' @returns Average height of the thermal boundary layer in m.
-#' @references p242.
+#' @references Bendix 2004, p. 242
 #' @export
 #'
 bound_thermal_avg <- function(v, z, temp_change_dist, t_pot_upwind, t_pot, lapse_rate,

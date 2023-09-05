@@ -55,5 +55,7 @@ flux signifies flux away from the surface, positive values signify flux
 towards the surface.
 }
 \references{
-p77eq4.6, Foken p362 Businger.
+Bendix 2004, p. 77, eq. 4.6,
+
+Foken 2016, p. 362: Businger
 }

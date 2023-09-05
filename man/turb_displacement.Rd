@@ -29,5 +29,5 @@ Calculate the displacement height, caused by an obstacle (e.g. a crop field).
 Works for vegetation only.
 }
 \references{
-p241.
+Bendix 2004, p. 241
 }
