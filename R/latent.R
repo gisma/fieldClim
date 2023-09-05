@@ -176,9 +176,26 @@ latent_monin <- function(...) {
 #' @param z1 Lower height of measurement in m.
 #' @param z2 Upper height of measurement in m.
 #' @param elev Elevation above sea level in m.
-#' @param surface_type Type of surface.
+#' @inheritParams turb_roughness_length
 #' @references p77eq4.6, Foken p61 Tab. 2.10.
-latent_monin.default <- function(hum1, hum2, t1, t2, v1, v2, z1 = 2, z2 = 10, elev, surface_type = "field", ...) {
+latent_monin.default <- function(hum1, hum2, t1, t2, v1, v2, z1 = 2, z2 = 10, elev, surface_type = NULL, obs_height = NULL, ...) {
+  # calculate ustar
+  if (!is.null(obs_height)) {
+    ustar <- turb_ustar(v=v1, z=z1, obs_height=obs_height)
+  } else if (!is.null(surface_type)) {
+    ustar <- turb_ustar(v=v1, z=z1, surface_type=surface_type)
+  } else {
+    print("The input is not valid. Either obs_height or surface_type has to be defined.")
+  }
+
+  # calculate Monin-Obhukov-Length
+  if (!is.null(obs_height)) {
+    monin <- turb_flux_monin(z1=z1, z2=z2, v1=v1, v2=v2, t1=t1, t2=t2, elev=elev, obs_height=obs_height)
+  } else if (!is.null(surface_type)) {
+    monin <- turb_flux_monin(z1=z1, z2=z2, v1=v1, v2=v2, t1=t1, t2=t2, elev=elev, surface_type=surface_type)
+  } else {
+    print("The input is not valid. Either obs_height or surface_type has to be defined.")
+  }
   monin <- turb_flux_monin(z1, z2, v1, v2, t1, t2, elev, surface_type)
   ustar <- turb_ustar(v1, z1, surface_type)
   grad_rich_no <- turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, elev)

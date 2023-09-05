@@ -18,7 +18,8 @@ latent_monin(...)
   z1 = 2,
   z2 = 10,
   elev,
-  surface_type = "field",
+  surface_type = NULL,
+  obs_height = NULL,
   ...
 )
 
@@ -46,6 +47,8 @@ latent_monin(...)
 \item{elev}{Elevation above sea level in m.}
 
 \item{surface_type}{Type of surface.}
+
+\item{obs_height}{Height of obstacle in m.}
 
 \item{weather_station}{Object of class weather_station.}
 }

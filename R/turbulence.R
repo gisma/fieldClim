@@ -101,9 +101,9 @@ turb_ustar <- function(...) {
 #' @rdname turb_ustar
 #' @param v Windspeed in height of anemometer in m/s.
 #' @param z Height of anemometer in m.
-#' @inheritDotParams turb_roughness_length
+#' @inheritParams turb_roughness_length
 #' @export
-turb_ustar.default <- function(v, z, ...) {
+turb_ustar.default <- function(v, z, surface_type = NULL, obs_height = NULL, ...) {
   if (!is.null(obs_height)) {
     z0 <- turb_roughness_length(obs_height=obs_height)
   } else if (!is.null(surface_type)) {

@@ -16,7 +16,8 @@ turb_flux_ex_quotient_temp(...)
   v1,
   v2,
   elev,
-  surface_type,
+  surface_type = NULL,
+  obs_height = NULL,
   ...
 )
 
@@ -40,6 +41,8 @@ turb_flux_ex_quotient_temp(...)
 \item{elev}{Elevation above sea level in m.}
 
 \item{surface_type}{Type of surface.}
+
+\item{obs_height}{Height of obstacle in m.}
 
 \item{weather_station}{Object of class weather_station}
 }

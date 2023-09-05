@@ -21,10 +21,10 @@ turb_flux_monin <- function(...) {
 #' @param t1 Temperature at lower height (e.g. height of anemometer) in °C.
 #' @param t2 Temperature at upper height in °C.
 #' @param elev Elevation above sea level in m.
-#' @inheritDotParams turb_roughness_length
+#' @inheritParams turb_roughness_length
 #' @export
 #' @references Bendix 2004, p. 241
-turb_flux_monin.default <- function(z1 = 2, z2 = 10, v1, v2, t1, t2, elev, ...) {
+turb_flux_monin.default <- function(z1 = 2, z2 = 10, v1, v2, t1, t2, elev, surface_type = NULL, obs_height = NULL, ...) {
   grad_rich_no <- turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, elev)
 
   # calculate z0
@@ -192,10 +192,10 @@ turb_flux_ex_quotient_temp <- function(...) {
 #' @param v1 Windspeed at lower height (e.g. height of anemometer) in m/s.
 #' @param v2 Windspeed at upper height in m/s.
 #' @param elev Elevation above sea level in m.
-#' @inheritDotParams turb_roughness_length
+#' @inheritParams turb_roughness_length
 #' @export
 #' @references Foken p362 Businger.
-turb_flux_ex_quotient_temp.default <- function(t1, t2, z1=2, z2=10, v1, v2, elev, ...) {
+turb_flux_ex_quotient_temp.default <- function(t1, t2, z1=2, z2=10, v1, v2, elev, surface_type = NULL, obs_height = NULL, ...) {
   grad_rich_no <- turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, elev)
 
   # calculate ustar
@@ -270,10 +270,10 @@ turb_flux_ex_quotient_imp <- function(...) {
 #' @param v1 Windspeed at lower height (e.g. height of anemometer) in m/s.
 #' @param v2 Windspeed at upper height in m/s.
 #' @param elev Elevation above sea level in m.
-#' @inheritDotParams turb_roughness_length
+#' @inheritParams turb_roughness_length
 #' @export
 #' @references Foken p361 Businger.
-turb_flux_ex_quotient_imp.default <- function(t1, t2, z1=2, z2=10, v1, v2, elev, ...) {
+turb_flux_ex_quotient_imp.default <- function(t1, t2, z1=2, z2=10, v1, v2, elev, surface_type = NULL, obs_height = NULL, ...) {
   grad_rich_no <- turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, elev)
 
   # calculate ustar
@@ -348,9 +348,9 @@ turb_flux_imp_exchange <- function(...) {
 #' @param z1 Lower height of measurement (e.g. height of anemometer) in m.
 #' @param z2 Upper height of measurement in m.
 #' @param elev Elevation above sea level in m.
-#' @inheritDotParams turb_roughness_length
+#' @inheritParams turb_roughness_length
 #' @export
-turb_flux_imp_exchange.default <- function(t1, t2, v1, v2, z1 = 2, z2 = 10, elev, ...) {
+turb_flux_imp_exchange.default <- function(t1, t2, v1, v2, z1 = 2, z2 = 10, elev, surface_type = NULL, obs_height = NULL, ...) {
   # calculate quotient
   if (!is.null(obs_height)) {
     ex_quotient <- turb_flux_ex_quotient_imp(t1, t2, z1, z2, v1, v2, elev, obs_height=obs_height)
