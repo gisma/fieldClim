@@ -8,7 +8,7 @@
 \usage{
 trans_ozone(...)
 
-\method{trans_ozone}{default}(datetime, lon, lat, ozone_column = 0.35, ...)
+\method{trans_ozone}{default}(datetime, lon, lat, ..., ozone_column = 0.35)
 
 \method{trans_ozone}{weather_station}(weather_station, ...)
 }

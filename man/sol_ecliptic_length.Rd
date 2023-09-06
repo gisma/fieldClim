@@ -3,16 +3,21 @@
 \name{sol_ecliptic_length}
 \alias{sol_ecliptic_length}
 \alias{sol_ecliptic_length.default}
+\alias{sol_ecliptic_length.weather_station}
 \title{Solar ecliptic length}
 \usage{
 sol_ecliptic_length(...)
 
 \method{sol_ecliptic_length}{default}(datetime, ...)
+
+\method{sol_ecliptic_length}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
 
 \item{datetime}{Datetime in POSIXt}
+
+\item{weather_station}{Object of class weather_station.}
 }
 \value{
 degree

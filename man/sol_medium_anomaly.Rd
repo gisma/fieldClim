@@ -3,21 +3,21 @@
 \name{sol_medium_anomaly}
 \alias{sol_medium_anomaly}
 \alias{sol_medium_anomaly.default}
-\alias{sol_time_formula.default}
+\alias{sol_medium_anomaly.weather_station}
 \title{Solar medium anomaly}
 \usage{
 sol_medium_anomaly(...)
 
 \method{sol_medium_anomaly}{default}(datetime, ...)
 
-\method{sol_time_formula}{default}(datetime, lon, ...)
+\method{sol_medium_anomaly}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
 
 \item{datetime}{Datetime in POSIXt}
 
-\item{lon}{Longitude.}
+\item{weather_station}{Object of class weather_station.}
 }
 \value{
 degree
@@ -26,7 +26,5 @@ degree
 Solar medium anomaly
 }
 \references{
-p243
-
 p243
 }

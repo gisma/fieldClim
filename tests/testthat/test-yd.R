@@ -74,7 +74,7 @@ rad_bal(datetime, lon, lat, elev, temp, rh, surface_temp)
 
 
 path <- file.path("data-raw", "caldern_weather_station.csv")
-input <- read.csv(path)
+input <- read.csv(path, nrows = 3)
 names(input)
 weather_station <- build_weather_station2(
   datetime = strptime(input$datetime, format = "%Y-%m-%d %H:%M:%S", tz = "Atlantic/Reykjavik"),
@@ -83,7 +83,13 @@ weather_station <- build_weather_station2(
   soil_temp1 = input$Ts,
   soil_temp2 = input$Ta_2m,
   soil_depth1 = 1,
-  soil_depth2 = 0
+  soil_depth2 = 0,
+  lon = 8.683300,
+  lat = 50.840503,
+  elev = 270,
+  temp = input$Ta_2m,
+  rh = input$Huma_2m,
+  surface_temp = input$Ts
 )
 
 soil_heat_flux(weather_station)

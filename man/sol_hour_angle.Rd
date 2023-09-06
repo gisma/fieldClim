@@ -3,11 +3,14 @@
 \name{sol_hour_angle}
 \alias{sol_hour_angle}
 \alias{sol_hour_angle.default}
+\alias{sol_hour_angle.weather_station}
 \title{Solar hour angle}
 \usage{
 sol_hour_angle(...)
 
 \method{sol_hour_angle}{default}(datetime, lon, ...)
+
+\method{sol_hour_angle}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
@@ -15,6 +18,8 @@ sol_hour_angle(...)
 \item{datetime}{Datetime in POSIXt}
 
 \item{lon}{Longitude.}
+
+\item{weather_station}{Object of class weather_station.}
 }
 \value{
 degree

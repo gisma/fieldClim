@@ -18,28 +18,21 @@ pres_p <- function(...) {
 #' @param rl Specific gas constant for air in m\eqn{^2}/s\eqn{^2}/K, default `r rl_default`.
 #' @export
 #' @references Lente & Ősz 2020 eq5.
-pres_p.default <- function(elev, temp,
-  p0 = p0_default, g = g_default, rl = rl_default, ...) {
+pres_p.default <- function(elev, temp, ...,
+  p0 = p0_default, g = g_default, rl = rl_default) {
   temp <- c2k(temp)
 
   p0 * exp(-(g * elev) / (rl * temp))
 }
 
 #' @rdname pres_p
-#' @param weather_station Object of class weather_station.
-#' @param height 'lower' or 'upper'
+#' @inheritParams sol_julian_day
 #' @export
-pres_p.weather_station <- function(weather_station, height = "lower", ...) {
-  if (height == "lower") {
-    check_availability(weather_station, "t1", "elevation", "z1")
-    t <- weather_station$measurements$t1 # to Kelvin
-    elev <- weather_station$location_properties$elevation + weather_station$properties$z1
-  } else if (height == "upper") {
-    check_availability(weather_station, "t2", "elevation", "z2")
-    t <- weather_station$measurements$t2 # to Kelvin
-    elev <- weather_station$location_properties$elevation + weather_station$properties$z2
-  }
-  return(pres_p(elev, t))
+pres_p.weather_station <- function(weather_station, ...) {
+  elev <- weather_station$elev
+  temp <- weather_station$temp
+  
+  pres_p(elev, temp, weather_station)
 }
 
 #' Vapor pressure
@@ -65,7 +58,7 @@ pres_vapor_p.default <- function(temp, rh, ...) {
 
 #' @rdname pres_vapor_p
 #' @export
-#' @param weather_station Object of class weather_station.
+#' @inheritParams sol_julian_day
 #' @param height Height of measurement. "lower" or "upper".
 pres_vapor_p.weather_station <- function(weather_station, height = "lower", ...) {
   check_availability(weather_station, "t1", "t2", "hum1", "hum2")
@@ -102,7 +95,7 @@ pres_sat_vapor_p.default <- function(temp, a = 7.5, b = 235, ...) {
 
 #' @rdname pres_sat_vapor_p
 #' @export
-#' @param weather_station Object of class weather_station.
+#' @inheritParams sol_julian_day
 #' @param height Height of measurement. "lower" or "upper".
 pres_sat_vapor_p.weather_station <- function(weather_station, height = "lower", ...) {
   check_availability(weather_station, "t1", "t2")
@@ -128,7 +121,7 @@ pres_air_density <- function(...) {
 }
 
 #' @rdname pres_air_density
-#' @param weather_station Object of class weather_station.
+#' @inheritParams sol_julian_day
 #' @param height "lower" or "upper"
 #' @export
 #'

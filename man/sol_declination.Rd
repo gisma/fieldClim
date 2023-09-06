@@ -3,16 +3,21 @@
 \name{sol_declination}
 \alias{sol_declination}
 \alias{sol_declination.default}
+\alias{sol_declination.weather_station}
 \title{Solar declination}
 \usage{
 sol_declination(...)
 
 \method{sol_declination}{default}(datetime, ...)
+
+\method{sol_declination}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
 
 \item{datetime}{Datetime in POSIXt}
+
+\item{weather_station}{Object of class weather_station.}
 }
 \value{
 degree

@@ -14,19 +14,24 @@ trans_gas <- function(...) {
 #' @export
 #' @references p246.
 trans_gas.default <- function(datetime, lon, lat, elev, temp, ...) {
-  air_mass_abs <- trans_air_mass_abs(datetime, lon, lat, elev, temp)
+  air_mass_abs <- trans_air_mass_abs(datetime, lon, lat, elev, temp, ...)
   
   exp(-0.0127 * air_mass_abs^0.26)
 }
 
 #' @rdname trans_gas
-#' @param weather_station Object of class weather_station.
+#' @inheritParams sol_julian_day
 #' @export
-#'
 trans_gas.weather_station <- function(weather_station, ...) {
-  air_mass_abs <- trans_air_mass_abs(weather_station)
-  return(trans_gas(air_mass_abs))
+  a <- formalArgs(generic.default)
+  a <- a[1:(length(a)-1)]
+  for(i in a) {
+    assign(i, weather_station[[i]])
+  }
+  
+  trans_gas(datetime, lon, lat, elev, temp, weather_station)
 }
+
 
 #' Absolute optical air mass
 #'
@@ -54,15 +59,16 @@ trans_air_mass_abs.default <- function(datetime, lon, lat, elev, temp, ...) {
 }
 
 #' @rdname trans_air_mass_abs
-#' @param weather_station Object of class weather_station.
+#' @inheritParams sol_julian_day
 #' @export
-#'
 trans_air_mass_abs.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "p2")
-
-  p <- weather_station$measurements$p2
-  air_mass_rel <- trans_air_mass_rel(weather_station)
-  return(trans_air_mass_abs(air_mass_rel, p))
+  a <- formalArgs(generic.default)
+  a <- a[1:(length(a)-1)]
+  for(i in a) {
+    assign(i, weather_station[[i]])
+  }
+  
+  trans_air_mass_abs(datetime, lon, lat, elev, temp, weather_station)
 }
 
 #' Relative optical air mass
@@ -87,12 +93,17 @@ trans_air_mass_rel.default <- function(datetime, lon, lat, ...) {
 }
 
 #' @rdname trans_air_mass_rel
-#' @param weather_station Object of class weather_station.
+#' @inheritParams sol_julian_day
 #' @export
 #'
 trans_air_mass_rel.weather_station <- function(weather_station, ...) {
-  sol_elevation <- sol_elevation(weather_station)
-  return(trans_air_mass_rel(sol_elevation))
+  a <- formalArgs(generic.default)
+  a <- a[1:(length(a)-1)]
+  for(i in a) {
+    assign(i, weather_station[[i]])
+  }
+  
+  trans_air_mass_rel(datetime, lon, lat)
 }
 
 #' Transmittance due to ozone
@@ -111,8 +122,8 @@ trans_ozone <- function(...) {
 #' @param ozone_column Atmospheric ozone as column in cm. Default is average value of 0.35 cm.
 #' @export
 #' @references p245.
-trans_ozone.default <- function(datetime, lon, lat, ozone_column = 0.35, ...) {
-  air_mass_rel <- trans_air_mass_rel(datetime, lon, lat)
+trans_ozone.default <- function(datetime, lon, lat, ..., ozone_column = 0.35) {
+  air_mass_rel <- trans_air_mass_rel(datetime, lon, lat, ...)
   x <- ozone_column * air_mass_rel
   
   1 - (
@@ -122,13 +133,18 @@ trans_ozone.default <- function(datetime, lon, lat, ozone_column = 0.35, ...) {
 }
 
 #' @rdname trans_ozone
-#' @param weather_station Object of class weather_station.
+#' @inheritParams sol_julian_day
 #' @export
-#'
 trans_ozone.weather_station <- function(weather_station, ...) {
-  air_mass_rel <- trans_air_mass_rel(weather_station)
-  return(trans_ozone(air_mass_rel, ...))
+  a <- formalArgs(trans_ozone.default)
+  a <- a[1:(length(a)-2)]
+  for(i in a) {
+    assign(i, weather_station[[i]])
+  }
+  
+  trans_ozone(datetime, lon, lat, weather_station)
 }
+
 
 #' Transmittance due to rayleigh scattering
 #'
@@ -152,12 +168,16 @@ trans_rayleigh.default <- function(datetime, lon, lat, elev, temp, ...) {
 }
 
 #' @rdname trans_rayleigh
-#' @param weather_station Object of class weather_station.
+#' @inheritParams sol_julian_day
 #' @export
-#'
 trans_rayleigh.weather_station <- function(weather_station, ...) {
-  air_mass_abs <- trans_air_mass_abs(weather_station)
-  return(trans_rayleigh(air_mass_abs))
+  a <- formalArgs(generic.default)
+  a <- a[1:(length(a)-2)]
+  for(i in a) {
+    assign(i, weather_station[[i]])
+  }
+  
+  trans_rayleigh(datetime, lon, lat, elev, temp, weather_station)
 }
 
 #' Transmittance due to water vapor
@@ -186,13 +206,16 @@ trans_vapor.default <- function(datetime, lon, lat, elev, temp, ...) {
 }
 
 #' @rdname trans_vapor
-#' @param weather_station Object of class weather_station.
+#' @inheritParams sol_julian_day
 #' @export
-#'
 trans_vapor.weather_station <- function(weather_station, ...) {
-  air_mass_rel <- trans_air_mass_rel(weather_station)
-  precipitable_water <- hum_precipitable_water(weather_station)
-  return(trans_vapor(air_mass_rel, precipitable_water))
+  a <- formalArgs(generic.default)
+  a <- a[1:(length(a)-2)]
+  for(i in a) {
+    assign(i, weather_station[[i]])
+  }
+  
+  trans_vapor(datetime, lon, lat, elev, temp, weather_station)
 }
 
 #' Transmittance due to aerosols
@@ -211,7 +234,7 @@ trans_aerosol <- function(...) {
 #' @param vis Visibility in km.
 #' @export
 #' @references p246.
-trans_aerosol.default <- function(datetime, lon, lat, elev, temp, vis = 30, ...) {
+trans_aerosol.default <- function(datetime, lon, lat, elev, temp, ..., vis = 30) {
   air_mass_abs <- trans_air_mass_abs(datetime, lon, lat, elev, temp)
   
   df <- data.frame(
@@ -231,79 +254,14 @@ trans_aerosol.default <- function(datetime, lon, lat, elev, temp, vis = 30, ...)
 }
 
 #' @rdname trans_aerosol
-#' @param weather_station Object of class weather_station.
+#' @inheritParams sol_julian_day
 #' @export
 trans_aerosol.weather_station <- function(weather_station, ...) {
-  air_mass_abs <- trans_air_mass_abs(weather_station)
-  return(trans_aerosol(weather_station, ...))
+  a <- formalArgs(trans_aerosol.default)
+  a <- a[1:(length(a)-2)]
+  for(i in a) {
+    assign(i, weather_station[[i]])
+  }
+  
+  trans_aerosol(datetime, lon, lat, elev, temp, weather_station)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#' Total transmittance
-#'
-#' Calculates total transmittance of the atmosphere.
-#'
-#' @rdname trans_total
-#' @param ... Additional arguments.
-#' @returns Total transmittance (0-1)
-#' @export
-#'
-#trans_total <- function(...) {
-#  UseMethod("trans_total")
-#}
-
-#' @rdname trans_total
-#' @param sol_elevation Solar elevation in degrees.
-#' @param t Air temperature in °C.
-#' @param elev Altitude above sea level in m.
-#' @param oz Atmospheric ozone as column in cm. Default is average global value.
-#' @param vis Meteorological visibility in km. Default is the visibility on a clear day.
-#' @param p OPTIONAL. Pressure in hPa. Estimated from elev and t if not available.
-#' @export
-#' @references p46.
-#trans_total.default <- function(sol_elevation, t, elev, oz = 0.35, vis = 30,
-#                                p = NULL, ...) {
-#  if (is.null(p)) p <- pres_p(elev, t)
-#  pw <- hum_precipitable_water(p, t, elev)
-#  mr <- trans_air_mass_rel(sol_elevation)
-#  ma <- trans_air_mass_abs(mr, p)
-#  trans_total <- data.frame(
-#    rayleigh = trans_rayleigh(ma),
-#    ozone = trans_ozone(mr, oz),
-#    vapor = trans_vapor(mr, pw),
-#    aerosol = trans_aerosol(ma, vis),
-#    gas = trans_gas(ma)
-#  )
-#  trans_total$total <- apply(trans_total, 1, FUN = prod)
-#  return(trans_total$total)
-#}
-
-#' @rdname trans_total
-#' @param weather_station Object of class weather_station.
-#' @param oz OPTIONAL. Columnar ozone in cm.
-#' Default is average global value.
-#' @param vis OPTIONAL. Meteorological visibility in km.
-#' Default is the visibility on a clear day.
-#' @export
-#'
-#trans_total.weather_station <- function(weather_station, oz = 0.35, vis = 30, ...) {
-#  sol_elevation <- sol_elevation(weather_station)
-#  check_availability(weather_station, "t2", "z2", "elevation", "p2")
-#  t <- weather_station$measurements$t2
-#  elev <- weather_station$location_properties$elevation + weather_station$properties$z2
-#  p2 <- weather_station$measurements$p2
-#  return(trans_total(sol_elevation, t, elev, oz = oz, vis = vis, p = p2, ...))
-#}

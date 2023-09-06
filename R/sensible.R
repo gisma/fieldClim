@@ -43,7 +43,7 @@ sensible_priestley_taylor.default <- function(t, rad_bal, soil_flux, surface_typ
 }
 
 #' @rdname sensible_priestley_taylor
-#' @param weather_station Object of class weather_station.
+#' @inheritParams sol_julian_day
 #' @export
 sensible_priestley_taylor.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "t1", "rad_bal", "soil_flux", "surface_type")
@@ -132,7 +132,7 @@ sensible_monin.default <- function(t1, t2, z1 = 2, z2 = 10, v1, v2, elev, surfac
 }
 
 #' @rdname sensible_monin
-#' @param weather_station Object of class weather_station.
+#' @inheritParams sol_julian_day
 #' @param obs_height Height of obstacle in m.
 #' @export
 sensible_monin.weather_station <- function(weather_station, obs_height = NULL, ...) {

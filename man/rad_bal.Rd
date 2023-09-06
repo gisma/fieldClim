@@ -15,6 +15,8 @@ rad_bal(...)
 \arguments{
 \item{...}{Additional arguments.}
 
+\item{datetime}{Datetime in POSIXt}
+
 \item{weather_station}{Object of class weather_station.}
 }
 \value{

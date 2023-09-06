@@ -8,9 +8,9 @@
 \usage{
 pres_p(...)
 
-\method{pres_p}{default}(elev, temp, p0 = p0_default, g = g_default, rl = rl_default, ...)
+\method{pres_p}{default}(elev, temp, ..., p0 = p0_default, g = g_default, rl = rl_default)
 
-\method{pres_p}{weather_station}(weather_station, height = "lower", ...)
+\method{pres_p}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
@@ -26,8 +26,6 @@ pres_p(...)
 \item{rl}{Specific gas constant for air in m\eqn{^2}/s\eqn{^2}/K, default 287.05.}
 
 \item{weather_station}{Object of class weather_station.}
-
-\item{height}{'lower' or 'upper'}
 }
 \value{
 Pressure in hPa.

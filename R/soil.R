@@ -26,7 +26,7 @@ soil_heat_flux.default <- function(soil_temp1, soil_temp2, soil_depth1, soil_dep
 
 #' @rdname soil_heat_flux
 #' @export
-#' @param weather_station Object of class weather_station.
+#' @inheritParams sol_julian_day
 soil_heat_flux.weather_station <- function(weather_station, ...) {
 #  check_availability(weather_station, soil_temp, soil_depth)
   soil_temp1 <- weather_station$soil_temp1
@@ -77,7 +77,7 @@ soil_thermal_cond.default <- function(texture = "sand", moisture = 0, ...) {
 }
 
 #' @rdname soil_thermal_cond
-#' @param weather_station Object of class weather_station.
+#' @inheritParams sol_julian_day
 #' @export
 soil_thermal_cond.weather_station <- function(weather_station, ...) {
 #  check_availability(weather_station, "texture", "moisture")
@@ -146,7 +146,7 @@ soil_heat_cap.default <- function(moisture, texture = "sand", ...) {
 
 
 #' @rdname soil_heat_cap
-#' @param weather_station Object of class weather_station.
+#' @inheritParams sol_julian_day
 #' @export
 #'
 soil_heat_cap.weather_station <- function(weather_station, ...) {
@@ -183,7 +183,7 @@ soil_attenuation.default <- function(moisture, texture = "sand", ...) {
 
 #' @rdname soil_attenuation
 #' @export
-#' @param weather_station Object of class weather_station.
+#' @inheritParams sol_julian_day
 soil_attenuation.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "moisture", "texture")
   moisture <- weather_station$measurements$moisture

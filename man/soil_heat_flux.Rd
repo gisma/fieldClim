@@ -8,7 +8,7 @@
 \usage{
 soil_heat_flux(...)
 
-\method{soil_heat_flux}{default}(soil_temp, soil_depth, ...)
+\method{soil_heat_flux}{default}(soil_temp1, soil_temp2, soil_depth1, soil_depth2, ...)
 
 \method{soil_heat_flux}{weather_station}(weather_station, ...)
 }
@@ -20,11 +20,11 @@ soil_heat_flux(...)
     \item{\code{moisture}}{Soil moisture in Cubic meter/cubic meter}
   }}
 
-\item{soil_temp}{Soil temperature in °C. A vector with two elements.}
-
-\item{soil_depth}{Depth of the measurement in m. A vector with two elements.}
+\item{soil_temp1, }{soil_temp2 Soil temperature in °C.}
 
 \item{weather_station}{Object of class weather_station.}
+
+\item{soil_depth, }{soil_depth2 Depth of the measurement in m. A vector with two elements.}
 }
 \value{
 Soil heat flux in W * m^(-2).

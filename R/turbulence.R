@@ -31,7 +31,7 @@ turb_roughness_length.default <- function(surface_type = NULL, obs_height = NULL
 }
 
 #' @rdname turb_roughness_length
-#' @param weather_station Object of class weather_station.
+#' @inheritParams sol_julian_day
 #' @export
 turb_roughness_length.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "obs_height", "surface_type")
@@ -119,7 +119,7 @@ turb_ustar.default <- function(v, z, surface_type = NULL, obs_height = NULL, ...
 }
 
 #' @rdname turb_ustar
-#' @param weather_station Object of class weather_station.
+#' @inheritParams sol_julian_day
 #' @param obs_height Height of obstacle in m.
 #' @export
 turb_ustar.weather_station <- function(weather_station, obs_height = NULL, ...) {

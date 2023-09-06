@@ -20,16 +20,16 @@ rad_bal.default <- function(datetime, lon, lat, elev, temp, rh, surface_temp, ..
 }
 
 #' @rdname rad_bal
-#' @param weather_station Object of class weather_station.
+#' @inheritParams sol_julian_day
 #' @export
 rad_bal.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "lw_in", "lw_out")
-
-  rad_lw_surface <- weather_station$measurements$lw_out
-  rad_lw_atmospheric <- weather_station$measurements$lw_in
-  rad_sw_radiation_balance <- rad_sw_radiation_balance(weather_station)
-
-  rad_bal(rad_sw_radiation_balance, rad_lw_surface, rad_lw_atmospheric)
+  a <- formalArgs(rad_bal.default)
+  a <- a[1:(length(a)-1)]
+  for(i in a) {
+    assign(i, weather_station[[i]])
+  }
+  
+  rad_bal(datetime, lon, lat, elev, temp, rh, surface_temp, weather_station)
 }
 
 #' Shortwave radiation balance
@@ -53,6 +53,19 @@ rad_sw_bal.default <- function(datetime, lon, lat, elev, temp, ...) {
   sw_in - sw_out + diffuse_in - diffuse_out
 }
 
+#' @rdname rad_sw_bal
+#' @inheritParams sol_julian_day
+#' @export
+rad_sw_bal.weather_station <- function(weather_station, ...) {
+  a <- formalArgs(rad_sw_bal.default)
+  a <- a[1:(length(a)-1)]
+  for(i in a) {
+    assign(i, weather_station[[i]])
+  }
+  
+  rad_sw_bal(datetime, lon, lat, elev, temp, weather_station)
+}
+
 #' Shortwave incoming radiation
 #'
 #' Provide `slope` and `exposition` to perform topographic correction.
@@ -72,7 +85,8 @@ rad_sw_in <- function(...) {
 #' @inheritDotParams terr_terrain_angle.default slope exposition
 #' @export
 #' @references p46eq3.3, p52eq3.8
-rad_sw_in.default <- function(datetime, lon, lat, elev, temp, surface_type = "field", ...) {
+rad_sw_in.default <- function(datetime, lon, lat, elev, temp, ...,
+    surface_type = "field") {
   sw_toa <- rad_sw_toa(datetime, lon, lat, ...)
   elevation <- sol_elevation(datetime, lon, lat)
   elevation <- deg2rad(elevation)
@@ -95,22 +109,18 @@ rad_sw_in.default <- function(datetime, lon, lat, elev, temp, surface_type = "fi
 }
 
 #' @rdname rad_sw_in
+#' @inheritParams sol_julian_day
 #' @export
-#' @param weather_station Object of class weather_station.
-#' @param trans_total Total transmittance of the atmosphere.
-#' @param oz OPTIONAL. Needed if trans_total = NULL. Columnar ozone in cm.
-#' Default is average global value.
-#' @param vis OPTIONAL. Needed if trans_total = NULL. Meteorological visibility in km.
-#' Default is the visibility on a clear day.
-rad_sw_in.weather_station <- function(weather_station,
-                                      trans_total = NULL,
-                                      oz = 0.35, vis = 30, ...) {
-  rad_sw_toa <- rad_sw_toa(weather_station)
-  if (is.null(trans_total)) {
-    trans_total <- trans_total(weather_station, oz = oz, vis = vis)
+rad_sw_in.weather_station <- function(weather_station, ...) {
+  a <- formalArgs(rad_sw_in.default)
+  a <- a[1:(length(a)-2)]
+  for(i in a) {
+    assign(i, weather_station[[i]])
   }
-  return(rad_sw_in(rad_sw_toa, trans_total))
+  
+  rad_sw_in(datetime, lon, lat, elev, temp, weather_station)
 }
+
 
 #' Shortwave radiation at top of atmosphere
 #'
@@ -128,36 +138,27 @@ rad_sw_toa <- function(...) {
 #' @param sol_const Solar constant in W/m\eqn{^2}
 #' @export
 #' @references p244
-rad_sw_toa.default <- function(datetime, lon, lat, sol_const = 1368, ...) {
+rad_sw_toa.default <- function(datetime, lon, lat, ..., sol_const = 1368) {
   eccentricity <- sol_eccentricity(datetime)
   elevation <- sol_elevation(datetime, lon, lat)
   elevation <- deg2rad(elevation)
 
   sol_const * eccentricity * sin(elevation)
 }
-#rad_sw_toa.default <- function(datetime, lat, lon, ...) {
-#  if (!inherits(datetime, "POSIXt")) {
-#    stop("datetime has to be of class POSIXt.")
-#  }
-#  sol_const <- 1368
-#  sol_eccentricity <- sol_eccentricity(datetime)
-#  sol_elevation <- sol_elevation(datetime, lat, lon)
-#  rad_sw_toa <- sol_const * sol_eccentricity * sin(sol_elevation * (pi / 180))
-#  return(rad_sw_toa)
-#}
 
 #' @rdname rad_sw_toa
+#' @inheritParams sol_julian_day
 #' @export
-#' @param weather_station Object of class weather_station.
 rad_sw_toa.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "datetime", "latitude", "longitude")
-
-  datetime <- weather_station$measurements$datetime
-  lat <- weather_station$location_properties$latitude
-  lon <- weather_station$location_properties$longitude
-
-  return(rad_sw_toa(datetime, lat, lon))
+  a <- formalArgs(rad_sw_toa.default)
+  a <- a[1:(length(a)-2)]
+  for(i in a) {
+    assign(i, weather_station[[i]])
+  }
+  
+  rad_sw_toa(datetime, lon, lat)
 }
+
 
 
 #' Incoming diffused radiation
@@ -178,7 +179,8 @@ rad_diffuse_in <- function(...) {
 #' @inheritDotParams terr_terrain_angle slope exposition
 #' @export
 #' @references p58eq3.14, p55eq3.9
-rad_diffuse_in.default <- function(datetime, lon, lat, elev, temp, surface_type = "field", ...) {
+rad_diffuse_in.default <- function(datetime, lon, lat, elev, temp, ...,
+    surface_type = "field") {
   vapor <- trans_vapor(datetime, lon, lat, elev, temp)
   ozone <- trans_ozone(datetime, lon, lat, ...)
   sw_toa <- rad_sw_toa(datetime, lon, lat, ...)
@@ -199,6 +201,19 @@ rad_diffuse_in.default <- function(datetime, lon, lat, elev, temp, surface_type 
   out * (1 + albedo * terrain_view)
 }
 
+#' @rdname rad_diffuse_in
+#' @inheritParams sol_julian_day
+#' @export
+rad_diffuse_in.weather_station <- function(weather_station, ...) {
+  a <- formalArgs(rad_diffuse_in.default)
+  a <- a[1:(length(a)-2)]
+  for(i in a) {
+    assign(i, weather_station[[i]])
+  }
+  
+  rad_diffuse_in(datetime, lon, lat, elev, temp, weather_station)
+}
+
 #' Shortwave outgoing radiation
 #'
 #' Provide `slope` and `exposition` to perform topographic correction.
@@ -213,12 +228,26 @@ rad_sw_out <- function(...) {
 #' @rdname rad_sw_out
 #' @export
 #' @references p46eq3.3, p52eq3.8
-rad_sw_out.default <- function(datetime, lon, lat, elev, temp, surface_type = "field", ...) {
+rad_sw_out.default <- function(datetime, lon, lat, elev, temp, ...,
+    surface_type = "field") {
   sw_in <- rad_sw_in(datetime, lon, lat, elev, temp, ...)
   surface_type
   albedo <- surface_properties[which(surface_properties$surface_type == surface_type), ]$albedo
   
   sw_in * albedo
+}
+
+#' @rdname rad_sw_out
+#' @inheritParams sol_julian_day
+#' @export
+rad_sw_out.weather_station <- function(weather_station, ...) {
+  a <- formalArgs(rad_sw_out.default)
+  a <- a[1:(length(a)-2)]
+  for(i in a) {
+    assign(i, weather_station[[i]])
+  }
+  
+  rad_sw_out(datetime, lon, lat, elev, temp, weather_station)
 }
 
 #' Diffused outgoing radiation
@@ -235,11 +264,25 @@ rad_diffuse_out <- function(...) {
 #' @rdname rad_diffuse_out
 #' @export
 #' @references p46eq3.3, p52eq3.8
-rad_diffuse_out.default <- function(datetime, lon, lat, elev, temp, surface_type = "field", ...) {
+rad_diffuse_out.default <- function(datetime, lon, lat, elev, temp, ...,
+    surface_type = "field") {
   diffuse_in <- rad_diffuse_in(datetime, lon, lat, elev, temp, ...)
   albedo <- surface_properties[which(surface_properties$surface_type == surface_type), ]$albedo
   
   diffuse_in * albedo
+}
+
+#' @rdname rad_diffuse_out
+#' @inheritParams sol_julian_day
+#' @export
+rad_diffuse_out.weather_station <- function(weather_station, ...) {
+  a <- formalArgs(rad_diffuse_out.default)
+  a <- a[1:(length(a)-2)]
+  for(i in a) {
+    assign(i, weather_station[[i]])
+  }
+  
+  rad_diffuse_out(datetime, lon, lat, elev, temp, weather_station)
 }
 
 #' Long wave radiation balance
@@ -265,6 +308,19 @@ rad_lw_bal.default <- function(temp, rh, surface_temp, ...) {
   lw_in - lw_out
 }
 
+#' @rdname rad_lw_bal
+#' @inheritParams sol_julian_day
+#' @export
+rad_lw_bal.weather_station <- function(weather_station, ...) {
+  a <- formalArgs(rad_lw_bal.default)
+  a <- a[1:(length(a)-1)]
+  for(i in a) {
+    assign(i, weather_station[[i]])
+  }
+  
+  rad_lw_bal(temp, rh, surface_temp, weather_station)
+}
+
 #' Longwave radiation of the atmosphere
 #'
 #' Calculation of the longwave radiation of the atmosphere.
@@ -285,29 +341,27 @@ rad_lw_in <- function(...) {
 #'   default `r sigma_default'.
 #' @export
 #' @references p66eq3.24
-rad_lw_in.default <- function(temp, rh, sigma = sigma_default, ...) {
+rad_lw_in.default <- function(temp, rh, ..., sigma = sigma_default) {
   emissivity_air <- rad_emissivity_air(temp, rh, ...)
   sky_view <- terr_sky_view(...)
   temp <- c2k(temp)
   
   emissivity_air * sigma * temp^4 * sky_view
 }
-#rad_lw_in.default <- function(hum, t, ...) {
-#  sigma <- 5.6693e-8
-#  gs <- (0.594 + 0.0416 * sqrt(pres_vapor_p(hum, t))) * sigma * (t + 273.15)^4
-#  return(gs)
-#}
 
 #' @rdname rad_lw_in
+#' @inheritParams sol_julian_day
 #' @export
-#' @param weather_station Object of class weather_station.
 rad_lw_in.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "t2", "hum2")
-  hum <- weather_station$measurements$hum2
-  t <- weather_station$measurements$t2
-
-  return(rad_lw_in(hum, t))
+  a <- formalArgs(rad_lw_in.default)
+  a <- a[1:(length(a)-2)]
+  for(i in a) {
+    assign(i, weather_station[[i]])
+  }
+  
+  rad_lw_in(temp, rh)
 }
+
 
 #' Emissivity of the atmosphere
 #'
@@ -335,23 +389,18 @@ rad_emissivity_air.default <- function(temp, rh, ...) {
 }
 
 #' @rdname rad_emissivity_air
+#' @inheritParams sol_julian_day
 #' @export
-#' @param weather_station Object of class weather_station.
-#' @param height Height of measurement. "lower" or "upper".
-rad_emissivity_air.weather_station <- function(weather_station, height = "lower", ...) {
-  check_availability(weather_station, "t1", "t2", "elevation", "p1", "p2", "hum1", "hum2")
-  if (!height %in% c("upper", "lower")) {
-    stop("'height' must be either 'lower' or 'upper'.")
+rad_emissivity_air.weather_station <- function(weather_station, ...) {
+  a <- formalArgs(rad_emissivity_air.default)
+  a <- a[1:(length(a)-1)]
+  for(i in a) {
+    assign(i, weather_station[[i]])
   }
-
-  height_num <- which(height == c("lower", "upper"))
-  t <- weather_station$measurements[[paste0("t", height_num)]]
-  p <- weather_station$measurements[[paste0("p", height_num)]]
-  elev <- weather_station$location_properties$elevation
-  hum <- weather_station$measurements[[paste0("hum", height_num)]]
-
-  return(rad_emissivity_air(t, elev, p, hum))
+  
+  rad_emissivity_air(temp, rh, weather_station)
 }
+
 
 #' Longwave radiation of the surface
 #'
@@ -375,7 +424,8 @@ rad_lw_out <- function(...) {
 #' Default is 'field' as surface type.
 #' @export
 #' @references p66eq3.20
-rad_lw_out.default <- function(surface_temp, surface_type = "field", sigma = sigma_default, ...) {
+rad_lw_out.default <- function(surface_temp, ...,
+    surface_type = "field", sigma = sigma_default) {
   emissivity <- surface_properties[which(surface_properties$ surface_type == surface_type), ]$emissivity
   surface_temp <- c2k(surface_temp)
   
@@ -383,20 +433,14 @@ rad_lw_out.default <- function(surface_temp, surface_type = "field", sigma = sig
 }
 
 #' @rdname rad_lw_out
+#' @inheritParams sol_julian_day
 #' @export
-#' @param weather_station Object of class weather_station.
-#' @param surface_type Surface type for which a specific emissivity will be selected.
-#' Default is 'field' as surface type.
-rad_lw_out.weather_station <- function(weather_station, surface_type = "field", ...) {
-  if (exists("weather_station$measurements$t_surface")) {
-    t <- weather_station$measurements$t_surface
-  } else {
-    t <- weather_station$measurements$t1
-    warning("There is no surface temperature available in this weather_station object. The 2 m air temperature will be used instead.")
+rad_lw_out.weather_station <- function(weather_station, ...) {
+  a <- formalArgs(rad_lw_out.default)
+  a <- a[1:(length(a)-3)]
+  for(i in a) {
+    assign(i, weather_station[[i]])
   }
-
-  surface_properties <- surface_properties
-  emissivity <- surface_properties[which(surface_properties$surface_type == surface_type), ]$emissivity
-
-  return(rad_lw_out(t, surface_type))
+  
+  rad_lw_out(surface_temp, weather_station)
 }

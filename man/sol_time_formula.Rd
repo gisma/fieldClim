@@ -2,16 +2,31 @@
 % Please edit documentation in R/solar.R
 \name{sol_time_formula}
 \alias{sol_time_formula}
+\alias{sol_time_formula.default}
+\alias{sol_time_formula.weather_station}
 \title{Solar time formula}
 \usage{
 sol_time_formula(...)
+
+\method{sol_time_formula}{default}(datetime, lon, ...)
+
+\method{sol_time_formula}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
+
+\item{datetime}{Datetime in POSIXt}
+
+\item{lon}{Longitude.}
+
+\item{weather_station}{Object of class weather_station.}
 }
 \value{
 hour
 }
 \description{
 Solar time formula
+}
+\references{
+p243
 }

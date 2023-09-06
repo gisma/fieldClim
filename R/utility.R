@@ -69,7 +69,7 @@ surface_properties <- data.frame(
 #' Checks availability of passed properties in the weather station object.
 #' If property is NULL, aborts with error.
 #'
-#' @param weather_station Object of class weather_station.
+#' @inheritParams sol_julian_day
 #' @param ... Strings of properties to check.
 #' @returns Absolutely nothing
 #' @export

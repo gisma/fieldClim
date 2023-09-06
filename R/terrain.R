@@ -28,16 +28,12 @@ terr_sky_view.default <- function(slope = 0, valley = FALSE, ...) {
 }
 
 #' @rdname terr_sky_view
-#' @param weather_station Object of class weather_station.
+#' @inheritParams sol_julian_day
 #' @export
 terr_sky_view.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "slope", "valley")
-
-  slope <- weather_station$location_properties$slope
-  valley <- weather_station$location_properties$valley
-
-  return(terr_sky_view(slope, valley))
+  terr_sky_view(weather_station)
 }
+
 
 #' Title
 #'
@@ -54,8 +50,8 @@ terr_terrain_angle <- function(...) {
 #' @param exposition Exposition in degree.
 #' @export
 #' @references p52eq3.7
-terr_terrain_angle.default <- function(datetime, lon, lat,
-    slope = 0, exposition = 0, ...) {
+terr_terrain_angle.default <- function(datetime, lon, lat, ...,
+    slope = 0, exposition = 0) {
   elevation <- sol_elevation(datetime, lon, lat)
   azimuth <- sol_azimuth(datetime, lon, lat)
   
@@ -67,4 +63,17 @@ terr_terrain_angle.default <- function(datetime, lon, lat,
   out <- acos(cos(slope) * sin(elevation) +
     sin(slope) * cos(elevation) * cos(azimuth - exposition))
   rad2deg(out)
+}
+
+#' @rdname terr_terrain_angle
+#' @inheritParams sol_julian_day
+#' @export
+terr_terrain_angle.weather_station <- function(weather_station, ...) {
+  a <- formalArgs(terr_terrain_angle.default)
+  a <- a[1:(length(a)-3)]
+  for(i in a) {
+    assign(i, weather_station[[i]])
+  }
+  
+  terr_terrain_angle(datetime, lon, lat)
 }

@@ -129,7 +129,7 @@ latent_penman.default <- function(datetime,
 }
 
 #' @rdname latent_penman
-#' @param weather_station Object of class weather_station.
+#' @inheritParams sol_julian_day
 #' @export
 latent_penman.weather_station <- function(weather_station, ...) {
   check_availability(
@@ -228,7 +228,7 @@ latent_monin.default <- function(hum1, hum2, t1, t2, v1, v2, z1 = 2, z2 = 10, el
 }
 
 #' @rdname latent_monin
-#' @param weather_station Object of class weather_station.
+#' @inheritParams sol_julian_day
 #' @param obs_height Height of obstacle in m.
 #' @export
 latent_monin.weather_station <- function(weather_station, obs_height = NULL, ...) {
@@ -308,7 +308,7 @@ latent_bowen.default <- function(t1, t2, hum1, hum2, z1 = 2, z2 = 10, elev,
 }
 
 #' @rdname latent_bowen
-#' @param weather_station Object of class weather_station.
+#' @inheritParams sol_julian_day
 #' @export
 latent_bowen.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "z1", "z2", "t1", "t2", "hum1", "hum2", "elevation", "rad_bal", "soil_flux")

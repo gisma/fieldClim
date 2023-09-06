@@ -3,11 +3,14 @@
 \name{sol_medium_suntime}
 \alias{sol_medium_suntime}
 \alias{sol_medium_suntime.default}
+\alias{sol_medium_suntime.weather_station}
 \title{Solar medium suntime}
 \usage{
 sol_medium_suntime(...)
 
 \method{sol_medium_suntime}{default}(datetime, lon, ...)
+
+\method{sol_medium_suntime}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
@@ -15,6 +18,8 @@ sol_medium_suntime(...)
 \item{datetime}{Datetime in POSIXt}
 
 \item{lon}{Longitude.}
+
+\item{weather_station}{Object of class weather_station.}
 }
 \value{
 hour
