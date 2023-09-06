@@ -8,18 +8,18 @@
 \usage{
 turb_ustar(...)
 
-\method{turb_ustar}{default}(v, z, surface_type = NULL, obs_height = NULL, ...)
+\method{turb_ustar}{default}(v1, z1, surface_type = NULL, obs_height = NULL, ...)
 
-\method{turb_ustar}{weather_station}(weather_station, obs_height = NULL, ...)
+\method{turb_ustar}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{v}{Windspeed in height of anemometer in m/s.}
+\item{v1}{Windspeed in height of anemometer in m/s.}
 
-\item{z}{Height of anemometer in m.}
+\item{z1}{Height of anemometer in m.}
 
-\item{surface_type}{Type of surface.}
+\item{surface_type}{Type of surface. Options: field, acre, lawn, street, agriculture, settlement, coniferous forest, deciduous forest, mixed forest, city, water, shrub}
 
 \item{obs_height}{Height of obstacle in m.}
 

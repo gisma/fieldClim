@@ -3,11 +3,14 @@
 \name{rad_diffuse_in}
 \alias{rad_diffuse_in}
 \alias{rad_diffuse_in.default}
+\alias{rad_diffuse_in.weather_station}
 \title{Incoming diffused radiation}
 \usage{
 rad_diffuse_in(...)
 
-\method{rad_diffuse_in}{default}(datetime, lon, lat, elev, temp, surface_type = "field", ...)
+\method{rad_diffuse_in}{default}(datetime, lon, lat, elev, temp, ..., surface_type = "field")
+
+\method{rad_diffuse_in}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{
@@ -25,6 +28,8 @@ rad_diffuse_in(...)
 \item{elev}{Elevation above sea level in m.}
 
 \item{temp}{Temperature in °C.}
+
+\item{weather_station}{Object of class weather_station.}
 }
 \value{
 Description.

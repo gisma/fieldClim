@@ -3,11 +3,14 @@
 \name{rad_lw_bal}
 \alias{rad_lw_bal}
 \alias{rad_lw_bal.default}
+\alias{rad_lw_bal.weather_station}
 \title{Long wave radiation balance}
 \usage{
 rad_lw_bal(...)
 
 \method{rad_lw_bal}{default}(temp, rh, surface_temp, ...)
+
+\method{rad_lw_bal}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{
@@ -15,8 +18,7 @@ rad_lw_bal(...)
   \describe{
     \item{\code{sigma}}{Stefan-Boltzmann constant in W/m\eqn{^2}/K\eqn{^4},
 default `r sigma_default'.}
-    \item{\code{surface_type}}{Surface type for which a specific emissivity will be selected.
-Default is 'field' as surface type.}
+    \item{\code{surface_type}}{Surface type for which a specific emissivity will be selected.}
   }}
 
 \item{temp}{Temperature in °C.}
@@ -24,6 +26,8 @@ Default is 'field' as surface type.}
 \item{rh}{relative humidity.}
 
 \item{surface_temp}{Surface temperature in °C.}
+
+\item{weather_station}{Object of class weather_station.}
 }
 \value{
 W/m\eqn{^2}.

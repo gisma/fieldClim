@@ -8,7 +8,7 @@
 \usage{
 rad_lw_in(...)
 
-\method{rad_lw_in}{default}(temp, rh, sigma = sigma_default, ...)
+\method{rad_lw_in}{default}(temp, rh, ..., sigma = sigma_default)
 
 \method{rad_lw_in}{weather_station}(weather_station, ...)
 }

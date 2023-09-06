@@ -75,7 +75,7 @@ surface_properties <- data.frame(
 #' @export
 #'
 check_availability <- function(weather_station, ...) {
-  unlisted <- names(c(weather_station[[1]], weather_station[[2]], weather_station[[3]]))
+  unlisted <- names(weather_station)
   parameters <- as.character(unlist(list(...)))
   empty <- parameters[!parameters %in% unlisted]
   if (length(empty) > 1) {

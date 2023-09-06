@@ -10,7 +10,7 @@ rad_emissivity_air(...)
 
 \method{rad_emissivity_air}{default}(temp, rh, ...)
 
-\method{rad_emissivity_air}{weather_station}(weather_station, height = "lower", ...)
+\method{rad_emissivity_air}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{
@@ -24,8 +24,6 @@ rad_emissivity_air(...)
 \item{rh}{relative humidity.}
 
 \item{weather_station}{Object of class weather_station.}
-
-\item{height}{Height of measurement. "lower" or "upper".}
 }
 \value{
 Emissivity of the atmosphere (0-1).

@@ -70,18 +70,18 @@ turb_flux_monin.default <- function(z1 = 2, z2 = 10, v1, v2, t1, t2, elev, surfa
 #' @export
 turb_flux_monin.weather_station <- function(weather_station, obs_height = NULL, ...) {
   check_availability(weather_station, "z1", "z2", "v1", "v2", "t1", "t2", "elevation")
-  z1 <- weather_station$properties$z1
-  z2 <- weather_station$properties$z2
-  v1 <- weather_station$measurements$v1
-  v2 <- weather_station$measurements$v2
-  t1 <- weather_station$measurements$t1
-  t2 <- weather_station$measurements$t2
-  elev <- weather_station$location_properties$elevation
+  z1 <- weather_station$z1
+  z2 <- weather_station$z2
+  v1 <- weather_station$v1
+  v2 <- weather_station$v2
+  t1 <- weather_station$t1
+  t2 <- weather_station$t2
+  elev <- weather_station$elevation
   if (!is.null(obs_height)) {
     return(turb_flux_monin(z1, z2, v1, v2, t1, t2, elev, obs_height = obs_height))
   } else {
     check_availability(weather_station, "surface_type")
-    surface_type <- weather_station$location_properties$surface_type
+    surface_type <- weather_station$surface_type
     return(turb_flux_monin(z1, z2, v1, v2, t1, t2, elev, surface_type = surface_type))
   }
 }
@@ -126,13 +126,13 @@ turb_flux_grad_rich_no.default <- function(t1, t2, z1 = 2, z2 = 10, v1, v2, elev
 #' @export
 turb_flux_grad_rich_no.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "z1", "z2", "v1", "v2", "t1", "t2", "elev")
-  t1 <- weather_station$measurements$t1
-  t2 <- weather_station$measurements$t2
-  z1 <- weather_station$properties$z1
-  z2 <- weather_station$properties$z2
-  v1 <- weather_station$measurements$v1
-  v2 <- weather_station$measurements$v2
-  elev <- weather_station$location_properties$elevation
+  t1 <- weather_station$t1
+  t2 <- weather_station$t2
+  z1 <- weather_station$z1
+  z2 <- weather_station$z2
+  v1 <- weather_station$v1
+  v2 <- weather_station$v2
+  elev <- weather_station$elevation
   return(turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, elev))
 }
 
@@ -243,18 +243,18 @@ turb_flux_ex_quotient_temp.default <- function(t1, t2, z1=2, z2=10, v1, v2, elev
 #' @export
 turb_flux_ex_quotient_temp.weather_station <- function(weather_station, obs_height = NULL, ...) {
   check_availability(weather_station, "t1", "t2", "z1", "z2", "v1", "v2", "elevation")
-  t1 <- weather_station$measurements$t1
-  t2 <- weather_station$measurements$t2
-  z1 <- weather_station$properties$z1
-  z2 <- weather_station$properties$z2
-  v1 <- weather_station$measurements$v1
-  v2 <- weather_station$measurements$v2
-  elev <- weather_station$location_properties$elevation
+  t1 <- weather_station$t1
+  t2 <- weather_station$t2
+  z1 <- weather_station$z1
+  z2 <- weather_station$z2
+  v1 <- weather_station$v1
+  v2 <- weather_station$v2
+  elev <- weather_station$elevation
   if (!is.null(obs_height)) {
     return(turb_flux_ex_quotient_temp(t1, t2, z1, z2, v1, v2, elev, obs_height = obs_height))
   } else {
     check_availability(weather_station, "surface_type")
-    surface_type <- weather_station$location_properties$surface_type
+    surface_type <- weather_station$surface_type
     return(turb_flux_ex_quotient_temp(t1, t2, z1, z2, v1, v2, elev, surface_type = surface_type))
   }
 }
@@ -327,18 +327,18 @@ turb_flux_ex_quotient_imp.default <- function(t1, t2, z1=2, z2=10, v1, v2, elev,
 #' @export
 turb_flux_ex_quotient_imp.weather_station <- function(weather_station, obs_height = NULL, ...) {
   check_availability(weather_station, "t1", "t2", "z1", "z2", "v1", "v2", "elevation")
-  t1 <- weather_station$measurements$t1
-  t2 <- weather_station$measurements$t2
-  z1 <- weather_station$properties$z1
-  z2 <- weather_station$properties$z2
-  v1 <- weather_station$measurements$v1
-  v2 <- weather_station$measurements$v2
-  elev <- weather_station$location_properties$elevation
+  t1 <- weather_station$t1
+  t2 <- weather_station$t2
+  z1 <- weather_station$z1
+  z2 <- weather_station$z2
+  v1 <- weather_station$v1
+  v2 <- weather_station$v2
+  elev <- weather_station$elevation
   if (!is.null(obs_height)) {
     return(turb_flux_ex_quotient_imp(t1, t2, z1, z2, v1, v2, elev, obs_height = obs_height))
   } else {
     check_availability(weather_station, "surface_type")
-    surface_type <- weather_station$location_properties$surface_type
+    surface_type <- weather_station$surface_type
     return(turb_flux_ex_quotient_imp(t1, t2, z1, z2, v1, v2, elev, surface_type = surface_type))
   }
 }
@@ -386,18 +386,18 @@ turb_flux_imp_exchange.default <- function(t1, t2, v1, v2, z1 = 2, z2 = 10, elev
 #' @export
 turb_flux_imp_exchange.weather_station <- function(weather_station, obs_height = NULL, ...) {
   check_availability(weather_station, "t1", "t2", "z1", "z2", "v1", "v2", "elevation")
-  t1 <- weather_station$measurements$t1
-  t2 <- weather_station$measurements$t2
-  z1 <- weather_station$properties$z1
-  z2 <- weather_station$properties$z2
-  v1 <- weather_station$measurements$v1
-  v2 <- weather_station$measurements$v2
-  elev <- weather_station$location_properties$elevation
+  t1 <- weather_station$t1
+  t2 <- weather_station$t2
+  z1 <- weather_station$z1
+  z2 <- weather_station$z2
+  v1 <- weather_station$v1
+  v2 <- weather_station$v2
+  elev <- weather_station$elevation
   if (!is.null(obs_height)) {
     return(turb_flux_imp_exchange(t1, t2, v1, v2, z1, z2, elev, obs_height = obs_height))
   } else {
     check_availability(weather_station, "surface_type")
-    surface_type <- weather_station$location_properties$surface_type
+    surface_type <- weather_station$surface_type
     return(turb_flux_imp_exchange(t1, t2, v1, v2, z1, z2, elev, surface_type = surface_type))
   }
 }
@@ -422,14 +422,14 @@ turb_flux_calc <- function(weather_station) {
   latent_mon <- latent_monin(weather_station)
   latent_pen <- latent_penman(weather_station)
 
-  weather_station$measurements$stability <- stability
-  weather_station$measurements$sensible_priestley_taylor <- sensible_pt
-  weather_station$measurements$latent_priestley_taylor <- latent_pt
-  weather_station$measurements$sensible_bowen <- sensible_bow
-  weather_station$measurements$latent_bowen <- latent_bow
-  weather_station$measurements$sensible_monin <- sensible_mon
-  weather_station$measurements$latent_monin <- latent_mon
-  weather_station$measurements$latent_penman <- latent_pen
+  weather_station$stability <- stability
+  weather_station$sensible_priestley_taylor <- sensible_pt
+  weather_station$latent_priestley_taylor <- latent_pt
+  weather_station$sensible_bowen <- sensible_bow
+  weather_station$latent_bowen <- latent_bow
+  weather_station$sensible_monin <- sensible_mon
+  weather_station$latent_monin <- latent_mon
+  weather_station$latent_penman <- latent_pen
 
   return(weather_station)
 }

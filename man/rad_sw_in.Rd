@@ -8,9 +8,9 @@
 \usage{
 rad_sw_in(...)
 
-\method{rad_sw_in}{default}(datetime, lon, lat, elev, temp, surface_type = "field", ...)
+\method{rad_sw_in}{default}(datetime, lon, lat, elev, temp, ..., surface_type = "field")
 
-\method{rad_sw_in}{weather_station}(weather_station, trans_total = NULL, oz = 0.35, vis = 30, ...)
+\method{rad_sw_in}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{
@@ -18,6 +18,7 @@ rad_sw_in(...)
   \describe{
     \item{\code{sol_const}}{Solar constant in W/m\eqn{^2}}
     \item{\code{ozone_column}}{Atmospheric ozone as column in cm. Default is average value of 0.35 cm.}
+    \item{\code{vis}}{Visibility in km.}
     \item{\code{slope}}{Slope in degree.}
     \item{\code{exposition}}{Exposition in degree.}
   }}
@@ -33,14 +34,6 @@ rad_sw_in(...)
 \item{temp}{Temperature in °C.}
 
 \item{weather_station}{Object of class weather_station.}
-
-\item{trans_total}{Total transmittance of the atmosphere.}
-
-\item{oz}{OPTIONAL. Needed if trans_total = NULL. Columnar ozone in cm.
-Default is average global value.}
-
-\item{vis}{OPTIONAL. Needed if trans_total = NULL. Meteorological visibility in km.
-Default is the visibility on a clear day.}
 }
 \value{
 W/m\eqn{^2}.

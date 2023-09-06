@@ -3,11 +3,14 @@
 \name{terr_terrain_angle}
 \alias{terr_terrain_angle}
 \alias{terr_terrain_angle.default}
+\alias{terr_terrain_angle.weather_station}
 \title{Title}
 \usage{
 terr_terrain_angle(...)
 
-\method{terr_terrain_angle}{default}(datetime, lon, lat, slope = 0, exposition = 0, ...)
+\method{terr_terrain_angle}{default}(datetime, lon, lat, ..., slope = 0, exposition = 0)
+
+\method{terr_terrain_angle}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
@@ -21,6 +24,8 @@ terr_terrain_angle(...)
 \item{slope}{Slope in degree.}
 
 \item{exposition}{Exposition in degree.}
+
+\item{weather_station}{Object of class weather_station.}
 }
 \value{
 degree.

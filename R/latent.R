@@ -48,10 +48,10 @@ latent_priestley_taylor.default <- function(t, rad_bal, soil_flux, surface_type 
 #' @export
 latent_priestley_taylor.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "t1", "rad_bal", "soil_flux", "surface_type")
-  t1 <- weather_station$measurements$t1
-  rad_bal <- weather_station$measurements$rad_bal
-  soil_flux <- weather_station$measurements$soil_flux
-  surface_type <- weather_station$location_properties$surface_type
+  t1 <- weather_station$t1
+  rad_bal <- weather_station$rad_bal
+  soil_flux <- weather_station$soil_flux
+  surface_type <- weather_station$surface_type
   return(latent_priestley_taylor(t1, rad_bal, soil_flux, surface_type = surface_type))
 }
 
@@ -137,15 +137,15 @@ latent_penman.weather_station <- function(weather_station, ...) {
     "v1", "t1", "hum1", "z1", "rad_bal",
     "elevation", "latitude", "longitude"
   )
-  datetime <- weather_station$measurements$datetime
-  v <- weather_station$measurements$v1
-  t <- weather_station$measurements$t1
-  hum <- weather_station$measurements$hum1
-  z <- weather_station$properties$z1
-  rad_bal <- weather_station$measurements$rad_bal
-  elev <- weather_station$location_properties$elevation
-  lat <- weather_station$location_properties$latitude
-  lon <- weather_station$location_properties$longitude
+  datetime <- weather_station$datetime
+  v <- weather_station$v1
+  t <- weather_station$t1
+  hum <- weather_station$hum1
+  z <- weather_station$z1
+  rad_bal <- weather_station$rad_bal
+  elev <- weather_station$elevation
+  lat <- weather_station$latitude
+  lon <- weather_station$longitude
   return(latent_penman(
     datetime, v, t, hum, z, rad_bal,
     elev, lat, lon
@@ -233,20 +233,20 @@ latent_monin.default <- function(hum1, hum2, t1, t2, v1, v2, z1 = 2, z2 = 10, el
 #' @export
 latent_monin.weather_station <- function(weather_station, obs_height = NULL, ...) {
   check_availability(weather_station, "z1", "z2", "t1", "t2", "hum1", "hum2", "v1", "v2", "elevation")
-  hum1 <- weather_station$measurements$hum1
-  hum2 <- weather_station$measurements$hum2
-  t1 <- weather_station$measurements$t1
-  t2 <- weather_station$measurements$t2
-  z1 <- weather_station$properties$z1
-  z2 <- weather_station$properties$z2
-  v1 <- weather_station$measurements$v1
-  v2 <- weather_station$measurements$v2
-  elev <- weather_station$location_properties$elevation
+  hum1 <- weather_station$hum1
+  hum2 <- weather_station$hum2
+  t1 <- weather_station$t1
+  t2 <- weather_station$t2
+  z1 <- weather_station$z1
+  z2 <- weather_station$z2
+  v1 <- weather_station$v1
+  v2 <- weather_station$v2
+  elev <- weather_station$elevation
   if (!is.null(obs_height)) {
     return(latent_monin(hum1, hum2, t1, t2, v1, v2, z1, z2, elev, obs_height = obs_height))
   } else {
     check_availability(weather_station, "surface_type")
-    surface_type <- weather_station$location_properties$surface_type
+    surface_type <- weather_station$surface_type
     return(latent_monin(hum1, hum2, t1, t2, v1, v2, z1, z2, elev, surface_type = surface_type))
   }
 }
@@ -312,14 +312,14 @@ latent_bowen.default <- function(t1, t2, hum1, hum2, z1 = 2, z2 = 10, elev,
 #' @export
 latent_bowen.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "z1", "z2", "t1", "t2", "hum1", "hum2", "elevation", "rad_bal", "soil_flux")
-  hum1 <- weather_station$measurements$hum1
-  hum2 <- weather_station$measurements$hum2
-  t1 <- weather_station$measurements$t1
-  t2 <- weather_station$measurements$t2
-  z1 <- weather_station$properties$z1
-  z2 <- weather_station$properties$z2
-  elev <- weather_station$location_properties$elevation
-  rad_bal <- weather_station$measurements$rad_bal
-  soil_flux <- weather_station$measurements$soil_flux
+  hum1 <- weather_station$hum1
+  hum2 <- weather_station$hum2
+  t1 <- weather_station$t1
+  t2 <- weather_station$t2
+  z1 <- weather_station$z1
+  z2 <- weather_station$z2
+  elev <- weather_station$elevation
+  rad_bal <- weather_station$rad_bal
+  soil_flux <- weather_station$soil_flux
   return(latent_bowen(t1, t2, hum1, hum2, z1, z2, elev, rad_bal, soil_flux))
 }

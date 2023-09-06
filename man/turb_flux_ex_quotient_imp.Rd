@@ -40,7 +40,7 @@ turb_flux_ex_quotient_imp(...)
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{surface_type}{Type of surface.}
+\item{surface_type}{Type of surface. Options: field, acre, lawn, street, agriculture, settlement, coniferous forest, deciduous forest, mixed forest, city, water, shrub}
 
 \item{obs_height}{Height of obstacle in m.}
 

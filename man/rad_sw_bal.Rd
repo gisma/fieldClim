@@ -3,14 +3,21 @@
 \name{rad_sw_bal}
 \alias{rad_sw_bal}
 \alias{rad_sw_bal.default}
+\alias{rad_sw_bal.weather_station}
 \title{Shortwave radiation balance}
 \usage{
 rad_sw_bal(...)
 
 \method{rad_sw_bal}{default}(datetime, lon, lat, elev, temp, ...)
+
+\method{rad_sw_bal}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
+
+\item{datetime}{Datetime in POSIXt}
+
+\item{weather_station}{Object of class weather_station.}
 }
 \value{
 W/m\eqn{^2}

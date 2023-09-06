@@ -15,11 +15,9 @@ turb_roughness_length(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{surface_type}{Type of surface.}
+\item{surface_type}{Type of surface. Options: field, acre, lawn, street, agriculture, settlement, coniferous forest, deciduous forest, mixed forest, city, water, shrub}
 
 \item{obs_height}{Height of obstacle in m.}
-
-\item{weather_station}{Object of class weather_station.}
 }
 \value{
 roughness length in m.

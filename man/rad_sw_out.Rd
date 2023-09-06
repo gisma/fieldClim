@@ -3,14 +3,21 @@
 \name{rad_sw_out}
 \alias{rad_sw_out}
 \alias{rad_sw_out.default}
+\alias{rad_sw_out.weather_station}
 \title{Shortwave outgoing radiation}
 \usage{
 rad_sw_out(...)
 
-\method{rad_sw_out}{default}(datetime, lon, lat, elev, temp, surface_type = "field", ...)
+\method{rad_sw_out}{default}(datetime, lon, lat, elev, temp, ..., surface_type = "field")
+
+\method{rad_sw_out}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
+
+\item{datetime}{Datetime in POSIXt}
+
+\item{weather_station}{Object of class weather_station.}
 }
 \value{
 W/m\eqn{^2}.

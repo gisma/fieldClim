@@ -8,7 +8,7 @@
 \usage{
 rad_sw_toa(...)
 
-\method{rad_sw_toa}{default}(datetime, lon, lat, sol_const = 1368, ...)
+\method{rad_sw_toa}{default}(datetime, lon, lat, ..., sol_const = 1368)
 
 \method{rad_sw_toa}{weather_station}(weather_station, ...)
 }

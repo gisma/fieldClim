@@ -16,7 +16,7 @@ turb_roughness_length <- function(...) {
 }
 
 #' @rdname turb_roughness_length
-#' @param surface_type Type of surface.
+#' @param surface_type Type of surface. Options: `r surface_properties$surface_type`
 #' @param obs_height Height of obstacle in m.
 #' @export
 turb_roughness_length.default <- function(surface_type = NULL, obs_height = NULL, ...) {
@@ -31,7 +31,6 @@ turb_roughness_length.default <- function(surface_type = NULL, obs_height = NULL
 }
 
 #' @rdname turb_roughness_length
-#' @inheritParams sol_julian_day
 #' @export
 turb_roughness_length.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "obs_height", "surface_type")
@@ -42,7 +41,6 @@ turb_roughness_length.weather_station <- function(weather_station, ...) {
   }
   return(turb_roughness_length(surface_type, obs_height))
 }
-
 
 #' Displacement height
 #'
@@ -98,11 +96,11 @@ turb_ustar <- function(...) {
 }
 
 #' @rdname turb_ustar
-#' @param v Windspeed in height of anemometer in m/s.
-#' @param z Height of anemometer in m.
+#' @param v1 Windspeed in height of anemometer in m/s.
+#' @param z1 Height of anemometer in m.
 #' @inheritParams turb_roughness_length
 #' @export
-turb_ustar.default <- function(v, z, surface_type = NULL, obs_height = NULL, ...) {
+turb_ustar.default <- function(v1, z1, surface_type = NULL, obs_height = NULL, ...) {
   if (!is.null(obs_height)) {
     z0 <- turb_roughness_length(obs_height=obs_height)
   } else if (!is.null(surface_type)) {
@@ -122,10 +120,10 @@ turb_ustar.default <- function(v, z, surface_type = NULL, obs_height = NULL, ...
 #' @inheritParams sol_julian_day
 #' @param obs_height Height of obstacle in m.
 #' @export
-turb_ustar.weather_station <- function(weather_station, obs_height = NULL, ...) {
+turb_ustar.weather_station <- function(weather_station, obs_height = NULL, ...)
   check_availability(weather_station, "v1", "z1")
-  v <- weather_station$measurements$v1
-  z <- weather_station$properties$z1
+  v <- weather_station$v1
+  z <- weather_station$z1
   if (!is.null(obs_height)) {
     return(turb_ustar(v, z, obs_height = obs_height))
   } else {
@@ -134,3 +132,4 @@ turb_ustar.weather_station <- function(weather_station, obs_height = NULL, ...) 
     return(turb_ustar(v, z, surface_type = surface_type))
   }
 }
+

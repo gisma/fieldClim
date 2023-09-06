@@ -10,7 +10,7 @@ hum_precipitable_water(...)
 
 \method{hum_precipitable_water}{default}(datetime, lat, elev, temp, ...)
 
-\method{hum_precipitable_water}{weather_station}(weather_station, height = "lower", ...)
+\method{hum_precipitable_water}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{
@@ -29,8 +29,6 @@ hum_precipitable_water(...)
 \item{temp}{Temperature in °C.}
 
 \item{weather_station}{Object of class weather_station.}
-
-\item{height}{Height of measurement. "lower" or "upper".}
 }
 \value{
 Total precipitable water in cm (grams).
