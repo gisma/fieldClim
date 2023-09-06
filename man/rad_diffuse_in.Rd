@@ -7,7 +7,7 @@
 \usage{
 rad_diffuse_in(...)
 
-\method{rad_diffuse_in}{default}(datetime, lon, lat, elev, temp, ...)
+\method{rad_diffuse_in}{default}(datetime, lon, lat, elev, temp, surface_type = "field", ...)
 }
 \arguments{
 \item{...}{

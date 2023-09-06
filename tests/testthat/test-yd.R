@@ -24,23 +24,17 @@ slope <- 30
 exposition <- 180
 rh <- 50
 surface_temp <- 10
-ts1 <-
-ts2 <- 
-depth1 <- 
-depth2 <- 
+soil_temp1 <- 15
+soil_temp2 <- 20
+soil_depth1 <- 2
+soil_depth2 <- 10
 
 # structure
-## 1 bound
-bound_mech_low
-bound_mech_avg
-bound_thermal_avg
-  turb_ustar
-  turb_roughness_length
-  surface_properties
-  temp_pot_temp
-  pres_p
+## soil
+soil_heat_flux(soil_temp1, soil_temp2, soil_depth1, soil_depth2)
+  soil_thermal_cond()
 
-## 2 rad
+## rad
 rad_bal(datetime, lon, lat, elev, temp, rh, surface_temp)
   rad_sw_bal(datetime, lon, lat, elev, temp)
     rad_sw_in(datetime, lon, lat, elev, temp)
@@ -78,37 +72,81 @@ rad_bal(datetime, lon, lat, elev, temp, rh, surface_temp)
     rad_lw_out(surface_temp)
 
 
-## 3 Wärmestrom
-turb_flux_imp_exchange
-  turb_flux_ex_quotient_imp
-  grad_rich_no
-    temp_pot_temp
-      pres_p
-  ustar
-    turb_roughness_length.default
-    surface_properties
-  monin
-  air_density
-  turb_flux_ex_quotient_temp
 
-  turb_flux_stability
+path <- file.path("data-raw", "caldern_weather_station.csv")
+input <- read.csv(path)
+names(input)
+weather_station <- build_weather_station2(
+  datetime = strptime(input$datetime, format = "%Y-%m-%d %H:%M:%S", tz = "Atlantic/Reykjavik"),
+  texture = "sand",
+  moisture = input$water_vol_soil,
+  soil_temp1 = input$Ts,
+  soil_temp2 = input$Ta_2m,
+  soil_depth1 = 1,
+  soil_depth2 = 0
+)
 
-sensible_priestley_taylor
-  rad_bal
-  sc
-  gam
-  soil_flux
-  priestley_taylor_coefficient
+soil_heat_flux(weather_station)
+  soil_thermal_cond(weather_station)
 
-sensible_monin
+rad_bal(weather_station)
+  rad_sw_bal(weather_station)
+    rad_sw_in(weather_station)
+      rad_sw_toa(weather_station)
+        sol_eccentricity(weather_station)
+          sol_day_angle(weather_station)
+            sol_julian_day(weather_station)
+        sol_elevation(weather_station)
+          sol_declination(weather_station)
+            sol_ecliptic_length(weather_station)
+              sol_medium_anomaly(weather_station)
+          sol_hour_angle(weather_station)
+            sol_medium_suntime(weather_station)
+            sol_time_formula(weather_station)
+      trans_gas(weather_station)
+        trans_air_mass_abs(weather_station)
+          trans_air_mass_rel(weather_station)
+          pres_p(weather_station)
+      trans_ozone(weather_station)
+      trans_rayleigh(weather_station)
+      trans_vapor(weather_station)
+        hum_precipitable_water(weather_station)
+      trans_aerosol(weather_station)
+      terr_terrain_angle(weather_station)
+        sol_azimuth(weather_station)
+    rad_diffuse_in(weather_station)
+      terr_sky_view()
+    rad_sw_out(weather_station)
+    rad_diffuse_out(weather_station)
+  rad_lw_bal(weather_station)
+    rad_lw_in(weather_station)
+      rad_emissivity_air(weather_station)
+        pres_vapor_p(weather_station)
+          pres_sat_vapor_p(weather_station)
+    rad_lw_out(weather_station)
 
-sensible_bowen
+Caldern_Wald <- build_weather_station(
+    lat = 50.8411,
+    lon = 8.68477,
+    elev = 263,
+    surface_type = "Laubwald",
+    obs_height = 2,
+    z1 = 2,
+    z2 = 10,
+    datetime = strptime(ws$datetime, format = "%Y-%m-%d %H:%M:%S", tz = "Atlantic/Reykjavik"),
+    t1 = ws$Ta_2m,
+    t2 = ws$Ta_10m,
+    v1 = ws$Windspeed_2m,
+    v2 = ws$Windspeed_10m,
+    hum1 = ws$Huma_2m,
+    hum2 = ws$Huma_10m,
+    sw_in = ws$rad_sw_in,
+    sw_out = ws$rad_sw_out,
+    lw_in = ws$rad_lw_in,
+    lw_out = ws$rad_lw_out,
+    soil_flux = ws$heatflux_soil
+)
 
-latent
-
-## 4. soil
-soil_heat_flux(ts1, ts2, depth1, depth2)
-  soil_thermal_cond()
 
 out <- c()
 a <- seq(as.Date("2020-01-01"), as.Date("2020-12-31"), by = 1)
@@ -189,5 +227,42 @@ plot(x, y)
 
 
 
-weather_station <- weather_station_example_data
-soil_thermal_cond(weather_station)
+
+
+## bound
+bound_mech_low
+bound_mech_avg
+bound_thermal_avg
+  turb_ustar
+  turb_roughness_length
+  surface_properties
+  temp_pot_temp
+  pres_p
+
+## turb
+turb_flux_imp_exchange
+  turb_flux_ex_quotient_imp
+  grad_rich_no
+    temp_pot_temp
+      pres_p
+  ustar
+    turb_roughness_length.default
+    surface_properties
+  monin
+  air_density
+  turb_flux_ex_quotient_temp
+
+  turb_flux_stability
+
+sensible_priestley_taylor
+  rad_bal
+  sc
+  gam
+  soil_flux
+  priestley_taylor_coefficient
+
+sensible_monin
+
+sensible_bowen
+
+latent

@@ -8,7 +8,7 @@
 \usage{
 rad_sw_in(...)
 
-\method{rad_sw_in}{default}(datetime, lon, lat, elev, temp, ...)
+\method{rad_sw_in}{default}(datetime, lon, lat, elev, temp, surface_type = "field", ...)
 
 \method{rad_sw_in}{weather_station}(weather_station, trans_total = NULL, oz = 0.35, vis = 30, ...)
 }

@@ -8,7 +8,7 @@
 \usage{
 rad_bal(...)
 
-\method{rad_bal}{default}(...)
+\method{rad_bal}{default}(datetime, lon, lat, elev, temp, rh, surface_temp, ...)
 
 \method{rad_bal}{weather_station}(weather_station, ...)
 }

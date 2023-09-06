@@ -14,39 +14,37 @@ soil_heat_flux <- function(...) {
 
 #' @rdname soil_heat_flux
 #' @inheritDotParams soil_thermal_cond.default
-#' @param ts1 Upper soil temperature (closest to the surface) in °C.
-#' @param ts2 Lower soil temperature in °C.
-#' @param depth1 Depth of upper measurement (closest to the surface) in m.
-#' @param depth2 Depth of lower measurement in m.
+#' @param soil_temp1, soil_temp2 Soil temperature in °C.
+#' @param soil_depth, soil_depth2 Depth of the measurement in m. A vector with two elements.
 #' @export
 #' @references p71eq4.2.
-soil_heat_flux.default <- function(ts1, ts2, depth1, depth2, ...) {
+soil_heat_flux.default <- function(soil_temp1, soil_temp2, soil_depth1, soil_depth2, ...) {
   thermal_cond <- soil_thermal_cond(...)
   
-  thermal_cond * (ts1 - ts2) / (depth1 - depth2)
+  thermal_cond * (soil_temp1 - soil_temp2) / (soil_depth1 - soil_depth2)
 }
 
 #' @rdname soil_heat_flux
 #' @export
 #' @param weather_station Object of class weather_station.
 soil_heat_flux.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "ts1", "ts2", "depth1", "depth2")
-  ts1 <- weather_station$measurements$ts1
-  ts2 <- weather_station$measurements$ts2
-  depth1 <- weather_station$properties$depth1
-  depth2 <- weather_station$properties$depth2
+#  check_availability(weather_station, soil_temp, soil_depth)
+  soil_temp1 <- weather_station$soil_temp1
+  soil_temp2 <- weather_station$soil_temp2
+  soil_depth1 <- weather_station$soil_depth1
+  soil_depth2 <- weather_station$soil_depth2
   
-  soil_heat_flux(ts1, ts2, depth1, depth2, ...)
+  soil_heat_flux(soil_temp1, soil_temp2, soil_depth1, soil_depth2, weather_station)
 }
 
 #' Soil thermal conductivity
 #'
-#' Calculates soil thermal conductivity (W/m K) from soil moisture (Cubic meter/cubic meter) and texture.
+#' Calculates soil thermal conductivity from soil texture and soil moisture.
 #'
 #' Works by linearly interpolating thermal conductivity based on measured data.
 #'
 #' @param ... Additional arguments.
-#' @returns Soil thermal conductivity in W/m K.
+#' @returns Soil thermal conductivity in W/m/K.
 #' @export
 soil_thermal_cond <- function(...) {
   UseMethod("soil_thermal_cond")
@@ -82,11 +80,11 @@ soil_thermal_cond.default <- function(texture = "sand", moisture = 0, ...) {
 #' @param weather_station Object of class weather_station.
 #' @export
 soil_thermal_cond.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "texture", "moisture")
-  texture <- weather_station$location_properties$texture
-  moisture <- weather_station$measurements$moisture
+#  check_availability(weather_station, "texture", "moisture")
+  texture <- weather_station$texture
+  moisture <- weather_station$moisture
   
-  soil_thermal_cond(moisture, texture, ...)
+  soil_thermal_cond(texture, moisture)
 }
 
 
@@ -111,7 +109,7 @@ soil_thermal_cond.weather_station <- function(weather_station, ...) {
 #' @rdname soil_heat_cap
 #' @param ... Additional arguments.
 #' @returns Numeric vector with volumetric heat capacity in  MJ/ (m\eqn{^3} * K).
-#' @export
+#' @noRd
 #'
 soil_heat_cap <- function(...) {
   UseMethod("soil_heat_cap")
@@ -165,7 +163,7 @@ soil_heat_cap.weather_station <- function(weather_station, ...) {
 #' @rdname soil_attenuation
 #' @param ... Additional arguments.
 #' @returns Soil attenuation length in m.
-#' @export
+#' @noRd
 #'
 soil_attenuation <- function(...) {
   UseMethod("soil_attenuation")

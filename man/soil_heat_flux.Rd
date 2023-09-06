@@ -8,7 +8,7 @@
 \usage{
 soil_heat_flux(...)
 
-\method{soil_heat_flux}{default}(ts1, ts2, depth1, depth2, ...)
+\method{soil_heat_flux}{default}(soil_temp, soil_depth, ...)
 
 \method{soil_heat_flux}{weather_station}(weather_station, ...)
 }
@@ -20,13 +20,9 @@ soil_heat_flux(...)
     \item{\code{moisture}}{Soil moisture in Cubic meter/cubic meter}
   }}
 
-\item{ts1}{Upper soil temperature (closest to the surface) in °C.}
+\item{soil_temp}{Soil temperature in °C. A vector with two elements.}
 
-\item{ts2}{Lower soil temperature in °C.}
-
-\item{depth1}{Depth of upper measurement (closest to the surface) in m.}
-
-\item{depth2}{Depth of lower measurement in m.}
+\item{soil_depth}{Depth of the measurement in m. A vector with two elements.}
 
 \item{weather_station}{Object of class weather_station.}
 }

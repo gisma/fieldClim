@@ -22,10 +22,10 @@ soil_thermal_cond(...)
 \item{weather_station}{Object of class weather_station.}
 }
 \value{
-Soil thermal conductivity in W/m K.
+Soil thermal conductivity in W/m/K.
 }
 \description{
-Calculates soil thermal conductivity (W/m K) from soil moisture (Cubic meter/cubic meter) and texture.
+Calculates soil thermal conductivity from soil texture and soil moisture.
 }
 \details{
 Works by linearly interpolating thermal conductivity based on measured data.

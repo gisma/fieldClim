@@ -1,3 +1,19 @@
+build_weather_station2 <- function(...) {
+  out <- list()
+  
+  args <- list(...)
+  for (i in seq_along(args)) {
+    # Add additional parameters to the right spot in the list
+    name <- names(args)[i]
+    value <- args[[i]]
+    out[[name]] <- value
+  }
+  
+  class(out) <- "weather_station"
+  
+  out
+}
+
 #' Weather Station
 #'
 #' Creates a list of class "weather_station", that contains all data regarding the
@@ -352,7 +368,7 @@ build_weather_station <- function(lat,
   # ---- Radiation balances ----
 
   # trans_total
-  out_list$measurements$sw_bal <- rad_sw_radiation_balance(out_list)
+  out_list$measurements$sw_bal <- rad_sw_bal(out_list)
 
   # calculate lw_bal
   out_list$measurements$lw_bal <- out_list$measurements$lw_in - out_list$measurements$lw_out

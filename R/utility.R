@@ -91,6 +91,23 @@ check_availability <- function(weather_station, ...) {
   }
 }
 
+#check_availability <- function(weather_station, ...) {
+#  unlisted <- names(c(weather_station[[1]], weather_station[[2]], weather_station[[3]]))
+#  parameters <- as.character(unlist(list(...)))
+#  empty <- parameters[!parameters %in% unlisted]
+#  if (length(empty) > 1) {
+#    stop(
+#      paste(empty, collapse = ", "), " are not available in the weather_station object.\n",
+#      "Please set the needed parameters."
+#    )
+#  } else if (length(empty) > 0) {
+#    stop(
+#      paste(empty, collapse = ", "), " is not available in the weather_station object.\n",
+#      "Please set the needed parameter."
+#    )
+#  }
+#}
+
 #' Create a data.frame from a weather station object
 #'
 #' Create a data.frame from a weather station object, that contains weather station measurements.

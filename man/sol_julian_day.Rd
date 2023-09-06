@@ -3,16 +3,21 @@
 \name{sol_julian_day}
 \alias{sol_julian_day}
 \alias{sol_julian_day.default}
+\alias{sol_julian_day.weather_station}
 \title{Julian day}
 \usage{
 sol_julian_day(...)
 
 \method{sol_julian_day}{default}(datetime, ...)
+
+\method{sol_julian_day}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
 
 \item{datetime}{Datetime in POSIXt}
+
+\item{weather_station}{Object of class weather_station.}
 }
 \value{
 unitless

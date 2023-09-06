@@ -72,6 +72,15 @@ sol_julian_day.default <- function(datetime, ...) {
   as.numeric(format(datetime, format = "%j"))
 }
 
+#' @rdname sol_julian_day
+#' @param weather_station Object of class weather_station.
+#' @export
+sol_julian_day.weather_station <- function(weather_station, ...) {
+  datetime <- weather_station$datetime
+  
+  sol_julian_day(datetime)
+}
+
 #' Solar elevation angle
 #'
 #' Calculates solar elevation angle for the given date and time.
