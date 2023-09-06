@@ -12,8 +12,11 @@ rad_bal <- function(...) {
 #' @rdname rad_bal
 #' @export
 #' @references p45eq3.1
-rad_bal.default <- function(...) {
-  rad_sw_bal + rad_lw_bal
+rad_bal.default <- function(datetime, lon, lat, elev, temp, rh, surface_temp, ...) {
+  sw_bal <- rad_sw_bal(datetime, lon, lat, elev, temp)
+  lw_bal <- rad_lw_bal(temp, rh, surface_temp)
+  
+  sw_bal + lw_bal
 }
 
 #' @rdname rad_bal
@@ -69,7 +72,7 @@ rad_sw_in <- function(...) {
 #' @inheritDotParams terr_terrain_angle.default slope exposition
 #' @export
 #' @references p46eq3.3, p52eq3.8
-rad_sw_in.default <- function(datetime, lon, lat, elev, temp, ...) {
+rad_sw_in.default <- function(datetime, lon, lat, elev, temp, surface_type = "field", ...) {
   sw_toa <- rad_sw_toa(datetime, lon, lat, ...)
   elevation <- sol_elevation(datetime, lon, lat)
   elevation <- deg2rad(elevation)
@@ -83,8 +86,12 @@ rad_sw_in.default <- function(datetime, lon, lat, elev, temp, ...) {
 
   terrain_angle <- terr_terrain_angle(datetime, lon, lat, ...)
   terrain_angle <- deg2rad(terrain_angle)
+  
+  albedo <- surface_properties[which(surface_properties$surface_type == surface_type), ]$albedo
+  terrain_view <- 1 - terr_sky_view(...)
 
-  sw_toa * 0.9751 * trans_total / sin(elevation) * cos(terrain_angle)
+  out <- sw_toa * 0.9751 * trans_total / sin(elevation) * cos(terrain_angle)
+  out * (1 + albedo * terrain_view)
 }
 
 #' @rdname rad_sw_in
@@ -171,7 +178,7 @@ rad_diffuse_in <- function(...) {
 #' @inheritDotParams terr_terrain_angle slope exposition
 #' @export
 #' @references p58eq3.14, p55eq3.9
-rad_diffuse_in.default <- function(datetime, lon, lat, elev, temp, ...) {
+rad_diffuse_in.default <- function(datetime, lon, lat, elev, temp, surface_type = "field", ...) {
   vapor <- trans_vapor(datetime, lon, lat, elev, temp)
   ozone <- trans_ozone(datetime, lon, lat, ...)
   sw_toa <- rad_sw_toa(datetime, lon, lat, ...)
@@ -183,9 +190,13 @@ rad_diffuse_in.default <- function(datetime, lon, lat, elev, temp, ...) {
   elevation <- sol_elevation(datetime, lon, lat)
   z <- 90 - elevation
   z <- deg2rad(z)
+  
+  albedo <- surface_properties[which(surface_properties$surface_type == surface_type), ]$albedo
+  terrain_view <- 1 - terr_sky_view(...)
 
-  0.5 * ((1 - (1 - vapor) - (1 - ozone)) * sw_toa - sw_in) *
+  out <- 0.5 * ((1 - (1 - vapor) - (1 - ozone)) * sw_toa - sw_in) *
   sky_view * (1 + cos(terrain_angle)^2 * sin(z)^3)
+  out * (1 + albedo * terrain_view)
 }
 
 #' Shortwave outgoing radiation
@@ -202,14 +213,34 @@ rad_sw_out <- function(...) {
 #' @rdname rad_sw_out
 #' @export
 #' @references p46eq3.3, p52eq3.8
-rad_sw_out.default <- function(datetime, lon, lat, elev, temp, ...) {
+rad_sw_out.default <- function(datetime, lon, lat, elev, temp, surface_type = "field", ...) {
   sw_in <- rad_sw_in(datetime, lon, lat, elev, temp, ...)
-  sky_view <- terr_sky_view(...)
-  terrain_view <- 1 - sky_view
+  surface_type
+  albedo <- surface_properties[which(surface_properties$surface_type == surface_type), ]$albedo
   
-  sw_in * (1 + albedo * terrain_view)
+  sw_in * albedo
 }
 
+#' Diffused outgoing radiation
+#'
+#' Provide `slope` and `exposition` to perform topographic correction.
+#'
+#' @param ... Additional arguments.
+#' @returns W/m\eqn{^2}.
+#' @export
+rad_diffuse_out <- function(...) {
+  UseMethod("rad_diffuse_out")
+}
+
+#' @rdname rad_diffuse_out
+#' @export
+#' @references p46eq3.3, p52eq3.8
+rad_diffuse_out.default <- function(datetime, lon, lat, elev, temp, surface_type = "field", ...) {
+  diffuse_in <- rad_diffuse_in(datetime, lon, lat, elev, temp, ...)
+  albedo <- surface_properties[which(surface_properties$surface_type == surface_type), ]$albedo
+  
+  diffuse_in * albedo
+}
 
 #' Long wave radiation balance
 #'

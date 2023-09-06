@@ -8,22 +8,20 @@
 \usage{
 rad_emissivity_air(...)
 
-\method{rad_emissivity_air}{default}(temp, rh, elev = 0, p = p0_default, p0 = p0_default, ...)
+\method{rad_emissivity_air}{default}(temp, rh, ...)
 
 \method{rad_emissivity_air}{weather_station}(weather_station, height = "lower", ...)
 }
 \arguments{
-\item{...}{Additional arguments.}
+\item{...}{
+  Arguments passed on to \code{\link[=pres_p]{pres_p}}, \code{\link[=pres_sat_vapor_p]{pres_sat_vapor_p}}
+  \describe{
+    \item{\code{}}{}
+  }}
 
-\item{temp}{Air temperature in °C.}
+\item{temp}{Temperature in °C.}
 
 \item{rh}{relative humidity.}
-
-\item{elev}{Meters above sea level in m.}
-
-\item{p}{OPTIONAL. Air pressure in hPa.}
-
-\item{p0}{Standard air pressure in hPa.}
 
 \item{weather_station}{Object of class weather_station.}
 
@@ -36,5 +34,5 @@ Emissivity of the atmosphere (0-1).
 Calculation of the emissivity of the atmosphere.
 }
 \references{
-p67eq3.23, 3.24, 3.25
+p67eq3.22
 }

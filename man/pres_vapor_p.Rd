@@ -8,16 +8,20 @@
 \usage{
 pres_vapor_p(...)
 
-\method{pres_vapor_p}{default}(hum, t, ...)
+\method{pres_vapor_p}{default}(temp, rh, ...)
 
 \method{pres_vapor_p}{weather_station}(weather_station, height = "lower", ...)
 }
 \arguments{
-\item{...}{Additional arguments.}
+\item{...}{
+  Arguments passed on to \code{\link[=pres_sat_vapor_p]{pres_sat_vapor_p}}
+  \describe{
+    \item{\code{}}{}
+  }}
 
-\item{hum}{Relative humidity in \%.}
+\item{temp}{Air temperature in °C.}
 
-\item{t}{Air temperature in °C.}
+\item{rh}{Relative humidity in \%.}
 
 \item{weather_station}{Object of class weather_station.}
 

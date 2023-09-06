@@ -14,21 +14,18 @@ rad_lw_in(...)
 }
 \arguments{
 \item{...}{
-  Arguments passed on to \code{\link[=rad_emissivity_air.default]{rad_emissivity_air.default}}, \code{\link[=terr_sky_view.default]{terr_sky_view.default}}
+  Arguments passed on to \code{\link[=terr_sky_view.default]{terr_sky_view.default}}
   \describe{
-    \item{\code{elev}}{Meters above sea level in m.}
-    \item{\code{p}}{OPTIONAL. Air pressure in hPa.}
-    \item{\code{p0}}{Standard air pressure in hPa.}
     \item{\code{slope}}{Inclination of slope in degrees.}
     \item{\code{valley}}{If the position is in a valley (TRUE) or on a slope (FALSE).}
   }}
 
-\item{temp}{Air temperature in °C.}
+\item{temp}{Temperature in °C.}
 
 \item{rh}{relative humidity.}
 
-\item{sigma}{Stefan-Boltzmann constant
-with the default 5.6993e-8 W/m\eqn{^2}/K$^{4}$}
+\item{sigma}{Stefan-Boltzmann constant in W/m\eqn{^2}/K\eqn{^4},
+default `r sigma_default'.}
 
 \item{weather_station}{Object of class weather_station.}
 }

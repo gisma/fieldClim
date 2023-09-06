@@ -7,7 +7,7 @@
 \usage{
 rad_sw_bal(...)
 
-\method{rad_sw_bal}{default}(...)
+\method{rad_sw_bal}{default}(datetime, lon, lat, elev, temp, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}

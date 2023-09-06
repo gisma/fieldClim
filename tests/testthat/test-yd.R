@@ -24,6 +24,10 @@ slope <- 30
 exposition <- 180
 rh <- 50
 surface_temp <- 10
+ts1 <-
+ts2 <- 
+depth1 <- 
+depth2 <- 
 
 # structure
 ## 1 bound
@@ -37,7 +41,7 @@ bound_thermal_avg
   pres_p
 
 ## 2 rad
-rad_bal
+rad_bal(datetime, lon, lat, elev, temp, rh, surface_temp)
   rad_sw_bal(datetime, lon, lat, elev, temp)
     rad_sw_in(datetime, lon, lat, elev, temp)
       rad_sw_toa(datetime, lon, lat)
@@ -64,6 +68,8 @@ rad_bal
         sol_azimuth(datetime, lon, lat)
     rad_diffuse_in(datetime, lon, lat, elev, temp)
       terr_sky_view()
+    rad_sw_out(datetime, lon, lat, elev, temp)
+    rad_diffuse_out(datetime, lon, lat, elev, temp)
   rad_lw_bal(temp, rh, surface_temp)
     rad_lw_in(temp, rh)
       rad_emissivity_air(temp, rh)
@@ -101,6 +107,8 @@ sensible_bowen
 latent
 
 ## 4. soil
+soil_heat_flux(ts1, ts2, depth1, depth2)
+  soil_thermal_cond()
 
 out <- c()
 a <- seq(as.Date("2020-01-01"), as.Date("2020-12-31"), by = 1)

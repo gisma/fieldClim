@@ -8,7 +8,7 @@
 \usage{
 terr_sky_view(...)
 
-\method{terr_sky_view}{default}(slope, valley = FALSE, ...)
+\method{terr_sky_view}{default}(slope = 0, valley = FALSE, ...)
 
 \method{terr_sky_view}{weather_station}(weather_station, ...)
 }
