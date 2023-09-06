@@ -17,7 +17,7 @@ terr_sky_view <- function(...) {
 #' @param valley If the position is in a valley (TRUE) or on a slope (FALSE).
 #' @export
 #' @references p57eq3.12, p57eq3.13
-terr_sky_view.default <- function(slope, valley = FALSE, ...) {
+terr_sky_view.default <- function(slope = 0, valley = FALSE, ...) {
   slope <- deg2rad(slope)
   
   if (valley == FALSE) {

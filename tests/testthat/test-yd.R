@@ -22,6 +22,8 @@ elev <- 200
 temp <- 15
 slope <- 30
 exposition <- 180
+rh <- 50
+surface_temp <- 10
 
 # structure
 ## 1 bound
@@ -36,7 +38,7 @@ bound_thermal_avg
 
 ## 2 rad
 rad_bal
-  rad_sw_bal
+  rad_sw_bal(datetime, lon, lat, elev, temp)
     rad_sw_in(datetime, lon, lat, elev, temp)
       rad_sw_toa(datetime, lon, lat)
         sol_eccentricity(datetime)
@@ -61,13 +63,13 @@ rad_bal
       terr_terrain_angle(datetime, lon, lat)
         sol_azimuth(datetime, lon, lat)
     rad_diffuse_in(datetime, lon, lat, elev, temp)
-      terr_sky_view(slope)
-  rad_lw_bal
-    rad_lw_in
-      rad_emissivity_air
-        pres_sat_vapor_p
-      terr_sky_view
-    rad_lw_out
+      terr_sky_view()
+  rad_lw_bal(temp, rh, surface_temp)
+    rad_lw_in(temp, rh)
+      rad_emissivity_air(temp, rh)
+        pres_vapor_p(temp, rh)
+          pres_sat_vapor_p(temp)
+    rad_lw_out(surface_temp)
 
 
 ## 3 Wärmestrom

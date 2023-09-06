@@ -41,14 +41,13 @@ rad_sw_bal <- function(...) {
 #' @rdname rad_sw_bal
 #' @export
 #' @references p45eq3.1, p63eq3.18
-rad_sw_bal.default <- function(...) {
-  sw_in <- rad_sw_in()
-  diffuse_in <- rad_diffuse_in()
-  albedo <- 0.5
-  sky_view <- terr_sky_view()
-  terrain_view <- 1 - sky_view
-
-  (sw_in + diffuse_in) * (1 - albedo + albedo * terrain_view - albedo^2 * terrain_view)
+rad_sw_bal.default <- function(datetime, lon, lat, elev, temp, ...) {
+  sw_in <- rad_sw_in(datetime, lon, lat, elev, temp, ...)
+  sw_out <- rad_sw_out(datetime, lon, lat, elev, temp, ...)
+  diffuse_in <- rad_diffuse_in(datetime, lon, lat, elev, temp, ...)
+  diffuse_out <- rad_diffuse_in(datetime, lon, lat, elev, temp, ...)
+  
+  sw_in - sw_out + diffuse_in - diffuse_out
 }
 
 #' Shortwave incoming radiation
@@ -168,7 +167,7 @@ rad_diffuse_in <- function(...) {
 #' @inheritDotParams trans_vapor
 #' @inheritDotParams trans_ozone.default
 #' @inheritDotParams rad_sw_toa sol_constant
-#' @inheritDotParams terr_sky_view valley
+#' @inheritDotParams terr_sky_view
 #' @inheritDotParams terr_terrain_angle slope exposition
 #' @export
 #' @references p58eq3.14, p55eq3.9
@@ -177,7 +176,7 @@ rad_diffuse_in.default <- function(datetime, lon, lat, elev, temp, ...) {
   ozone <- trans_ozone(datetime, lon, lat, ...)
   sw_toa <- rad_sw_toa(datetime, lon, lat, ...)
   sw_in <- rad_sw_in(datetime, lon, lat, elev, temp)
-  sky_view <- terr_sky_view(slope, ...)
+  sky_view <- terr_sky_view(...)
   terrain_angle <- terr_terrain_angle(datetime, lon, lat, ...)
   terrain_angle <- deg2rad(terrain_angle)
 
@@ -188,6 +187,29 @@ rad_diffuse_in.default <- function(datetime, lon, lat, elev, temp, ...) {
   0.5 * ((1 - (1 - vapor) - (1 - ozone)) * sw_toa - sw_in) *
   sky_view * (1 + cos(terrain_angle)^2 * sin(z)^3)
 }
+
+#' Shortwave outgoing radiation
+#'
+#' Provide `slope` and `exposition` to perform topographic correction.
+#'
+#' @param ... Additional arguments.
+#' @returns W/m\eqn{^2}.
+#' @export
+rad_sw_out <- function(...) {
+  UseMethod("rad_sw_out")
+}
+
+#' @rdname rad_sw_out
+#' @export
+#' @references p46eq3.3, p52eq3.8
+rad_sw_out.default <- function(datetime, lon, lat, elev, temp, ...) {
+  sw_in <- rad_sw_in(datetime, lon, lat, elev, temp, ...)
+  sky_view <- terr_sky_view(...)
+  terrain_view <- 1 - sky_view
+  
+  sw_in * (1 + albedo * terrain_view)
+}
+
 
 #' Long wave radiation balance
 #'
@@ -227,10 +249,9 @@ rad_lw_in <- function(...) {
 
 #' @rdname rad_lw_in
 #' @inheritParams rad_emissivity_air
-#' @inheritDotParams rad_emissivity_air.default elev p p0
-#' @inheritDotParams terr_sky_view.default slope valley
-#' @param sigma Stefan-Boltzmann constant
-#'   with the default 5.6993e-8 W/m\eqn{^2}/K$^{4}$
+#' @inheritDotParams terr_sky_view.default
+#' @param sigma Stefan-Boltzmann constant in W/m\eqn{^2}/K\eqn{^4},
+#'   default `r sigma_default'.
 #' @export
 #' @references p66eq3.24
 rad_lw_in.default <- function(temp, rh, sigma = sigma_default, ...) {
@@ -269,38 +290,18 @@ rad_emissivity_air <- function(...) {
 }
 
 #' @rdname rad_emissivity_air
-#' @param temp Air temperature in °C.
+#' @inheritParams pres_p
+#' @inheritDotParams pres_p
+#' @inheritDotParams pres_sat_vapor_p
 #' @param rh relative humidity.
-#' @param elev Meters above sea level in m.
-#' @param p OPTIONAL. Air pressure in hPa.
-#' @param p0 Standard air pressure in hPa.
 #' @export
-#' @references p67eq3.23, 3.24, 3.25
-rad_emissivity_air.default <- function(temp, rh,
-    elev = 0, p = p0_default, p0 = p0_default, ...) {
-  temp <- c2k(temp) - 0.0065 * elev
-  sat_vapor_p <- pres_sat_vapor_p(temp, ...)
-  vapor_p <- rh * sat_vapor_p
+#' @references p67eq3.22
+rad_emissivity_air.default <- function(temp, rh, ...) {
+  vapor_p <- pres_vapor_p(temp, rh, ...)
+  temp <- c2k(temp)
   
-  (1.24 * vapor_p / temp)^(1 / 7) * p / p0
+  (1.24 * vapor_p / temp)^(1 / 7)
 }
-#rad_emissivity_air.default <- function(t, elev, hum, p = NULL, ...) {
-#  if (is.null(p)) p <- pres_p(elev, t)
-
-#   Calculate temperature adjusted to elevation (with saturated adiabatic lapse rate)
-#  t_adj <- t * (0.0065 * elev)
-
-#   Calculate saturated vapor pressure with adjusted temperature
-#  svp <- hum_sat_vapor_pres(t_adj)
-
-#   Calculate vapor pressure with saturated vapor pressure and measured humidity
-#  e <- hum * svp
-
-#   Calculate emissivity
-#  eat <- ((1.24 * e / (t_adj + 273.15))**1 / 7) * (p / 1013.25)
-
-#  return(eat)
-#}
 
 #' @rdname rad_emissivity_air
 #' @export
@@ -344,8 +345,7 @@ rad_lw_out <- function(...) {
 #' @export
 #' @references p66eq3.20
 rad_lw_out.default <- function(surface_temp, surface_type = "field", sigma = sigma_default, ...) {
-  surface_properties <- surface_properties
-  emissivity <- surface_properties[which(surface_properties$surface_type == surface_type), ]$emissivity
+  emissivity <- surface_properties[which(surface_properties$ surface_type == surface_type), ]$emissivity
   surface_temp <- c2k(surface_temp)
   
   emissivity * sigma * surface_temp^4

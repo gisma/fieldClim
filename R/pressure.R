@@ -54,12 +54,13 @@ pres_vapor_p <- function(...) {
 }
 
 #' @rdname pres_vapor_p
+#' @inheritParams pres_sat_vapor_p
+#' @inheritDotParams pres_sat_vapor_p
+#' @param rh Relative humidity in %.
 #' @export
-#' @param hum Relative humidity in %.
-#' @param t Air temperature in °C.
-pres_vapor_p.default <- function(hum, t, ...) {
-  sat_vapor_p <- pres_sat_vapor_p(t)
-  (hum / 100) * sat_vapor_p
+pres_vapor_p.default <- function(temp, rh, ...) {
+  sat_vapor_p <- pres_sat_vapor_p(temp, ...)
+  (rh / 100) * sat_vapor_p
 }
 
 #' @rdname pres_vapor_p

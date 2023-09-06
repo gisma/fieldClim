@@ -5,6 +5,65 @@ rl_default <- 287.05
 c2k_default <- 273.15
 sigma_default <- 5.6704 * 10^-8
 
+surface_properties <- data.frame(
+  surface_type = c(
+    "field",
+    "acre",
+    "lawn",
+    "street",
+    "agriculture",
+    "settlement",
+    "coniferous forest",
+    "deciduous forest",
+    "mixed forest",
+    "city",
+    "water",
+    "shrub"
+  ),
+  emissivity = c(
+    0.92,
+    0.98,
+    0.95,
+    0.95,
+    0.95,
+    0.8,
+    0.98,
+    0.98,
+    0.98,
+    0.9,
+    0.95,
+    0.96
+  ),
+  roughness_length = c(
+    0.02,
+    0.05,
+    0.2,
+    0.2,
+    0.2,
+    1.0,
+    1.0,
+    1.5,
+    1.5,
+    2.0,
+    0.01,
+    0.5
+  ),
+  albedo = c(
+    0.200,
+    0.050,
+    0.260,
+    0.120,
+    0.220,
+    0.300,
+    0.100,
+    0.170,
+    0.135,
+    0.220,
+    0.050,
+    0.170
+  )
+)
+
 #' Check Availability
 #'
 #' Checks availability of passed properties in the weather station object.
