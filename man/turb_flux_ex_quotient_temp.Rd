@@ -16,11 +16,12 @@ turb_flux_ex_quotient_temp(...)
   v1,
   v2,
   elev,
-  surface_type,
+  surface_type = NULL,
+  obs_height = NULL,
   ...
 )
 
-\method{turb_flux_ex_quotient_temp}{weather_station}(weather_station, ...)
+\method{turb_flux_ex_quotient_temp}{weather_station}(weather_station, obs_height = NULL, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
@@ -41,6 +42,8 @@ turb_flux_ex_quotient_temp(...)
 
 \item{surface_type}{Type of surface.}
 
+\item{obs_height}{Height of obstacle in m.}
+
 \item{weather_station}{Object of class weather_station}
 }
 \value{
@@ -50,5 +53,5 @@ Exchange quotient for heat transmission in kg/(m*s).
 Calculation of the exchange quotient of the turbulent heat transmission.
 }
 \references{
-Foken p362 Businger.
+Foken 2016, p. 362: Businger.
 }

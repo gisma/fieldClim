@@ -16,11 +16,12 @@ turb_flux_imp_exchange(...)
   z1 = 2,
   z2 = 10,
   elev,
-  surface_type,
+  surface_type = NULL,
+  obs_height = NULL,
   ...
 )
 
-\method{turb_flux_imp_exchange}{weather_station}(weather_station, ...)
+\method{turb_flux_imp_exchange}{weather_station}(weather_station, obs_height = NULL, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
@@ -40,6 +41,8 @@ turb_flux_imp_exchange(...)
 \item{elev}{Elevation above sea level in m.}
 
 \item{surface_type}{Type of surface.}
+
+\item{obs_height}{Height of obstacle in m.}
 
 \item{weather_station}{Object of class weather_station}
 }

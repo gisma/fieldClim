@@ -18,11 +18,12 @@ latent_monin(...)
   z1 = 2,
   z2 = 10,
   elev,
-  surface_type = "field",
+  surface_type = NULL,
+  obs_height = NULL,
   ...
 )
 
-\method{latent_monin}{weather_station}(weather_station, ...)
+\method{latent_monin}{weather_station}(weather_station, obs_height = NULL, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
@@ -47,6 +48,8 @@ latent_monin(...)
 
 \item{surface_type}{Type of surface.}
 
+\item{obs_height}{Height of obstacle in m.}
+
 \item{weather_station}{Object of class weather_station.}
 }
 \value{
@@ -58,5 +61,7 @@ flux signifies flux away from the surface, positive values signify flux
 towards the surface.
 }
 \references{
-p77eq4.6, Foken p61 Tab. 2.10.
+Bendix 2004, p. 77, eq.4.6
+
+Foken 2016, p. 61, Tab. 2.10
 }

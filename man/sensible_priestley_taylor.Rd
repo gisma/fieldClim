@@ -34,5 +34,5 @@ heat flux signifies flux away from the surface, positive values signify flux
 towards the surface.
 }
 \references{
-Foken p220eq5.6.
+Foken 2016, p. 220, eq. 5.6
 }

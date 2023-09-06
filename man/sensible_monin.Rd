@@ -16,11 +16,12 @@ sensible_monin(...)
   v1,
   v2,
   elev,
-  surface_type = "field",
+  surface_type = NULL,
+  obs_height = NULL,
   ...
 )
 
-\method{sensible_monin}{weather_station}(weather_station, ...)
+\method{sensible_monin}{weather_station}(weather_station, obs_height = NULL, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
@@ -41,6 +42,8 @@ sensible_monin(...)
 
 \item{surface_type}{Type of surface.}
 
+\item{obs_height}{Height of obstacle in m.}
+
 \item{weather_station}{Object of class weather_station.}
 }
 \value{
@@ -52,5 +55,7 @@ flux signifies flux away from the surface, positive values signify flux
 towards the surface.
 }
 \references{
-p77eq4.6, Foken p362 Businger.
+Bendix 2004, p. 77, eq. 4.6,
+
+Foken 2016, p. 362: Businger
 }

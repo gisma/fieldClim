@@ -17,7 +17,7 @@ sensible_priestley_taylor <- function(...) {
 #' @param rad_bal Radiation balance in W/m\eqn{^2}.
 #' @param soil_flux Soil flux in W/m\eqn{^2}.
 #' @param surface_type Surface type, for which a Priestley-Taylor coefficient will be selected. Default is for short grass.
-#' @references Foken p220eq5.6.
+#' @references Foken 2016, p. 220, eq. 5.6
 sensible_priestley_taylor.default <- function(t, rad_bal, soil_flux, surface_type = "field", ...) {
   sc <- sc(t)
   gam <- gam(t)
@@ -46,11 +46,12 @@ sensible_priestley_taylor.default <- function(t, rad_bal, soil_flux, surface_typ
 #' @param weather_station Object of class weather_station.
 #' @export
 sensible_priestley_taylor.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "t1", "rad_bal", "soil_flux")
+  check_availability(weather_station, "t1", "rad_bal", "soil_flux", "surface_type")
   t1 <- weather_station$measurements$t1
   rad_bal <- weather_station$measurements$rad_bal
   soil_flux <- weather_station$measurements$soil_flux
-  return(sensible_priestley_taylor(t1, rad_bal, soil_flux))
+  surface_type <- weather_station$location_properties$surface_type
+  return(sensible_priestley_taylor(t1, rad_bal, soil_flux, surface_type = surface_type))
 }
 
 
@@ -76,11 +77,28 @@ sensible_monin <- function(...) {
 #' @param v1 Windspeed at lower height (e.g. height of anemometer) in m/s.
 #' @param v2 Windspeed at upper height in m/s.
 #' @param elev Elevation above sea level in m.
-#' @param surface_type Type of surface.
-#' @references p77eq4.6, Foken p362 Businger.
-sensible_monin.default <- function(t1, t2, z1 = 2, z2 = 10, v1, v2, elev, surface_type = "field", ...) {
-  monin <- turb_flux_monin(z1, z2, v1, v2, t1, t2, elev, surface_type)
-  ustar <- turb_ustar(v1, z1, surface_type)
+#' @inheritParams turb_roughness_length
+#' @references Bendix 2004, p. 77, eq. 4.6,
+#' @references Foken 2016, p. 362: Businger
+sensible_monin.default <- function(t1, t2, z1 = 2, z2 = 10, v1, v2, elev, surface_type = NULL, obs_height = NULL, ...) {
+  # calculate ustar
+  if (!is.null(obs_height)) {
+    ustar <- turb_ustar(v=v1, z=z1, obs_height=obs_height)
+  } else if (!is.null(surface_type)) {
+    ustar <- turb_ustar(v=v1, z=z1, surface_type=surface_type)
+  } else {
+    print("The input is not valid. Either obs_height or surface_type has to be defined.")
+  }
+
+  # calculate Monin-Obhukov-Length
+  if (!is.null(obs_height)) {
+    monin <- turb_flux_monin(z1=z1, z2=z2, v1=v1, v2=v2, t1=t1, t2=t2, elev=elev, obs_height=obs_height)
+  } else if (!is.null(surface_type)) {
+    monin <- turb_flux_monin(z1=z1, z2=z2, v1=v1, v2=v2, t1=t1, t2=t2, elev=elev, surface_type=surface_type)
+  } else {
+    print("The input is not valid. Either obs_height or surface_type has to be defined.")
+  }
+
   grad_rich_no <- turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, elev)
   cp <- 1004.834
   k <- 0.35
@@ -115,9 +133,10 @@ sensible_monin.default <- function(t1, t2, z1 = 2, z2 = 10, v1, v2, elev, surfac
 
 #' @rdname sensible_monin
 #' @param weather_station Object of class weather_station.
+#' @param obs_height Height of obstacle in m.
 #' @export
-sensible_monin.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "t1", "t2", "z1", "z2", "v1", "v2", "elevation", "surface_type")
+sensible_monin.weather_station <- function(weather_station, obs_height = NULL, ...) {
+  check_availability(weather_station, "t1", "t2", "z1", "z2", "v1", "v2", "elevation")
   t1 <- weather_station$measurements$t1
   t2 <- weather_station$measurements$t2
   z1 <- weather_station$properties$z1
@@ -125,8 +144,13 @@ sensible_monin.weather_station <- function(weather_station, ...) {
   v1 <- weather_station$measurements$v1
   v2 <- weather_station$measurements$v2
   elev <- weather_station$location_properties$elevation
-  surface_type <- weather_station$location_properties$surface_type
-  return(sensible_monin(t1, t2, z1, z2, v1, v2, elev, surface_type))
+  if (!is.null(obs_height)) {
+    return(sensible_monin(t1, t2, z1, z2, v1, v2, elev, obs_height = obs_height))
+  } else {
+    check_availability(weather_station, "surface_type")
+    surface_type <- weather_station$location_properties$surface_type
+    return(sensible_monin(t1, t2, z1, z2, v1, v2, elev, surface_type = surface_type))
+  }
 }
 
 
@@ -156,7 +180,7 @@ sensible_bowen <- function(...) {
 #' @param elev Elevation above sea level in m.
 #' @param rad_bal Radiation balance in W/m\eqn{^2}.
 #' @param soil_flux Soil flux in W/m\eqn{^2}.
-#' @references p221eq9.21.
+#' @references Bendix 2004, p. 221, eq. 9.21
 sensible_bowen.default <- function(t1, t2, hum1, hum2, z1 = 2, z2 = 10, elev, rad_bal, soil_flux, ...) {
   # Calculating potential temperature delta
   t1_pot <- temp_pot_temp(t1, elev)

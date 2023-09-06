@@ -62,16 +62,15 @@ turb_displacement <- function(...) {
 #' @param obs_height Height of vegetation in m.
 #' @param surroundings Choose either 'vegetation' or 'city'.
 #' @export
-#' @references p241.
+#' @references Bendix 2004, p. 241
 turb_displacement.default <- function(obs_height, surroundings = "vegetation", ...) {
   if (surroundings == "vegetation") {
-    d0 <- (2 / 3) * obs_height # for vegetation
+    (2 / 3) * obs_height # for vegetation
   } else if (surroundings == "city") {
-    d0 <- 0.8 * obs_height # for dense housing
+    0.8 * obs_height # for dense housing
   } else {
     stop("Please set 'surroundings' to either 'vegetation' or 'city'.")
   }
-  d0
 }
 
 #' @rdname turb_displacement
@@ -101,9 +100,9 @@ turb_ustar <- function(...) {
 #' @rdname turb_ustar
 #' @param v Windspeed in height of anemometer in m/s.
 #' @param z Height of anemometer in m.
-#' @inheritDotParams turb_roughness_length
+#' @inheritParams turb_roughness_length
 #' @export
-turb_ustar.default <- function(v, z, ...) {
+turb_ustar.default <- function(v, z, surface_type = NULL, obs_height = NULL, ...) {
   if (!is.null(obs_height)) {
     z0 <- turb_roughness_length(obs_height=obs_height)
   } else if (!is.null(surface_type)) {
@@ -121,11 +120,17 @@ turb_ustar.default <- function(v, z, ...) {
 
 #' @rdname turb_ustar
 #' @param weather_station Object of class weather_station.
+#' @param obs_height Height of obstacle in m.
 #' @export
-turb_ustar.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "v1", "z1", "surface_type")
+turb_ustar.weather_station <- function(weather_station, obs_height = NULL, ...) {
+  check_availability(weather_station, "v1", "z1")
   v <- weather_station$measurements$v1
   z <- weather_station$properties$z1
-  surface_type <- weather_station$location_properties$surface_type
-  return(turb_ustar(v, z, surface_type))
+  if (!is.null(obs_height)) {
+    return(turb_ustar(v, z, obs_height = obs_height))
+  } else {
+    check_availability(weather_station, "surface_type")
+    surface_type <- weather_station$location_properties$surface_type
+    return(turb_ustar(v, z, surface_type = surface_type))
+  }
 }

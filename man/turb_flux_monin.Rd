@@ -8,9 +8,20 @@
 \usage{
 turb_flux_monin(...)
 
-\method{turb_flux_monin}{default}(z1 = 2, z2 = 10, v1, v2, t1, t2, elev, surface_type, ...)
+\method{turb_flux_monin}{default}(
+  z1 = 2,
+  z2 = 10,
+  v1,
+  v2,
+  t1,
+  t2,
+  elev,
+  surface_type = NULL,
+  obs_height = NULL,
+  ...
+)
 
-\method{turb_flux_monin}{weather_station}(weather_station, ...)
+\method{turb_flux_monin}{weather_station}(weather_station, obs_height = NULL, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
@@ -31,6 +42,8 @@ turb_flux_monin(...)
 
 \item{surface_type}{Type of surface.}
 
+\item{obs_height}{Height of obstacle in m.}
+
 \item{weather_station}{Object of class weather_station}
 }
 \value{
@@ -42,5 +55,5 @@ The calculation depends on the stability of the atmosphere.
 This value will be taken from the Gradient-Richardson-Number.
 }
 \references{
-p241
+Bendix 2004, p. 241
 }

@@ -17,7 +17,7 @@ latent_priestley_taylor <- function(...) {
 #' @param rad_bal Radiation balance in W/m\eqn{^2}.
 #' @param soil_flux Soil flux in W/m\eqn{^2}.
 #' @param surface_type Surface type, for which a Priestley-Taylor coefficient will be selected. Default is for short grass.
-#' @references Foken p220eq5.7.
+#' @references Foken 2016, p. 220, eq. 5.7.
 latent_priestley_taylor.default <- function(t, rad_bal, soil_flux, surface_type = "field", ...) {
   priestley_taylor_coefficient <- priestley_taylor_coefficient
 
@@ -47,11 +47,12 @@ latent_priestley_taylor.default <- function(t, rad_bal, soil_flux, surface_type 
 #' @param weather_station Object of class weather_station
 #' @export
 latent_priestley_taylor.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "t1", "rad_bal", "soil_flux")
+  check_availability(weather_station, "t1", "rad_bal", "soil_flux", "surface_type")
   t1 <- weather_station$measurements$t1
   rad_bal <- weather_station$measurements$rad_bal
   soil_flux <- weather_station$measurements$soil_flux
-  return(latent_priestley_taylor(t1, rad_bal, soil_flux))
+  surface_type <- weather_station$location_properties$surface_type
+  return(latent_priestley_taylor(t1, rad_bal, soil_flux, surface_type = surface_type))
 }
 
 
@@ -176,11 +177,27 @@ latent_monin <- function(...) {
 #' @param z1 Lower height of measurement in m.
 #' @param z2 Upper height of measurement in m.
 #' @param elev Elevation above sea level in m.
-#' @param surface_type Type of surface.
-#' @references p77eq4.6, Foken p61 Tab. 2.10.
-latent_monin.default <- function(hum1, hum2, t1, t2, v1, v2, z1 = 2, z2 = 10, elev, surface_type = "field", ...) {
-  monin <- turb_flux_monin(z1, z2, v1, v2, t1, t2, elev, surface_type)
-  ustar <- turb_ustar(v1, z1, surface_type)
+#' @inheritParams turb_roughness_length
+#' @references Bendix 2004, p. 77, eq.4.6
+#' @references Foken 2016, p. 61, Tab. 2.10
+latent_monin.default <- function(hum1, hum2, t1, t2, v1, v2, z1 = 2, z2 = 10, elev, surface_type = NULL, obs_height = NULL, ...) {
+  # calculate ustar
+  if (!is.null(obs_height)) {
+    ustar <- turb_ustar(v=v1, z=z1, obs_height=obs_height)
+  } else if (!is.null(surface_type)) {
+    ustar <- turb_ustar(v=v1, z=z1, surface_type=surface_type)
+  } else {
+    print("The input is not valid. Either obs_height or surface_type has to be defined.")
+  }
+
+  # calculate Monin-Obhukov-Length
+  if (!is.null(obs_height)) {
+    monin <- turb_flux_monin(z1=z1, z2=z2, v1=v1, v2=v2, t1=t1, t2=t2, elev=elev, obs_height=obs_height)
+  } else if (!is.null(surface_type)) {
+    monin <- turb_flux_monin(z1=z1, z2=z2, v1=v1, v2=v2, t1=t1, t2=t2, elev=elev, surface_type=surface_type)
+  } else {
+    print("The input is not valid. Either obs_height or surface_type has to be defined.")
+  }
   grad_rich_no <- turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, elev)
   moist_gradient <- hum_moisture_gradient(hum1, hum2, t1, t2, z1, z2, elev)
   air_density <- pres_air_density(elev, t1)
@@ -212,9 +229,10 @@ latent_monin.default <- function(hum1, hum2, t1, t2, v1, v2, z1 = 2, z2 = 10, el
 
 #' @rdname latent_monin
 #' @param weather_station Object of class weather_station.
+#' @param obs_height Height of obstacle in m.
 #' @export
-latent_monin.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "z1", "z2", "t1", "t2", "hum1", "hum2", "v1", "v2", "elevation", "surface_type")
+latent_monin.weather_station <- function(weather_station, obs_height = NULL, ...) {
+  check_availability(weather_station, "z1", "z2", "t1", "t2", "hum1", "hum2", "v1", "v2", "elevation")
   hum1 <- weather_station$measurements$hum1
   hum2 <- weather_station$measurements$hum2
   t1 <- weather_station$measurements$t1
@@ -224,8 +242,13 @@ latent_monin.weather_station <- function(weather_station, ...) {
   v1 <- weather_station$measurements$v1
   v2 <- weather_station$measurements$v2
   elev <- weather_station$location_properties$elevation
-  surface_type <- weather_station$location_properties$surface_type
-  return(latent_monin(hum1, hum2, t1, t2, v1, v2, z1, z2, elev, surface_type))
+  if (!is.null(obs_height)) {
+    return(latent_monin(hum1, hum2, t1, t2, v1, v2, z1, z2, elev, obs_height = obs_height))
+  } else {
+    check_availability(weather_station, "surface_type")
+    surface_type <- weather_station$location_properties$surface_type
+    return(latent_monin(hum1, hum2, t1, t2, v1, v2, z1, z2, elev, surface_type = surface_type))
+  }
 }
 
 
@@ -256,7 +279,7 @@ latent_bowen <- function(...) {
 #' @param elev Elevation above sea level in m.
 #' @param rad_bal Radiation balance in W/m\eqn{^2}.
 #' @param soil_flux Soil flux in W/m\eqn{^2}.
-#' @references p221eq9.21.
+#' @references Bendix 2004, p. 221, eq. 9.21
 latent_bowen.default <- function(t1, t2, hum1, hum2, z1 = 2, z2 = 10, elev,
                                  rad_bal, soil_flux, ...) {
   # Calculating potential temperature delta

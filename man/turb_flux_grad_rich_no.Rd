@@ -41,5 +41,5 @@ positive values signify stable conditions, whereas values around zero represent
 neutral conditions.
 }
 \references{
-p43eq2.5.
+Bendix 2004, p. 43, eq. 2.5
 }
