@@ -63,18 +63,16 @@ pres_vapor_p.default <- function(temp, rh, ...) {
 }
 
 #' @rdname pres_vapor_p
-#' @export
 #' @inheritParams sol_julian_day
-#' @param height Height of measurement. "lower" or "upper".
-pres_vapor_p.weather_station <- function(weather_station, height = "lower", ...) {
-  check_availability(weather_station, "t1", "t2", "hum1", "hum2")
-  if (!height %in% c("upper", "lower")) {
-    stop("'height' must be either 'lower' or 'upper'.")
+#' @export
+pres_vapor_p.weather_station <- function(weather_station) {
+  a <- formalArgs(pres_vapor_p.default)
+  a <- a[1:(length(a)-1)]
+  for(i in a) {
+    assign(i, weather_station[[i]])
   }
-  height_num <- which(height == c("lower", "upper"))
-  t <- weather_station$measurements[[paste0("t", height_num)]]
-  hum <- weather_station$measurements[[paste0("hum", height_num)]]
-  return(pres_vapor_p(hum, t))
+  
+  pres_vapor_p(temp, rh)
 }
 
 #' Saturated vapor pressure
@@ -100,17 +98,16 @@ pres_sat_vapor_p.default <- function(temp, a = 7.5, b = 235, ...) {
 }
 
 #' @rdname pres_sat_vapor_p
-#' @export
 #' @inheritParams sol_julian_day
-#' @param height Height of measurement. "lower" or "upper".
-pres_sat_vapor_p.weather_station <- function(weather_station, height = "lower", ...) {
-  check_availability(weather_station, "t1", "t2")
-  if (!height %in% c("upper", "lower")) {
-    stop("'height' must be either 'lower' or 'upper'.")
+#' @export
+pres_sat_vapor_p.weather_station <- function(weather_station, ...) {
+  a <- formalArgs(pres_sat_vapor_p.default)
+  a <- a[1:(length(a)-3)]
+  for(i in a) {
+    assign(i, weather_station[[i]])
   }
-  height_num <- which(height == c("lower", "upper"))
-  t <- weather_station$measurements[[paste0("t", height_num)]]
-  return(pres_sat_vapor_p(t))
+  
+  pres_sat_vapor_p(temp)
 }
 
 #' Air density

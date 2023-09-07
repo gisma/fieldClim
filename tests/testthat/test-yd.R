@@ -22,12 +22,12 @@ elev <- 200
 temp <- 15
 slope <- 30
 exposition <- 180
-#rh <- 50
-#surface_temp <- 10
-#soil_temp1 <- 15
-#soil_temp2 <- 20
-#soil_depth1 <- 2
-#soil_depth2 <- 10
+rh <- 50
+surface_temp <- 10
+soil_temp1 <- 15
+soil_temp2 <- 20
+soil_depth1 <- 2
+soil_depth2 <- 10
 
 # structure
 ## soil
@@ -38,29 +38,29 @@ soil_heat_flux(soil_temp1, soil_temp2, soil_depth1, soil_depth2)
 rad_bal(datetime, lon, lat, elev, temp, rh, surface_temp)*1
   rad_sw_bal(datetime, lon, lat, elev, temp)*1
     rad_sw_in(datetime, lon, lat, elev, temp)*1
-#      rad_sw_toa(datetime, lon, lat)*1
-#        sol_eccentricity(datetime)
-#          sol_day_angle(datetime)
-#            sol_julian_day(datetime)
-#        sol_elevation(datetime, lon, lat)
-#          sol_declination(datetime)
-#            sol_ecliptic_length(datetime)
-#              sol_medium_anomaly(datetime)
-#          sol_hour_angle(datetime, lon)
-#            sol_medium_suntime(datetime, lon)
-#            sol_time_formula(datetime, lon)
-#      trans_gas(datetime, lon, lat, elev, temp)*1
-#        trans_air_mass_abs(datetime, lon, lat, elev, temp)*1
-#          trans_air_mass_rel(datetime, lon, lat)
-#          pres_p(elev, temp)*1
-#      trans_ozone(datetime, lon, lat)
-#      trans_rayleigh(datetime, lon, lat, elev, temp)*1
-#      trans_vapor(datetime, lon, lat, elev, temp)*1
-#        hum_precipitable_water(datetime, lat, elev, temp)*1
-#      trans_aerosol(datetime, lon, lat, elev, temp)*1
+      rad_sw_toa(datetime, lon, lat)*1
+        sol_eccentricity(datetime)
+          sol_day_angle(datetime)
+            sol_julian_day(datetime)
+        sol_elevation(datetime, lon, lat)
+          sol_declination(datetime)
+            sol_ecliptic_length(datetime)
+              sol_medium_anomaly(datetime)
+          sol_hour_angle(datetime, lon)
+            sol_medium_suntime(datetime, lon)
+            sol_time_formula(datetime, lon)
+      trans_gas(datetime, lon, lat, elev, temp)*1
+        trans_air_mass_abs(datetime, lon, lat, elev, temp)*1
+          trans_air_mass_rel(datetime, lon, lat)
+          pres_p(elev, temp)*1
+      trans_ozone(datetime, lon, lat)*1
+      trans_rayleigh(datetime, lon, lat, elev, temp)*1
+      trans_vapor(datetime, lon, lat, elev, temp)*1
+        hum_precipitable_water(datetime, lat, elev, temp)*1
+      trans_aerosol(datetime, lon, lat, elev, temp)*1
       terr_terrain_angle(datetime, lon, lat)*1
         sol_azimuth(datetime, lon, lat)
-    rad_diffuse_in(datetime, lon, lat, elev, temp)
+    rad_diffuse_in(datetime, lon, lat, elev, temp)*1
       terr_sky_view()
     rad_sw_out(datetime, lon, lat, elev, temp)
     rad_diffuse_out(datetime, lon, lat, elev, temp)
@@ -79,20 +79,20 @@ input <- input[c(1:3, 133:135), ]
 #names(input)
 weather_station <- build_weather_station(
   datetime = strptime(input$datetime, format = "%Y-%m-%d %H:%M:%S", tz = "Atlantic/Reykjavik"),
-#  texture = "sand",
-#  moisture = input$water_vol_soil,
-#  soil_temp1 = input$Ts,
-#  soil_temp2 = input$Ta_2m,
-#  soil_depth1 = 1,
-#  soil_depth2 = 0,
+  texture = "sand",
+  moisture = input$water_vol_soil,
+  soil_temp1 = input$Ts,
+  soil_temp2 = input$Ta_2m,
+  soil_depth1 = 1,
+  soil_depth2 = 0,
   lon = 8.683300,
   lat = 50.840503,
   elev = 270,
   temp = input$Ta_2m,
-#  rh = input$Huma_2m,
-#  surface_temp = input$Ts,
-slope = 30,
-exposition = 20
+  rh = input$Huma_2m,
+  surface_temp = input$Ts,
+  slope = 30,
+  exposition = 20
 )
 
 soil_heat_flux(weather_station)
@@ -101,28 +101,28 @@ soil_heat_flux(weather_station)
 rad_bal(weather_station)
   rad_sw_bal(weather_station)
     rad_sw_in(weather_station)
-#      rad_sw_toa(weather_station)
-#        sol_eccentricity(weather_station)
-#          sol_day_angle(weather_station)
-#            sol_julian_day(weather_station)
-#        sol_elevation(weather_station)
-#          sol_declination(weather_station)
-#            sol_ecliptic_length(weather_station)
-#              sol_medium_anomaly(weather_station)
-#          sol_hour_angle(weather_station)
-#            sol_medium_suntime(weather_station)
-#            sol_time_formula(weather_station)
-#      trans_gas(weather_station)
-#        trans_air_mass_abs(weather_station)
-#          trans_air_mass_rel(weather_station)
-#          pres_p(weather_station)
-#      trans_ozone(weather_station)
-#      trans_rayleigh(weather_station)
-#      trans_vapor(weather_station)
-#        hum_precipitable_water(weather_station)
-#      trans_aerosol(weather_station)
-#      terr_terrain_angle(weather_station)
-#        sol_azimuth(weather_station)
+      rad_sw_toa(weather_station)
+        sol_eccentricity(weather_station)
+          sol_day_angle(weather_station)
+            sol_julian_day(weather_station)
+        sol_elevation(weather_station)
+          sol_declination(weather_station)
+            sol_ecliptic_length(weather_station)
+              sol_medium_anomaly(weather_station)
+          sol_hour_angle(weather_station)
+            sol_medium_suntime(weather_station)
+            sol_time_formula(weather_station)
+      trans_gas(weather_station)
+        trans_air_mass_abs(weather_station)
+          trans_air_mass_rel(weather_station)
+          pres_p(weather_station)
+      trans_ozone(weather_station)
+      trans_rayleigh(weather_station)
+      trans_vapor(weather_station)
+        hum_precipitable_water(weather_station)
+      trans_aerosol(weather_station)
+      terr_terrain_angle(weather_station)
+        sol_azimuth(weather_station)
     rad_diffuse_in(weather_station)
       terr_sky_view()
     rad_sw_out(weather_station)

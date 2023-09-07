@@ -89,21 +89,22 @@ rad_sw_in.default <- function(datetime, lon, lat, elev, temp, ...,
     surface_type = "field") {
   sw_toa <- rad_sw_toa(datetime, lon, lat, ...)
   elevation <- sol_elevation(datetime, lon, lat)
-  elevation <- deg2rad(elevation)
-
-  gas <- trans_gas(datetime, lon, lat, elev, temp)
+  
+  gas <- trans_gas(datetime, lon, lat, elev, temp, ...)
   ozone <- trans_ozone(datetime, lon, lat, ...)
-  rayleigh <- trans_rayleigh(datetime, lon, lat, elev, temp)
-  vapor <- trans_vapor(datetime, lon, lat, elev, temp)
+  rayleigh <- trans_rayleigh(datetime, lon, lat, elev, temp, ...)
+  vapor <- trans_vapor(datetime, lon, lat, elev, temp, ...)
   aerosol <- trans_aerosol(datetime, lon, lat, elev, temp, ...)
   trans_total <- gas * ozone * rayleigh * vapor * aerosol
 
   terrain_angle <- terr_terrain_angle(datetime, lon, lat, ...)
-  terrain_angle <- deg2rad(terrain_angle)
   
   albedo <- surface_properties[which(surface_properties$surface_type == surface_type), ]$albedo
   terrain_view <- 1 - terr_sky_view(...)
 
+  elevation <- deg2rad(elevation)
+  terrain_angle <- deg2rad(terrain_angle)
+  
   out <- sw_toa * 0.9751 * trans_total / sin(elevation) * cos(terrain_angle)
   out * (1 + albedo * terrain_view)
 }
@@ -162,7 +163,7 @@ rad_sw_toa.weather_station <- function(weather_station, ...) {
 #' Incoming diffused radiation
 #'
 #' @param ... Additional arguments.
-#' @returns Description.
+#' @returns W/m\eqn{^2}
 #' @export
 rad_diffuse_in <- function(...) {
   UseMethod("rad_diffuse_in")
@@ -179,23 +180,24 @@ rad_diffuse_in <- function(...) {
 #' @references p58eq3.14, p55eq3.9
 rad_diffuse_in.default <- function(datetime, lon, lat, elev, temp, ...,
     surface_type = "field") {
-  vapor <- trans_vapor(datetime, lon, lat, elev, temp)
+  vapor <- trans_vapor(datetime, lon, lat, elev, temp, ...)
   ozone <- trans_ozone(datetime, lon, lat, ...)
   sw_toa <- rad_sw_toa(datetime, lon, lat, ...)
-  sw_in <- rad_sw_in(datetime, lon, lat, elev, temp)
+  sw_in <- rad_sw_in(datetime, lon, lat, elev, temp, ...)
   sky_view <- terr_sky_view(...)
   terrain_angle <- terr_terrain_angle(datetime, lon, lat, ...)
-  terrain_angle <- deg2rad(terrain_angle)
-
+  
   elevation <- sol_elevation(datetime, lon, lat)
-  z <- 90 - elevation
-  z <- deg2rad(z)
+  solar_angle <- 90 - elevation
   
   albedo <- surface_properties[which(surface_properties$surface_type == surface_type), ]$albedo
   terrain_view <- 1 - terr_sky_view(...)
-
+  
+  terrain_angle <- deg2rad(terrain_angle)
+  solar_angle <- deg2rad(solar_angle)
+  
   out <- 0.5 * ((1 - (1 - vapor) - (1 - ozone)) * sw_toa - sw_in) *
-  sky_view * (1 + cos(terrain_angle)^2 * sin(z)^3)
+    sky_view * (1 + cos(terrain_angle)^2 * sin(solar_angle)^3)
   out * (1 + albedo * terrain_view)
 }
 
@@ -378,7 +380,7 @@ rad_emissivity_air <- function(...) {
 #' @inheritDotParams pres_sat_vapor_p
 #' @param rh relative humidity.
 #' @export
-#' @references p67eq3.22
+#' @references p66eq3.22
 rad_emissivity_air.default <- function(temp, rh, ...) {
   vapor_p <- pres_vapor_p(temp, rh, ...)
   temp <- c2k(temp)
@@ -396,7 +398,7 @@ rad_emissivity_air.weather_station <- function(weather_station, ...) {
     assign(i, weather_station[[i]])
   }
   
-  rad_emissivity_air(temp, rh, weather_station)
+  rad_emissivity_air(temp, rh)
 }
 
 

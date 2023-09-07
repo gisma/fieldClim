@@ -31,9 +31,8 @@ terr_sky_view.default <- function(slope = 0, valley = FALSE, ...) {
 #' @inheritParams sol_julian_day
 #' @export
 terr_sky_view.weather_station <- function(weather_station, ...) {
-  terr_sky_view(weather_station)
+  terr_sky_view()
 }
-
 
 #' Terrain angle
 #'
