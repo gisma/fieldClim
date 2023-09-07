@@ -15,15 +15,15 @@ sol_eccentricity(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{datetime}{Datetime in POSIXt}
+\item{datetime}{Datetime in \code{POSIXt}.}
 
-\item{weather_station}{Object of class weather_station.}
+\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-Eccentricity at the date. unitless
+unitless
 }
 \description{
-Calculates the eccentricity.
+Eccentricity
 }
 \references{
 p243.

@@ -8,32 +8,39 @@
 \usage{
 trans_aerosol(...)
 
-\method{trans_aerosol}{default}(datetime, lon, lat, elev, temp, ..., vis = 30)
+\method{trans_aerosol}{default}(datetime, lon, lat, elev, temp, ..., vis = vis_default)
 
 \method{trans_aerosol}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional arguments.}
+\item{...}{
+  Arguments passed on to \code{\link[=trans_air_mass_abs.default]{trans_air_mass_abs.default}}
+  \describe{
+    \item{\code{}}{}
+  }}
 
-\item{datetime}{Datetime in POSIXt}
+\item{datetime}{Datetime in \code{POSIXt}.}
 
-\item{lon}{Longitude.}
+\item{lon}{Longitude in degree.}
 
-\item{lat}{Latitude in decimal degrees.}
+\item{lat}{Latitude in degree.}
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{temp}{Temperature in °C.}
+\item{temp}{Temperature in degree Celcius.}
 
-\item{vis}{Visibility in km.}
+\item{vis}{Visibility in km, default 30.}
 
-\item{weather_station}{Object of class weather_station.}
+\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-Transmittance due to aerosols (0-1). unitless
+Ratio from 0 to 1, unitless.
 }
 \description{
-Calculates transmittance due to aerosols.
+Transmittance due to fine particles in the air.
+}
+\details{
+Visibility is used to linearly interpolate aerosol optical thickness.
 }
 \references{
 p246.

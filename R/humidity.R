@@ -112,27 +112,24 @@ hum_evap_heat.weather_station <- function(weather_station, height = "lower", ...
 }
 
 
-#' Total precipitable water
+#' Precipitable water
 #'
-#' Estimates total precipitable water in the atmosphere.
-#' It uses a moist adiabatic temperature gradient which might not be
-#' suitable for every application.
+#' Selects reference temperature and pressure based on location and season.
+#' Then calculates precipitable water.
 #'
-#' Latitude <= 30 degrees are defined as tropic; <= 60 are temperate; others are subarctic.
+#' Latitude <= 30 degrees is defined as tropic; <= 60 is temperate; others is subarctic.
 #' Summer is defined as April to September in the northern hemisphere.
 #'
 #' @param ... Additional arguments.
-#' @returns Total precipitable water in cm (grams).
+#' @returns Total precipitable water in cm\cdotgrams.
 #' @export
 hum_precipitable_water <- function(...) {
   UseMethod("hum_precipitable_water")
 }
 
 #' @rdname hum_precipitable_water
-#' @inheritParams sol_julian_day.default
-#' @inheritParams pres_p
+#' @inheritParams rad_bal
 #' @inheritDotParams pres_p.default g rl
-#' @param lat Latitude
 #' @export
 #' @references p246. Column name "subarctic_summer" and "subarctic_winter" were switched.
 hum_precipitable_water.default <- function(datetime, lat, elev, temp, ...) {
@@ -142,44 +139,50 @@ hum_precipitable_water.default <- function(datetime, lat, elev, temp, ...) {
     row.names = c("tropic", "temperate_summer", "temperate_winter", "subarctic_summer", "subarctic_winter")
   )
   
-  if (abs(lat) <= 30) { # tropic
-    temp_standard <- df["tropic", "t0"]
-    pw_standard <- df["tropic", "pwst"]
-  } else if ((abs(lat) <= 60) && (lat > 0)) { # temperate, northern hemisphere
-    if (datetime$mon + 1 %in% seq(4, 9)) {
-      temp_standard <- df["temperate_summer", "t0"]
-      pw_standard <- df["temperate_summer", "pwst"]
-    } else {
-      temp_standard <- df["temperate_winter", "t0"]
-      pw_standard <- df["temperate_winter", "pwst"]
-    }
-  } else if ((abs(lat) <= 60) && (lat < 0)) { # temperate, southern hemisphere
-    if (datetime$mon + 1 %in% seq(4, 9)) {
-      temp_standard <- df["temperate_winter", "t0"]
-      pw_standard <- df["temperate_winter", "pwst"]
-    } else {
-      temp_standard <- df["temperate_summer", "t0"]
-      pw_standard <- df["temperate_summer", "pwst"]
-    }
-  } else if (lat > 0) { # subarctic, northern hemisphere
-    if (datetime$mon + 1 %in% seq(4, 9)) {
-      temp_standard <- df["subarctic_summer", "t0"]
-      pw_standard <- df["subarctic_summer", "pwst"]
-    } else {
-      temp_standard <- df["subarctic_winter", "t0"]
-      pw_standard <- df["subarctic_winter", "pwst"]
-    }
-  } else if (lat > 0) { # subarctic, southern hemisphere
-    if (datetime$mon + 1 %in% seq(4, 9)) {
-      temp_standard <- df["subarctic_winter", "t0"]
-      pw_standard <- df["subarctic_winter", "pwst"]
-    } else {
-      temp_standard <- df["subarctic_summer", "t0"]
-      pw_standard <- df["subarctic_summer", "pwst"]
+  temp_standard <- c()
+  pw_standard <- c()
+  
+  for (i in seq_along(datetime)) {
+    if (abs(lat) <= 30) { # tropic
+      temp_standard <- df["tropic", "t0"]
+      pw_standard <- df["tropic", "pwst"]
+    } else if ((abs(lat) <= 60) && (lat > 0)) { # temperate, northern hemisphere
+      if ((datetime[i]$mon + 1) %in% seq(4, 9)) {
+        temp_standard[i] <- df["temperate_summer", "t0"]
+        pw_standard[i] <- df["temperate_summer", "pwst"]
+      } else {
+        temp_standard[i] <- df["temperate_winter", "t0"]
+        pw_standard[i] <- df["temperate_winter", "pwst"]
+      }
+    } else if ((abs(lat) <= 60) && (lat < 0)) { # temperate, southern hemisphere
+      if ((datetime[i]$mon + 1) %in% seq(4, 9)) {
+        temp_standard[i] <- df["temperate_winter", "t0"]
+        pw_standard[i] <- df["temperate_winter", "pwst"]
+      } else {
+        temp_standard[i] <- df["temperate_summer", "t0"]
+        pw_standard[i] <- df["temperate_summer", "pwst"]
+      }
+    } else if (lat > 0) { # subarctic, northern hemisphere
+      if ((datetime[i]$mon + 1) %in% seq(4, 9)) {
+        temp_standard[i] <- df["subarctic_summer", "t0"]
+        pw_standard[i] <- df["subarctic_summer", "pwst"]
+      } else {
+        temp_standard[i] <- df["subarctic_winter", "t0"]
+        pw_standard[i] <- df["subarctic_winter", "pwst"]
+      }
+    } else if (lat > 0) { # subarctic, southern hemisphere
+      if ((datetime[i]$mon + 1) %in% seq(4, 9)) {
+        temp_standard[i] <- df["subarctic_winter", "t0"]
+        pw_standard[i] <- df["subarctic_winter", "pwst"]
+      } else {
+        temp_standard[i] <- df["subarctic_summer", "t0"]
+        pw_standard[i] <- df["subarctic_summer", "pwst"]
+      }
     }
   }
-  p <- pres_p(elev, temp)
-  p0 <- p0_default
+  
+  p <- pres_p(elev, temp, ...)
+  p0 <- p0_default # will be cancled in pres_p
   
   pw_standard * (p / p0) * (temp_standard / temp)^0.5
 }
@@ -194,7 +197,7 @@ hum_precipitable_water.weather_station <- function(weather_station, ...) {
     assign(i, weather_station[[i]])
   }
   
-  hum_precipitable_water(datetime, lat, elev, temp)
+  hum_precipitable_water(datetime, lat, elev, temp, weather_station)
 }
 
 #' Moisture gradient

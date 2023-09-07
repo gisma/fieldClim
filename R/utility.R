@@ -4,6 +4,9 @@ g_default <- 9.81
 rl_default <- 287.05
 c2k_default <- 273.15
 sigma_default <- 5.6704 * 10^-8
+ozone_column_default <- 0.35
+vis_default <- 30
+sol_const_default <- 1368
 
 surface_properties <- data.frame(
   surface_type = c(

@@ -1,6 +1,9 @@
 #' Air pressure
 #'
-#' Calculation of pressure as a function of the elevation above sea level.
+#' Calculate pressure based on barometric formula.
+#'
+#' The formula assumes that the temperature does not change with altitude.
+#' The results are satisfying enough for an height under 5 km.
 #'
 #' @rdname pres_p
 #' @param ... Additional arguments.
@@ -12,14 +15,14 @@ pres_p <- function(...) {
 
 #' @rdname pres_p
 #' @param elev Elevation above sea level in m.
-#' @param temp Temperature in °C.
+#' @param temp Temperature in degree Celcius.
 #' @param p0 Standard pressure in hPa, default `r p0_default`.
 #' @param g Gravitational acceleration in m/s\eqn{^2}, default `r g_default`.
 #' @param rl Specific gas constant for air in m\eqn{^2}/s\eqn{^2}/K, default `r rl_default`.
 #' @export
 #' @references Lente & Ősz 2020 eq5.
 pres_p.default <- function(elev, temp, ...,
-  p0 = p0_default, g = g_default, rl = rl_default) {
+    p0 = p0_default, g = g_default, rl = rl_default) {
   temp <- c2k(temp)
 
   p0 * exp(-(g * elev) / (rl * temp))
@@ -29,8 +32,11 @@ pres_p.default <- function(elev, temp, ...,
 #' @inheritParams sol_julian_day
 #' @export
 pres_p.weather_station <- function(weather_station, ...) {
-  elev <- weather_station$elev
-  temp <- weather_station$temp
+  a <- formalArgs(pres_p.default)
+  a <- a[1:(length(a)-4)]
+  for(i in a) {
+    assign(i, weather_station[[i]])
+  }
   
   pres_p(elev, temp, weather_station)
 }

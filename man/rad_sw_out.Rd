@@ -15,9 +15,9 @@ rad_sw_out(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{datetime}{Datetime in POSIXt}
+\item{datetime}{Datetime in \code{POSIXt}.}
 
-\item{weather_station}{Object of class weather_station.}
+\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
 W/m\eqn{^2}.

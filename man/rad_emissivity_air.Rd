@@ -19,11 +19,11 @@ rad_emissivity_air(...)
     \item{\code{}}{}
   }}
 
-\item{temp}{Temperature in °C.}
+\item{temp}{Temperature in degree Celcius.}
 
 \item{rh}{relative humidity.}
 
-\item{weather_station}{Object of class weather_station.}
+\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
 Emissivity of the atmosphere (0-1).

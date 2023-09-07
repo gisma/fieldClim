@@ -23,7 +23,7 @@ pres_vapor_p(...)
 
 \item{rh}{Relative humidity in \%.}
 
-\item{weather_station}{Object of class weather_station.}
+\item{weather_station}{Object of class \code{weather_station}.}
 
 \item{height}{Height of measurement. "lower" or "upper".}
 }

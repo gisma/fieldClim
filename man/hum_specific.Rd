@@ -21,7 +21,7 @@ hum_specific(...)
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{weather_station}{Object of class weather_station.}
+\item{weather_station}{Object of class \code{weather_station}.}
 
 \item{height}{Height of measurement. "lower" or "upper".}
 }

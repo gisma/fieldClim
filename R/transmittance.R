@@ -1,9 +1,9 @@
 #' Transmittance due to gas
 #'
-#' Calculates transmittance due to O$_{2}$ and CO$_{2}$.
+#' Calculates transmittance due to O\eqn{_2} and CO\eqn{_2}.
 #'
 #' @param ... Additional arguments.
-#' @returns Transmittance due to gas (0-1), unitless
+#' @returns Ratio from 0 to 1, unitless.
 #' @export
 trans_gas <- function(...) {
   UseMethod("trans_gas")
@@ -23,7 +23,7 @@ trans_gas.default <- function(datetime, lon, lat, elev, temp, ...) {
 #' @inheritParams sol_julian_day
 #' @export
 trans_gas.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(generic.default)
+  a <- formalArgs(trans_gas.default)
   a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
@@ -35,10 +35,8 @@ trans_gas.weather_station <- function(weather_station, ...) {
 
 #' Absolute optical air mass
 #'
-#' Calculates absolute optical air mass.
-#'
 #' @param ... Additional arguments.
-#' @returns Absolute optical air mass.
+#' @returns unitless
 #' @export
 trans_air_mass_abs <- function(...) {
   UseMethod("trans_air_mass_abs")
@@ -52,7 +50,7 @@ trans_air_mass_abs <- function(...) {
 #' @references p247.
 trans_air_mass_abs.default <- function(datetime, lon, lat, elev, temp, ...) {
   air_mass_rel <- trans_air_mass_rel(datetime, lon, lat)
-  p <- pres_p(elev, temp, ...)
+  p <- pres_p(elev, temp)
   p0 <- p0_default # will be cancled in pres_p
   
   air_mass_rel * (p / p0)
@@ -62,7 +60,7 @@ trans_air_mass_abs.default <- function(datetime, lon, lat, elev, temp, ...) {
 #' @inheritParams sol_julian_day
 #' @export
 trans_air_mass_abs.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(generic.default)
+  a <- formalArgs(trans_air_mass_abs.default)
   a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
@@ -73,10 +71,8 @@ trans_air_mass_abs.weather_station <- function(weather_station, ...) {
 
 #' Relative optical air mass
 #'
-#' Calculates relative optical air mass. Returns NA for negative values.
-#'
 #' @param ... Additional arguments.
-#' @returns Relative optical air mass.
+#' @returns unitless
 #' @export
 trans_air_mass_rel <- function(...) {
   UseMethod("trans_air_mass_rel")
@@ -95,9 +91,8 @@ trans_air_mass_rel.default <- function(datetime, lon, lat, ...) {
 #' @rdname trans_air_mass_rel
 #' @inheritParams sol_julian_day
 #' @export
-#'
 trans_air_mass_rel.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(generic.default)
+  a <- formalArgs(trans_air_mass_rel.default)
   a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
@@ -108,10 +103,8 @@ trans_air_mass_rel.weather_station <- function(weather_station, ...) {
 
 #' Transmittance due to ozone
 #'
-#' Calculates transmittance due to ozone.
-#'
 #' @param ... Additional arguments.
-#' @returns Transmittance due to ozone (0-1). unitless
+#' @returns Ratio from 0 to 1, unitless.
 #' @export
 trans_ozone <- function(...) {
   UseMethod("trans_ozone")
@@ -119,11 +112,12 @@ trans_ozone <- function(...) {
 
 #' @rdname trans_ozone
 #' @inheritParams trans_air_mass_rel
-#' @param ozone_column Atmospheric ozone as column in cm. Default is average value of 0.35 cm.
+#' @param ozone_column Atmospheric ozone as column in cm, default `r ozone_column_default`.
 #' @export
 #' @references p245.
-trans_ozone.default <- function(datetime, lon, lat, ..., ozone_column = 0.35) {
-  air_mass_rel <- trans_air_mass_rel(datetime, lon, lat, ...)
+trans_ozone.default <- function(datetime, lon, lat, ...,
+    ozone_column = ozone_column_default) {
+  air_mass_rel <- trans_air_mass_rel(datetime, lon, lat)
   x <- ozone_column * air_mass_rel
   
   1 - (
@@ -142,16 +136,14 @@ trans_ozone.weather_station <- function(weather_station, ...) {
     assign(i, weather_station[[i]])
   }
   
-  trans_ozone(datetime, lon, lat, weather_station)
+  trans_ozone(datetime, lon, lat)
 }
 
 
 #' Transmittance due to rayleigh scattering
 #'
-#' Calculates transmittance due to rayleigh scattering.
-#'
 #' @param ... Additional arguments.
-#' @returns Transmittance due to rayleigh scattering (0-1). unitless
+#' @returns Ratio from 0 to 1, unitless.
 #' @export
 trans_rayleigh <- function(...) {
   UseMethod("trans_rayleigh")
@@ -162,7 +154,7 @@ trans_rayleigh <- function(...) {
 #' @export
 #' @references p245.
 trans_rayleigh.default <- function(datetime, lon, lat, elev, temp, ...) {
-  air_mass_abs <- trans_air_mass_abs(datetime, lon, lat, elev, temp)
+  air_mass_abs <- trans_air_mass_abs(datetime, lon, lat, elev, temp, ...)
   
   exp(-0.0903 * air_mass_abs^0.84 * (1 + air_mass_abs - air_mass_abs^1.01))
 }
@@ -171,8 +163,8 @@ trans_rayleigh.default <- function(datetime, lon, lat, elev, temp, ...) {
 #' @inheritParams sol_julian_day
 #' @export
 trans_rayleigh.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(generic.default)
-  a <- a[1:(length(a)-2)]
+  a <- formalArgs(trans_rayleigh.default)
+  a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
   }
@@ -182,11 +174,9 @@ trans_rayleigh.weather_station <- function(weather_station, ...) {
 
 #' Transmittance due to water vapor
 #'
-#' Calculates transmittance due to water vapor.
-#'
 #' @rdname trans_vapor
 #' @param ... Additional arguments.
-#' @returns Transmittance due to water vapor (0-1). unitless
+#' @returns Ratio from 0 to 1, unitless.
 #' @export
 trans_vapor <- function(...) {
   UseMethod("trans_vapor")
@@ -198,7 +188,7 @@ trans_vapor <- function(...) {
 #' @export
 #' @references p245.
 trans_vapor.default <- function(datetime, lon, lat, elev, temp, ...) {
-  precipitable_water <- hum_precipitable_water(datetime, lat, elev, temp)
+  precipitable_water <- hum_precipitable_water(datetime, lat, elev, temp, ...)
   air_mass_rel <- trans_air_mass_rel(datetime, lon, lat)
   x <- precipitable_water * air_mass_rel
   
@@ -209,8 +199,8 @@ trans_vapor.default <- function(datetime, lon, lat, elev, temp, ...) {
 #' @inheritParams sol_julian_day
 #' @export
 trans_vapor.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(generic.default)
-  a <- a[1:(length(a)-2)]
+  a <- formalArgs(trans_vapor.default)
+  a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
   }
@@ -220,10 +210,12 @@ trans_vapor.weather_station <- function(weather_station, ...) {
 
 #' Transmittance due to aerosols
 #'
-#' Calculates transmittance due to aerosols.
+#' Transmittance due to fine particles in the air.
+#'
+#' Visibility is used to linearly interpolate aerosol optical thickness.
 #'
 #' @param ... Additional arguments.
-#' @returns Transmittance due to aerosols (0-1). unitless
+#' @returns Ratio from 0 to 1, unitless.
 #' @export
 trans_aerosol <- function(...) {
   UseMethod("trans_aerosol")
@@ -231,11 +223,13 @@ trans_aerosol <- function(...) {
 
 #' @rdname trans_aerosol
 #' @inheritParams trans_air_mass_abs
-#' @param vis Visibility in km.
+#' @inheritDotParams trans_air_mass_abs.default
+#' @param vis Visibility in km, default `r vis_default`.
 #' @export
 #' @references p246.
-trans_aerosol.default <- function(datetime, lon, lat, elev, temp, ..., vis = 30) {
-  air_mass_abs <- trans_air_mass_abs(datetime, lon, lat, elev, temp)
+trans_aerosol.default <- function(datetime, lon, lat, elev, temp, ...,
+    vis = vis_default) {
+  air_mass_abs <- trans_air_mass_abs(datetime, lon, lat, elev, temp, ...)
   
   df <- data.frame(
     vis = seq(10, 60, 10),

@@ -15,15 +15,15 @@ rad_sw_toa(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{datetime}{Datetime in POSIXt}
+\item{datetime}{Datetime in \code{POSIXt}.}
 
-\item{lon}{Longitude.}
+\item{lon}{Longitude in degree.}
 
-\item{lat}{Latitude in decimal degrees.}
+\item{lat}{Latitude in degree.}
 
 \item{sol_const}{Solar constant in W/m\eqn{^2}}
 
-\item{weather_station}{Object of class weather_station.}
+\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
 Shortwave radiation at top of atmosphere in W/m\eqn{^2}.

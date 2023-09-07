@@ -16,20 +16,16 @@ rad_diffuse_in(...)
 \item{...}{
   Arguments passed on to \code{\link[=trans_vapor]{trans_vapor}}, \code{\link[=trans_ozone.default]{trans_ozone.default}}, \code{\link[=rad_sw_toa]{rad_sw_toa}}, \code{\link[=terr_sky_view]{terr_sky_view}}, \code{\link[=terr_terrain_angle]{terr_terrain_angle}}
   \describe{
-    \item{\code{ozone_column}}{Atmospheric ozone as column in cm. Default is average value of 0.35 cm.}
+    \item{\code{ozone_column}}{Atmospheric ozone as column in cm, default 0.35.}
   }}
 
-\item{datetime}{Datetime in POSIXt}
+\item{datetime}{Datetime in \code{POSIXt}.}
 
-\item{lon}{Longitude.}
+\item{lon}{Longitude in degree.}
 
-\item{lat}{Latitude}
+\item{lat}{Latitude in degree.}
 
-\item{elev}{Elevation above sea level in m.}
-
-\item{temp}{Temperature in °C.}
-
-\item{weather_station}{Object of class weather_station.}
+\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
 Description.

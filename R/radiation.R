@@ -124,10 +124,8 @@ rad_sw_in.weather_station <- function(weather_station, ...) {
 
 #' Shortwave radiation at top of atmosphere
 #'
-#' Calculation of the shortwave radiation at the top of the atmosphere.
-#'
 #' @param ... Additional arguments.
-#' @returns Shortwave radiation at top of atmosphere in W/m\eqn{^2}.
+#' @returns W/m\eqn{^2}
 #' @export
 rad_sw_toa <- function(...) {
   UseMethod("rad_sw_toa")
@@ -135,10 +133,10 @@ rad_sw_toa <- function(...) {
 
 #' @rdname rad_sw_toa
 #' @inheritParams sol_elevation
-#' @param sol_const Solar constant in W/m\eqn{^2}
+#' @param sol_const Solar constant in W/m\eqn{^2}, default `r sol_const_default`.
 #' @export
 #' @references p244
-rad_sw_toa.default <- function(datetime, lon, lat, ..., sol_const = 1368) {
+rad_sw_toa.default <- function(datetime, lon, lat, ..., sol_const = sol_const_default) {
   eccentricity <- sol_eccentricity(datetime)
   elevation <- sol_elevation(datetime, lon, lat)
   elevation <- deg2rad(elevation)
@@ -156,7 +154,7 @@ rad_sw_toa.weather_station <- function(weather_station, ...) {
     assign(i, weather_station[[i]])
   }
   
-  rad_sw_toa(datetime, lon, lat)
+  rad_sw_toa(datetime, lon, lat, weather_station)
 }
 
 

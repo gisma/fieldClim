@@ -19,7 +19,7 @@ terr_sky_view(...)
 
 \item{valley}{If the position is in a valley (TRUE) or on a slope (FALSE).}
 
-\item{weather_station}{Object of class weather_station.}
+\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
 Sky view factor from 0-1. unitless

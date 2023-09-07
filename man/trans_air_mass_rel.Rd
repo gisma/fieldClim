@@ -15,19 +15,19 @@ trans_air_mass_rel(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{datetime}{Datetime in POSIXt}
+\item{datetime}{Datetime in \code{POSIXt}.}
 
-\item{lon}{Longitude.}
+\item{lon}{Longitude in degree.}
 
-\item{lat}{Latitude in decimal degrees.}
+\item{lat}{Latitude in degree.}
 
-\item{weather_station}{Object of class weather_station.}
+\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-Relative optical air mass.
+unitless
 }
 \description{
-Calculates relative optical air mass. Returns NA for negative values.
+Relative optical air mass
 }
 \references{
 p246.

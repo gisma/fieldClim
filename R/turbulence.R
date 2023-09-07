@@ -126,7 +126,11 @@ turb_ustar.default <- function(v1, z1, surface_type = NULL, obs_height = NULL, .
 #' @rdname turb_ustar
 #' @inheritParams sol_julian_day
 #' @export
+<<<<<<< HEAD
 turb_ustar.weather_station <- function(weather_station, ...) {
+=======
+turb_ustar.weather_station <- function(weather_station, obs_height = NULL, ...) {
+>>>>>>> aec3be24d36bcf1a73b75104ad20b1d10c6d16c9
   check_availability(weather_station, "v1", "z1")
   v <- weather_station$v1
   z <- weather_station$z1

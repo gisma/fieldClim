@@ -10,7 +10,7 @@ turb_ustar(...)
 
 \method{turb_ustar}{default}(v1, z1, surface_type = NULL, obs_height = NULL, ...)
 
-\method{turb_ustar}{weather_station}(weather_station, ...)
+\method{turb_ustar}{weather_station}(weather_station, obs_height = NULL, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
@@ -23,7 +23,11 @@ turb_ustar(...)
 
 \item{obs_height}{Height of obstacle in m.}
 
+<<<<<<< HEAD
 \item{weather_station}{Object of class weather_station}
+=======
+\item{weather_station}{Object of class \code{weather_station}.}
+>>>>>>> aec3be24d36bcf1a73b75104ad20b1d10c6d16c9
 }
 \value{
 Friction velocity in m/s.

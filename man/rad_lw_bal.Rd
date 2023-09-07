@@ -21,13 +21,13 @@ default `r sigma_default'.}
     \item{\code{surface_type}}{Surface type for which a specific emissivity will be selected.}
   }}
 
-\item{temp}{Temperature in °C.}
+\item{temp}{Temperature in degree Celcius.}
 
 \item{rh}{relative humidity.}
 
 \item{surface_temp}{Surface temperature in °C.}
 
-\item{weather_station}{Object of class weather_station.}
+\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
 W/m\eqn{^2}.

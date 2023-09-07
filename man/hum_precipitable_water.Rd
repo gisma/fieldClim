@@ -4,7 +4,7 @@
 \alias{hum_precipitable_water}
 \alias{hum_precipitable_water.default}
 \alias{hum_precipitable_water.weather_station}
-\title{Total precipitable water}
+\title{Precipitable water}
 \usage{
 hum_precipitable_water(...)
 
@@ -20,26 +20,19 @@ hum_precipitable_water(...)
     \item{\code{rl}}{Specific gas constant for air in m\eqn{^2}/s\eqn{^2}/K, default 287.05.}
   }}
 
-\item{datetime}{Datetime in POSIXt}
+\item{datetime}{Datetime in \code{POSIXt}.}
 
-\item{lat}{Latitude}
-
-\item{elev}{Elevation above sea level in m.}
-
-\item{temp}{Temperature in °C.}
-
-\item{weather_station}{Object of class weather_station.}
+\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-Total precipitable water in cm (grams).
+Total precipitable water in cm\cdotgrams.
 }
 \description{
-Estimates total precipitable water in the atmosphere.
-It uses a moist adiabatic temperature gradient which might not be
-suitable for every application.
+Selects reference temperature and pressure based on location and season.
+Then calculates precipitable water.
 }
 \details{
-Latitude <= 30 degrees are defined as tropic; <= 60 are temperate; others are subarctic.
+Latitude <= 30 degrees is defined as tropic; <= 60 is temperate; others is subarctic.
 Summer is defined as April to September in the northern hemisphere.
 }
 \references{

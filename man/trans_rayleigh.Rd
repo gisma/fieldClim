@@ -15,23 +15,23 @@ trans_rayleigh(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{datetime}{Datetime in POSIXt}
+\item{datetime}{Datetime in \code{POSIXt}.}
 
-\item{lon}{Longitude.}
+\item{lon}{Longitude in degree.}
 
-\item{lat}{Latitude in decimal degrees.}
+\item{lat}{Latitude in degree.}
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{temp}{Temperature in °C.}
+\item{temp}{Temperature in degree Celcius.}
 
-\item{weather_station}{Object of class weather_station.}
+\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-Transmittance due to rayleigh scattering (0-1). unitless
+Ratio from 0 to 1, unitless.
 }
 \description{
-Calculates transmittance due to rayleigh scattering.
+Transmittance due to rayleigh scattering
 }
 \references{
 p245.

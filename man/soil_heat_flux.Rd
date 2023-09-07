@@ -22,7 +22,7 @@ soil_heat_flux(...)
 
 \item{soil_temp1, }{soil_temp2 Soil temperature in °C.}
 
-\item{weather_station}{Object of class weather_station.}
+\item{weather_station}{Object of class \code{weather_station}.}
 
 \item{soil_depth, }{soil_depth2 Depth of the measurement in m. A vector with two elements.}
 }

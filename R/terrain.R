@@ -35,7 +35,7 @@ terr_sky_view.weather_station <- function(weather_station, ...) {
 }
 
 
-#' Title
+#' Terrain angle
 #'
 #' @param ... Additional arguments.
 #' @returns degree.
@@ -75,5 +75,5 @@ terr_terrain_angle.weather_station <- function(weather_station, ...) {
     assign(i, weather_station[[i]])
   }
   
-  terr_terrain_angle(datetime, lon, lat)
+  terr_terrain_angle(datetime, lon, lat, weather_station)
 }
