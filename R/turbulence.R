@@ -18,6 +18,7 @@ turb_roughness_length <- function(...) {
 #' @rdname turb_roughness_length
 #' @param surface_type Type of surface. Options: `r surface_properties$surface_type`
 #' @param obs_height Height of obstacle in m.
+#' @param ... Additional arguments.
 #' @export
 turb_roughness_length.default <- function(surface_type = NULL, obs_height = NULL, ...) {
   surface_properties <- surface_properties
@@ -31,16 +32,22 @@ turb_roughness_length.default <- function(surface_type = NULL, obs_height = NULL
 }
 
 #' @rdname turb_roughness_length
+#' @param weather_station Object of class weather_station
+#' @param ... Additional arguments.
+#' @method turb_roughness_length weather_station
 #' @export
 turb_roughness_length.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "obs_height", "surface_type")
-  obs_height <- weather_station$location_properties$obs_height
-  surface_type <- weather_station$location_properties$surface_type
-  if (is.null(obs_height) & is.null(surface_type)) {
-    stop("Either surface_type or obs_height must be set.")
+  obs_height <- weather_station$obs_height
+  surface_type <- weather_station$surface_type
+  if (!is.null(obs_height)) {
+    check_availability(weather_station, "obs_height")
+    return(turb_roughness_length(obs_height = obs_height))
+  } else {
+    check_availability(weather_station, "surface_type")
+    return(turb_roughness_length(surface_type = surface_type))
   }
-  return(turb_roughness_length(surface_type, obs_height))
 }
+
 
 #' Displacement height
 #'
@@ -76,7 +83,7 @@ turb_displacement.default <- function(obs_height, surroundings = "vegetation", .
 #' @export
 turb_displacement.weather_station <- function(weather_station, surroundings = "vegetation", ...) {
   check_availability(weather_station, "obs_height")
-  obs_height <- weather_station$location_properties$obs_height
+  obs_height <- weather_station$obs_height
   return(turb_displacement(obs_height, surroundings))
 }
 
@@ -108,7 +115,7 @@ turb_ustar.default <- function(v1, z1, surface_type = NULL, obs_height = NULL, .
   } else {
     print("The input is not valid. Either obs_height or surface_type has to be defined.")
   }
-  ustar <- (v * 0.4) / log(z / z0)
+  ustar <- (v1 * 0.4) / log(z1 / z0)
   if (any(is.infinite(ustar))) {
     print("One or more ustar values are infinite. They are set to NA.")
     ustar[is.infinite(ustar)] <- NA
@@ -118,17 +125,17 @@ turb_ustar.default <- function(v1, z1, surface_type = NULL, obs_height = NULL, .
 
 #' @rdname turb_ustar
 #' @inheritParams sol_julian_day
-#' @param obs_height Height of obstacle in m.
 #' @export
-turb_ustar.weather_station <- function(weather_station, obs_height = NULL, ...)
+turb_ustar.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "v1", "z1")
   v <- weather_station$v1
   z <- weather_station$z1
+  obs_height <- weather_station$obs_height
   if (!is.null(obs_height)) {
     return(turb_ustar(v, z, obs_height = obs_height))
   } else {
     check_availability(weather_station, "surface_type")
-    surface_type <- weather_station$location_properties$surface_type
+    surface_type <- weather_station$surface_type
     return(turb_ustar(v, z, surface_type = surface_type))
   }
 }

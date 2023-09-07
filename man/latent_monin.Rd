@@ -23,7 +23,7 @@ latent_monin(...)
   ...
 )
 
-\method{latent_monin}{weather_station}(weather_station, obs_height = NULL, ...)
+\method{latent_monin}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
@@ -50,7 +50,7 @@ latent_monin(...)
 
 \item{obs_height}{Height of obstacle in m.}
 
-\item{weather_station}{Object of class weather_station.}
+\item{weather_station}{Object of class weather_station}
 }
 \value{
 Latent heat flux in W/m\eqn{^2}.

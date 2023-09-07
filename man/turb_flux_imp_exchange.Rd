@@ -21,7 +21,7 @@ turb_flux_imp_exchange(...)
   ...
 )
 
-\method{turb_flux_imp_exchange}{weather_station}(weather_station, obs_height = NULL, ...)
+\method{turb_flux_imp_exchange}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}

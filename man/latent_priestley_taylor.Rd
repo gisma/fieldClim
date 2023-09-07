@@ -8,7 +8,7 @@
 \usage{
 latent_priestley_taylor(...)
 
-\method{latent_priestley_taylor}{default}(t, rad_bal, soil_flux, surface_type = "field", ...)
+\method{latent_priestley_taylor}{default}(t, rad_bal, soil_flux, surface_type, ...)
 
 \method{latent_priestley_taylor}{weather_station}(weather_station, ...)
 }
@@ -21,7 +21,7 @@ latent_priestley_taylor(...)
 
 \item{soil_flux}{Soil flux in W/m\eqn{^2}.}
 
-\item{surface_type}{Surface type, for which a Priestley-Taylor coefficient will be selected. Default is for short grass.}
+\item{surface_type}{Surface type, for which a Priestley-Taylor coefficient will be selected. Options: field, bare soil, coniferous forest, water, wetland, spruce forest}
 
 \item{weather_station}{Object of class weather_station}
 }

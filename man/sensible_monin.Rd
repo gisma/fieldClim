@@ -21,7 +21,7 @@ sensible_monin(...)
   ...
 )
 
-\method{sensible_monin}{weather_station}(weather_station, obs_height = NULL, ...)
+\method{sensible_monin}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
@@ -44,7 +44,7 @@ sensible_monin(...)
 
 \item{obs_height}{Height of obstacle in m.}
 
-\item{weather_station}{Object of class weather_station.}
+\item{weather_station}{Object of class weather_station}
 }
 \value{
 Sensible heat flux in W/m\eqn{^2}.

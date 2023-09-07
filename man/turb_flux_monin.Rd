@@ -21,7 +21,7 @@ turb_flux_monin(...)
   ...
 )
 
-\method{turb_flux_monin}{weather_station}(weather_station, obs_height = NULL, ...)
+\method{turb_flux_monin}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}

@@ -16,9 +16,9 @@ latent_priestley_taylor <- function(...) {
 #' @param t Air temperature in °C.
 #' @param rad_bal Radiation balance in W/m\eqn{^2}.
 #' @param soil_flux Soil flux in W/m\eqn{^2}.
-#' @param surface_type Surface type, for which a Priestley-Taylor coefficient will be selected. Default is for short grass.
+#' @param surface_type Surface type, for which a Priestley-Taylor coefficient will be selected. Options: `r priestley_taylor_coefficient$surface_type`
 #' @references Foken 2016, p. 220, eq. 5.7.
-latent_priestley_taylor.default <- function(t, rad_bal, soil_flux, surface_type = "field", ...) {
+latent_priestley_taylor.default <- function(t, rad_bal, soil_flux, surface_type, ...) {
   priestley_taylor_coefficient <- priestley_taylor_coefficient
 
   if (!surface_type %in% priestley_taylor_coefficient$surface_type) {
@@ -229,9 +229,8 @@ latent_monin.default <- function(hum1, hum2, t1, t2, v1, v2, z1 = 2, z2 = 10, el
 
 #' @rdname latent_monin
 #' @inheritParams sol_julian_day
-#' @param obs_height Height of obstacle in m.
 #' @export
-latent_monin.weather_station <- function(weather_station, obs_height = NULL, ...) {
+latent_monin.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "z1", "z2", "t1", "t2", "hum1", "hum2", "v1", "v2", "elevation")
   hum1 <- weather_station$hum1
   hum2 <- weather_station$hum2
@@ -242,6 +241,7 @@ latent_monin.weather_station <- function(weather_station, obs_height = NULL, ...
   v1 <- weather_station$v1
   v2 <- weather_station$v2
   elev <- weather_station$elevation
+  obs_height <- weather_station$obs_height
   if (!is.null(obs_height)) {
     return(latent_monin(hum1, hum2, t1, t2, v1, v2, z1, z2, elev, obs_height = obs_height))
   } else {
