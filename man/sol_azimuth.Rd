@@ -4,7 +4,7 @@
 \alias{sol_azimuth}
 \alias{sol_azimuth.default}
 \alias{sol_azimuth.weather_station}
-\title{Solar azimuth angle}
+\title{Solar azimuth}
 \usage{
 sol_azimuth(...)
 
@@ -15,19 +15,19 @@ sol_azimuth(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{datetime}{Datetime in POSIXt}
+\item{datetime}{Datetime in \code{POSIXt}.}
 
-\item{lon}{Longitude.}
+\item{lon}{Longitude in degree.}
 
-\item{lat}{Latitude in decimal degrees.}
+\item{lat}{Latitude in degree.}
 
-\item{weather_station}{Object of class weather_station.}
+\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-Solar azimuth angle in degrees.
+degree
 }
 \description{
-Calculates solar azimuth angle for the given date and time.
+Solar azimuth
 }
 \references{
 p243

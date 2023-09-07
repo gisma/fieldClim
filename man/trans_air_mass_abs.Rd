@@ -20,23 +20,23 @@ trans_air_mass_abs(...)
     \item{\code{rl}}{Specific gas constant for air in m\eqn{^2}/s\eqn{^2}/K, default 287.05.}
   }}
 
-\item{datetime}{Datetime in POSIXt}
+\item{datetime}{Datetime in \code{POSIXt}.}
 
-\item{lon}{Longitude.}
+\item{lon}{Longitude in degree.}
 
-\item{lat}{Latitude in decimal degrees.}
+\item{lat}{Latitude in degree.}
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{temp}{Temperature in °C.}
+\item{temp}{Temperature in degree Celcius.}
 
-\item{weather_station}{Object of class weather_station.}
+\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-Absolute optical air mass.
+unitless
 }
 \description{
-Calculates absolute optical air mass.
+Absolute optical air mass
 }
 \references{
 p247.

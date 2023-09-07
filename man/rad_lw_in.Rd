@@ -20,14 +20,14 @@ rad_lw_in(...)
     \item{\code{valley}}{If the position is in a valley (TRUE) or on a slope (FALSE).}
   }}
 
-\item{temp}{Temperature in °C.}
+\item{temp}{Temperature in degree Celcius.}
 
 \item{rh}{relative humidity.}
 
 \item{sigma}{Stefan-Boltzmann constant in W/m\eqn{^2}/K\eqn{^4},
 default `r sigma_default'.}
 
-\item{weather_station}{Object of class weather_station.}
+\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
 Atmospheric radiation in W/m\eqn{^2}.

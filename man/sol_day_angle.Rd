@@ -15,15 +15,16 @@ sol_day_angle(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{datetime}{Datetime in POSIXt}
+\item{datetime}{Datetime in \code{POSIXt}.}
 
-\item{weather_station}{Object of class weather_station.}
+\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
 degree
 }
 \description{
-Day angle
+See a year as a circle. The first day of a (leap) year is 0 degree
+and the last day 360 degree.
 }
 \references{
 p243

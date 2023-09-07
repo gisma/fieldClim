@@ -120,7 +120,7 @@ turb_ustar.default <- function(v1, z1, surface_type = NULL, obs_height = NULL, .
 #' @inheritParams sol_julian_day
 #' @param obs_height Height of obstacle in m.
 #' @export
-turb_ustar.weather_station <- function(weather_station, obs_height = NULL, ...)
+turb_ustar.weather_station <- function(weather_station, obs_height = NULL, ...) {
   check_availability(weather_station, "v1", "z1")
   v <- weather_station$v1
   z <- weather_station$z1

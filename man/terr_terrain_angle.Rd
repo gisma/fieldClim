@@ -4,7 +4,7 @@
 \alias{terr_terrain_angle}
 \alias{terr_terrain_angle.default}
 \alias{terr_terrain_angle.weather_station}
-\title{Title}
+\title{Terrain angle}
 \usage{
 terr_terrain_angle(...)
 
@@ -15,23 +15,23 @@ terr_terrain_angle(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{datetime}{Datetime in POSIXt}
+\item{datetime}{Datetime in \code{POSIXt}.}
 
-\item{lon}{Longitude.}
+\item{lon}{Longitude in degree.}
 
-\item{lat}{Latitude in decimal degrees.}
+\item{lat}{Latitude in degree.}
 
 \item{slope}{Slope in degree.}
 
 \item{exposition}{Exposition in degree.}
 
-\item{weather_station}{Object of class weather_station.}
+\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
 degree.
 }
 \description{
-Title
+Terrain angle
 }
 \references{
 p52eq3.7

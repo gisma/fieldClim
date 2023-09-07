@@ -8,28 +8,28 @@
 \usage{
 trans_ozone(...)
 
-\method{trans_ozone}{default}(datetime, lon, lat, ..., ozone_column = 0.35)
+\method{trans_ozone}{default}(datetime, lon, lat, ..., ozone_column = ozone_column_default)
 
 \method{trans_ozone}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{datetime}{Datetime in POSIXt}
+\item{datetime}{Datetime in \code{POSIXt}.}
 
-\item{lon}{Longitude.}
+\item{lon}{Longitude in degree.}
 
-\item{lat}{Latitude in decimal degrees.}
+\item{lat}{Latitude in degree.}
 
-\item{ozone_column}{Atmospheric ozone as column in cm. Default is average value of 0.35 cm.}
+\item{ozone_column}{Atmospheric ozone as column in cm, default 0.35.}
 
-\item{weather_station}{Object of class weather_station.}
+\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-Transmittance due to ozone (0-1). unitless
+Ratio from 0 to 1, unitless.
 }
 \description{
-Calculates transmittance due to ozone.
+Transmittance due to ozone
 }
 \references{
 p245.

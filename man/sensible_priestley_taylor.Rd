@@ -23,7 +23,7 @@ sensible_priestley_taylor(...)
 
 \item{surface_type}{Surface type, for which a Priestley-Taylor coefficient will be selected. Default is for short grass.}
 
-\item{weather_station}{Object of class weather_station.}
+\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
 Sensible heat flux in W/m\eqn{^2}.

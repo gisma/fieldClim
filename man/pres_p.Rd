@@ -17,7 +17,7 @@ pres_p(...)
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{temp}{Temperature in °C.}
+\item{temp}{Temperature in degree Celcius.}
 
 \item{p0}{Standard pressure in hPa, default 1013.25.}
 
@@ -25,13 +25,17 @@ pres_p(...)
 
 \item{rl}{Specific gas constant for air in m\eqn{^2}/s\eqn{^2}/K, default 287.05.}
 
-\item{weather_station}{Object of class weather_station.}
+\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
 Pressure in hPa.
 }
 \description{
-Calculation of pressure as a function of the elevation above sea level.
+Calculate pressure based on barometric formula.
+}
+\details{
+The formula assumes that the temperature does not change with altitude.
+The results are satisfying enough for an height under 5 km.
 }
 \references{
 Lente & Ősz 2020 eq5.

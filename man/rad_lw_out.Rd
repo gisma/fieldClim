@@ -23,7 +23,7 @@ rad_lw_out(...)
 with the default 5.6993e-8 W/m\eqn{^2}/K$^{4}$
 Default is 'field' as surface type.}
 
-\item{weather_station}{Object of class weather_station.}
+\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
 Emissions in W/m\eqn{^2}.

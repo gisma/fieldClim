@@ -17,23 +17,23 @@ rad_sw_in(...)
   Arguments passed on to \code{\link[=rad_sw_toa.default]{rad_sw_toa.default}}, \code{\link[=trans_ozone.default]{trans_ozone.default}}, \code{\link[=trans_aerosol.default]{trans_aerosol.default}}, \code{\link[=terr_terrain_angle.default]{terr_terrain_angle.default}}
   \describe{
     \item{\code{sol_const}}{Solar constant in W/m\eqn{^2}}
-    \item{\code{ozone_column}}{Atmospheric ozone as column in cm. Default is average value of 0.35 cm.}
-    \item{\code{vis}}{Visibility in km.}
+    \item{\code{ozone_column}}{Atmospheric ozone as column in cm, default 0.35.}
+    \item{\code{vis}}{Visibility in km, default 30.}
     \item{\code{slope}}{Slope in degree.}
     \item{\code{exposition}}{Exposition in degree.}
   }}
 
-\item{datetime}{Datetime in POSIXt}
+\item{datetime}{Datetime in \code{POSIXt}.}
 
-\item{lon}{Longitude.}
+\item{lon}{Longitude in degree.}
 
-\item{lat}{Latitude in decimal degrees.}
+\item{lat}{Latitude in degree.}
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{temp}{Temperature in °C.}
+\item{temp}{Temperature in degree Celcius.}
 
-\item{weather_station}{Object of class weather_station.}
+\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
 W/m\eqn{^2}.
