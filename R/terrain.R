@@ -68,11 +68,11 @@ terr_terrain_angle.default <- function(datetime, lon, lat, ...,
 #' @inheritParams sol_julian_day
 #' @export
 terr_terrain_angle.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(terr_terrain_angle.default)
+  a <- methods::formalArgs(terr_terrain_angle.default)
   a <- a[1:(length(a)-3)]
   for(i in a) {
     assign(i, weather_station[[i]])
   }
   
-  terr_terrain_angle(datetime, lon, lat, weather_station)
+  terr_terrain_angle(datetime, lon, lat, ...)
 }

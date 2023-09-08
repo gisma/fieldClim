@@ -10,7 +10,7 @@ pres_vapor_p(...)
 
 \method{pres_vapor_p}{default}(temp, rh, ...)
 
-\method{pres_vapor_p}{weather_station}(weather_station)
+\method{pres_vapor_p}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{

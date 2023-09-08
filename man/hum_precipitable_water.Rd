@@ -25,7 +25,7 @@ hum_precipitable_water(...)
 \item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-Total precipitable water in cm\cdotgrams.
+Total precipitable water in cm\eqn{\cdot}grams.
 }
 \description{
 Selects reference temperature and pressure based on location and season.

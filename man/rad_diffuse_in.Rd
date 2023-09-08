@@ -14,9 +14,12 @@ rad_diffuse_in(...)
 }
 \arguments{
 \item{...}{
-  Arguments passed on to \code{\link[=trans_vapor]{trans_vapor}}, \code{\link[=trans_ozone.default]{trans_ozone.default}}, \code{\link[=rad_sw_toa]{rad_sw_toa}}, \code{\link[=terr_sky_view]{terr_sky_view}}, \code{\link[=terr_terrain_angle]{terr_terrain_angle}}
+  Arguments passed on to \code{\link[=trans_vapor]{trans_vapor}}, \code{\link[=trans_ozone.default]{trans_ozone.default}}, \code{\link[=rad_sw_toa.default]{rad_sw_toa.default}}, \code{\link[=terr_sky_view]{terr_sky_view}}, \code{\link[=terr_terrain_angle.default]{terr_terrain_angle.default}}
   \describe{
     \item{\code{ozone_column}}{Atmospheric ozone as column in cm, default 0.35.}
+    \item{\code{sol_const}}{Solar constant in W/m\eqn{^2}, default 1368.}
+    \item{\code{slope}}{Slope in degree.}
+    \item{\code{exposition}}{Exposition in degree.}
   }}
 
 \item{datetime}{Datetime in \code{POSIXt}.}

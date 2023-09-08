@@ -30,3 +30,5 @@ RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 Suggests: water, knitr, markdown, testthat, rmarkdown
 Depends: R (>= 4.0)
+Imports: 
+    methods

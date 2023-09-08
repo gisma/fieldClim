@@ -23,13 +23,13 @@ trans_gas.default <- function(datetime, lon, lat, elev, temp, ...) {
 #' @inheritParams sol_julian_day
 #' @export
 trans_gas.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(trans_gas.default)
+  a <- methods::formalArgs(trans_gas.default)
   a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
   }
   
-  trans_gas(datetime, lon, lat, elev, temp, weather_station)
+  trans_gas(datetime, lon, lat, elev, temp, ...)
 }
 
 
@@ -60,13 +60,13 @@ trans_air_mass_abs.default <- function(datetime, lon, lat, elev, temp, ...) {
 #' @inheritParams sol_julian_day
 #' @export
 trans_air_mass_abs.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(trans_air_mass_abs.default)
+  a <- methods::formalArgs(trans_air_mass_abs.default)
   a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
   }
   
-  trans_air_mass_abs(datetime, lon, lat, elev, temp, weather_station)
+  trans_air_mass_abs(datetime, lon, lat, elev, temp, ...)
 }
 
 #' Relative optical air mass
@@ -92,7 +92,7 @@ trans_air_mass_rel.default <- function(datetime, lon, lat, ...) {
 #' @inheritParams sol_julian_day
 #' @export
 trans_air_mass_rel.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(trans_air_mass_rel.default)
+  a <- methods::formalArgs(trans_air_mass_rel.default)
   a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
@@ -130,7 +130,7 @@ trans_ozone.default <- function(datetime, lon, lat, ...,
 #' @inheritParams sol_julian_day
 #' @export
 trans_ozone.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(trans_ozone.default)
+  a <- methods::formalArgs(trans_ozone.default)
   a <- a[1:(length(a)-2)]
   for(i in a) {
     assign(i, weather_station[[i]])
@@ -163,13 +163,13 @@ trans_rayleigh.default <- function(datetime, lon, lat, elev, temp, ...) {
 #' @inheritParams sol_julian_day
 #' @export
 trans_rayleigh.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(trans_rayleigh.default)
+  a <- methods::formalArgs(trans_rayleigh.default)
   a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
   }
   
-  trans_rayleigh(datetime, lon, lat, elev, temp, weather_station)
+  trans_rayleigh(datetime, lon, lat, elev, temp, ...)
 }
 
 #' Transmittance due to water vapor
@@ -199,13 +199,13 @@ trans_vapor.default <- function(datetime, lon, lat, elev, temp, ...) {
 #' @inheritParams sol_julian_day
 #' @export
 trans_vapor.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(trans_vapor.default)
+  a <- methods::formalArgs(trans_vapor.default)
   a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
   }
   
-  trans_vapor(datetime, lon, lat, elev, temp, weather_station)
+  trans_vapor(datetime, lon, lat, elev, temp, ...)
 }
 
 #' Transmittance due to aerosols
@@ -251,11 +251,11 @@ trans_aerosol.default <- function(datetime, lon, lat, elev, temp, ...,
 #' @inheritParams sol_julian_day
 #' @export
 trans_aerosol.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(trans_aerosol.default)
+  a <- methods::formalArgs(trans_aerosol.default)
   a <- a[1:(length(a)-2)]
   for(i in a) {
     assign(i, weather_station[[i]])
   }
   
-  trans_aerosol(datetime, lon, lat, elev, temp, weather_station)
+  trans_aerosol(datetime, lon, lat, elev, temp, ...)
 }

@@ -32,13 +32,13 @@ pres_p.default <- function(elev, temp, ...,
 #' @inheritParams sol_julian_day
 #' @export
 pres_p.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(pres_p.default)
+  a <- methods::formalArgs(pres_p.default)
   a <- a[1:(length(a)-4)]
   for(i in a) {
     assign(i, weather_station[[i]])
   }
   
-  pres_p(elev, temp, weather_station)
+  pres_p(elev, temp, ...)
 }
 
 #' Vapor pressure
@@ -65,8 +65,8 @@ pres_vapor_p.default <- function(temp, rh, ...) {
 #' @rdname pres_vapor_p
 #' @inheritParams sol_julian_day
 #' @export
-pres_vapor_p.weather_station <- function(weather_station) {
-  a <- formalArgs(pres_vapor_p.default)
+pres_vapor_p.weather_station <- function(weather_station, ...) {
+  a <- methods::formalArgs(pres_vapor_p.default)
   a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
@@ -101,7 +101,7 @@ pres_sat_vapor_p.default <- function(temp, a = 7.5, b = 235, ...) {
 #' @inheritParams sol_julian_day
 #' @export
 pres_sat_vapor_p.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(pres_sat_vapor_p.default)
+  a <- methods::formalArgs(pres_sat_vapor_p.default)
   a <- a[1:(length(a)-3)]
   for(i in a) {
     assign(i, weather_station[[i]])

@@ -23,7 +23,7 @@ sol_eccentricity.default <- function(datetime, ...) {
 #' @inheritParams sol_julian_day
 #' @export
 sol_eccentricity.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(sol_eccentricity.default)
+  a <- methods::formalArgs(sol_eccentricity.default)
   a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
@@ -59,7 +59,7 @@ sol_day_angle.default <- function(datetime, ...) {
 #' @inheritParams sol_julian_day
 #' @export
 sol_day_angle.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(sol_day_angle.default)
+  a <- methods::formalArgs(sol_day_angle.default)
   a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
@@ -90,7 +90,7 @@ sol_julian_day.default <- function(datetime, ...) {
 #' @param weather_station Object of class `weather_station`.
 #' @export
 sol_julian_day.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(sol_julian_day.default)
+  a <- methods::formalArgs(sol_julian_day.default)
   a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
@@ -130,7 +130,7 @@ sol_elevation.default <- function(datetime, lon, lat, ...) {
 #' @inheritParams sol_julian_day
 #' @export
 sol_elevation.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(sol_elevation.default)
+  a <- methods::formalArgs(sol_elevation.default)
   a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
@@ -164,7 +164,7 @@ sol_declination.default <- function(datetime, ...) {
 #' @inheritParams sol_julian_day
 #' @export
 sol_declination.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(sol_declination.default)
+  a <- methods::formalArgs(sol_declination.default)
   a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
@@ -198,7 +198,7 @@ sol_ecliptic_length.default <- function(datetime, ...) {
 #' @inheritParams sol_julian_day
 #' @export
 sol_ecliptic_length.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(sol_ecliptic_length.default)
+  a <- methods::formalArgs(sol_ecliptic_length.default)
   a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
@@ -230,7 +230,7 @@ sol_medium_anomaly.default <- function(datetime, ...) {
 #' @inheritParams sol_julian_day
 #' @export
 sol_medium_anomaly.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(sol_medium_anomaly.default)
+  a <- methods::formalArgs(sol_medium_anomaly.default)
   a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
@@ -263,7 +263,7 @@ sol_hour_angle.default <- function(datetime, lon, ...) {
 #' @inheritParams sol_julian_day
 #' @export
 sol_hour_angle.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(sol_hour_angle.default)
+  a <- methods::formalArgs(sol_hour_angle.default)
   a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
@@ -295,7 +295,7 @@ sol_medium_suntime.default <- function(datetime, lon, ...) {
 #' @inheritParams sol_julian_day
 #' @export
 sol_medium_suntime.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(sol_medium_suntime.default)
+  a <- methods::formalArgs(sol_medium_suntime.default)
   a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
@@ -331,7 +331,7 @@ sol_time_formula.default <- function(datetime, lon, ...) {
 #' @inheritParams sol_julian_day
 #' @export
 sol_time_formula.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(sol_time_formula.default)
+  a <- methods::formalArgs(sol_time_formula.default)
   a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
@@ -377,7 +377,7 @@ sol_azimuth.default <- function(datetime, lon, lat, ...) {
 #' @inheritParams sol_julian_day
 #' @export
 sol_azimuth.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(sol_azimuth.default)
+  a <- methods::formalArgs(sol_azimuth.default)
   a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])

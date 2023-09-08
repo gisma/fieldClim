@@ -34,7 +34,7 @@ soil_heat_flux.weather_station <- function(weather_station, ...) {
   soil_depth1 <- weather_station$soil_depth1
   soil_depth2 <- weather_station$soil_depth2
   
-  soil_heat_flux(soil_temp1, soil_temp2, soil_depth1, soil_depth2, weather_station)
+  soil_heat_flux(soil_temp1, soil_temp2, soil_depth1, soil_depth2, ...)
 }
 
 #' Soil thermal conductivity
@@ -84,7 +84,7 @@ soil_thermal_cond.weather_station <- function(weather_station, ...) {
   texture <- weather_station$texture
   moisture <- weather_station$moisture
   
-  soil_thermal_cond(texture, moisture)
+  soil_thermal_cond(texture, moisture, ...)
 }
 
 
@@ -110,7 +110,6 @@ soil_thermal_cond.weather_station <- function(weather_station, ...) {
 #' @param ... Additional arguments.
 #' @returns Numeric vector with volumetric heat capacity in  MJ/ (m\eqn{^3} * K).
 #' @noRd
-#'
 soil_heat_cap <- function(...) {
   UseMethod("soil_heat_cap")
 }
@@ -120,6 +119,7 @@ soil_heat_cap <- function(...) {
 #' @param texture Soil texture. Either "sand", "peat" or "clay".
 #' @importFrom stats approx
 #' @export
+#' @noRd
 #' @references p254.
 soil_heat_cap.default <- function(moisture, texture = "sand", ...) {
   # convert moisture from [cubic m/cubic m] to [Vol-%]
@@ -144,11 +144,10 @@ soil_heat_cap.default <- function(moisture, texture = "sand", ...) {
 }
 
 
-
 #' @rdname soil_heat_cap
 #' @inheritParams sol_julian_day
 #' @export
-#'
+#' @noRd
 soil_heat_cap.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "moisture", "texture")
   moisture <- weather_station$measurements$moisture
@@ -164,15 +163,15 @@ soil_heat_cap.weather_station <- function(weather_station, ...) {
 #' @param ... Additional arguments.
 #' @returns Soil attenuation length in m.
 #' @noRd
-#'
 soil_attenuation <- function(...) {
   UseMethod("soil_attenuation")
 }
 
 #' @rdname soil_attenuation
-#' @export
 #' @param moisture Soil moisture in Cubic meter/cubic meter
 #' @param texture Soil texture. Either "sand", "peat" or "clay".
+#' @export
+#' @noRd
 #' @references p253.
 soil_attenuation.default <- function(moisture, texture = "sand", ...) {
   thermal_cond <- soil_thermal_cond(moisture, texture)
@@ -182,8 +181,9 @@ soil_attenuation.default <- function(moisture, texture = "sand", ...) {
 }
 
 #' @rdname soil_attenuation
-#' @export
 #' @inheritParams sol_julian_day
+#' @export
+#' @noRd
 soil_attenuation.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "moisture", "texture")
   moisture <- weather_station$measurements$moisture

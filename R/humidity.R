@@ -121,7 +121,7 @@ hum_evap_heat.weather_station <- function(weather_station, height = "lower", ...
 #' Summer is defined as April to September in the northern hemisphere.
 #'
 #' @param ... Additional arguments.
-#' @returns Total precipitable water in cm\cdotgrams.
+#' @returns Total precipitable water in cm\eqn{\cdot}grams.
 #' @export
 hum_precipitable_water <- function(...) {
   UseMethod("hum_precipitable_water")
@@ -191,13 +191,13 @@ hum_precipitable_water.default <- function(datetime, lat, elev, temp, ...) {
 #' @inheritParams sol_julian_day
 #' @export
 hum_precipitable_water.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(hum_precipitable_water.default)
+  a <- methods::formalArgs(hum_precipitable_water.default)
   a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
   }
   
-  hum_precipitable_water(datetime, lat, elev, temp, weather_station)
+  hum_precipitable_water(datetime, lat, elev, temp, ...)
 }
 
 #' Moisture gradient

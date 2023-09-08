@@ -92,7 +92,8 @@ weather_station <- build_weather_station(
   rh = input$Huma_2m,
   surface_temp = input$Ts,
   slope = 30,
-  exposition = 20
+  exposition = 20,
+  sol_const = 1
 )
 
 soil_heat_flux(weather_station)

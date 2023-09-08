@@ -23,13 +23,13 @@ rad_bal.default <- function(datetime, lon, lat, elev, temp, rh, surface_temp, ..
 #' @inheritParams sol_julian_day
 #' @export
 rad_bal.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(rad_bal.default)
+  a <- methods::formalArgs(rad_bal.default)
   a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
   }
   
-  rad_bal(datetime, lon, lat, elev, temp, rh, surface_temp, weather_station)
+  rad_bal(datetime, lon, lat, elev, temp, rh, surface_temp, ...)
 }
 
 #' Shortwave radiation balance
@@ -57,13 +57,13 @@ rad_sw_bal.default <- function(datetime, lon, lat, elev, temp, ...) {
 #' @inheritParams sol_julian_day
 #' @export
 rad_sw_bal.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(rad_sw_bal.default)
+  a <- methods::formalArgs(rad_sw_bal.default)
   a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
   }
   
-  rad_sw_bal(datetime, lon, lat, elev, temp, weather_station)
+  rad_sw_bal(datetime, lon, lat, elev, temp, ...)
 }
 
 #' Shortwave incoming radiation
@@ -113,13 +113,13 @@ rad_sw_in.default <- function(datetime, lon, lat, elev, temp, ...,
 #' @inheritParams sol_julian_day
 #' @export
 rad_sw_in.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(rad_sw_in.default)
+  a <- methods::formalArgs(rad_sw_in.default)
   a <- a[1:(length(a)-2)]
   for(i in a) {
     assign(i, weather_station[[i]])
   }
   
-  rad_sw_in(datetime, lon, lat, elev, temp, weather_station)
+  rad_sw_in(datetime, lon, lat, elev, temp, ...)
 }
 
 
@@ -149,13 +149,13 @@ rad_sw_toa.default <- function(datetime, lon, lat, ..., sol_const = sol_const_de
 #' @inheritParams sol_julian_day
 #' @export
 rad_sw_toa.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(rad_sw_toa.default)
+  a <- methods::formalArgs(rad_sw_toa.default)
   a <- a[1:(length(a)-2)]
   for(i in a) {
     assign(i, weather_station[[i]])
   }
   
-  rad_sw_toa(datetime, lon, lat, weather_station)
+  rad_sw_toa(datetime, lon, lat, ...)
 }
 
 
@@ -173,9 +173,9 @@ rad_diffuse_in <- function(...) {
 #' @inheritParams trans_vapor
 #' @inheritDotParams trans_vapor
 #' @inheritDotParams trans_ozone.default
-#' @inheritDotParams rad_sw_toa sol_constant
+#' @inheritDotParams rad_sw_toa.default sol_const
 #' @inheritDotParams terr_sky_view
-#' @inheritDotParams terr_terrain_angle slope exposition
+#' @inheritDotParams terr_terrain_angle.default slope exposition
 #' @export
 #' @references p58eq3.14, p55eq3.9
 rad_diffuse_in.default <- function(datetime, lon, lat, elev, temp, ...,
@@ -205,13 +205,13 @@ rad_diffuse_in.default <- function(datetime, lon, lat, elev, temp, ...,
 #' @inheritParams sol_julian_day
 #' @export
 rad_diffuse_in.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(rad_diffuse_in.default)
+  a <- methods::formalArgs(rad_diffuse_in.default)
   a <- a[1:(length(a)-2)]
   for(i in a) {
     assign(i, weather_station[[i]])
   }
   
-  rad_diffuse_in(datetime, lon, lat, elev, temp, weather_station)
+  rad_diffuse_in(datetime, lon, lat, elev, temp, ...)
 }
 
 #' Shortwave outgoing radiation
@@ -241,13 +241,13 @@ rad_sw_out.default <- function(datetime, lon, lat, elev, temp, ...,
 #' @inheritParams sol_julian_day
 #' @export
 rad_sw_out.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(rad_sw_out.default)
+  a <- methods::formalArgs(rad_sw_out.default)
   a <- a[1:(length(a)-2)]
   for(i in a) {
     assign(i, weather_station[[i]])
   }
   
-  rad_sw_out(datetime, lon, lat, elev, temp, weather_station)
+  rad_sw_out(datetime, lon, lat, elev, temp, ...)
 }
 
 #' Diffused outgoing radiation
@@ -276,13 +276,13 @@ rad_diffuse_out.default <- function(datetime, lon, lat, elev, temp, ...,
 #' @inheritParams sol_julian_day
 #' @export
 rad_diffuse_out.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(rad_diffuse_out.default)
+  a <- methods::formalArgs(rad_diffuse_out.default)
   a <- a[1:(length(a)-2)]
   for(i in a) {
     assign(i, weather_station[[i]])
   }
   
-  rad_diffuse_out(datetime, lon, lat, elev, temp, weather_station)
+  rad_diffuse_out(datetime, lon, lat, elev, temp, ...)
 }
 
 #' Long wave radiation balance
@@ -312,13 +312,13 @@ rad_lw_bal.default <- function(temp, rh, surface_temp, ...) {
 #' @inheritParams sol_julian_day
 #' @export
 rad_lw_bal.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(rad_lw_bal.default)
+  a <- methods::formalArgs(rad_lw_bal.default)
   a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
   }
   
-  rad_lw_bal(temp, rh, surface_temp, weather_station)
+  rad_lw_bal(temp, rh, surface_temp, ...)
 }
 
 #' Longwave radiation of the atmosphere
@@ -353,7 +353,7 @@ rad_lw_in.default <- function(temp, rh, ..., sigma = sigma_default) {
 #' @inheritParams sol_julian_day
 #' @export
 rad_lw_in.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(rad_lw_in.default)
+  a <- methods::formalArgs(rad_lw_in.default)
   a <- a[1:(length(a)-2)]
   for(i in a) {
     assign(i, weather_station[[i]])
@@ -392,7 +392,7 @@ rad_emissivity_air.default <- function(temp, rh, ...) {
 #' @inheritParams sol_julian_day
 #' @export
 rad_emissivity_air.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(rad_emissivity_air.default)
+  a <- methods::formalArgs(rad_emissivity_air.default)
   a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
@@ -436,11 +436,11 @@ rad_lw_out.default <- function(surface_temp, ...,
 #' @inheritParams sol_julian_day
 #' @export
 rad_lw_out.weather_station <- function(weather_station, ...) {
-  a <- formalArgs(rad_lw_out.default)
+  a <- methods::formalArgs(rad_lw_out.default)
   a <- a[1:(length(a)-3)]
   for(i in a) {
     assign(i, weather_station[[i]])
   }
   
-  rad_lw_out(surface_temp, weather_station)
+  rad_lw_out(surface_temp, ...)
 }
