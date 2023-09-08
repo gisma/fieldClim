@@ -74,10 +74,10 @@ terr_terrain_angle.default <- function(datetime, lon, lat, slope, exposition, ..
 #' @export
 terr_terrain_angle.weather_station <- function(weather_station, ...) {
   a <- methods::formalArgs(terr_terrain_angle.default)
-  a <- a[1:(length(a)-3)]
+  a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
   }
   
-  terr_terrain_angle(datetime, lon, lat)
+  terr_terrain_angle(datetime, lon, lat, slope, exposition)
 }

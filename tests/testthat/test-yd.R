@@ -16,18 +16,22 @@
 
 
 datetime <- as.POSIXlt("2018-02-19 13:15:00", tz = "GMT")
-lat <- 57
-lon <- 5
-elev <- 200
-temp <- 15
-slope <- 30
-exposition <- 180
-rh <- 50
-surface_temp <- 10
-soil_temp1 <- 15
-soil_temp2 <- 20
-soil_depth1 <- 2
-soil_depth2 <- 10
+lon = 8.683300
+lat = 50.840503
+elev = 270
+temp = 20
+slope = 30
+exposition = 20
+surface_type = "field"
+valley = FALSE
+surface_temp = 20
+rh = 50
+texture = "sand"
+moisture = 0.2
+soil_temp1 = 20
+soil_temp2 = 30
+soil_depth1 = 1
+soil_depth2 = 0
 
 # structure
 ## soil
@@ -35,9 +39,13 @@ soil_heat_flux(texture, moisture, soil_temp1, soil_temp2, soil_depth1, soil_dept
   soil_thermal_cond(texture, moisture)
 
 ## rad
-rad_bal(datetime, lon, lat, elev, temp, rh, surface_temp)*1
-  rad_sw_bal(datetime, lon, lat, elev, temp)*1
-    rad_sw_in(datetime, lon, lat, elev, temp)*1
+rad_bal(datetime, lon, lat, elev, temp,
+    surface_type, slope, exposition, valley,
+    rh, surface_temp)*1
+  rad_sw_bal(datetime, lon, lat, elev, temp,
+    surface_type, slope, exposition, valley)*1
+    rad_sw_in(datetime, lon, lat, elev, temp,
+    surface_type, slope, exposition, valley)*1
       rad_sw_toa(datetime, lon, lat)*1
         sol_eccentricity(datetime)
           sol_day_angle(datetime)
@@ -58,18 +66,21 @@ rad_bal(datetime, lon, lat, elev, temp, rh, surface_temp)*1
       trans_vapor(datetime, lon, lat, elev, temp)
         hum_precipitable_water(datetime, lat, elev, temp)
       trans_aerosol(datetime, lon, lat, elev, temp)*1
-      terr_terrain_angle(datetime, lon, lat)
+      terr_terrain_angle(datetime, lon, lat, slope, exposition)
         sol_azimuth(datetime, lon, lat)
       terr_sky_view(slope, valley)
-    rad_diffuse_in(datetime, lon, lat, elev, temp)*1
-    rad_sw_out(datetime, lon, lat, elev, temp)*1
-    rad_diffuse_out(datetime, lon, lat, elev, temp)*1
-  rad_lw_bal(temp, rh, surface_temp)*1
+    rad_diffuse_in(datetime, lon, lat, elev, temp,
+    surface_type, slope, valley)*1
+    rad_sw_out(datetime, lon, lat, elev, temp,
+    slope, exposition, valley, surface_type)*1
+    rad_diffuse_out(datetime, lon, lat, elev, temp,
+    surface_type, slope, valley)*1
+  rad_lw_bal(temp, rh, surface_type, surface_temp)*1
     rad_lw_in(temp, rh)*1
       rad_emissivity_air(temp, rh)*1
         pres_vapor_p(temp, rh)*1
           pres_sat_vapor_p(temp)*1
-    rad_lw_out(surface_temp)*1
+    rad_lw_out(surface_type, surface_temp)*1
 
 
 
@@ -79,21 +90,22 @@ input <- input[c(1:3, 133:135), ]
 #names(input)
 weather_station <- build_weather_station(
   datetime = strptime(input$datetime, format = "%Y-%m-%d %H:%M:%S", tz = "Atlantic/Reykjavik"),
+  lon = 8.683300,
+  lat = 50.840503,
+  elev = 270,
+  temp = input$Ta_2m,
+  slope = 30,
+  exposition = 20,
+  surface_type = "field",
+  valley = FALSE,
+  surface_temp = input$Ta_2m,
+  rh = input$Huma_2m,
   texture = "sand",
   moisture = input$water_vol_soil,
   soil_temp1 = input$Ts,
   soil_temp2 = input$Ta_2m,
   soil_depth1 = 1,
-  soil_depth2 = 0,
-  lon = 8.683300,
-  lat = 50.840503,
-  elev = 270,
-  temp = input$Ta_2m,
-  rh = input$Huma_2m,
-  surface_temp = input$Ts,
-  slope = 30,
-  exposition = 20,
-  sol_const = 1
+  soil_depth2 = 0
 )
 
 soil_heat_flux(weather_station)
@@ -125,7 +137,7 @@ rad_bal(weather_station)
       terr_terrain_angle(weather_station)
         sol_azimuth(weather_station)
     rad_diffuse_in(weather_station)
-      terr_sky_view()
+      terr_sky_view(weather_station)
     rad_sw_out(weather_station)
     rad_diffuse_out(weather_station)
   rad_lw_bal(weather_station)

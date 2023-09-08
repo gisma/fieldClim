@@ -15,7 +15,7 @@ soil_heat_flux <- function(...) {
 #' @rdname soil_heat_flux
 #' @inheritDotParams soil_thermal_cond.default
 #' @param soil_temp1, soil_temp2 Soil temperature in °C.
-#' @param soil_depth, soil_depth2 Depth of the measurement in m. A vector with two elements.
+#' @param soil_depth, soil_depth2 Depth of the soil temperature measurement in m.
 #' @export
 #' @references p71eq4.2.
 soil_heat_flux.default <- function(texture, moisture,
