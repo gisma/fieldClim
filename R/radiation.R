@@ -334,7 +334,7 @@ rad_lw_bal.weather_station <- function(weather_station, ...) {
     assign(i, weather_station[[i]])
   }
   
-  rad_lw_bal(temp, rh, surface_temp, ...)
+  rad_lw_bal(temp, rh, surface_temp, surface_type, ...)
 }
 
 #' Longwave radiation of the atmosphere
@@ -440,7 +440,7 @@ rad_lw_out <- function(...) {
 #' Default is 'field' as surface type.
 #' @export
 #' @references p66eq3.20
-rad_lw_out.default <- function(surface_type, surface_temp, ...,
+rad_lw_out.default <- function(surface_temp, surface_type, ...,
     sigma = sigma_default) {
   emissivity <- surface_properties[which(surface_properties$ surface_type == surface_type), ]$emissivity
   surface_temp <- c2k(surface_temp)
@@ -458,5 +458,5 @@ rad_lw_out.weather_station <- function(weather_station, ...) {
     assign(i, weather_station[[i]])
   }
   
-  rad_lw_out(surface_type, surface_temp, ...)
+  rad_lw_out(surface_temp, surface_type, ...)
 }

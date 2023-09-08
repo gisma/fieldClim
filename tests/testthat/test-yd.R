@@ -75,12 +75,12 @@ rad_bal(datetime, lon, lat, elev, temp,
     slope, exposition, valley, surface_type)*1
     rad_diffuse_out(datetime, lon, lat, elev, temp,
     surface_type, slope, valley)*1
-  rad_lw_bal(temp, rh, surface_type, surface_temp)*1
+  rad_lw_bal(temp, rh, surface_temp, surface_type)*1
     rad_lw_in(temp, rh)*1
       rad_emissivity_air(temp, rh)*1
         pres_vapor_p(temp, rh)*1
           pres_sat_vapor_p(temp)*1
-    rad_lw_out(surface_type, surface_temp)*1
+    rad_lw_out(surface_temp, surface_type)*1
 
 
 
