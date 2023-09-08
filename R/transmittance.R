@@ -14,7 +14,7 @@ trans_gas <- function(...) {
 #' @export
 #' @references p246.
 trans_gas.default <- function(datetime, lon, lat, elev, temp, ...) {
-  air_mass_abs <- trans_air_mass_abs(datetime, lon, lat, elev, temp, ...)
+  air_mass_abs <- trans_air_mass_abs(datetime, lon, lat, elev, temp)
   
   exp(-0.0127 * air_mass_abs^0.26)
 }
@@ -29,7 +29,7 @@ trans_gas.weather_station <- function(weather_station, ...) {
     assign(i, weather_station[[i]])
   }
   
-  trans_gas(datetime, lon, lat, elev, temp, ...)
+  trans_gas(datetime, lon, lat, elev, temp)
 }
 
 
@@ -66,7 +66,7 @@ trans_air_mass_abs.weather_station <- function(weather_station, ...) {
     assign(i, weather_station[[i]])
   }
   
-  trans_air_mass_abs(datetime, lon, lat, elev, temp, ...)
+  trans_air_mass_abs(datetime, lon, lat, elev, temp)
 }
 
 #' Relative optical air mass
@@ -136,7 +136,7 @@ trans_ozone.weather_station <- function(weather_station, ...) {
     assign(i, weather_station[[i]])
   }
   
-  trans_ozone(datetime, lon, lat)
+  trans_ozone(datetime, lon, lat, ...)
 }
 
 
@@ -154,7 +154,7 @@ trans_rayleigh <- function(...) {
 #' @export
 #' @references p245.
 trans_rayleigh.default <- function(datetime, lon, lat, elev, temp, ...) {
-  air_mass_abs <- trans_air_mass_abs(datetime, lon, lat, elev, temp, ...)
+  air_mass_abs <- trans_air_mass_abs(datetime, lon, lat, elev, temp)
   
   exp(-0.0903 * air_mass_abs^0.84 * (1 + air_mass_abs - air_mass_abs^1.01))
 }
@@ -169,7 +169,7 @@ trans_rayleigh.weather_station <- function(weather_station, ...) {
     assign(i, weather_station[[i]])
   }
   
-  trans_rayleigh(datetime, lon, lat, elev, temp, ...)
+  trans_rayleigh(datetime, lon, lat, elev, temp)
 }
 
 #' Transmittance due to water vapor
@@ -188,7 +188,7 @@ trans_vapor <- function(...) {
 #' @export
 #' @references p245.
 trans_vapor.default <- function(datetime, lon, lat, elev, temp, ...) {
-  precipitable_water <- hum_precipitable_water(datetime, lat, elev, temp, ...)
+  precipitable_water <- hum_precipitable_water(datetime, lat, elev, temp)
   air_mass_rel <- trans_air_mass_rel(datetime, lon, lat)
   x <- precipitable_water * air_mass_rel
   
@@ -205,7 +205,7 @@ trans_vapor.weather_station <- function(weather_station, ...) {
     assign(i, weather_station[[i]])
   }
   
-  trans_vapor(datetime, lon, lat, elev, temp, ...)
+  trans_vapor(datetime, lon, lat, elev, temp)
 }
 
 #' Transmittance due to aerosols
@@ -229,7 +229,7 @@ trans_aerosol <- function(...) {
 #' @references p246.
 trans_aerosol.default <- function(datetime, lon, lat, elev, temp, ...,
     vis = vis_default) {
-  air_mass_abs <- trans_air_mass_abs(datetime, lon, lat, elev, temp, ...)
+  air_mass_abs <- trans_air_mass_abs(datetime, lon, lat, elev, temp)
   
   df <- data.frame(
     vis = seq(10, 60, 10),
@@ -257,5 +257,5 @@ trans_aerosol.weather_station <- function(weather_station, ...) {
     assign(i, weather_station[[i]])
   }
   
-  trans_aerosol(datetime, lon, lat, elev, temp, ...)
+  trans_aerosol(datetime, lon, lat, elev, temp)
 }

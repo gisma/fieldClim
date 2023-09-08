@@ -8,7 +8,7 @@
 \usage{
 rad_lw_out(...)
 
-\method{rad_lw_out}{default}(surface_temp, ..., surface_type = "field", sigma = sigma_default)
+\method{rad_lw_out}{default}(surface_temp, surface_type, ..., sigma = sigma_default)
 
 \method{rad_lw_out}{weather_station}(weather_station, ...)
 }

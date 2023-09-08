@@ -8,16 +8,16 @@
 \usage{
 soil_thermal_cond(...)
 
-\method{soil_thermal_cond}{default}(texture = "sand", moisture = 0, ...)
+\method{soil_thermal_cond}{default}(texture, moisture, ...)
 
 \method{soil_thermal_cond}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{texture}{Soil texture. Either \code{sand} (default), \code{peat} or \code{clay}.}
+\item{texture}{Soil texture. Either \code{sand}, \code{peat} or \code{clay}.}
 
-\item{moisture}{Soil moisture in Cubic meter/cubic meter}
+\item{moisture}{Soil moisture in cubic meter/cubic meter.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }

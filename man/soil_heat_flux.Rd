@@ -8,7 +8,15 @@
 \usage{
 soil_heat_flux(...)
 
-\method{soil_heat_flux}{default}(soil_temp1, soil_temp2, soil_depth1, soil_depth2, ...)
+\method{soil_heat_flux}{default}(
+  texture,
+  moisture,
+  soil_temp1,
+  soil_temp2,
+  soil_depth1,
+  soil_depth2,
+  ...
+)
 
 \method{soil_heat_flux}{weather_station}(weather_station, ...)
 }
@@ -16,8 +24,8 @@ soil_heat_flux(...)
 \item{...}{
   Arguments passed on to \code{\link[=soil_thermal_cond.default]{soil_thermal_cond.default}}
   \describe{
-    \item{\code{texture}}{Soil texture. Either \code{sand} (default), \code{peat} or \code{clay}.}
-    \item{\code{moisture}}{Soil moisture in Cubic meter/cubic meter}
+    \item{\code{texture}}{Soil texture. Either \code{sand}, \code{peat} or \code{clay}.}
+    \item{\code{moisture}}{Soil moisture in cubic meter/cubic meter.}
   }}
 
 \item{soil_temp1, }{soil_temp2 Soil temperature in °C.}

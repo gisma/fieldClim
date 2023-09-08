@@ -8,7 +8,7 @@
 \usage{
 terr_terrain_angle(...)
 
-\method{terr_terrain_angle}{default}(datetime, lon, lat, ..., slope = 0, exposition = 0)
+\method{terr_terrain_angle}{default}(datetime, lon, lat, slope, exposition, ...)
 
 \method{terr_terrain_angle}{weather_station}(weather_station, ...)
 }

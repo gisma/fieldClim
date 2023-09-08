@@ -31,8 +31,8 @@ soil_depth2 <- 10
 
 # structure
 ## soil
-soil_heat_flux(soil_temp1, soil_temp2, soil_depth1, soil_depth2)
-  soil_thermal_cond()
+soil_heat_flux(texture, moisture, soil_temp1, soil_temp2, soil_depth1, soil_depth2)
+  soil_thermal_cond(texture, moisture)
 
 ## rad
 rad_bal(datetime, lon, lat, elev, temp, rh, surface_temp)*1
@@ -49,27 +49,27 @@ rad_bal(datetime, lon, lat, elev, temp, rh, surface_temp)*1
           sol_hour_angle(datetime, lon)
             sol_medium_suntime(datetime, lon)
             sol_time_formula(datetime, lon)
-      trans_gas(datetime, lon, lat, elev, temp)*1
-        trans_air_mass_abs(datetime, lon, lat, elev, temp)*1
+      trans_gas(datetime, lon, lat, elev, temp)
+        trans_air_mass_abs(datetime, lon, lat, elev, temp)
           trans_air_mass_rel(datetime, lon, lat)
           pres_p(elev, temp)*1
       trans_ozone(datetime, lon, lat)*1
-      trans_rayleigh(datetime, lon, lat, elev, temp)*1
-      trans_vapor(datetime, lon, lat, elev, temp)*1
-        hum_precipitable_water(datetime, lat, elev, temp)*1
+      trans_rayleigh(datetime, lon, lat, elev, temp)
+      trans_vapor(datetime, lon, lat, elev, temp)
+        hum_precipitable_water(datetime, lat, elev, temp)
       trans_aerosol(datetime, lon, lat, elev, temp)*1
-      terr_terrain_angle(datetime, lon, lat)*1
+      terr_terrain_angle(datetime, lon, lat)
         sol_azimuth(datetime, lon, lat)
+      terr_sky_view(slope, valley)
     rad_diffuse_in(datetime, lon, lat, elev, temp)*1
-      terr_sky_view()
-    rad_sw_out(datetime, lon, lat, elev, temp)
-    rad_diffuse_out(datetime, lon, lat, elev, temp)
-  rad_lw_bal(temp, rh, surface_temp)
-    rad_lw_in(temp, rh)
-      rad_emissivity_air(temp, rh)
-        pres_vapor_p(temp, rh)
-          pres_sat_vapor_p(temp)
-    rad_lw_out(surface_temp)
+    rad_sw_out(datetime, lon, lat, elev, temp)*1
+    rad_diffuse_out(datetime, lon, lat, elev, temp)*1
+  rad_lw_bal(temp, rh, surface_temp)*1
+    rad_lw_in(temp, rh)*1
+      rad_emissivity_air(temp, rh)*1
+        pres_vapor_p(temp, rh)*1
+          pres_sat_vapor_p(temp)*1
+    rad_lw_out(surface_temp)*1
 
 
 

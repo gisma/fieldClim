@@ -85,22 +85,21 @@ rad_sw_in <- function(...) {
 #' @inheritDotParams terr_terrain_angle.default slope exposition
 #' @export
 #' @references p46eq3.3, p52eq3.8
-rad_sw_in.default <- function(datetime, lon, lat, elev, temp, ...,
-    surface_type = "field") {
+rad_sw_in.default <- function(datetime, lon, lat, elev, temp, surface_type, slope, valley, ...) {
   sw_toa <- rad_sw_toa(datetime, lon, lat, ...)
   elevation <- sol_elevation(datetime, lon, lat)
   
-  gas <- trans_gas(datetime, lon, lat, elev, temp, ...)
+  gas <- trans_gas(datetime, lon, lat, elev, temp)
   ozone <- trans_ozone(datetime, lon, lat, ...)
-  rayleigh <- trans_rayleigh(datetime, lon, lat, elev, temp, ...)
-  vapor <- trans_vapor(datetime, lon, lat, elev, temp, ...)
+  rayleigh <- trans_rayleigh(datetime, lon, lat, elev, temp)
+  vapor <- trans_vapor(datetime, lon, lat, elev, temp)
   aerosol <- trans_aerosol(datetime, lon, lat, elev, temp, ...)
   trans_total <- gas * ozone * rayleigh * vapor * aerosol
 
-  terrain_angle <- terr_terrain_angle(datetime, lon, lat, ...)
+  terrain_angle <- terr_terrain_angle(datetime, lon, lat)
   
   albedo <- surface_properties[which(surface_properties$surface_type == surface_type), ]$albedo
-  terrain_view <- 1 - terr_sky_view(...)
+  terrain_view <- 1 - terr_sky_view(slope, valley)
 
   elevation <- deg2rad(elevation)
   terrain_angle <- deg2rad(terrain_angle)
@@ -114,12 +113,12 @@ rad_sw_in.default <- function(datetime, lon, lat, elev, temp, ...,
 #' @export
 rad_sw_in.weather_station <- function(weather_station, ...) {
   a <- methods::formalArgs(rad_sw_in.default)
-  a <- a[1:(length(a)-2)]
+  a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
   }
   
-  rad_sw_in(datetime, lon, lat, elev, temp, ...)
+  rad_sw_in(datetime, lon, lat, elev, temp, surface_type, slope, valley, ...)
 }
 
 
@@ -178,20 +177,18 @@ rad_diffuse_in <- function(...) {
 #' @inheritDotParams terr_terrain_angle.default slope exposition
 #' @export
 #' @references p58eq3.14, p55eq3.9
-rad_diffuse_in.default <- function(datetime, lon, lat, elev, temp, ...,
-    surface_type = "field") {
-  vapor <- trans_vapor(datetime, lon, lat, elev, temp, ...)
+rad_diffuse_in.default <- function(datetime, lon, lat, elev, temp, surface_type, ...) {
+  vapor <- trans_vapor(datetime, lon, lat, elev, temp)
   ozone <- trans_ozone(datetime, lon, lat, ...)
   sw_toa <- rad_sw_toa(datetime, lon, lat, ...)
   sw_in <- rad_sw_in(datetime, lon, lat, elev, temp, ...)
-  sky_view <- terr_sky_view(...)
-  terrain_angle <- terr_terrain_angle(datetime, lon, lat, ...)
+  terrain_angle <- terr_terrain_angle(datetime, lon, lat)
   
   elevation <- sol_elevation(datetime, lon, lat)
   solar_angle <- 90 - elevation
   
   albedo <- surface_properties[which(surface_properties$surface_type == surface_type), ]$albedo
-  terrain_view <- 1 - terr_sky_view(...)
+  terrain_view <- 1 - terr_sky_view(slope, valley)
   
   terrain_angle <- deg2rad(terrain_angle)
   solar_angle <- deg2rad(solar_angle)
@@ -206,12 +203,12 @@ rad_diffuse_in.default <- function(datetime, lon, lat, elev, temp, ...,
 #' @export
 rad_diffuse_in.weather_station <- function(weather_station, ...) {
   a <- methods::formalArgs(rad_diffuse_in.default)
-  a <- a[1:(length(a)-2)]
+  a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
   }
   
-  rad_diffuse_in(datetime, lon, lat, elev, temp, ...)
+  rad_diffuse_in(datetime, lon, lat, elev, temp, surface_type, ...)
 }
 
 #' Shortwave outgoing radiation
@@ -228,8 +225,7 @@ rad_sw_out <- function(...) {
 #' @rdname rad_sw_out
 #' @export
 #' @references p46eq3.3, p52eq3.8
-rad_sw_out.default <- function(datetime, lon, lat, elev, temp, ...,
-    surface_type = "field") {
+rad_sw_out.default <- function(datetime, lon, lat, elev, temp, surface_type, ...) {
   sw_in <- rad_sw_in(datetime, lon, lat, elev, temp, ...)
   surface_type
   albedo <- surface_properties[which(surface_properties$surface_type == surface_type), ]$albedo
@@ -264,8 +260,7 @@ rad_diffuse_out <- function(...) {
 #' @rdname rad_diffuse_out
 #' @export
 #' @references p46eq3.3, p52eq3.8
-rad_diffuse_out.default <- function(datetime, lon, lat, elev, temp, ...,
-    surface_type = "field") {
+rad_diffuse_out.default <- function(datetime, lon, lat, elev, temp, surface_type, ...) {
   diffuse_in <- rad_diffuse_in(datetime, lon, lat, elev, temp, ...)
   albedo <- surface_properties[which(surface_properties$surface_type == surface_type), ]$albedo
   
@@ -340,10 +335,10 @@ rad_lw_in <- function(...) {
 #' @param sigma Stefan-Boltzmann constant in W/m\eqn{^2}/K\eqn{^4},
 #'   default `r sigma_default'.
 #' @export
-#' @references p66eq3.24
+#' @references p68eq3.24
 rad_lw_in.default <- function(temp, rh, ..., sigma = sigma_default) {
   emissivity_air <- rad_emissivity_air(temp, rh, ...)
-  sky_view <- terr_sky_view(...)
+  sky_view <- terr_sky_view(slope, valley)
   temp <- c2k(temp)
   
   emissivity_air * sigma * temp^4 * sky_view
@@ -359,7 +354,7 @@ rad_lw_in.weather_station <- function(weather_station, ...) {
     assign(i, weather_station[[i]])
   }
   
-  rad_lw_in(temp, rh)
+  rad_lw_in(temp, rh, ...)
 }
 
 
@@ -398,7 +393,7 @@ rad_emissivity_air.weather_station <- function(weather_station, ...) {
     assign(i, weather_station[[i]])
   }
   
-  rad_emissivity_air(temp, rh)
+  rad_emissivity_air(temp, rh, ...)
 }
 
 
@@ -424,8 +419,8 @@ rad_lw_out <- function(...) {
 #' Default is 'field' as surface type.
 #' @export
 #' @references p66eq3.20
-rad_lw_out.default <- function(surface_temp, ...,
-    surface_type = "field", sigma = sigma_default) {
+rad_lw_out.default <- function(surface_temp, surface_type, ...,
+    sigma = sigma_default) {
   emissivity <- surface_properties[which(surface_properties$ surface_type == surface_type), ]$emissivity
   surface_temp <- c2k(surface_temp)
   
@@ -437,10 +432,10 @@ rad_lw_out.default <- function(surface_temp, ...,
 #' @export
 rad_lw_out.weather_station <- function(weather_station, ...) {
   a <- methods::formalArgs(rad_lw_out.default)
-  a <- a[1:(length(a)-3)]
+  a <- a[1:(length(a)-2)]
   for(i in a) {
     assign(i, weather_station[[i]])
   }
   
-  rad_lw_out(surface_temp, ...)
+  rad_lw_out(surface_temp, surface_type, ...)
 }

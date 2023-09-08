@@ -39,5 +39,5 @@ Calculation of the longwave radiation of the atmosphere.
 The second part of the equation related to the surrounding terrain is not included.
 }
 \references{
-p66eq3.24
+p68eq3.24
 }

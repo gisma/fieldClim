@@ -72,7 +72,7 @@ pres_vapor_p.weather_station <- function(weather_station, ...) {
     assign(i, weather_station[[i]])
   }
   
-  pres_vapor_p(temp, rh)
+  pres_vapor_p(temp, rh, ...)
 }
 
 #' Saturated vapor pressure
@@ -107,7 +107,7 @@ pres_sat_vapor_p.weather_station <- function(weather_station, ...) {
     assign(i, weather_station[[i]])
   }
   
-  pres_sat_vapor_p(temp)
+  pres_sat_vapor_p(temp, ...)
 }
 
 #' Air density

@@ -181,7 +181,7 @@ hum_precipitable_water.default <- function(datetime, lat, elev, temp, ...) {
     }
   }
   
-  p <- pres_p(elev, temp, ...)
+  p <- pres_p(elev, temp)
   p0 <- p0_default # will be cancled in pres_p
   
   pw_standard * (p / p0) * (temp_standard / temp)^0.5
@@ -197,7 +197,7 @@ hum_precipitable_water.weather_station <- function(weather_station, ...) {
     assign(i, weather_station[[i]])
   }
   
-  hum_precipitable_water(datetime, lat, elev, temp, ...)
+  hum_precipitable_water(datetime, lat, elev, temp)
 }
 
 #' Moisture gradient

@@ -1,19 +1,32 @@
 #' Build a weather station object
 #'
 #' Creates a list of class `weather_station` that contains all input arguments.
-#' Only the following is used:
+#' Only the following arguments are used:
+#' Arguments *without* default value:
 #' * datetime Datetime in `POSIXt`.
 #' * lon Longitude in degree.
 #' * lat Latitude in degree.
 #' * elev Elevation above sea level in m.
 #' * temp Temperature in \eqn{^\circ}C.
-#' * surface_temp Surface temperature in \eqn{^\circ}C.
+#' @param slope Slope in degree.
+#' @param exposition Exposition in degree.
 #' * surface_type Surface type for which a specific emissivity will be selected.
+#' @param valley If the position is in a valley (TRUE) or on a slope (FALSE).
+#' * surface_temp Surface temperature in \eqn{^\circ}C.
 #' * rh Relative humidity in %.
+#' @param texture Soil texture. Either `sand`, `peat` or `clay`.
+#' @param moisture Soil moisture in cubic meter/cubic meter.
+#' Arguments *with* default value:
 #' * sol_const Solar constant in W/m\eqn{^2}, default `r sol_const_default`.
+#' * ozone_column Atmospheric ozone as column in cm, default `r ozone_column_default`.
+#' * vis Visibility in km, default `r vis_default`.
 #' * p0 Standard pressure in hPa, default `r p0_default`.
 #' * g Gravitational acceleration in m/s\eqn{^2}, default `r g_default`.
 #' * rl Specific gas constant for air in m\eqn{^2}/s\eqn{^2}/K, default `r rl_default`.
+#' @param a Constant a is 7.5 (default) over water, 7.6 over undercooled water, and 9.5 over ice.
+#' @param b Constant b is 235 (defalut) over water, 240.7 over undercooled water, and 265.5 over ice.
+#' @param sigma Stefan-Boltzmann constant in W/m\eqn{^2}/K\eqn{^4},
+#'   default `r sigma_default'.
 #' @export
 build_weather_station <- function(...) {
   out <- list()

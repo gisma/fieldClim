@@ -18,8 +18,9 @@ soil_heat_flux <- function(...) {
 #' @param soil_depth, soil_depth2 Depth of the measurement in m. A vector with two elements.
 #' @export
 #' @references p71eq4.2.
-soil_heat_flux.default <- function(soil_temp1, soil_temp2, soil_depth1, soil_depth2, ...) {
-  thermal_cond <- soil_thermal_cond(...)
+soil_heat_flux.default <- function(texture, moisture,
+    soil_temp1, soil_temp2, soil_depth1, soil_depth2, ...) {
+  thermal_cond <- soil_thermal_cond(texture, moisture)
   
   thermal_cond * (soil_temp1 - soil_temp2) / (soil_depth1 - soil_depth2)
 }
@@ -28,13 +29,13 @@ soil_heat_flux.default <- function(soil_temp1, soil_temp2, soil_depth1, soil_dep
 #' @export
 #' @inheritParams sol_julian_day
 soil_heat_flux.weather_station <- function(weather_station, ...) {
-#  check_availability(weather_station, soil_temp, soil_depth)
-  soil_temp1 <- weather_station$soil_temp1
-  soil_temp2 <- weather_station$soil_temp2
-  soil_depth1 <- weather_station$soil_depth1
-  soil_depth2 <- weather_station$soil_depth2
+  a <- methods::formalArgs(soil_heat_flux.default)
+  a <- a[1:(length(a)-1)]
+  for(i in a) {
+    assign(i, weather_station[[i]])
+  }
   
-  soil_heat_flux(soil_temp1, soil_temp2, soil_depth1, soil_depth2, ...)
+  soil_heat_flux(texture, moisture, soil_temp1, soil_temp2, soil_depth1, soil_depth2)
 }
 
 #' Soil thermal conductivity
@@ -51,11 +52,11 @@ soil_thermal_cond <- function(...) {
 }
 
 #' @rdname soil_thermal_cond
-#' @param texture Soil texture. Either `sand` (default), `peat` or `clay`.
-#' @param moisture Soil moisture in Cubic meter/cubic meter
+#' @param texture Soil texture. Either `sand`, `peat` or `clay`.
+#' @param moisture Soil moisture in cubic meter/cubic meter.
 #' @export
 #' @references p254.
-soil_thermal_cond.default <- function(texture = "sand", moisture = 0, ...) {
+soil_thermal_cond.default <- function(texture, moisture, ...) {
   # convert moisture from [cubic m/cubic m] to [Vol-%]
   moisture <- moisture * 100
 
@@ -80,11 +81,13 @@ soil_thermal_cond.default <- function(texture = "sand", moisture = 0, ...) {
 #' @inheritParams sol_julian_day
 #' @export
 soil_thermal_cond.weather_station <- function(weather_station, ...) {
-#  check_availability(weather_station, "texture", "moisture")
-  texture <- weather_station$texture
-  moisture <- weather_station$moisture
+  a <- methods::formalArgs(soil_thermal_cond.default)
+  a <- a[1:(length(a)-1)]
+  for(i in a) {
+    assign(i, weather_station[[i]])
+  }
   
-  soil_thermal_cond(texture, moisture, ...)
+  soil_thermal_cond(texture, moisture)
 }
 
 

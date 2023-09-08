@@ -8,7 +8,7 @@
 \usage{
 rad_diffuse_in(...)
 
-\method{rad_diffuse_in}{default}(datetime, lon, lat, elev, temp, ..., surface_type = "field")
+\method{rad_diffuse_in}{default}(datetime, lon, lat, elev, temp, surface_type, ...)
 
 \method{rad_diffuse_in}{weather_station}(weather_station, ...)
 }

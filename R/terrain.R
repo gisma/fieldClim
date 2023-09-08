@@ -17,7 +17,7 @@ terr_sky_view <- function(...) {
 #' @param valley If the position is in a valley (TRUE) or on a slope (FALSE).
 #' @export
 #' @references p57eq3.12, p57eq3.13
-terr_sky_view.default <- function(slope = 0, valley = FALSE, ...) {
+terr_sky_view.default <- function(slope, valley, ...) {
   slope <- deg2rad(slope)
   
   if (valley == FALSE) {
@@ -31,7 +31,13 @@ terr_sky_view.default <- function(slope = 0, valley = FALSE, ...) {
 #' @inheritParams sol_julian_day
 #' @export
 terr_sky_view.weather_station <- function(weather_station, ...) {
-  terr_sky_view()
+  a <- methods::formalArgs(terr_sky_view.default)
+  a <- a[1:(length(a)-1)]
+  for(i in a) {
+    assign(i, weather_station[[i]])
+  }
+  
+  terr_sky_view(slope, valley)
 }
 
 #' Terrain angle
@@ -49,8 +55,7 @@ terr_terrain_angle <- function(...) {
 #' @param exposition Exposition in degree.
 #' @export
 #' @references p52eq3.7
-terr_terrain_angle.default <- function(datetime, lon, lat, ...,
-    slope = 0, exposition = 0) {
+terr_terrain_angle.default <- function(datetime, lon, lat, slope, exposition, ...) {
   elevation <- sol_elevation(datetime, lon, lat)
   azimuth <- sol_azimuth(datetime, lon, lat)
   
@@ -74,5 +79,5 @@ terr_terrain_angle.weather_station <- function(weather_station, ...) {
     assign(i, weather_station[[i]])
   }
   
-  terr_terrain_angle(datetime, lon, lat, ...)
+  terr_terrain_angle(datetime, lon, lat)
 }
