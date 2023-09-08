@@ -85,7 +85,7 @@ trans_air_mass_rel <- function(...) {
 trans_air_mass_rel.default <- function(datetime, lon, lat, ...) {
   elevation <- sol_elevation(datetime, lon, lat)
   
-  1 / (sin(deg2rad(elevation)) + 1.5 * elevation^-0.72)
+  out <- 1 / (sin(deg2rad(elevation)) + 1.5 * elevation^-0.72)
 }
 
 #' @rdname trans_air_mass_rel

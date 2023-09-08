@@ -97,9 +97,8 @@ rad_sw_in <- function(...) {
 #' @export
 #' @references p46eq3.3, p52eq3.8
 rad_sw_in.default <- function(datetime, lon, lat, elev, temp,
-    surface_type, slope, exposition, valley, ...) {
+    surface_type, slope, exposition, valley, ..., sol_const = sol_const_default) {
   sw_toa <- rad_sw_toa(datetime, lon, lat, ...)
-  elevation <- sol_elevation(datetime, lon, lat)
   
   gas <- trans_gas(datetime, lon, lat, elev, temp)
   ozone <- trans_ozone(datetime, lon, lat, ...)
@@ -108,6 +107,7 @@ rad_sw_in.default <- function(datetime, lon, lat, elev, temp,
   aerosol <- trans_aerosol(datetime, lon, lat, elev, temp, ...)
   trans_total <- gas * ozone * rayleigh * vapor * aerosol
 
+  elevation <- sol_elevation(datetime, lon, lat)
   terrain_angle <- terr_terrain_angle(datetime, lon, lat, slope, exposition)
   
   albedo <- surface_properties[which(surface_properties$surface_type == surface_type), ]$albedo
@@ -117,7 +117,9 @@ rad_sw_in.default <- function(datetime, lon, lat, elev, temp,
   terrain_angle <- deg2rad(terrain_angle)
   
   out <- sw_toa * 0.9751 * trans_total / sin(elevation) * cos(terrain_angle)
-  out * (1 + albedo * terrain_view)
+  out <- out * (1 + albedo * terrain_view)
+  # if sw_toa is 0, which means night, out is set to 0
+  ifelse(sw_toa == 0, 0, out)
 }
 
 #' @rdname rad_sw_in
@@ -153,8 +155,10 @@ rad_sw_toa.default <- function(datetime, lon, lat, ..., sol_const = sol_const_de
   eccentricity <- sol_eccentricity(datetime)
   elevation <- sol_elevation(datetime, lon, lat)
   elevation <- deg2rad(elevation)
-
-  sol_const * eccentricity * sin(elevation)
+  
+  out <- sol_const * eccentricity * sin(elevation)
+  # negative value comes from elevation < 0, which means night, and out is therefore set to 0
+  ifelse(out < 0, 0, out)
 }
 
 #' @rdname rad_sw_toa
@@ -211,7 +215,9 @@ rad_diffuse_in.default <- function(datetime, lon, lat, elev, temp,
   
   out <- 0.5 * ((1 - (1 - vapor) - (1 - ozone)) * sw_toa - sw_in) *
     sky_view * (1 + cos(terrain_angle)^2 * sin(solar_angle)^3)
-  out * (1 + albedo * terrain_view)
+  out <- out * (1 + albedo * terrain_view)
+  # if sw_toa is 0, which means night, out is set to 0
+  ifelse(sw_toa == 0, 0, out)
 }
 
 #' @rdname rad_diffuse_in
