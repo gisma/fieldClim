@@ -28,7 +28,7 @@ rad_diffuse_in(...)
 \item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-Description.
+W/m\eqn{^2}
 }
 \description{
 Incoming diffused radiation

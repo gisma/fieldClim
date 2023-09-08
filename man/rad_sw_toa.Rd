@@ -8,7 +8,7 @@
 \usage{
 rad_sw_toa(...)
 
-\method{rad_sw_toa}{default}(datetime, lon, lat, ..., sol_const = 1368)
+\method{rad_sw_toa}{default}(datetime, lon, lat, ..., sol_const = sol_const_default)
 
 \method{rad_sw_toa}{weather_station}(weather_station, ...)
 }
@@ -21,15 +21,15 @@ rad_sw_toa(...)
 
 \item{lat}{Latitude in degree.}
 
-\item{sol_const}{Solar constant in W/m\eqn{^2}}
+\item{sol_const}{Solar constant in W/m\eqn{^2}, default 1368.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-Shortwave radiation at top of atmosphere in W/m\eqn{^2}.
+W/m\eqn{^2}
 }
 \description{
-Calculation of the shortwave radiation at the top of the atmosphere.
+Shortwave radiation at top of atmosphere
 }
 \references{
 p244

@@ -44,11 +44,7 @@ sensible_monin(...)
 
 \item{obs_height}{Height of obstacle in m.}
 
-<<<<<<< HEAD
 \item{weather_station}{Object of class weather_station}
-=======
-\item{weather_station}{Object of class \code{weather_station}.}
->>>>>>> aec3be24d36bcf1a73b75104ad20b1d10c6d16c9
 }
 \value{
 Sensible heat flux in W/m\eqn{^2}.

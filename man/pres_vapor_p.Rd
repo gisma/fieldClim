@@ -10,7 +10,7 @@ pres_vapor_p(...)
 
 \method{pres_vapor_p}{default}(temp, rh, ...)
 
-\method{pres_vapor_p}{weather_station}(weather_station, height = "lower", ...)
+\method{pres_vapor_p}{weather_station}(weather_station)
 }
 \arguments{
 \item{...}{
@@ -24,8 +24,6 @@ pres_vapor_p(...)
 \item{rh}{Relative humidity in \%.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
-
-\item{height}{Height of measurement. "lower" or "upper".}
 }
 \value{
 Vapor pressure in hPa.

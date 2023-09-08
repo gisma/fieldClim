@@ -10,7 +10,7 @@ pres_sat_vapor_p(...)
 
 \method{pres_sat_vapor_p}{default}(temp, a = 7.5, b = 235, ...)
 
-\method{pres_sat_vapor_p}{weather_station}(weather_station, height = "lower", ...)
+\method{pres_sat_vapor_p}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
@@ -22,8 +22,6 @@ pres_sat_vapor_p(...)
 \item{b}{Constant b is 235 (defalut) over water, 240.7 over undercooled water, and 265.5 over ice.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
-
-\item{height}{Height of measurement. "lower" or "upper".}
 }
 \value{
 Saturation vapor pressure in hPa.

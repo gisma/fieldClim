@@ -32,5 +32,5 @@ Emissivity of the atmosphere (0-1).
 Calculation of the emissivity of the atmosphere.
 }
 \references{
-p67eq3.22
+p66eq3.22
 }

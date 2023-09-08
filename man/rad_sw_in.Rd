@@ -16,7 +16,7 @@ rad_sw_in(...)
 \item{...}{
   Arguments passed on to \code{\link[=rad_sw_toa.default]{rad_sw_toa.default}}, \code{\link[=trans_ozone.default]{trans_ozone.default}}, \code{\link[=trans_aerosol.default]{trans_aerosol.default}}, \code{\link[=terr_terrain_angle.default]{terr_terrain_angle.default}}
   \describe{
-    \item{\code{sol_const}}{Solar constant in W/m\eqn{^2}}
+    \item{\code{sol_const}}{Solar constant in W/m\eqn{^2}, default 1368.}
     \item{\code{ozone_column}}{Atmospheric ozone as column in cm, default 0.35.}
     \item{\code{vis}}{Visibility in km, default 30.}
     \item{\code{slope}}{Slope in degree.}
