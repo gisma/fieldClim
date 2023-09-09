@@ -17,7 +17,7 @@ rad_bal.default <- function(datetime, lon, lat, elev, temp,
     rh, surface_temp, ...) {
   sw_bal <- rad_sw_bal(datetime, lon, lat, elev, temp,
     surface_type, slope, exposition, valley, ...)
-  lw_bal <- rad_lw_bal(temp, rh, surface_temp, surface_type, ...)
+  lw_bal <- rad_lw_bal(temp, rh, slope, valley, surface_temp, surface_type, ...)
   
   sw_bal + lw_bal
 }
@@ -56,9 +56,9 @@ rad_sw_bal.default <- function(datetime, lon, lat, elev, temp,
   sw_out <- rad_sw_out(datetime, lon, lat, elev, temp,
     slope, exposition, valley, surface_type, ...)
   diffuse_in <- rad_diffuse_in(datetime, lon, lat, elev, temp,
-    surface_type, slope, valley, ...)
+    surface_type, slope, exposition, valley, ...)
   diffuse_out <- rad_diffuse_out(datetime, lon, lat, elev, temp,
-    surface_type, slope, valley, ...)
+    surface_type, slope, exposition, valley, ...)
   
   sw_in - sw_out + diffuse_in - diffuse_out
 }
@@ -195,7 +195,7 @@ rad_diffuse_in <- function(...) {
 #' @export
 #' @references p58eq3.14, p55eq3.9
 rad_diffuse_in.default <- function(datetime, lon, lat, elev, temp,
-    surface_type, slope, valley, ...) {
+    surface_type, slope, exposition, valley, ...) {
   vapor <- trans_vapor(datetime, lon, lat, elev, temp)
   ozone <- trans_ozone(datetime, lon, lat, ...)
   sw_toa <- rad_sw_toa(datetime, lon, lat, ...)
@@ -231,7 +231,7 @@ rad_diffuse_in.weather_station <- function(weather_station, ...) {
   }
   
   rad_diffuse_in(datetime, lon, lat, elev, temp,
-    surface_type, slope, valley, ...)
+    surface_type, slope, exposition, valley, ...)
 }
 
 #' Shortwave outgoing radiation
@@ -262,7 +262,7 @@ rad_sw_out.default <- function(datetime, lon, lat, elev, temp,
 #' @export
 rad_sw_out.weather_station <- function(weather_station, ...) {
   a <- methods::formalArgs(rad_sw_out.default)
-  a <- a[1:(length(a)-2)]
+  a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
   }
@@ -286,8 +286,8 @@ rad_diffuse_out <- function(...) {
 #' @export
 #' @references p46eq3.3, p52eq3.8
 rad_diffuse_out.default <- function(datetime, lon, lat, elev, temp,
-    surface_type, slope, valley, ...) {
-  diffuse_in <- rad_diffuse_in(datetime, lon, lat, elev, temp, surface_type, slope, valley, ...)
+    surface_type, slope, exposition, valley, ...) {
+  diffuse_in <- rad_diffuse_in(datetime, lon, lat, elev, temp, surface_type, slope, exposition, valley, ...)
   albedo <- surface_properties[which(surface_properties$surface_type == surface_type), ]$albedo
   
   diffuse_in * albedo
@@ -323,8 +323,8 @@ rad_lw_bal <- function(...) {
 #' @inheritDotParams rad_lw_out.default surface_type
 #' @export
 #' @references p68eq3.25
-rad_lw_bal.default <- function(temp, rh, surface_temp, surface_type, ...) {
-  lw_in <- rad_lw_in(temp, rh, ...)
+rad_lw_bal.default <- function(temp, rh, slope, valley, surface_temp, surface_type, ...) {
+  lw_in <- rad_lw_in(temp, rh, slope, valley, ...)
   lw_out <- rad_lw_out(surface_temp, surface_type, ...)
   
   lw_in - lw_out
@@ -340,7 +340,7 @@ rad_lw_bal.weather_station <- function(weather_station, ...) {
     assign(i, weather_station[[i]])
   }
   
-  rad_lw_bal(temp, rh, surface_temp, surface_type, ...)
+  rad_lw_bal(temp, rh, slope, valley, surface_temp, surface_type, ...)
 }
 
 #' Longwave radiation of the atmosphere
@@ -363,7 +363,7 @@ rad_lw_in <- function(...) {
 #'   default `r sigma_default'.
 #' @export
 #' @references p68eq3.24
-rad_lw_in.default <- function(temp, rh, ..., sigma = sigma_default) {
+rad_lw_in.default <- function(temp, rh, slope, valley, ..., sigma = sigma_default) {
   emissivity_air <- rad_emissivity_air(temp, rh, ...)
   sky_view <- terr_sky_view(slope, valley)
   temp <- c2k(temp)
@@ -381,7 +381,7 @@ rad_lw_in.weather_station <- function(weather_station, ...) {
     assign(i, weather_station[[i]])
   }
   
-  rad_lw_in(temp, rh, ...)
+  rad_lw_in(temp, rh, slope, valley, ...)
 }
 
 

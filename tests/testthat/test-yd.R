@@ -84,7 +84,7 @@ rad_bal(datetime, lon, lat, elev, temp,
 
 
 
-path <- file.path("data-raw", "caldern_weather_station.csv")
+path <- file.path("inst", "extdata", "caldern_weather_station.csv")
 input <- read.csv(path)
 #input <- input[c(1:3, 133:135), ]
 #names(input)
