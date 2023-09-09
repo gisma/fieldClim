@@ -29,27 +29,27 @@ surface_properties <- data.frame(
     0.95,
     0.95,
     0.95,
-    0.8,
+    0.80,
     0.98,
     0.98,
     0.98,
-    0.9,
+    0.90,
     0.95,
     0.96
   ),
   roughness_length = c(
     0.02,
     0.05,
-    0.2,
-    0.2,
-    0.2,
-    1.0,
-    1.0,
-    1.5,
-    1.5,
-    2.0,
+    0.20,
+    0.20,
+    0.20,
+    1.00,
+    1.00,
+    1.50,
+    1.50,
+    2.00,
     0.01,
-    0.5
+    0.50
   ),
   albedo = c(
     0.200,
@@ -64,6 +64,26 @@ surface_properties <- data.frame(
     0.220,
     0.050,
     0.170
+  )
+)
+
+priestley_taylor_coefficient <- data.frame(
+  surface_type = c(
+    "field",
+    "bare soil",
+    "coniferous forest",
+    "water",
+    "wetland",
+    "spruce forest"
+  ),
+  
+  alpha = c(
+    1.12,
+    1.04,
+    1.13,
+    1.26,
+    1.26,
+    1.72
   )
 )
 
