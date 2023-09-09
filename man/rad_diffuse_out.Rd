@@ -16,6 +16,7 @@ rad_diffuse_out(...)
   temp,
   surface_type,
   slope,
+  exposition,
   valley,
   ...
 )

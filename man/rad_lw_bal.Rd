@@ -8,7 +8,7 @@
 \usage{
 rad_lw_bal(...)
 
-\method{rad_lw_bal}{default}(temp, rh, surface_temp, surface_type, ...)
+\method{rad_lw_bal}{default}(temp, rh, slope, valley, surface_temp, surface_type, ...)
 
 \method{rad_lw_bal}{weather_station}(weather_station, ...)
 }
