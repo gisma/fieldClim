@@ -8,7 +8,18 @@
 \usage{
 rad_sw_bal(...)
 
-\method{rad_sw_bal}{default}(datetime, lon, lat, elev, temp, ...)
+\method{rad_sw_bal}{default}(
+  datetime,
+  lon,
+  lat,
+  elev,
+  temp,
+  surface_type,
+  slope,
+  exposition,
+  valley,
+  ...
+)
 
 \method{rad_sw_bal}{weather_station}(weather_station, ...)
 }

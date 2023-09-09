@@ -32,7 +32,7 @@ soil_heat_flux(...)
 
 \item{weather_station}{Object of class \code{weather_station}.}
 
-\item{soil_depth, }{soil_depth2 Depth of the measurement in m. A vector with two elements.}
+\item{soil_depth, }{soil_depth2 Depth of the soil temperature measurement in m.}
 }
 \value{
 Soil heat flux in W * m^(-2).

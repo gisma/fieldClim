@@ -8,7 +8,17 @@
 \usage{
 rad_diffuse_out(...)
 
-\method{rad_diffuse_out}{default}(datetime, lon, lat, elev, temp, surface_type, ...)
+\method{rad_diffuse_out}{default}(
+  datetime,
+  lon,
+  lat,
+  elev,
+  temp,
+  surface_type,
+  slope,
+  valley,
+  ...
+)
 
 \method{rad_diffuse_out}{weather_station}(weather_station, ...)
 }
