@@ -68,14 +68,14 @@ turb_flux_monin.default <- function(z1 = 2, z2 = 10, v1, v2, t1, t2, elev, surfa
 #' @param weather_station Object of class weather_station
 #' @export
 turb_flux_monin.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "z1", "z2", "v1", "v2", "t1", "t2", "elevation")
+  check_availability(weather_station, "z1", "z2", "v1", "v2", "t1", "t2", "elev")
   z1 <- weather_station$z1
   z2 <- weather_station$z2
   v1 <- weather_station$v1
   v2 <- weather_station$v2
   t1 <- weather_station$t1
   t2 <- weather_station$t2
-  elev <- weather_station$elevation
+  elev <- weather_station$elev
   obs_height <- weather_station$obs_height
   if (!is.null(obs_height)) {
     check_availability(weather_station, "obs_height")
@@ -126,14 +126,14 @@ turb_flux_grad_rich_no.default <- function(t1, t2, z1 = 2, z2 = 10, v1, v2, elev
 #' @param weather_station Object of class weather_station
 #' @export
 turb_flux_grad_rich_no.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "z1", "z2", "v1", "v2", "t1", "t2", "elevation")
+  check_availability(weather_station, "z1", "z2", "v1", "v2", "t1", "t2", "elev")
   t1 <- weather_station$t1
   t2 <- weather_station$t2
   z1 <- weather_station$z1
   z2 <- weather_station$z2
   v1 <- weather_station$v1
   v2 <- weather_station$v2
-  elev <- weather_station$elevation
+  elev <- weather_station$elev
   return(turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, elev))
 }
 
@@ -242,14 +242,14 @@ turb_flux_ex_quotient_temp.default <- function(t1, t2, z1=2, z2=10, v1, v2, elev
 #' @param weather_station Object of class weather_station
 #' @export
 turb_flux_ex_quotient_temp.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "t1", "t2", "z1", "z2", "v1", "v2", "elevation")
+  check_availability(weather_station, "t1", "t2", "z1", "z2", "v1", "v2", "elev")
   t1 <- weather_station$t1
   t2 <- weather_station$t2
   z1 <- weather_station$z1
   z2 <- weather_station$z2
   v1 <- weather_station$v1
   v2 <- weather_station$v2
-  elev <- weather_station$elevation
+  elev <- weather_station$elev
   obs_height <- weather_station$obs_height
   if (!is.null(obs_height)) {
     return(turb_flux_ex_quotient_temp(t1, t2, z1, z2, v1, v2, elev, obs_height = obs_height))
@@ -326,14 +326,14 @@ turb_flux_ex_quotient_imp.default <- function(t1, t2, z1=2, z2=10, v1, v2, elev,
 #' @param weather_station Object of class weather_station
 #' @export
 turb_flux_ex_quotient_imp.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "t1", "t2", "z1", "z2", "v1", "v2", "elevation")
+  check_availability(weather_station, "t1", "t2", "z1", "z2", "v1", "v2", "elev")
   t1 <- weather_station$t1
   t2 <- weather_station$t2
   z1 <- weather_station$z1
   z2 <- weather_station$z2
   v1 <- weather_station$v1
   v2 <- weather_station$v2
-  elev <- weather_station$elevation
+  elev <- weather_station$elev
   obs_height <- weather_station$obs_height
   if (!is.null(obs_height)) {
     return(turb_flux_ex_quotient_imp(t1, t2, z1, z2, v1, v2, elev, obs_height = obs_height))
@@ -385,14 +385,14 @@ turb_flux_imp_exchange.default <- function(t1, t2, v1, v2, z1 = 2, z2 = 10, elev
 #' @param weather_station Object of class weather_station
 #' @export
 turb_flux_imp_exchange.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "t1", "t2", "z1", "z2", "v1", "v2", "elevation")
+  check_availability(weather_station, "t1", "t2", "z1", "z2", "v1", "v2", "elev")
   t1 <- weather_station$t1
   t2 <- weather_station$t2
   z1 <- weather_station$z1
   z2 <- weather_station$z2
   v1 <- weather_station$v1
   v2 <- weather_station$v2
-  elev <- weather_station$elevation
+  elev <- weather_station$elev
   obs_height <- weather_station$obs_height
   if (!is.null(obs_height)) {
     return(turb_flux_imp_exchange(t1, t2, v1, v2, z1, z2, elev, obs_height = obs_height))

@@ -13,12 +13,12 @@ latent_priestley_taylor <- function(...) {
 
 #' @rdname latent_priestley_taylor
 #' @export
-#' @param t Air temperature in °C.
+#' @param temp Air temperature in °C.
 #' @param rad_bal Radiation balance in W/m\eqn{^2}.
 #' @param soil_flux Soil flux in W/m\eqn{^2}.
 #' @param surface_type Surface type, for which a Priestley-Taylor coefficient will be selected. Options: `r priestley_taylor_coefficient$surface_type`
 #' @references Foken 2016, p. 220, eq. 5.7.
-latent_priestley_taylor.default <- function(t, rad_bal, soil_flux, surface_type, ...) {
+latent_priestley_taylor.default <- function(temp, rad_bal, soil_flux, surface_type, ...) {
   priestley_taylor_coefficient <- priestley_taylor_coefficient
 
   if (!surface_type %in% priestley_taylor_coefficient$surface_type) {
@@ -28,8 +28,8 @@ latent_priestley_taylor.default <- function(t, rad_bal, soil_flux, surface_type,
     alpha_pt <- priestley_taylor_coefficient[which(priestley_taylor_coefficient$surface_type == surface_type), ]$alpha
   }
 
-  sc <- sc(t)
-  gam <- gam(t)
+  sc <- sc(temp)
+  gam <- gam(temp)
 
   out <- alpha_pt * sc * (-rad_bal - soil_flux) / (sc + gam)
 
@@ -47,12 +47,12 @@ latent_priestley_taylor.default <- function(t, rad_bal, soil_flux, surface_type,
 #' @param weather_station Object of class weather_station
 #' @export
 latent_priestley_taylor.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "t1", "rad_bal", "soil_flux", "surface_type")
-  t1 <- weather_station$t1
+  check_availability(weather_station, "temp", "rad_bal", "soil_flux", "surface_type")
+  t1 <- weather_station$temp
   rad_bal <- weather_station$rad_bal
   soil_flux <- weather_station$soil_flux
   surface_type <- weather_station$surface_type
-  return(latent_priestley_taylor(t1, rad_bal, soil_flux, surface_type = surface_type))
+  return(latent_priestley_taylor(temp, rad_bal, soil_flux, surface_type = surface_type))
 }
 
 
@@ -75,8 +75,8 @@ latent_penman <- function(...) {
 #' @param datetime POSIXt object (POSIXct, POSIXlt).
 #' See [base::as.POSIXlt] and [base::strptime] for conversion.
 #' @param v Wind velocity in m/s.
-#' @param t Temperature in °C
-#' @param hum Relative humidity in %.
+#' @param temp Air temperature in °C
+#' @param rh Relative humidity in %.
 #' @param z Height of measurement for t, v in m.
 #' @param rad_bal Radiation balance in W/m\eqn{^2}.
 #' @param elev Elevation above sea level in m.
@@ -84,8 +84,8 @@ latent_penman <- function(...) {
 #' @param lon Longitude in decimal degrees.
 latent_penman.default <- function(datetime,
                                  v,
-                                 t,
-                                 hum,
+                                 temp,
+                                 rh,
                                  z = 2,
                                  rad_bal,
                                  elev,
@@ -107,8 +107,8 @@ latent_penman.default <- function(datetime,
 
   WeatherStation <- data.frame(
     wind = v,
-    RH = hum,
-    temp = t,
+    RH = rh,
+    temp = temp,
     radiation = rad_bal,
     height = z,
     lat = lat,
@@ -134,12 +134,12 @@ latent_penman.default <- function(datetime,
 latent_penman.weather_station <- function(weather_station, ...) {
   check_availability(
     weather_station, "datetime",
-    "v1", "t1", "hum1", "z1", "rad_bal",
-    "elevation", "latitude", "longitude"
+    "v1", "temp", "rh", "z1", "rad_bal",
+    "elev", "lat", "lon"
   )
   datetime <- weather_station$datetime
   v <- weather_station$v1
-  t <- weather_station$t1
+  temp <- weather_station$temp
   hum <- weather_station$hum1
   z <- weather_station$z1
   rad_bal <- weather_station$rad_bal
@@ -147,7 +147,7 @@ latent_penman.weather_station <- function(weather_station, ...) {
   lat <- weather_station$latitude
   lon <- weather_station$longitude
   return(latent_penman(
-    datetime, v, t, hum, z, rad_bal,
+    datetime, v, temp, rh, z, rad_bal,
     elev, lat, lon
   ))
 }
@@ -231,7 +231,7 @@ latent_monin.default <- function(hum1, hum2, t1, t2, v1, v2, z1 = 2, z2 = 10, el
 #' @inheritParams sol_julian_day
 #' @export
 latent_monin.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "z1", "z2", "t1", "t2", "hum1", "hum2", "v1", "v2", "elevation")
+  check_availability(weather_station, "z1", "z2", "t1", "t2", "hum1", "hum2", "v1", "v2", "elev")
   hum1 <- weather_station$hum1
   hum2 <- weather_station$hum2
   t1 <- weather_station$t1
@@ -240,7 +240,7 @@ latent_monin.weather_station <- function(weather_station, ...) {
   z2 <- weather_station$z2
   v1 <- weather_station$v1
   v2 <- weather_station$v2
-  elev <- weather_station$elevation
+  elev <- weather_station$elev
   obs_height <- weather_station$obs_height
   if (!is.null(obs_height)) {
     return(latent_monin(hum1, hum2, t1, t2, v1, v2, z1, z2, elev, obs_height = obs_height))
@@ -311,14 +311,14 @@ latent_bowen.default <- function(t1, t2, hum1, hum2, z1 = 2, z2 = 10, elev,
 #' @inheritParams sol_julian_day
 #' @export
 latent_bowen.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "z1", "z2", "t1", "t2", "hum1", "hum2", "elevation", "rad_bal", "soil_flux")
+  check_availability(weather_station, "z1", "z2", "t1", "t2", "hum1", "hum2", "elev", "rad_bal", "soil_flux")
   hum1 <- weather_station$hum1
   hum2 <- weather_station$hum2
   t1 <- weather_station$t1
   t2 <- weather_station$t2
   z1 <- weather_station$z1
   z2 <- weather_station$z2
-  elev <- weather_station$elevation
+  elev <- weather_station$elev
   rad_bal <- weather_station$rad_bal
   soil_flux <- weather_station$soil_flux
   return(latent_bowen(t1, t2, hum1, hum2, z1, z2, elev, rad_bal, soil_flux))
