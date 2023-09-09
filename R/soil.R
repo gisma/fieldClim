@@ -5,17 +5,15 @@
 #'
 #' Negative values signify flux towards the atmosphere, positive values signify flux into the soil.
 #'
-#' @param ... Additional arguments.
-#' @returns Soil heat flux in W * m^(-2).
+#' @inheritParams build_weather_station
+#' @returns eqn{W \cdot m^-2}.
 #' @export
 soil_heat_flux <- function(...) {
   UseMethod("soil_heat_flux")
 }
 
 #' @rdname soil_heat_flux
-#' @inheritDotParams soil_thermal_cond.default
-#' @param soil_temp1, soil_temp2 Soil temperature in °C.
-#' @param soil_depth, soil_depth2 Depth of the soil temperature measurement in m.
+#' @inheritParams build_weather_station
 #' @export
 #' @references Bendix 2004, p. 71eq4.2.
 soil_heat_flux.default <- function(texture, moisture,
@@ -27,7 +25,7 @@ soil_heat_flux.default <- function(texture, moisture,
 
 #' @rdname soil_heat_flux
 #' @export
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 soil_heat_flux.weather_station <- function(weather_station, ...) {
   a <- methods::formalArgs(soil_heat_flux.default)
   a <- a[1:(length(a)-1)]
@@ -44,7 +42,7 @@ soil_heat_flux.weather_station <- function(weather_station, ...) {
 #'
 #' Works by linearly interpolating thermal conductivity based on measured data.
 #'
-#' @param ... Additional arguments.
+#' @inheritParams build_weather_station
 #' @returns Soil thermal conductivity in W/m/K.
 #' @export
 soil_thermal_cond <- function(...) {
@@ -52,8 +50,7 @@ soil_thermal_cond <- function(...) {
 }
 
 #' @rdname soil_thermal_cond
-#' @param texture Soil texture. Either `sand`, `peat` or `clay`.
-#' @param moisture Soil moisture in cubic meter/cubic meter.
+#' @inheritParams build_weather_station
 #' @export
 #' @references Bendix 2004, p. 254.
 soil_thermal_cond.default <- function(texture, moisture, ...) {
@@ -78,7 +75,7 @@ soil_thermal_cond.default <- function(texture, moisture, ...) {
 }
 
 #' @rdname soil_thermal_cond
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @export
 soil_thermal_cond.weather_station <- function(weather_station, ...) {
   a <- methods::formalArgs(soil_thermal_cond.default)

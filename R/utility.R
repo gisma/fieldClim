@@ -1,4 +1,5 @@
-# Constants
+#' Constants
+#'
 p0_default <- 1013.25
 g_default <- 9.81
 rl_default <- 287.05
@@ -8,6 +9,8 @@ ozone_column_default <- 0.35
 vis_default <- 30
 sol_const_default <- 1368
 
+#' Surface properties
+#'
 surface_properties <- data.frame(
   surface_type = c(
     "field",
@@ -67,6 +70,8 @@ surface_properties <- data.frame(
   )
 )
 
+#' Priestley-Taylor coefficient
+#'
 priestley_taylor_coefficient <- data.frame(
   surface_type = c(
     "field",
@@ -95,8 +100,6 @@ priestley_taylor_coefficient <- data.frame(
 #' @inheritParams sol_julian_day
 #' @param ... Strings of properties to check.
 #' @returns Absolutely nothing
-#' @export
-#'
 check_availability <- function(weather_station, ...) {
   unlisted <- names(weather_station)
   parameters <- as.character(unlist(list(...)))
@@ -145,7 +148,6 @@ check_availability <- function(weather_station, ...) {
 #' If `reduced = F`, the data.frame contains all columns of the `measurements` list in `weather_station`.
 #' If `reduced = T`, the data.frame contains: "datetime", "t1", "t2", "v1", "v2", "p1", "p2", "hum1", "hum2", "soil_flux", "sw_in", "sw_out", "lw_in", "lw_out", "sw_bal", "lw_bal", "rad_bal", "stability", "sensible_priestley_taylor", "latent_priestley_taylor","sensible_bowen", "latent_bowen","sensible_monin", "latent_monin","latent_penman"
 #' If `unit = T`, the column names are replaced by more detailed names, containing the respective uits.
-#' @export
 #'
 #' @examples
 #' \dontrun{
@@ -184,7 +186,6 @@ check_availability <- function(weather_station, ...) {
 #' # create a reduced data.frame with detailed units
 #' unit <- as.data.frame(station_turbulent, reduced = T, unit = T)
 #' }
-#'
 as.data.frame.weather_station <- function(x, ...,
                                           reduced = F, unit = F) {
   out <- as.data.frame(x$measurements)
@@ -249,8 +250,7 @@ as.data.frame.weather_station <- function(x, ...,
 #' Radian to degree
 #'
 #' @param angle Angle in radian.
-#' @returns Degree..
-#' @export
+#' @returns Degree.
 rad2deg <- function(angle) {
   angle * 180 / pi
 }
@@ -258,8 +258,7 @@ rad2deg <- function(angle) {
 #' Degree to radian
 #'
 #' @param angle Angle in degree.
-#' @returns radian.
-#' @export
+#' @returns Radian.
 deg2rad <- function(angle) {
   angle * pi / 180
 }
@@ -268,7 +267,6 @@ deg2rad <- function(angle) {
 #'
 #' @param temp Temperature in degree Celcius.
 #' @returns Kelvin
-#' @export
 c2k <- function(temp) {
   temp + c2k_default
 }
@@ -276,8 +274,7 @@ c2k <- function(temp) {
 #' Kelvin to degree Celcius
 #'
 #' @param temp Temperature in Kelvin.
-#' @returns Degree. Celcius
-#' @export
+#' @returns Degree Celcius.
 k2c <- function(temp) {
   temp - c2k_default
 }

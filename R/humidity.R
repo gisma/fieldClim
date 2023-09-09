@@ -120,16 +120,16 @@ hum_evap_heat.weather_station <- function(weather_station, height = "lower", ...
 #' Latitude <= 30 degrees is defined as tropic; <= 60 is temperate; others is subarctic.
 #' Summer is defined as April to September in the northern hemisphere.
 #'
-#' @param ... Additional arguments.
-#' @returns Total precipitable water in cm\eqn{\cdot}grams.
+#' @inheritParams build_weather_station
+#' @returns cm\eqn{\cdot}grams.
 #' @export
 hum_precipitable_water <- function(...) {
   UseMethod("hum_precipitable_water")
 }
 
 #' @rdname hum_precipitable_water
-#' @inheritParams rad_bal
-#' @inheritDotParams pres_p.default g rl
+#' @inheritParams build_weather_station
+#' @inheritDotParams build_weather_station g rl
 #' @export
 #' @references Bendix 2004, p. 246. Column name "subarctic_summer" and "subarctic_winter" were switched.
 hum_precipitable_water.default <- function(datetime, lat, elev, temp, ...) {
@@ -188,7 +188,7 @@ hum_precipitable_water.default <- function(datetime, lat, elev, temp, ...) {
 }
 
 #' @rdname hum_precipitable_water
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @export
 hum_precipitable_water.weather_station <- function(weather_station, ...) {
   a <- methods::formalArgs(hum_precipitable_water.default)

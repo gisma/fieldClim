@@ -6,14 +6,13 @@
 #' Terrain view factor can be calculated by 1-terr_sky_view.
 #'
 #' @inheritParams build_weather_station
-#' @returns Sky view factor from 0-1. unitless
+#' @returns Unitless.
 #' @export
 terr_sky_view <- function(...) {
   UseMethod("terr_sky_view")
 }
 
 #' @rdname terr_sky_view
-#' @inheritParams build_weather_station
 #' @inheritParams build_weather_station
 #' @export
 #' @references Bendix 2004, p. 57eq3.12, p57eq3.13
@@ -43,15 +42,13 @@ terr_sky_view.weather_station <- function(weather_station, ...) {
 #' Terrain angle
 #'
 #' @inheritParams build_weather_station
-#' @returns Degree..
+#' @returns Degree.
 #' @export
 terr_terrain_angle <- function(...) {
   UseMethod("terr_terrain_angle")
 }
 
 #' @rdname terr_terrain_angle
-#' @inheritParams build_weather_station
-#' @inheritParams build_weather_station
 #' @inheritParams build_weather_station
 #' @export
 #' @references Bendix 2004, p. 52eq3.7

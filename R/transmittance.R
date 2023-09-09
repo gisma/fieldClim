@@ -44,8 +44,7 @@ trans_air_mass_abs <- function(...) {
 
 #' @rdname trans_air_mass_abs
 #' @inheritParams build_weather_station
-#' @inheritParams build_weather_station
-#' @inheritDotParams pres_p.default g rl
+#' @inheritDotParams build_weather_station.default g rl
 #' @export
 #' @references Bendix 2004, p. 247.
 trans_air_mass_abs.default <- function(datetime, lon, lat, elev, temp, ...) {
@@ -111,7 +110,6 @@ trans_ozone <- function(...) {
 }
 
 #' @rdname trans_ozone
-#' @inheritParams build_weather_station
 #' @inheritParams build_weather_station
 #' @export
 #' @references Bendix 2004, p. 245.
@@ -184,7 +182,6 @@ trans_vapor <- function(...) {
 
 #' @rdname trans_vapor
 #' @inheritParams build_weather_station
-#' @inheritParams build_weather_station
 #' @export
 #' @references Bendix 2004, p. 245.
 trans_vapor.default <- function(datetime, lon, lat, elev, temp, ...) {
@@ -223,8 +220,7 @@ trans_aerosol <- function(...) {
 
 #' @rdname trans_aerosol
 #' @inheritParams build_weather_station
-#' @inheritDotParams trans_air_mass_abs.default
-#' @inheritParams build_weather_station
+#' @inheritDotParams build_weather_station
 #' @export
 #' @references Bendix 2004, p. 246.
 trans_aerosol.default <- function(datetime, lon, lat, elev, temp, ...,
