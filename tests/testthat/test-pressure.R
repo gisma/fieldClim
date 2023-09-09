@@ -1,5 +1,3 @@
-context("Pressure")
-
 # Test data
 elev <- 200
 t <- 20.8

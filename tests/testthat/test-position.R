@@ -1,5 +1,3 @@
-context("Position of climate station")
-
 # Test data
 obs_width <- 30
 obs_height <- 13

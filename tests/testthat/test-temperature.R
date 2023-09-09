@@ -1,5 +1,3 @@
-context("Temperature functions")
-
 test_that("Potential Temperature", {
   expect_equal(temp_pot_temp(25, 1000),
     26.124,

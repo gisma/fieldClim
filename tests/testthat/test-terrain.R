@@ -1,5 +1,3 @@
-context("Terrain")
-
 slp <- 20 # slope of terrain in degrees
 
 test_that("terr_sky_view", {

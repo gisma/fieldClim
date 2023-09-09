@@ -1,4 +1,6 @@
-#' Eccentricity
+#' Eccentricity factor
+#'
+#' The track of Earth around Sun is not a circle, but more like an ellipse.
 #'
 #' @inheritParams build_weather_station
 #' @returns Unitless.
@@ -46,7 +48,7 @@ sol_day_angle <- function(...) {
 #' @rdname sol_day_angle
 #' @inheritParams build_weather_station
 #' @export
-#' @references Bendix 2004, p. 243
+#' @references Bendix 2004, p. 243.
 sol_day_angle.default <- function(datetime, ...) {
   julian_day <- sol_julian_day(datetime)
   

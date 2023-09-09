@@ -1,5 +1,3 @@
-context("transmittance")
-
 # test data
 p <- 1000 # Air pressure in hPa
 oz <- 0.35 # average ozon columnar values 0.35 cm

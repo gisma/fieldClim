@@ -1,5 +1,3 @@
-context("Radiation")
-
 # Test data
 t <- 20.8
 hum1 <- 89

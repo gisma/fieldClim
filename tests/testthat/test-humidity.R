@@ -1,5 +1,3 @@
-context("Humidity")
-
 # test data
 t1 <- 22
 t2 <- 21

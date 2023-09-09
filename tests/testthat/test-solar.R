@@ -1,13 +1,3 @@
-context("Solar")
-
-#test_that("sol_eccentricity", {
-#  expect_equal(sol_eccentricity(datetime), 0.9965642, tolerance = 1e-5)
-#})
-
-#test_that("sol_day_angle", {
-#  expect_equal(sol_day_angle(datetime), 0.9965642, tolerance = 1e-5)
-#})
-
 test_that("sol_julian_day.defaut", {
   datetime <- as.POSIXlt("2018-9-29")
   expect_equal(sol_julian_day(datetime), 272)

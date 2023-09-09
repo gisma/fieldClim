@@ -1,5 +1,3 @@
-context("Soil functions")
-
 # test data
 s_Moist <- 13 # soil moisture in volume percent
 s_flag <- 3 # 1 = sand, 2 = clay, 3 = silt

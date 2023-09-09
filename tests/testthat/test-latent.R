@@ -1,5 +1,3 @@
-context("Latent")
-
 # define values for test data
 hum1 <- 89
 hum2 <- 88

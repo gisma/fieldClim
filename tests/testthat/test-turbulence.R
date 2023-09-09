@@ -1,5 +1,3 @@
-context("Turbulence")
-
 # define values for test data
 ah <- 10 # Measurement height
 h <- 1.2 # Obstacle height in m

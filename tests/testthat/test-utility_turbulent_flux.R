@@ -1,5 +1,3 @@
-context("Utility Turbulent Flux")
-
 # test data
 t <- 22.53
 dpot <- -0.1254715

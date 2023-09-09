@@ -1,5 +1,3 @@
-context("Boundary layers")
-
 # Test data
 dist <- 200
 v <- 3.0

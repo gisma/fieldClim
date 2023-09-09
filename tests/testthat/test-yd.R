@@ -64,6 +64,7 @@ soil_heat_flux(texture, moisture, soil_temp1, soil_temp2, soil_depth1, soil_dept
   soil_thermal_cond(texture, moisture)
 
 ## rad
+#*1 means there are other optional arguments
 rad_bal(datetime, lon, lat, elev, temp,
     surface_type, slope, exposition, valley,
     rh, surface_temp)*1
@@ -195,34 +196,6 @@ Caldern_Wald <- build_weather_station(
 )
 
 
-out <- c()
-a <- seq(as.Date("2020-01-01"), as.Date("2020-12-31"), by = 1)
-for (i in seq(length(a))) {
-  out[i] <- sol_julian_day(a[i])
-}
-plot(out, type = "l")
-
-out <- c()
-a <- seq(as.Date("2020-01-01"), as.Date("2020-12-31"), by = 1)
-for (i in seq(length(a))) {
-  out[i] <- sol_day_angle(a[i])
-}
-plot(out, type = "l")
-
-
-out <- c()
-a <- seq(as.Date("2020-01-01"), as.Date("2020-12-31"), by = 1)
-for (i in seq(length(a))) {
-  out[i] <- sol_eccentricity(a[i])
-}
-plot(out, type = "l")
-
-a <- c()
-for(day_angle in seq(0, 359)) {
-  a[day_angle+1] = 1.00011 + 0.034221 * cos(day_angle) + 0.00128 * sin(day_angle) + 0.000719 * cos(2 * day_angle) + 0.000719 * sin(2 * day_angle)
-}
-plot(a, type = "l")
-# matches with p243, +-3%
 
 a <- c()
 for(elevation in seq(0, 359)) {
