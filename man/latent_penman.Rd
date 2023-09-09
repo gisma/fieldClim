@@ -33,8 +33,6 @@ See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:strptime]{base::strp
 \item{lat}{Latitude in decimal degrees.}
 
 \item{lon}{Longitude in decimal degrees.}
-
-\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
 Latent heat flux in W/m\eqn{^2}.

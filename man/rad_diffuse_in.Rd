@@ -29,15 +29,25 @@ rad_diffuse_in(...)
   \describe{
     \item{\code{ozone_column}}{Atmospheric ozone as column in cm, default 0.35.}
     \item{\code{sol_const}}{Solar constant in W/m\eqn{^2}, default 1368.}
-    \item{\code{slope}}{Slope in degree.}
-    \item{\code{exposition}}{Exposition in degree.}
   }}
 
-\item{datetime}{Datetime of class \code{POSIXlt}.}
+\item{datetime}{Datetime of class \code{POSIXlt}. See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}}.}
 
 \item{lon}{Longitude in degree.}
 
 \item{lat}{Latitude in degree.}
+
+\item{elev}{Elevation above sea level in m.}
+
+\item{temp}{Temperature in \eqn{^\circ}C.}
+
+\item{surface_type}{Surface type for which a specific emissivity will be selected.}
+
+\item{slope}{Slope in degree.}
+
+\item{exposition}{Exposition in degree.}
+
+\item{valley}{If the position is in a valley (TRUE) or on a slope (FALSE).}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }
@@ -48,5 +58,5 @@ W/m\eqn{^2}
 Incoming diffused radiation
 }
 \references{
-p58eq3.14, p55eq3.9
+Bendix 2004, p. 58eq3.14, p55eq3.9
 }

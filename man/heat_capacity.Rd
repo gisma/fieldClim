@@ -16,5 +16,5 @@ Heat capacity density in J/(K*m\eqn{^3})
 Calculates volumetric heat capacity
 }
 \references{
-p261.
+Bendix 2004, p. 261.
 }

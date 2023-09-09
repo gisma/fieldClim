@@ -29,5 +29,5 @@ Minimal distance between measurement point and obstacle for undisturbed measurem
 Calculate the needed minimum distance between climate station and obstacle (e.g. forest), to ensure independence of measurements.
 }
 \references{
-p189eq9.1.
+Bendix 2004, p. 189eq9.1.
 }

@@ -20,7 +20,13 @@ hum_precipitable_water(...)
     \item{\code{rl}}{Specific gas constant for air in m\eqn{^2}/s\eqn{^2}/K, default 287.05.}
   }}
 
-\item{datetime}{Datetime of class \code{POSIXlt}.}
+\item{datetime}{Datetime of class \code{POSIXlt}. See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}}.}
+
+\item{lat}{Latitude in degree.}
+
+\item{elev}{Elevation above sea level in m.}
+
+\item{temp}{Temperature in \eqn{^\circ}C.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }
@@ -36,5 +42,5 @@ Latitude <= 30 degrees is defined as tropic; <= 60 is temperate; others is subar
 Summer is defined as April to September in the northern hemisphere.
 }
 \references{
-p246. Column name "subarctic_summer" and "subarctic_winter" were switched.
+Bendix 2004, p. 246. Column name "subarctic_summer" and "subarctic_winter" were switched.
 }

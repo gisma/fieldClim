@@ -1,16 +1,15 @@
 #' Eccentricity
 #'
-#' @param ... Additional arguments.
-#' @returns unitless
+#' @inheritParams build_weather_station
+#' @returns Unitless.
 #' @export
 sol_eccentricity <- function(...) {
   UseMethod("sol_eccentricity")
 }
 
-#' @rdname sol_eccentricity
-#' @inheritParams sol_day_angle
+#' @inheritParams build_weather_station
 #' @export
-#' @references p243.
+#' @references Bendix 2004, p. 243.
 sol_eccentricity.default <- function(datetime, ...) {
   day_angle <- sol_day_angle(datetime)
   day_angle <- deg2rad(day_angle)
@@ -20,7 +19,7 @@ sol_eccentricity.default <- function(datetime, ...) {
 }
 
 #' @rdname sol_eccentricity
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @export
 sol_eccentricity.weather_station <- function(weather_station, ...) {
   a <- methods::formalArgs(sol_eccentricity.default)
@@ -37,17 +36,17 @@ sol_eccentricity.weather_station <- function(weather_station, ...) {
 #' See a year as a circle. The first day of a (leap) year is 0 degree
 #' and the last day 360 degree.
 #'
-#' @param ... Additional arguments.
-#' @returns degree
+#' @inheritParams build_weather_station
+#' @returns Degree.
 #' @export
 sol_day_angle <- function(...) {
   UseMethod("sol_day_angle")
 }
 
 #' @rdname sol_day_angle
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @export
-#' @references p243
+#' @references Bendix 2004, p. 243
 sol_day_angle.default <- function(datetime, ...) {
   julian_day <- sol_julian_day(datetime)
   
@@ -56,7 +55,7 @@ sol_day_angle.default <- function(datetime, ...) {
 }
 
 #' @rdname sol_day_angle
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @export
 sol_day_angle.weather_station <- function(weather_station, ...) {
   a <- methods::formalArgs(sol_day_angle.default)
@@ -72,22 +71,20 @@ sol_day_angle.weather_station <- function(weather_station, ...) {
 #'
 #' Day of year as an integer from 1 to 366.
 #'
-#' @param ... Additional arguments.
-#' @returns unitless
+#' @inheritParams build_weather_station
+#' @returns Unitless.
 #' @export
 sol_julian_day <- function(...) {
   UseMethod("sol_julian_day")
 }
 
-#' @rdname sol_julian_day
 #' @inheritParams build_weather_station
 #' @export
 sol_julian_day.default <- function(datetime, ...) {
   as.integer(format(datetime, format = "%j"))
 }
 
-#' @rdname sol_julian_day
-#' @param weather_station Object of class `weather_station`.
+#' @inheritParams build_weather_station
 #' @export
 sol_julian_day.weather_station <- function(weather_station, ...) {
   a <- methods::formalArgs(sol_julian_day.default)
@@ -101,18 +98,17 @@ sol_julian_day.weather_station <- function(weather_station, ...) {
 
 #' Solar elevation angle
 #'
-#' @param ... Additional arguments.
-#' @returns degree
+#' @inheritParams build_weather_station
+#' @returns Degree.
 #' @export
 sol_elevation <- function(...) {
   UseMethod("sol_elevation")
 }
 
 #' @rdname sol_elevation
-#' @inheritParams sol_hour_angle
-#' @param lat Latitude in degree.
+#' @inheritParams build_weather_station
 #' @export
-#' @references p243
+#' @references Bendix 2004, p. 243.
 sol_elevation.default <- function(datetime, lon, lat, ...) {
   declination <- sol_declination(datetime)
   hour_angle <- sol_hour_angle(datetime, lon)
@@ -127,7 +123,7 @@ sol_elevation.default <- function(datetime, lon, lat, ...) {
 }
 
 #' @rdname sol_elevation
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @export
 sol_elevation.weather_station <- function(weather_station, ...) {
   a <- methods::formalArgs(sol_elevation.default)
@@ -141,17 +137,17 @@ sol_elevation.weather_station <- function(weather_station, ...) {
 
 #' Solar declination
 #'
-#' @param ... Additional arguments.
-#' @returns degree
+#' @inheritParams build_weather_station
+#' @returns Degree.
 #' @export
 sol_declination <- function(...) {
   UseMethod("sol_declination")
 }
 
 #' @rdname sol_declination
-#' @inheritParams sol_ecliptic_length
+#' @inheritParams build_weather_station
 #' @export
-#' @references p243
+#' @references Bendix 2004, p. 243.
 sol_declination.default <- function(datetime, ...) {
   ecliptic_length <- sol_ecliptic_length(datetime)
   ecliptic_length <- deg2rad(ecliptic_length)
@@ -161,7 +157,7 @@ sol_declination.default <- function(datetime, ...) {
 }
 
 #' @rdname sol_declination
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @export
 sol_declination.weather_station <- function(weather_station, ...) {
   a <- methods::formalArgs(sol_declination.default)
@@ -175,17 +171,17 @@ sol_declination.weather_station <- function(weather_station, ...) {
 
 #' Solar ecliptic length
 #'
-#' @param ... Additional arguments.
-#' @returns degree
+#' @inheritParams build_weather_station
+#' @returns Degree.
 #' @export
 sol_ecliptic_length <- function(...) {
   UseMethod("sol_ecliptic_length")
 }
 
 #' @rdname sol_ecliptic_length
-#' @inheritParams sol_medium_anomaly
+#' @inheritParams build_weather_station
 #' @export
-#' @references p243
+#' @references Bendix 2004, p. 243.
 sol_ecliptic_length.default <- function(datetime, ...) {
   julian_day <- sol_julian_day(datetime)
   medium_anomaly <- sol_medium_anomaly(datetime)
@@ -195,7 +191,7 @@ sol_ecliptic_length.default <- function(datetime, ...) {
 }
 
 #' @rdname sol_ecliptic_length
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @export
 sol_ecliptic_length.weather_station <- function(weather_station, ...) {
   a <- methods::formalArgs(sol_ecliptic_length.default)
@@ -209,17 +205,17 @@ sol_ecliptic_length.weather_station <- function(weather_station, ...) {
 
 #' Solar medium anomaly
 #'
-#' @param ... Additional arguments.
-#' @returns degree
+#' @inheritParams build_weather_station
+#' @returns Degree.
 #' @export
 sol_medium_anomaly <- function(...) {
   UseMethod("sol_medium_anomaly")
 }
 
 #' @rdname sol_medium_anomaly
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @export
-#' @references p243
+#' @references Bendix 2004, p. 243.
 sol_medium_anomaly.default <- function(datetime, ...) {
   julian_day <- sol_julian_day(datetime)
   
@@ -227,7 +223,7 @@ sol_medium_anomaly.default <- function(datetime, ...) {
 }
 
 #' @rdname sol_medium_anomaly
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @export
 sol_medium_anomaly.weather_station <- function(weather_station, ...) {
   a <- methods::formalArgs(sol_medium_anomaly.default)
@@ -241,17 +237,17 @@ sol_medium_anomaly.weather_station <- function(weather_station, ...) {
 
 #' Solar hour angle
 #'
-#' @param ... Additional arguments.
-#' @returns degree
+#' @inheritParams build_weather_station
+#' @returns Degree.
 #' @export
 sol_hour_angle <- function(...) {
   UseMethod("sol_hour_angle")
 }
 
 #' @rdname sol_hour_angle
-#' @inheritParams sol_time_formula
+#' @inheritParams build_weather_station
 #' @export
-#' @references p243
+#' @references Bendix 2004, p. 243.
 sol_hour_angle.default <- function(datetime, lon, ...) {
   medium_suntime <- sol_medium_suntime(datetime, lon)
   time_formula <- sol_time_formula(datetime, lon)
@@ -260,7 +256,7 @@ sol_hour_angle.default <- function(datetime, lon, ...) {
 }
 
 #' @rdname sol_hour_angle
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @export
 sol_hour_angle.weather_station <- function(weather_station, ...) {
   a <- methods::formalArgs(sol_hour_angle.default)
@@ -274,7 +270,7 @@ sol_hour_angle.weather_station <- function(weather_station, ...) {
 
 #' Solar medium suntime
 #'
-#' @param ... Additional arguments.
+#' @inheritParams build_weather_station
 #' @returns hour
 #' @export
 sol_medium_suntime <- function(...) {
@@ -282,9 +278,9 @@ sol_medium_suntime <- function(...) {
 }
 
 #' @rdname sol_medium_suntime
-#' @inheritParams sol_time_formula
+#' @inheritParams build_weather_station
 #' @export
-#' @references p243
+#' @references Bendix 2004, p. 243.
 sol_medium_suntime.default <- function(datetime, lon, ...) {
   datetime <- as.POSIXct(datetime)
   datetime <- as.POSIXlt(datetime, tz = "UTC")
@@ -294,7 +290,7 @@ sol_medium_suntime.default <- function(datetime, lon, ...) {
 }
 
 #' @rdname sol_medium_suntime
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @export
 sol_medium_suntime.weather_station <- function(weather_station, ...) {
   a <- methods::formalArgs(sol_medium_suntime.default)
@@ -308,7 +304,7 @@ sol_medium_suntime.weather_station <- function(weather_station, ...) {
 
 #' Solar time formula
 #'
-#' @param ... Additional arguments.
+#' @inheritParams build_weather_station
 #' @returns hour
 #' @export
 sol_time_formula <- function(...) {
@@ -316,10 +312,9 @@ sol_time_formula <- function(...) {
 }
 
 #' @rdname sol_time_formula
-#' @inheritParams sol_medium_anomaly
-#' @param lon Longitude in degree.
+#' @inheritParams build_weather_station
 #' @export
-#' @references p243
+#' @references Bendix 2004, p. 243.
 sol_time_formula.default <- function(datetime, lon, ...) {
   medium_anomaly <- sol_medium_anomaly(datetime)
   
@@ -330,7 +325,7 @@ sol_time_formula.default <- function(datetime, lon, ...) {
 }
 
 #' @rdname sol_time_formula
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @export
 sol_time_formula.weather_station <- function(weather_station, ...) {
   a <- methods::formalArgs(sol_time_formula.default)
@@ -344,17 +339,17 @@ sol_time_formula.weather_station <- function(weather_station, ...) {
 
 #' Solar azimuth
 #'
-#' @param ... Additional arguments.
-#' @returns degree
+#' @inheritParams build_weather_station
+#' @returns Degree.
 #' @export
 sol_azimuth <- function(...) {
   UseMethod("sol_azimuth")
 }
 
 #' @rdname sol_azimuth
-#' @inheritParams sol_elevation
+#' @inheritParams build_weather_station
 #' @export
-#' @references p243
+#' @references Bendix 2004, p. 243.
 sol_azimuth.default <- function(datetime, lon, lat, ...) {
   declination <- sol_declination(datetime)
   hour_angle <- sol_hour_angle(datetime, lon)
@@ -376,7 +371,7 @@ sol_azimuth.default <- function(datetime, lon, lat, ...) {
 }
 
 #' @rdname sol_azimuth
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @export
 sol_azimuth.weather_station <- function(weather_station, ...) {
   a <- methods::formalArgs(sol_azimuth.default)

@@ -7,10 +7,63 @@
 build_weather_station(...)
 }
 \arguments{
-\item{datetime}{Datetime of class \code{POSIXlt}.}
+\item{...}{Additional arguments.}
+
+\item{weather_station}{Object of class \code{weather_station}.}
+
+\item{datetime}{Datetime of class \code{POSIXlt}. See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}}.}
+
+\item{lon}{Longitude in degree.}
+
+\item{lat}{Latitude in degree.}
+
+\item{elev}{Elevation above sea level in m.}
+
+\item{temp}{Temperature in \eqn{^\circ}C.}
+
+\item{slope}{Slope in degree.}
+
+\item{exposition}{Exposition in degree.}
+
+\item{surface_type}{Surface type for which a specific emissivity will be selected.}
+
+\item{valley}{If the position is in a valley (TRUE) or on a slope (FALSE).}
+
+\item{surface_temp}{Surface temperature in \eqn{^\circ}C.}
+
+\item{rh}{Relative humidity in \%.}
+
+\item{texture}{Soil texture. Either \code{sand}, \code{peat} or \code{clay}.}
+
+\item{moisture}{Soil moisture in cubic meter/cubic meter.}
+
+\item{soil_temp1, }{soil_temp2 Soil temperature in °C.}
+
+\item{soil_depth, }{soil_depth2 Depth of the soil temperature measurement in m.}
+
+\item{sol_const}{Solar constant in W/m\eqn{^2}, default 1368.}
+
+\item{ozone_column}{Atmospheric ozone as column in cm, default 0.35.}
+
+\item{vis}{Visibility in km, default 30.}
+
+\item{p0}{Standard pressure in hPa, default 1013.25.}
+
+\item{g}{Gravitational acceleration in m/s\eqn{^2}, default 9.81.}
+
+\item{rl}{Specific gas constant for air in m\eqn{^2}/s\eqn{^2}/K, default 287.05.}
+
+\item{a}{Constant a is 7.5 (default) over water, 7.6 over undercooled water, and 9.5 over ice.}
+
+\item{b}{Constant b is 235 (defalut) over water, 240.7 over undercooled water, and 265.5 over ice.}
+
+\item{sigma}{Stefan-Boltzmann constant in W/m\eqn{^2}/K\eqn{^4}, default `r sigma_default'.}
 }
 \description{
 Creates a list of class \code{weather_station} that contains all input arguments.
+}
+\details{
+Provided input arguments will only be used if they are listed in the section "Arguments".
 }
 \section{Arguments without default value}{
 \tabular{ll}{

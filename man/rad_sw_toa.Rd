@@ -15,7 +15,7 @@ rad_sw_toa(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{datetime}{Datetime of class \code{POSIXlt}.}
+\item{datetime}{Datetime of class \code{POSIXlt}. See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}}.}
 
 \item{lon}{Longitude in degree.}
 
@@ -32,5 +32,5 @@ W/m\eqn{^2}
 Shortwave radiation at top of atmosphere
 }
 \references{
-p244
+Bendix 2004, p. 244
 }

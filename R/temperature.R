@@ -15,7 +15,7 @@ temp_pot_temp <- function(...) {
 #' @param t Temperature in °C.
 #' @param elev Elevation above sea level in m.
 #' @export
-#' @references p261.
+#' @references Bendix 2004, p. 261.
 temp_pot_temp.default <- function(t, elev, ...) {
   p0 <- p0_default # standard air pressure in hPa
   p <- pres_p(elev, t) # calculate air pressure

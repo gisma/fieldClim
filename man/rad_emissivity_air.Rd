@@ -19,9 +19,9 @@ rad_emissivity_air(...)
     \item{\code{}}{}
   }}
 
-\item{temp}{Temperature in degree Celcius.}
+\item{temp}{Temperature in \eqn{^\circ}C.}
 
-\item{rh}{relative humidity.}
+\item{rh}{Relative humidity in \%.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }
@@ -32,5 +32,5 @@ Emissivity of the atmosphere (0-1).
 Calculation of the emissivity of the atmosphere.
 }
 \references{
-p66eq3.22
+Bendix 2004, p. 66eq3.22
 }

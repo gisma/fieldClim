@@ -18,7 +18,7 @@ pos_min_dist <- function(...) {
 #' @param obs_radius If ring == T: radius of the ring in m.
 #' @export
 #' @returns Minimal distance between measurement point and obstacle for undisturbed measurement in m.
-#' @references p189eq9.1.
+#' @references Bendix 2004, p. 189eq9.1.
 pos_min_dist.default <- function(obs_width, obs_height, ring = F, obs_radius = NULL, ...) {
   # if climate station is positioned on a clearing:
   if (ring == TRUE) {
@@ -53,7 +53,7 @@ pos_min_dist.default <- function(obs_width, obs_height, ring = F, obs_radius = N
 #'
 #' @returns Message, that tells you if climate station is well positioned or, if not, in which distance to the obstacle it needs to be placed instead.
 #' @export
-#' @references p189eq9.1.
+#' @references Bendix 2004, p. 189eq9.1.
 pos_max_dist <- function(dist, obs_width, obs_height, ring = F) {
   if (ring == T) {
     if (dist < 15 * obs_height) {

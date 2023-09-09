@@ -24,8 +24,6 @@ pres_p(...)
 \item{g}{Gravitational acceleration in m/s\eqn{^2}, default 9.81.}
 
 \item{rl}{Specific gas constant for air in m\eqn{^2}/s\eqn{^2}/K, default 287.05.}
-
-\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
 Pressure in hPa.

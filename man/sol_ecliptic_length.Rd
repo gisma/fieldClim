@@ -15,7 +15,7 @@ sol_ecliptic_length(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{datetime}{Datetime of class \code{POSIXlt}.}
+\item{datetime}{Datetime of class \code{POSIXlt}. See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}}.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }
@@ -26,5 +26,5 @@ degree
 Solar ecliptic length
 }
 \references{
-p243
+Bendix 2004, p. 243
 }

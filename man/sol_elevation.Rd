@@ -15,7 +15,7 @@ sol_elevation(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{datetime}{Datetime of class \code{POSIXlt}.}
+\item{datetime}{Datetime of class \code{POSIXlt}. See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}}.}
 
 \item{lon}{Longitude in degree.}
 
@@ -30,5 +30,5 @@ degree
 Solar elevation angle
 }
 \references{
-p243
+Bendix 2004, p. 243
 }

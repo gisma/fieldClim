@@ -15,8 +15,6 @@ pres_air_density(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{weather_station}{Object of class \code{weather_station}.}
-
 \item{height}{"lower" or "upper"}
 
 \item{p}{Pressure in hPa.}

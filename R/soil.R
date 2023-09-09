@@ -17,7 +17,7 @@ soil_heat_flux <- function(...) {
 #' @param soil_temp1, soil_temp2 Soil temperature in °C.
 #' @param soil_depth, soil_depth2 Depth of the soil temperature measurement in m.
 #' @export
-#' @references p71eq4.2.
+#' @references Bendix 2004, p. 71eq4.2.
 soil_heat_flux.default <- function(texture, moisture,
     soil_temp1, soil_temp2, soil_depth1, soil_depth2, ...) {
   thermal_cond <- soil_thermal_cond(texture, moisture)
@@ -55,7 +55,7 @@ soil_thermal_cond <- function(...) {
 #' @param texture Soil texture. Either `sand`, `peat` or `clay`.
 #' @param moisture Soil moisture in cubic meter/cubic meter.
 #' @export
-#' @references p254.
+#' @references Bendix 2004, p. 254.
 soil_thermal_cond.default <- function(texture, moisture, ...) {
   # convert moisture from [cubic m/cubic m] to [Vol-%]
   moisture <- moisture * 100
@@ -123,7 +123,7 @@ soil_heat_cap <- function(...) {
 #' @importFrom stats approx
 #' @export
 #' @noRd
-#' @references p254.
+#' @references Bendix 2004, p. 254.
 soil_heat_cap.default <- function(moisture, texture = "sand", ...) {
   # convert moisture from [cubic m/cubic m] to [Vol-%]
   moisture <- moisture * 100
@@ -175,7 +175,7 @@ soil_attenuation <- function(...) {
 #' @param texture Soil texture. Either "sand", "peat" or "clay".
 #' @export
 #' @noRd
-#' @references p253.
+#' @references Bendix 2004, p. 253.
 soil_attenuation.default <- function(moisture, texture = "sand", ...) {
   thermal_cond <- soil_thermal_cond(moisture, texture)
   vol_heat_cap <- soil_heat_cap(moisture, texture)

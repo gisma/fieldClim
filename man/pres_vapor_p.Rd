@@ -22,8 +22,6 @@ pres_vapor_p(...)
 \item{temp}{Air temperature in °C.}
 
 \item{rh}{Relative humidity in \%.}
-
-\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
 Vapor pressure in hPa.

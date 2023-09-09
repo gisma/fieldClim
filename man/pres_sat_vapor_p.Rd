@@ -20,8 +20,6 @@ pres_sat_vapor_p(...)
 \item{a}{Constant a is 7.5 (default) over water, 7.6 over undercooled water, and 9.5 over ice.}
 
 \item{b}{Constant b is 235 (defalut) over water, 240.7 over undercooled water, and 265.5 over ice.}
-
-\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
 Saturation vapor pressure in hPa.
@@ -31,5 +29,5 @@ Calculates the saturation vapor pressure from air temperature using the \emph{Ma
 formula (applicable over water surfaces).
 }
 \references{
-p261.
+Bendix 2004, p. 261.
 }

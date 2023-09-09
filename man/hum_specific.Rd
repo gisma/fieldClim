@@ -21,8 +21,6 @@ hum_specific(...)
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{weather_station}{Object of class \code{weather_station}.}
-
 \item{height}{Height of measurement. "lower" or "upper".}
 }
 \value{
@@ -32,5 +30,5 @@ Specific humidity in kg/kg.
 Calculates specific humidity from vapor pressure and air pressure.
 }
 \references{
-p262.
+Bendix 2004, p. 262.
 }

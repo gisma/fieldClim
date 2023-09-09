@@ -16,15 +16,18 @@ rad_lw_bal(...)
 \item{...}{
   Arguments passed on to \code{\link[=rad_lw_in.default]{rad_lw_in.default}}, \code{\link[=rad_lw_out.default]{rad_lw_out.default}}
   \describe{
-    \item{\code{sigma}}{Stefan-Boltzmann constant in W/m\eqn{^2}/K\eqn{^4},
-default `r sigma_default'.}
+    \item{\code{sigma}}{Stefan-Boltzmann constant in W/m\eqn{^2}/K\eqn{^4}, default `r sigma_default'.}
   }}
 
-\item{temp}{Temperature in degree Celcius.}
+\item{temp}{Temperature in \eqn{^\circ}C.}
 
-\item{rh}{relative humidity.}
+\item{rh}{Relative humidity in \%.}
 
-\item{surface_temp}{Surface temperature in °C.}
+\item{slope}{Slope in degree.}
+
+\item{valley}{If the position is in a valley (TRUE) or on a slope (FALSE).}
+
+\item{surface_temp}{Surface temperature in \eqn{^\circ}C.}
 
 \item{surface_type}{Surface type for which a specific emissivity will be selected.}
 
@@ -37,5 +40,5 @@ W/m\eqn{^2}.
 Long wave radiation balance
 }
 \references{
-p68eq3.25
+Bendix 2004, p. 68eq3.25
 }

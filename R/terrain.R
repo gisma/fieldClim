@@ -5,7 +5,7 @@
 #'
 #' Terrain view factor can be calculated by 1-terr_sky_view.
 #'
-#' @param ... Additional arguments.
+#' @inheritParams build_weather_station
 #' @returns Sky view factor from 0-1. unitless
 #' @export
 terr_sky_view <- function(...) {
@@ -13,10 +13,10 @@ terr_sky_view <- function(...) {
 }
 
 #' @rdname terr_sky_view
-#' @param slope Inclination of slope in degrees.
-#' @param valley If the position is in a valley (TRUE) or on a slope (FALSE).
+#' @inheritParams build_weather_station
+#' @inheritParams build_weather_station
 #' @export
-#' @references p57eq3.12, p57eq3.13
+#' @references Bendix 2004, p. 57eq3.12, p57eq3.13
 terr_sky_view.default <- function(slope, valley, ...) {
   slope <- deg2rad(slope)
   
@@ -28,7 +28,7 @@ terr_sky_view.default <- function(slope, valley, ...) {
 }
 
 #' @rdname terr_sky_view
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @export
 terr_sky_view.weather_station <- function(weather_station, ...) {
   a <- methods::formalArgs(terr_sky_view.default)
@@ -42,19 +42,19 @@ terr_sky_view.weather_station <- function(weather_station, ...) {
 
 #' Terrain angle
 #'
-#' @param ... Additional arguments.
-#' @returns degree.
+#' @inheritParams build_weather_station
+#' @returns Degree..
 #' @export
 terr_terrain_angle <- function(...) {
   UseMethod("terr_terrain_angle")
 }
 
 #' @rdname terr_terrain_angle
-#' @inheritParams sol_elevation
-#' @param slope Slope in degree.
-#' @param exposition Exposition in degree.
+#' @inheritParams build_weather_station
+#' @inheritParams build_weather_station
+#' @inheritParams build_weather_station
 #' @export
-#' @references p52eq3.7
+#' @references Bendix 2004, p. 52eq3.7
 terr_terrain_angle.default <- function(datetime, lon, lat, slope, exposition, ...) {
   elevation <- sol_elevation(datetime, lon, lat)
   azimuth <- sol_azimuth(datetime, lon, lat)
@@ -70,7 +70,7 @@ terr_terrain_angle.default <- function(datetime, lon, lat, slope, exposition, ..
 }
 
 #' @rdname terr_terrain_angle
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @export
 terr_terrain_angle.weather_station <- function(weather_station, ...) {
   a <- methods::formalArgs(terr_terrain_angle.default)

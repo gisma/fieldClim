@@ -22,5 +22,5 @@ Message, that tells you if climate station is well positioned or, if not, in whi
 If station is positioned beyond minimum distance, check if it lies within maximum distance.
 }
 \references{
-p189eq9.1.
+Bendix 2004, p. 189eq9.1.
 }

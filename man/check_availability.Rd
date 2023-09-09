@@ -7,8 +7,6 @@
 check_availability(weather_station, ...)
 }
 \arguments{
-\item{weather_station}{Object of class \code{weather_station}.}
-
 \item{...}{Strings of properties to check.}
 }
 \value{

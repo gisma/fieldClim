@@ -249,7 +249,7 @@ as.data.frame.weather_station <- function(x, ...,
 #' Radian to degree
 #'
 #' @param angle Angle in radian.
-#' @returns degree.
+#' @returns Degree..
 #' @export
 rad2deg <- function(angle) {
   angle * 180 / pi
@@ -276,7 +276,7 @@ c2k <- function(temp) {
 #' Kelvin to degree Celcius
 #'
 #' @param temp Temperature in Kelvin.
-#' @returns degree Celcius
+#' @returns Degree. Celcius
 #' @export
 k2c <- function(temp) {
   temp - c2k_default

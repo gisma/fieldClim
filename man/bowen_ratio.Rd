@@ -21,5 +21,5 @@ Bowen-ratio
 Calculates Bowen-ratio.
 }
 \references{
-p221eq9.21.
+Bendix 2004, p. 221eq9.21.
 }

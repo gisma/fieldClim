@@ -15,7 +15,7 @@ trans_gas(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{datetime}{Datetime of class \code{POSIXlt}.}
+\item{datetime}{Datetime of class \code{POSIXlt}. See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}}.}
 
 \item{lon}{Longitude in degree.}
 
@@ -23,7 +23,7 @@ trans_gas(...)
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{temp}{Temperature in degree Celcius.}
+\item{temp}{Temperature in \eqn{^\circ}C.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }
@@ -34,5 +34,5 @@ Ratio from 0 to 1, unitless.
 Calculates transmittance due to O\eqn{_2} and CO\eqn{_2}.
 }
 \references{
-p246.
+Bendix 2004, p. 246.
 }

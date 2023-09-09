@@ -28,8 +28,6 @@ hum_moisture_gradient(...)
 \item{z2}{Upper measurement height in m.}
 
 \item{elev}{Elevation above sea level in m.}
-
-\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
 Moisture gradient.

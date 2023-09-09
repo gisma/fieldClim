@@ -15,7 +15,7 @@ sol_medium_suntime(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{datetime}{Datetime of class \code{POSIXlt}.}
+\item{datetime}{Datetime of class \code{POSIXlt}. See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}}.}
 
 \item{lon}{Longitude in degree.}
 
@@ -28,5 +28,5 @@ hour
 Solar medium suntime
 }
 \references{
-p243
+Bendix 2004, p. 243
 }

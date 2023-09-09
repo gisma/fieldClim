@@ -15,7 +15,7 @@ terr_sky_view(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{slope}{Inclination of slope in degrees.}
+\item{slope}{Slope in degree.}
 
 \item{valley}{If the position is in a valley (TRUE) or on a slope (FALSE).}
 
@@ -32,5 +32,5 @@ position in valley or on a slope.
 Terrain view factor can be calculated by 1-terr_sky_view.
 }
 \references{
-p57eq3.12, p57eq3.13
+Bendix 2004, p. 57eq3.12, p57eq3.13
 }

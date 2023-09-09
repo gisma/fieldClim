@@ -17,8 +17,6 @@ hum_evap_heat(...)
 
 \item{t}{Air temperature in °C.}
 
-\item{weather_station}{Object of class \code{weather_station}.}
-
 \item{height}{Height of measurement. "lower" or "upper".}
 }
 \value{
@@ -28,5 +26,5 @@ Enthalpy of vaporization in J/kg.
 Calculates heat of evaporation for water from air temperature.
 }
 \references{
-p261.
+Bendix 2004, p. 261.
 }

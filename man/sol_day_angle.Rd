@@ -15,7 +15,7 @@ sol_day_angle(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{datetime}{Datetime of class \code{POSIXlt}.}
+\item{datetime}{Datetime of class \code{POSIXlt}. See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}}.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }
@@ -27,5 +27,5 @@ See a year as a circle. The first day of a (leap) year is 0 degree
 and the last day 360 degree.
 }
 \references{
-p243
+Bendix 2004, p. 243
 }

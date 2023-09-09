@@ -15,13 +15,11 @@ rad_lw_out(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{surface_temp}{Surface temperature in °C.}
+\item{surface_temp}{Surface temperature in \eqn{^\circ}C.}
 
 \item{surface_type}{Surface type for which a specific emissivity will be selected.}
 
-\item{sigma}{Stefan-Boltzmann constant
-with the default 5.6993e-8 W/m\eqn{^2}/K$^{4}$
-Default is 'field' as surface type.}
+\item{sigma}{Stefan-Boltzmann constant in W/m\eqn{^2}/K\eqn{^4}, default `r sigma_default'.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }
@@ -36,5 +34,5 @@ If a weather_station object is given, the lower air temperature will be used
 instead of the surface temperature.
 }
 \references{
-p66eq3.20
+Bendix 2004, p. 66eq3.20
 }

@@ -15,7 +15,7 @@ trans_ozone(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{datetime}{Datetime of class \code{POSIXlt}.}
+\item{datetime}{Datetime of class \code{POSIXlt}. See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}}.}
 
 \item{lon}{Longitude in degree.}
 
@@ -32,5 +32,5 @@ Ratio from 0 to 1, unitless.
 Transmittance due to ozone
 }
 \references{
-p245.
+Bendix 2004, p. 245.
 }

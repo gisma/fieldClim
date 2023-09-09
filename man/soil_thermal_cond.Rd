@@ -18,8 +18,6 @@ soil_thermal_cond(...)
 \item{texture}{Soil texture. Either \code{sand}, \code{peat} or \code{clay}.}
 
 \item{moisture}{Soil moisture in cubic meter/cubic meter.}
-
-\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
 Soil thermal conductivity in W/m/K.
@@ -31,5 +29,5 @@ Calculates soil thermal conductivity from soil texture and soil moisture.
 Works by linearly interpolating thermal conductivity based on measured data.
 }
 \references{
-p254.
+Bendix 2004, p. 254.
 }

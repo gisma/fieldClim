@@ -28,14 +28,11 @@ rad_sw_in(...)
 \item{...}{
   Arguments passed on to \code{\link[=rad_sw_toa.default]{rad_sw_toa.default}}, \code{\link[=trans_ozone.default]{trans_ozone.default}}, \code{\link[=trans_aerosol.default]{trans_aerosol.default}}, \code{\link[=terr_terrain_angle.default]{terr_terrain_angle.default}}
   \describe{
-    \item{\code{sol_const}}{Solar constant in W/m\eqn{^2}, default 1368.}
     \item{\code{ozone_column}}{Atmospheric ozone as column in cm, default 0.35.}
     \item{\code{vis}}{Visibility in km, default 30.}
-    \item{\code{slope}}{Slope in degree.}
-    \item{\code{exposition}}{Exposition in degree.}
   }}
 
-\item{datetime}{Datetime of class \code{POSIXlt}.}
+\item{datetime}{Datetime of class \code{POSIXlt}. See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}}.}
 
 \item{lon}{Longitude in degree.}
 
@@ -43,7 +40,17 @@ rad_sw_in(...)
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{temp}{Temperature in degree Celcius.}
+\item{temp}{Temperature in \eqn{^\circ}C.}
+
+\item{surface_type}{Surface type for which a specific emissivity will be selected.}
+
+\item{slope}{Slope in degree.}
+
+\item{exposition}{Exposition in degree.}
+
+\item{valley}{If the position is in a valley (TRUE) or on a slope (FALSE).}
+
+\item{sol_const}{Solar constant in W/m\eqn{^2}, default 1368.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }
@@ -54,5 +61,5 @@ W/m\eqn{^2}.
 Provide \code{slope} and \code{exposition} to perform topographic correction.
 }
 \references{
-p46eq3.3, p52eq3.8
+Bendix 2004, p. 46eq3.3, p52eq3.8
 }

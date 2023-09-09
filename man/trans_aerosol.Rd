@@ -19,7 +19,7 @@ trans_aerosol(...)
     \item{\code{}}{}
   }}
 
-\item{datetime}{Datetime of class \code{POSIXlt}.}
+\item{datetime}{Datetime of class \code{POSIXlt}. See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}}.}
 
 \item{lon}{Longitude in degree.}
 
@@ -27,7 +27,7 @@ trans_aerosol(...)
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{temp}{Temperature in degree Celcius.}
+\item{temp}{Temperature in \eqn{^\circ}C.}
 
 \item{vis}{Visibility in km, default 30.}
 
@@ -43,5 +43,5 @@ Transmittance due to fine particles in the air.
 Visibility is used to linearly interpolate aerosol optical thickness.
 }
 \references{
-p246.
+Bendix 2004, p. 246.
 }

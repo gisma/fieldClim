@@ -26,7 +26,23 @@ rad_sw_out(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{datetime}{Datetime of class \code{POSIXlt}.}
+\item{datetime}{Datetime of class \code{POSIXlt}. See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}}.}
+
+\item{lon}{Longitude in degree.}
+
+\item{lat}{Latitude in degree.}
+
+\item{elev}{Elevation above sea level in m.}
+
+\item{temp}{Temperature in \eqn{^\circ}C.}
+
+\item{slope}{Slope in degree.}
+
+\item{exposition}{Exposition in degree.}
+
+\item{valley}{If the position is in a valley (TRUE) or on a slope (FALSE).}
+
+\item{surface_type}{Surface type for which a specific emissivity will be selected.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }
@@ -37,5 +53,5 @@ W/m\eqn{^2}.
 Provide \code{slope} and \code{exposition} to perform topographic correction.
 }
 \references{
-p46eq3.3, p52eq3.8
+Bendix 2004, p. 46eq3.3, p52eq3.8
 }

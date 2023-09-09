@@ -2,6 +2,8 @@
 #'
 #' Creates a list of class `weather_station` that contains all input arguments.
 #'
+#' Provided input arguments will only be used if they are listed in the section "Arguments".
+#'
 #' @param ... Additional arguments.
 #' @param weather_station Object of class `weather_station`.
 #' @param datetime Datetime of class `POSIXlt`. See [base::as.POSIXlt()].

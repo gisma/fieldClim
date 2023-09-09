@@ -28,7 +28,27 @@ rad_bal(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{datetime}{Datetime of class \code{POSIXlt}.}
+\item{datetime}{Datetime of class \code{POSIXlt}. See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}}.}
+
+\item{lon}{Longitude in degree.}
+
+\item{lat}{Latitude in degree.}
+
+\item{elev}{Elevation above sea level in m.}
+
+\item{temp}{Temperature in \eqn{^\circ}C.}
+
+\item{surface_type}{Surface type for which a specific emissivity will be selected.}
+
+\item{slope}{Slope in degree.}
+
+\item{exposition}{Exposition in degree.}
+
+\item{valley}{If the position is in a valley (TRUE) or on a slope (FALSE).}
+
+\item{rh}{Relative humidity in \%.}
+
+\item{surface_temp}{Surface temperature in \eqn{^\circ}C.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }
@@ -39,5 +59,5 @@ Total radiation balance in W/m\eqn{^2}.
 Calculate total radiation balance.
 }
 \references{
-p45eq3.1
+Bendix 2004, p. 45eq3.1
 }

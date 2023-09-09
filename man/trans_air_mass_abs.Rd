@@ -20,7 +20,7 @@ trans_air_mass_abs(...)
     \item{\code{rl}}{Specific gas constant for air in m\eqn{^2}/s\eqn{^2}/K, default 287.05.}
   }}
 
-\item{datetime}{Datetime of class \code{POSIXlt}.}
+\item{datetime}{Datetime of class \code{POSIXlt}. See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}}.}
 
 \item{lon}{Longitude in degree.}
 
@@ -28,7 +28,7 @@ trans_air_mass_abs(...)
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{temp}{Temperature in degree Celcius.}
+\item{temp}{Temperature in \eqn{^\circ}C.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }
@@ -39,5 +39,5 @@ unitless
 Absolute optical air mass
 }
 \references{
-p247.
+Bendix 2004, p. 247.
 }

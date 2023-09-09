@@ -16,16 +16,18 @@ rad_lw_in(...)
 \item{...}{
   Arguments passed on to \code{\link[=terr_sky_view.default]{terr_sky_view.default}}
   \describe{
-    \item{\code{slope}}{Inclination of slope in degrees.}
-    \item{\code{valley}}{If the position is in a valley (TRUE) or on a slope (FALSE).}
+    \item{\code{}}{}
   }}
 
-\item{temp}{Temperature in degree Celcius.}
+\item{temp}{Temperature in \eqn{^\circ}C.}
 
-\item{rh}{relative humidity.}
+\item{rh}{Relative humidity in \%.}
 
-\item{sigma}{Stefan-Boltzmann constant in W/m\eqn{^2}/K\eqn{^4},
-default `r sigma_default'.}
+\item{slope}{Slope in degree.}
+
+\item{valley}{If the position is in a valley (TRUE) or on a slope (FALSE).}
+
+\item{sigma}{Stefan-Boltzmann constant in W/m\eqn{^2}/K\eqn{^4}, default `r sigma_default'.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }
@@ -39,5 +41,5 @@ Calculation of the longwave radiation of the atmosphere.
 The second part of the equation related to the surrounding terrain is not included.
 }
 \references{
-p68eq3.24
+Bendix 2004, p. 68eq3.24
 }

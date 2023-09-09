@@ -15,7 +15,7 @@ hum_specific <- function(...) {
 #' @param t Temperature in °C.
 #' @param elev Elevation above sea level in m.
 #' @export
-#' @references p262.
+#' @references Bendix 2004, p. 262.
 hum_specific.default <- function(hum, t, elev, ...) {
   p_vapor <- pres_vapor_p(hum, t)
   p <- pres_p(elev, t)
@@ -55,7 +55,7 @@ hum_absolute <- function(...) {
 #' @param hum Relative humidity in %.
 #' @param t Air temperature in °C.
 #' @export
-#' @references p262.
+#' @references Bendix 2004, p. 262.
 hum_absolute.default <- function(hum, t, ...) {
   p_vapor <- pres_vapor_p(hum, t)
   t <- c2k(t)
@@ -92,7 +92,7 @@ hum_evap_heat <- function(...) {
 #' @rdname hum_evap_heat
 #' @export
 #' @param t Air temperature in °C.
-#' @references p261.
+#' @references Bendix 2004, p. 261.
 hum_evap_heat.default <- function(t, ...) {
   (2.5008 - 0.002372 * t) * 10^6
 }
@@ -131,7 +131,7 @@ hum_precipitable_water <- function(...) {
 #' @inheritParams rad_bal
 #' @inheritDotParams pres_p.default g rl
 #' @export
-#' @references p246. Column name "subarctic_summer" and "subarctic_winter" were switched.
+#' @references Bendix 2004, p. 246. Column name "subarctic_summer" and "subarctic_winter" were switched.
 hum_precipitable_water.default <- function(datetime, lat, elev, temp, ...) {
   df <- data.frame(
     t0 = c(300, 294, 272.2, 287, 257.1),

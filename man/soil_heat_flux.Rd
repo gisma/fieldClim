@@ -30,8 +30,6 @@ soil_heat_flux(...)
 
 \item{soil_temp1, }{soil_temp2 Soil temperature in °C.}
 
-\item{weather_station}{Object of class \code{weather_station}.}
-
 \item{soil_depth, }{soil_depth2 Depth of the soil temperature measurement in m.}
 }
 \value{
@@ -45,5 +43,5 @@ depths and thermal conductivity of the soil.
 Negative values signify flux towards the atmosphere, positive values signify flux into the soil.
 }
 \references{
-p71eq4.2.
+Bendix 2004, p. 71eq4.2.
 }

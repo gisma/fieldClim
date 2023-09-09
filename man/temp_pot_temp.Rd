@@ -19,8 +19,6 @@ temp_pot_temp(...)
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{weather_station}{Object of class \code{weather_station}.}
-
 \item{height}{Height of measurement, either "upper" or "lower".}
 }
 \value{
@@ -30,5 +28,5 @@ Potential temperature in °C.
 Calculation of the potential air temperature.
 }
 \references{
-p261.
+Bendix 2004, p. 261.
 }
