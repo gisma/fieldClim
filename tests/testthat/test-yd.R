@@ -1,45 +1,3 @@
-#https://www.r-bloggers.com/2016/07/timezone-conversion-in-r/
-#datetime <- as.POSIXct(strptime("2018-08-19 13:15:00", format = "%Y-%m-%d %H:%M:%S", tz = "CET"), tz = "CET")
-#datetime <- format(datetime, tz = "GMT", usetz = TRUE)
-
-# correctly transformed
-datetime <- as.POSIXct("2018-08-19 13:15:00", tz = "CET")
-datetime
-class(datetime)
-datetime <- format(datetime, tz = "GMT", usetz = TRUE)
-datetime
-
-# does not work, because format just print, but does not convert
-datetime <- as.POSIXlt("2018-08-19 13:15:00", tz = "CET")
-datetime
-class(datetime)
-datetime <- format(datetime, tz = "GMT", usetz = TRUE)
-datetime
-class(datetime)
-
-#for `format`, see [base::strptime]
-#for time zone `tz`, see for example [https://en.wikipedia.org/wiki/List_of_tz_database_time_zones]
-datetime <- c("2018-08-19 13:15:00", "2018-08-19 13:20:00")
-datetime
-class(datetime)
-datetime <- as.POSIXct(datetime, format = "%Y-%m-%d %H:%M:%S", tz = "Africa/Addis_Ababa")
-datetime
-class(datetime)
-datetime <- as.POSIXlt(datetime, format = "%Y-%m-%d %H:%M:%S", tz = "UTC")
-datetime
-class(datetime)
-
-datetime <- c("2018-08-19 13:15:00", "2018-08-19 13:20:00")
-datetime <- as.POSIXlt(datetime, format = "%Y-%m-%d %H:%M:%S", tz = "Africa/Addis_Ababa")
-datetime <- as.POSIXct(datetime)
-datetime <- as.POSIXlt(datetime, tz = "UTC")
-datetime
-
-datetime <- c("2018-08-19 13:00:00", "2018-08-19 10:00:00")
-datetime <- as.POSIXlt(datetime, format = "%Y-%m-%d %H:%M:%S", tz = "Africa/Addis_Ababa")
-lon <- 0
-sol_medium_suntime(datetime, lon)
-
 datetime <- as.POSIXlt("2018-02-19 13:15:00", tz = "GMT")
 lon = 8.683300
 lat = 50.840503
@@ -195,11 +153,10 @@ Caldern_Wald <- build_weather_station(
     soil_flux = ws$heatflux_soil
 )
 
-
-
 a <- c()
-for(elevation in seq(0, 359)) {
-  a[elevation+1] = 1 / (sin(deg2rad(elevation)) + 1.5 * elevation^-0.72)
+t <- format(seq(as.POSIXlt("2020-01-01 00:00:00"), as.POSIXlt("2020-01-01 23:00:00"), 60*60))
+for(i in t) {
+  a <- c(a, fun(as.POSIXlt(i), 0, 0))
 }
 plot(a, type = "l")
 

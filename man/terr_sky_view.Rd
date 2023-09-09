@@ -22,7 +22,7 @@ terr_sky_view(...)
 \item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-Sky view factor from 0-1. unitless
+Unitless.
 }
 \description{
 Calculates the sky view factor of a position only based on slope angle and

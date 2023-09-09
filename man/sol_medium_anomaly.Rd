@@ -20,11 +20,11 @@ sol_medium_anomaly(...)
 \item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-degree
+Degree.
 }
 \description{
 Solar medium anomaly
 }
 \references{
-Bendix 2004, p. 243
+Bendix 2004, p. 243.
 }

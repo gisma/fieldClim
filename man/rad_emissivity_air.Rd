@@ -14,7 +14,7 @@ rad_emissivity_air(...)
 }
 \arguments{
 \item{...}{
-  Arguments passed on to \code{\link[=pres_p]{pres_p}}, \code{\link[=pres_sat_vapor_p]{pres_sat_vapor_p}}
+  Arguments passed on to \code{\link[=pres_vapor_p.default]{pres_vapor_p.default}}
   \describe{
     \item{\code{}}{}
   }}
@@ -26,11 +26,11 @@ rad_emissivity_air(...)
 \item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-Emissivity of the atmosphere (0-1).
+Uniteless from 0 to 1.
 }
 \description{
 Calculation of the emissivity of the atmosphere.
 }
 \references{
-Bendix 2004, p. 66eq3.22
+Bendix 2004, p. 66 eq. 3.22.
 }

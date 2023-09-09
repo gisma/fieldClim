@@ -26,7 +26,7 @@ rad_sw_in(...)
 }
 \arguments{
 \item{...}{
-  Arguments passed on to \code{\link[=rad_sw_toa.default]{rad_sw_toa.default}}, \code{\link[=trans_ozone.default]{trans_ozone.default}}, \code{\link[=trans_aerosol.default]{trans_aerosol.default}}, \code{\link[=terr_terrain_angle.default]{terr_terrain_angle.default}}
+  Arguments passed on to \code{\link[=trans_ozone.default]{trans_ozone.default}}, \code{\link[=trans_aerosol.default]{trans_aerosol.default}}
   \describe{
     \item{\code{ozone_column}}{Atmospheric ozone as column in cm, default 0.35.}
     \item{\code{vis}}{Visibility in km, default 30.}
@@ -61,5 +61,5 @@ W/m\eqn{^2}.
 Provide \code{slope} and \code{exposition} to perform topographic correction.
 }
 \references{
-Bendix 2004, p. 46eq3.3, p52eq3.8
+Bendix 2004, p. 46 eq. 3.3, p. 52 eq. 3.8.
 }

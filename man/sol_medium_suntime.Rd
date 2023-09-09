@@ -22,11 +22,11 @@ sol_medium_suntime(...)
 \item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-hour
+Hour.
 }
 \description{
 Solar medium suntime
 }
 \references{
-Bendix 2004, p. 243
+Bendix 2004, p. 243.
 }

@@ -53,11 +53,11 @@ rad_bal(...)
 \item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-Total radiation balance in W/m\eqn{^2}.
+W/m\eqn{^2}.
 }
 \description{
 Calculate total radiation balance.
 }
 \references{
-Bendix 2004, p. 45eq3.1
+Bendix 2004, p. 45 eq. 3.1.
 }

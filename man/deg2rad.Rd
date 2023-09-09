@@ -10,7 +10,7 @@ deg2rad(angle)
 \item{angle}{Angle in degree.}
 }
 \value{
-radian.
+Radian.
 }
 \description{
 Degree to radian

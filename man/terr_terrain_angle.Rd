@@ -28,7 +28,7 @@ terr_terrain_angle(...)
 \item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-degree.
+Degree.
 }
 \description{
 Terrain angle

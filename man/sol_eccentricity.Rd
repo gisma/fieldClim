@@ -2,29 +2,21 @@
 % Please edit documentation in R/solar.R
 \name{sol_eccentricity}
 \alias{sol_eccentricity}
-\alias{sol_eccentricity.default}
 \alias{sol_eccentricity.weather_station}
-\title{Eccentricity}
+\title{Eccentricity factor}
 \usage{
 sol_eccentricity(...)
-
-\method{sol_eccentricity}{default}(datetime, ...)
 
 \method{sol_eccentricity}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{datetime}{Datetime of class \code{POSIXlt}. See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}}.}
-
 \item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-unitless
+Unitless.
 }
 \description{
-Eccentricity
-}
-\references{
-Bendix 2004, p. 243.
+The track of Earth around Sun is not a circle, but more like an ellipse.
 }

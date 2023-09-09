@@ -20,11 +20,11 @@ sol_ecliptic_length(...)
 \item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-degree
+Degree.
 }
 \description{
 Solar ecliptic length
 }
 \references{
-Bendix 2004, p. 243
+Bendix 2004, p. 243.
 }

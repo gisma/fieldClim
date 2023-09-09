@@ -22,14 +22,11 @@
 #' @param soil_temp1, soil_temp2 Soil temperature in °C.
 #' @param soil_depth, soil_depth2 Depth of the soil temperature measurement in m.
 #' @param sol_const Solar constant in W/m\eqn{^2}, default `r sol_const_default`.
-#' @param ozone_column Atmospheric ozone as column in cm, default `r ozone_column_default`.
-#' @param vis Visibility in km, default `r vis_default`.
-#' @param p0 Standard pressure in hPa, default `r p0_default`.
-#' @param g Gravitational acceleration in m/s\eqn{^2}, default `r g_default`.
-#' @param rl Specific gas constant for air in m\eqn{^2}/s\eqn{^2}/K, default `r rl_default`.
-#' @param a Constant a is 7.5 (default) over water, 7.6 over undercooled water, and 9.5 over ice.
-#' @param b Constant b is 235 (defalut) over water, 240.7 over undercooled water, and 265.5 over ice.
-#' @param sigma Stefan-Boltzmann constant in W/m\eqn{^2}/K\eqn{^4}, default `r sigma_default'.
+#' @inheritDotParams trans_ozone.default ozone_column
+#' @inheritDotParams trans_aerosol.default vis
+#' @inheritDotParams pres_p.default p0 g rl
+#' @inheritDotParams pres_sat_vapor_p.default a b
+#' @inheritDotParams rad_lw_in.default sigma
 #'
 #' @section Arguments without default value:
 #'

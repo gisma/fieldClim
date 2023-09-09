@@ -1,18 +1,17 @@
-test_that("sol_julian_day.defaut", {
+test_that("sol_julian_day.default works", {
   datetime <- as.POSIXlt("2018-9-29")
   expect_equal(sol_julian_day(datetime), 272)
 })
 
-test_that("sol_julian_day.weather_station", {
+test_that("sol_julian_day.weather_station works", {
   datetime <- as.POSIXlt(c("2018-9-29", "2018-9-30"))
   weather_station <- build_weather_station(datetime = datetime)
   expect_equal(sol_julian_day(weather_station), c(272, 273))
 })
 
-#test_that("sol_elevation", {
-#  expect_equal(sol_elevation(datetime, lat, lon), 36.98267, tolerance = 1e-5)
-#})
-
-#test_that("sol_azimuth", {
-#  expect_equal(sol_azimuth(datetime, lat, lon), 179.1576, tolerance = 1e-5)
-#})
+test_that("sol_medium_suntime.default changes timezone", {
+  datetime <- c("2018-08-19 13:00:00", "2018-08-19 10:00:00")
+  datetime <- as.POSIXlt(datetime, format = "%Y-%m-%d %H:%M:%S", tz = "Africa/Addis_Ababa") # UTC+3
+  lon <- 0
+  expect_equal(sol_medium_suntime(datetime, lon), c(10, 7))
+})

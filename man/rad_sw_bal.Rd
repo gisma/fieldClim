@@ -47,11 +47,11 @@ rad_sw_bal(...)
 \item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-W/m\eqn{^2}
+W/m\eqn{^2}.
 }
 \description{
 Shortwave radiation balance
 }
 \references{
-Bendix 2004, p. 45eq3.1, p63eq3.18
+Bendix 2004, p. 45 eq. 3.1, p63 eq. 3.18
 }

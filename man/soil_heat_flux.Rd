@@ -21,19 +21,18 @@ soil_heat_flux(...)
 \method{soil_heat_flux}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{
-  Arguments passed on to \code{\link[=soil_thermal_cond.default]{soil_thermal_cond.default}}
-  \describe{
-    \item{\code{texture}}{Soil texture. Either \code{sand}, \code{peat} or \code{clay}.}
-    \item{\code{moisture}}{Soil moisture in cubic meter/cubic meter.}
-  }}
+\item{...}{Additional arguments.}
 
-\item{soil_temp1, }{soil_temp2 Soil temperature in °C.}
+\item{texture}{Soil texture. Either \code{sand}, \code{peat} or \code{clay}.}
 
-\item{soil_depth, }{soil_depth2 Depth of the soil temperature measurement in m.}
+\item{moisture}{Soil moisture in cubic meter/cubic meter.}
+
+\item{soil_temp1}{soil_temp2 Soil temperature in °C.}
+
+\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-Soil heat flux in W * m^(-2).
+eqn{W \cdot m^-2}.
 }
 \description{
 Calculates soil heat flux from measurements in two different

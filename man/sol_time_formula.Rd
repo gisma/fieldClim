@@ -22,11 +22,11 @@ sol_time_formula(...)
 \item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-hour
+Hour.
 }
 \description{
 Solar time formula
 }
 \references{
-Bendix 2004, p. 243
+Bendix 2004, p. 243.
 }

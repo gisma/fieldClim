@@ -10,7 +10,7 @@ k2c(temp)
 \item{temp}{Temperature in Kelvin.}
 }
 \value{
-degree Celcius
+Degree Celcius.
 }
 \description{
 Kelvin to degree Celcius

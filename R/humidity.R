@@ -18,7 +18,7 @@ hum_specific <- function(...) {
 #' @references Bendix 2004, p. 262.
 hum_specific.default <- function(hum, t, elev, ...) {
   p_vapor <- pres_vapor_p(hum, t)
-  p <- pres_p(elev, t)
+  p <- pres_p(elev, t, ...)
   0.622 * (p_vapor / p)
 }
 
@@ -121,7 +121,7 @@ hum_evap_heat.weather_station <- function(weather_station, height = "lower", ...
 #' Summer is defined as April to September in the northern hemisphere.
 #'
 #' @inheritParams build_weather_station
-#' @returns cm\eqn{\cdot}grams.
+#' @returns \eqn{cm \cdot grams}.
 #' @export
 hum_precipitable_water <- function(...) {
   UseMethod("hum_precipitable_water")
@@ -129,7 +129,7 @@ hum_precipitable_water <- function(...) {
 
 #' @rdname hum_precipitable_water
 #' @inheritParams build_weather_station
-#' @inheritDotParams build_weather_station g rl
+#' @inheritDotParams pres_p.default g rl
 #' @export
 #' @references Bendix 2004, p. 246. Column name "subarctic_summer" and "subarctic_winter" were switched.
 hum_precipitable_water.default <- function(datetime, lat, elev, temp, ...) {
@@ -181,7 +181,7 @@ hum_precipitable_water.default <- function(datetime, lat, elev, temp, ...) {
     }
   }
   
-  p <- pres_p(elev, temp)
+  p <- pres_p(elev, temp, ...)
   p0 <- p0_default # will be cancled in pres_p
   
   pw_standard * (p / p0) * (temp_standard / temp)^0.5

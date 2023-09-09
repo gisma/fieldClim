@@ -13,11 +13,7 @@ trans_aerosol(...)
 \method{trans_aerosol}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{
-  Arguments passed on to \code{\link[=trans_air_mass_abs.default]{trans_air_mass_abs.default}}
-  \describe{
-    \item{\code{}}{}
-  }}
+\item{...}{Additional arguments.}
 
 \item{datetime}{Datetime of class \code{POSIXlt}. See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}}.}
 

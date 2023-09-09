@@ -25,10 +25,10 @@ rad_diffuse_in(...)
 }
 \arguments{
 \item{...}{
-  Arguments passed on to \code{\link[=trans_vapor]{trans_vapor}}, \code{\link[=trans_ozone.default]{trans_ozone.default}}, \code{\link[=rad_sw_toa.default]{rad_sw_toa.default}}, \code{\link[=terr_sky_view]{terr_sky_view}}, \code{\link[=terr_terrain_angle.default]{terr_terrain_angle.default}}
+  Arguments passed on to \code{\link[=rad_sw_toa.default]{rad_sw_toa.default}}, \code{\link[=trans_ozone.default]{trans_ozone.default}}
   \describe{
-    \item{\code{ozone_column}}{Atmospheric ozone as column in cm, default 0.35.}
     \item{\code{sol_const}}{Solar constant in W/m\eqn{^2}, default 1368.}
+    \item{\code{ozone_column}}{Atmospheric ozone as column in cm, default 0.35.}
   }}
 
 \item{datetime}{Datetime of class \code{POSIXlt}. See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}}.}
@@ -52,11 +52,11 @@ rad_diffuse_in(...)
 \item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-W/m\eqn{^2}
+W/m\eqn{^2}.
 }
 \description{
 Incoming diffused radiation
 }
 \references{
-Bendix 2004, p. 58eq3.14, p55eq3.9
+Bendix 2004, p. 58 eq. 3.14, p. 55 eq. 3.9.
 }

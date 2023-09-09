@@ -19,12 +19,10 @@ rad_lw_out(...)
 
 \item{surface_type}{Surface type for which a specific emissivity will be selected.}
 
-\item{sigma}{Stefan-Boltzmann constant in W/m\eqn{^2}/K\eqn{^4}, default `r sigma_default'.}
-
 \item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-Emissions in W/m\eqn{^2}.
+W/m\eqn{^2}.
 }
 \description{
 Calculates emissions of a surface.
@@ -34,5 +32,5 @@ If a weather_station object is given, the lower air temperature will be used
 instead of the surface temperature.
 }
 \references{
-Bendix 2004, p. 66eq3.20
+Bendix 2004, p. 66 eq. 3.20.
 }

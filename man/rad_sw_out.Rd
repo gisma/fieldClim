@@ -53,5 +53,5 @@ W/m\eqn{^2}.
 Provide \code{slope} and \code{exposition} to perform topographic correction.
 }
 \references{
-Bendix 2004, p. 46eq3.3, p52eq3.8
+Bendix 2004, p. 46 eq. 3.3, p. 52 eq. 3.8.
 }

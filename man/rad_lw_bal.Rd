@@ -14,7 +14,7 @@ rad_lw_bal(...)
 }
 \arguments{
 \item{...}{
-  Arguments passed on to \code{\link[=rad_lw_in.default]{rad_lw_in.default}}, \code{\link[=rad_lw_out.default]{rad_lw_out.default}}
+  Arguments passed on to \code{\link[=rad_lw_in.default]{rad_lw_in.default}}
   \describe{
     \item{\code{sigma}}{Stefan-Boltzmann constant in W/m\eqn{^2}/K\eqn{^4}, default `r sigma_default'.}
   }}

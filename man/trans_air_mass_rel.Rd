@@ -24,7 +24,7 @@ trans_air_mass_rel(...)
 \item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-unitless
+Unitless.
 }
 \description{
 Relative optical air mass

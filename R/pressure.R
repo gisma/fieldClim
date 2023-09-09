@@ -3,24 +3,23 @@
 #' Calculate pressure based on barometric formula.
 #'
 #' The formula assumes that the temperature does not change with altitude.
-#' The results are satisfying enough for an height under 5 km.
+#' The results should be satisfying enough for an elevation lower than 5 km.
 #'
 #' @rdname pres_p
-#' @param ... Additional arguments.
-#' @returns Pressure in hPa.
+#' @inheritParams build_weather_station
+#' @returns hPa.
 #' @export
 pres_p <- function(...) {
   UseMethod("pres_p")
 }
 
 #' @rdname pres_p
-#' @param elev Elevation above sea level in m.
-#' @param temp Temperature in degree Celcius.
+#' @inheritParams build_weather_station
 #' @param p0 Standard pressure in hPa, default `r p0_default`.
-#' @param g Gravitational acceleration in m/s\eqn{^2}, default `r g_default`.
-#' @param rl Specific gas constant for air in m\eqn{^2}/s\eqn{^2}/K, default `r rl_default`.
+#' @param g Gravitational acceleration in \eqn{m \cdot s^{-2}}, default `r g_default`.
+#' @param rl Specific gas constant for air in \eqn{m^2 \cdot s^{-2} \cdot K^{-1}}, default `r rl_default`.
 #' @export
-#' @references Lente & Ősz 2020 eq5.
+#' @references Lente & Ősz 2020 eq. 5.
 pres_p.default <- function(elev, temp, ...,
     p0 = p0_default, g = g_default, rl = rl_default) {
   temp <- c2k(temp)
@@ -29,7 +28,7 @@ pres_p.default <- function(elev, temp, ...,
 }
 
 #' @rdname pres_p
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @export
 pres_p.weather_station <- function(weather_station, ...) {
   a <- methods::formalArgs(pres_p.default)
@@ -45,17 +44,16 @@ pres_p.weather_station <- function(weather_station, ...) {
 #'
 #' Calculates vapor pressure from relative humidity and saturation vapor pressure.
 #'
-#' @param ... Additional arguments.
-#' @returns Vapor pressure in hPa.
+#' @inheritParams build_weather_station
+#' @returns hPa.
 #' @export
 pres_vapor_p <- function(...) {
   UseMethod("pres_vapor_p")
 }
 
 #' @rdname pres_vapor_p
-#' @inheritParams pres_sat_vapor_p
-#' @inheritDotParams pres_sat_vapor_p
-#' @param rh Relative humidity in %.
+#' @inheritParams build_weather_station
+#' @inheritDotParams pres_sat_vapor_p.default a b
 #' @export
 pres_vapor_p.default <- function(temp, rh, ...) {
   sat_vapor_p <- pres_sat_vapor_p(temp, ...)
@@ -63,7 +61,7 @@ pres_vapor_p.default <- function(temp, rh, ...) {
 }
 
 #' @rdname pres_vapor_p
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @export
 pres_vapor_p.weather_station <- function(weather_station, ...) {
   a <- methods::formalArgs(pres_vapor_p.default)
@@ -77,18 +75,15 @@ pres_vapor_p.weather_station <- function(weather_station, ...) {
 
 #' Saturated vapor pressure
 #'
-#' Calculates the saturation vapor pressure from air temperature using the \emph{Magnus}
-#' formula (applicable over water surfaces).
-#'
-#' @param ... Additional arguments.
-#' @returns Saturation vapor pressure in hPa.
+#' @inheritParams build_weather_station
+#' @returns hPa.
 #' @export
 pres_sat_vapor_p <- function(...) {
   UseMethod("pres_sat_vapor_p")
 }
 
 #' @rdname pres_sat_vapor_p
-#' @param temp Air temperature in °C.
+#' @inheritParams build_weather_station
 #' @param a Constant a is 7.5 (default) over water, 7.6 over undercooled water, and 9.5 over ice.
 #' @param b Constant b is 235 (defalut) over water, 240.7 over undercooled water, and 265.5 over ice.
 #' @export
@@ -98,7 +93,7 @@ pres_sat_vapor_p.default <- function(temp, a = 7.5, b = 235, ...) {
 }
 
 #' @rdname pres_sat_vapor_p
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @export
 pres_sat_vapor_p.weather_station <- function(weather_station, ...) {
   a <- methods::formalArgs(pres_sat_vapor_p.default)

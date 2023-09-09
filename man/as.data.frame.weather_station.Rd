@@ -62,5 +62,4 @@ reduced <- as.data.frame(station_turbulent, reduced = T)
 # create a reduced data.frame with detailed units
 unit <- as.data.frame(station_turbulent, reduced = T, unit = T)
 }
-
 }

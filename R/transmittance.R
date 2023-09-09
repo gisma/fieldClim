@@ -44,12 +44,12 @@ trans_air_mass_abs <- function(...) {
 
 #' @rdname trans_air_mass_abs
 #' @inheritParams build_weather_station
-#' @inheritDotParams build_weather_station.default g rl
+#' @inheritDotParams pres_p.default g rl
 #' @export
 #' @references Bendix 2004, p. 247.
 trans_air_mass_abs.default <- function(datetime, lon, lat, elev, temp, ...) {
   air_mass_rel <- trans_air_mass_rel(datetime, lon, lat)
-  p <- pres_p(elev, temp)
+  p <- pres_p(elev, temp, ...)
   p0 <- p0_default # will be cancled in pres_p
   
   air_mass_rel * (p / p0)
@@ -111,6 +111,7 @@ trans_ozone <- function(...) {
 
 #' @rdname trans_ozone
 #' @inheritParams build_weather_station
+#' @param ozone_column Atmospheric ozone as column in cm, default `r ozone_column_default`.
 #' @export
 #' @references Bendix 2004, p. 245.
 trans_ozone.default <- function(datetime, lon, lat, ...,
@@ -220,7 +221,7 @@ trans_aerosol <- function(...) {
 
 #' @rdname trans_aerosol
 #' @inheritParams build_weather_station
-#' @inheritDotParams build_weather_station
+#' @param vis Visibility in km, default `r vis_default`.
 #' @export
 #' @references Bendix 2004, p. 246.
 trans_aerosol.default <- function(datetime, lon, lat, elev, temp, ...,

@@ -17,24 +17,26 @@ pres_p(...)
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{temp}{Temperature in degree Celcius.}
+\item{temp}{Temperature in \eqn{^\circ}C.}
 
 \item{p0}{Standard pressure in hPa, default 1013.25.}
 
-\item{g}{Gravitational acceleration in m/s\eqn{^2}, default 9.81.}
+\item{g}{Gravitational acceleration in \eqn{m \cdot s^{-2}}, default 9.81.}
 
-\item{rl}{Specific gas constant for air in m\eqn{^2}/s\eqn{^2}/K, default 287.05.}
+\item{rl}{Specific gas constant for air in \eqn{m^2 \cdot s^{-2} \cdot K^{-1}}, default 287.05.}
+
+\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-Pressure in hPa.
+hPa.
 }
 \description{
 Calculate pressure based on barometric formula.
 }
 \details{
 The formula assumes that the temperature does not change with altitude.
-The results are satisfying enough for an height under 5 km.
+The results should be satisfying enough for an elevation lower than 5 km.
 }
 \references{
-Lente & Ősz 2020 eq5.
+Lente & Ősz 2020 eq. 5.
 }

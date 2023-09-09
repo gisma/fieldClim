@@ -7,7 +7,18 @@
 build_weather_station(...)
 }
 \arguments{
-\item{...}{Additional arguments.}
+\item{...}{
+  Arguments passed on to \code{\link[=trans_ozone.default]{trans_ozone.default}}, \code{\link[=trans_aerosol.default]{trans_aerosol.default}}, \code{\link[=pres_p.default]{pres_p.default}}, \code{\link[=pres_sat_vapor_p.default]{pres_sat_vapor_p.default}}, \code{\link[=rad_lw_in.default]{rad_lw_in.default}}
+  \describe{
+    \item{\code{ozone_column}}{Atmospheric ozone as column in cm, default 0.35.}
+    \item{\code{vis}}{Visibility in km, default 30.}
+    \item{\code{p0}}{Standard pressure in hPa, default 1013.25.}
+    \item{\code{g}}{Gravitational acceleration in \eqn{m \cdot s^{-2}}, default 9.81.}
+    \item{\code{rl}}{Specific gas constant for air in \eqn{m^2 \cdot s^{-2} \cdot K^{-1}}, default 287.05.}
+    \item{\code{a}}{Constant a is 7.5 (default) over water, 7.6 over undercooled water, and 9.5 over ice.}
+    \item{\code{b}}{Constant b is 235 (defalut) over water, 240.7 over undercooled water, and 265.5 over ice.}
+    \item{\code{sigma}}{Stefan-Boltzmann constant in W/m\eqn{^2}/K\eqn{^4}, default `r sigma_default'.}
+  }}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 
@@ -42,22 +53,6 @@ build_weather_station(...)
 \item{soil_depth, }{soil_depth2 Depth of the soil temperature measurement in m.}
 
 \item{sol_const}{Solar constant in W/m\eqn{^2}, default 1368.}
-
-\item{ozone_column}{Atmospheric ozone as column in cm, default 0.35.}
-
-\item{vis}{Visibility in km, default 30.}
-
-\item{p0}{Standard pressure in hPa, default 1013.25.}
-
-\item{g}{Gravitational acceleration in m/s\eqn{^2}, default 9.81.}
-
-\item{rl}{Specific gas constant for air in m\eqn{^2}/s\eqn{^2}/K, default 287.05.}
-
-\item{a}{Constant a is 7.5 (default) over water, 7.6 over undercooled water, and 9.5 over ice.}
-
-\item{b}{Constant b is 235 (defalut) over water, 240.7 over undercooled water, and 265.5 over ice.}
-
-\item{sigma}{Stefan-Boltzmann constant in W/m\eqn{^2}/K\eqn{^4}, default `r sigma_default'.}
 }
 \description{
 Creates a list of class \code{weather_station} that contains all input arguments.

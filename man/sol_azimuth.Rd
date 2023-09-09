@@ -24,11 +24,11 @@ sol_azimuth(...)
 \item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-degree
+Degree.
 }
 \description{
 Solar azimuth
 }
 \references{
-Bendix 2004, p. 243
+Bendix 2004, p. 243.
 }

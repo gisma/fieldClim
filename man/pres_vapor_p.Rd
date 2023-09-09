@@ -14,17 +14,20 @@ pres_vapor_p(...)
 }
 \arguments{
 \item{...}{
-  Arguments passed on to \code{\link[=pres_sat_vapor_p]{pres_sat_vapor_p}}
+  Arguments passed on to \code{\link[=pres_sat_vapor_p.default]{pres_sat_vapor_p.default}}
   \describe{
-    \item{\code{}}{}
+    \item{\code{a}}{Constant a is 7.5 (default) over water, 7.6 over undercooled water, and 9.5 over ice.}
+    \item{\code{b}}{Constant b is 235 (defalut) over water, 240.7 over undercooled water, and 265.5 over ice.}
   }}
 
-\item{temp}{Air temperature in °C.}
+\item{temp}{Temperature in \eqn{^\circ}C.}
 
 \item{rh}{Relative humidity in \%.}
+
+\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-Vapor pressure in hPa.
+hPa.
 }
 \description{
 Calculates vapor pressure from relative humidity and saturation vapor pressure.

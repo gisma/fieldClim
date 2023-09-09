@@ -273,7 +273,7 @@ sol_hour_angle.weather_station <- function(weather_station, ...) {
 #' Solar medium suntime
 #'
 #' @inheritParams build_weather_station
-#' @returns hour
+#' @returns Hour.
 #' @export
 sol_medium_suntime <- function(...) {
   UseMethod("sol_medium_suntime")
@@ -284,6 +284,7 @@ sol_medium_suntime <- function(...) {
 #' @export
 #' @references Bendix 2004, p. 243.
 sol_medium_suntime.default <- function(datetime, lon, ...) {
+  # change to POSIXct and then change back to POSIXlt for timezone conversion
   datetime <- as.POSIXct(datetime)
   datetime <- as.POSIXlt(datetime, tz = "UTC")
   utc <- datetime$hour + datetime$min / 60 + datetime$sec / 3600
@@ -307,7 +308,7 @@ sol_medium_suntime.weather_station <- function(weather_station, ...) {
 #' Solar time formula
 #'
 #' @inheritParams build_weather_station
-#' @returns hour
+#' @returns Hour.
 #' @export
 sol_time_formula <- function(...) {
   UseMethod("sol_time_formula")
@@ -365,7 +366,8 @@ sol_azimuth.default <- function(datetime, lon, lat, ...) {
   
   out <- acos(
     (sin(declination) * cos(lat) -
-     cos(declination) * sin(lat) * cos(hour_angle)) / cos(elevation)
+     cos(declination) * sin(lat) * cos(hour_angle)
+    ) / cos(elevation)
   )
   out <- rad2deg(out)
   

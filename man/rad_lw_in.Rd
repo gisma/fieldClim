@@ -13,11 +13,7 @@ rad_lw_in(...)
 \method{rad_lw_in}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{
-  Arguments passed on to \code{\link[=terr_sky_view.default]{terr_sky_view.default}}
-  \describe{
-    \item{\code{}}{}
-  }}
+\item{...}{Additional arguments.}
 
 \item{temp}{Temperature in \eqn{^\circ}C.}
 
@@ -32,7 +28,7 @@ rad_lw_in(...)
 \item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-Atmospheric radiation in W/m\eqn{^2}.
+W/m\eqn{^2}.
 }
 \description{
 Calculation of the longwave radiation of the atmosphere.
@@ -41,5 +37,5 @@ Calculation of the longwave radiation of the atmosphere.
 The second part of the equation related to the surrounding terrain is not included.
 }
 \references{
-Bendix 2004, p. 68eq3.24
+Bendix 2004, p. 68 eq. 3.24.
 }

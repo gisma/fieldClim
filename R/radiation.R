@@ -10,6 +10,7 @@ rad_bal <- function(...) {
 }
 
 #' @rdname rad_bal
+#' @inheritParams build_weather_station
 #' @export
 #' @references Bendix 2004, p. 45 eq. 3.1.
 rad_bal.default <- function(datetime, lon, lat, elev, temp,
@@ -90,7 +91,8 @@ rad_sw_in <- function(...) {
 
 #' @rdname rad_sw_in
 #' @inheritParams build_weather_station
-#' @inheritDotParams build_weather_station ozone_column vis
+#' @inheritDotParams trans_ozone.default ozone_column
+#' @inheritDotParams trans_aerosol.default vis
 #' @export
 #' @references Bendix 2004, p. 46 eq. 3.3, p. 52 eq. 3.8.
 rad_sw_in.default <- function(datetime, lon, lat, elev, temp,
@@ -181,7 +183,8 @@ rad_diffuse_in <- function(...) {
 
 #' @rdname rad_diffuse_in
 #' @inheritParams build_weather_station
-#' @inheritDotParams build_weather_station sol_const ozone_column
+#' @inheritDotParams rad_sw_toa.default sol_const
+#' @inheritDotParams trans_ozone.default ozone_column
 #' @export
 #' @references Bendix 2004, p. 58 eq. 3.14, p. 55 eq. 3.9.
 rad_diffuse_in.default <- function(datetime, lon, lat, elev, temp,
@@ -308,7 +311,7 @@ rad_lw_bal <- function(...) {
 
 #' @rdname rad_lw_bal
 #' @inheritParams build_weather_station
-#' @inheritDotParams build_weather_station sigma
+#' @inheritDotParams rad_lw_in.default sigma
 #' @export
 #' @references Bendix 2004, p. 68eq3.25
 rad_lw_bal.default <- function(temp, rh, slope, valley, surface_temp, surface_type, ...) {
@@ -346,7 +349,7 @@ rad_lw_in <- function(...) {
 
 #' @rdname rad_lw_in
 #' @inheritParams build_weather_station
-#' @inheritDotParams build_weather_station sigma
+#' @param sigma Stefan-Boltzmann constant in W/m\eqn{^2}/K\eqn{^4}, default `r sigma_default'.
 #' @export
 #' @references Bendix 2004, p. 68 eq. 3.24.
 rad_lw_in.default <- function(temp, rh, slope, valley, ..., sigma = sigma_default) {
@@ -384,7 +387,7 @@ rad_emissivity_air <- function(...) {
 
 #' @rdname rad_emissivity_air
 #' @inheritParams build_weather_station
-#' @inheritDotParams pres_vapor_p g rl
+#' @inheritDotParams pres_vapor_p.default
 #' @export
 #' @references Bendix 2004, p. 66 eq. 3.22.
 rad_emissivity_air.default <- function(temp, rh, ...) {

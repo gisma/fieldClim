@@ -20,12 +20,12 @@ sol_day_angle(...)
 \item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-degree
+Degree.
 }
 \description{
 See a year as a circle. The first day of a (leap) year is 0 degree
 and the last day 360 degree.
 }
 \references{
-Bendix 2004, p. 243
+Bendix 2004, p. 243.
 }

@@ -26,7 +26,7 @@ rad_sw_toa(...)
 \item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-W/m\eqn{^2}
+W/m\eqn{^2}.
 }
 \description{
 Shortwave radiation at top of atmosphere
