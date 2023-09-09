@@ -6,49 +6,44 @@
 \usage{
 build_weather_station(...)
 }
-\arguments{
-\item{slope}{Slope in degree.}
-
-\item{exposition}{Exposition in degree.
-\itemize{
-\item surface_type Surface type for which a specific emissivity will be selected.
-}}
-
-\item{valley}{If the position is in a valley (TRUE) or on a slope (FALSE).
-\itemize{
-\item surface_temp Surface temperature in \eqn{^\circ}C.
-\item rh Relative humidity in \%.
-}}
-
-\item{texture}{Soil texture. Either \code{sand}, \code{peat} or \code{clay}.}
-
-\item{moisture}{Soil moisture in cubic meter/cubic meter.
-Arguments \emph{with} default value:
-\itemize{
-\item sol_const Solar constant in W/m\eqn{^2}, default 1368.
-\item ozone_column Atmospheric ozone as column in cm, default 0.35.
-\item vis Visibility in km, default 30.
-\item p0 Standard pressure in hPa, default 1013.25.
-\item g Gravitational acceleration in m/s\eqn{^2}, default 9.81.
-\item rl Specific gas constant for air in m\eqn{^2}/s\eqn{^2}/K, default 287.05.
-}}
-
-\item{a}{Constant a is 7.5 (default) over water, 7.6 over undercooled water, and 9.5 over ice.}
-
-\item{b}{Constant b is 235 (defalut) over water, 240.7 over undercooled water, and 265.5 over ice.}
-
-\item{sigma}{Stefan-Boltzmann constant in W/m\eqn{^2}/K\eqn{^4},
-default `r sigma_default'.}
-}
 \description{
 Creates a list of class \code{weather_station} that contains all input arguments.
-Only the following arguments are used:
-Arguments \emph{without} default value:
-\itemize{
-\item datetime Datetime in \code{POSIXt}.
-\item lon Longitude in degree.
-\item lat Latitude in degree.
-\item elev Elevation above sea level in m.
-\item temp Temperature in \eqn{^\circ}C.
+}
+\section{Arguments without default value}{
+\tabular{ll}{
+   Argument \tab Description \cr
+   datetime \tab Datetime in \code{POSIXt}. \cr
+   lon \tab Longitude in degree. \cr
+   lat \tab Latitude in degree. \cr
+   elev \tab Elevation above sea level in m. \cr
+   temp \tab Temperature in ^\circ C. \cr
+   slope \tab Slope in degree. \cr
+   exposition \tab Exposition in degree. \cr
+   surface_type \tab Surface type for which a specific emissivity will be selected. \cr
+   valley \tab If the position is in a valley (TRUE) or on a slope (FALSE). \cr
+   surface_temp \tab Surface temperature in ^\circ C. \cr
+   rh \tab Relative humidity in \%. \cr
+   texture \tab Soil texture. Either sand, peat, or clay. \cr
+   moisture \tab Soil moisture in cubic meter/cubic meter. \cr
+   soil_temp1 \tab Soil temperature in °C (upper height). \cr
+   soil_temp2 \tab Soil temperature in °C (lower height). \cr
+   soil_depth \tab Depth of the soil temperature measurement in m (upper height). \cr
+   soil_depth2 \tab Depth of the soil temperature measurement in m (lower height). \cr
 }
 }
+
+\section{Arguments with default value}{
+\tabular{ll}{
+   Argument \tab Description \cr
+   sol_const \tab Solar constant in W/m\eqn{^2}, default = 1368. \cr
+   ozone_column \tab Atmospheric ozone as column in cm, default = 0.35. \cr
+   vis \tab Visibility in km, default = 30. \cr
+   p0 \tab Standard pressure in hPa, default = 1013.25. \cr
+   g \tab Gravitational acceleration in m/s\eqn{^2}, default = 9.81. \cr
+   rl \tab Specific gas constant for air in m\eqn{^2}/s\eqn{^2}/K, default = 287.05. \cr
+   a \tab Constant a is 7.5 (default) over water, 7.6 over undercooled water, and 9.5 over ice. \cr
+   b \tab Constant b is 235 (default) over water, 240.7 over undercooled water, and 265.5 over ice. \cr
+   sigma \tab Stefan-Boltzmann constant in W/m\eqn{^2}/K\eqn{^4}, default = 5.6704 × 10\if{html}{\out{<sup>}}-8\if{html}{\out{</sup>}}. \cr
+}
+}
+
