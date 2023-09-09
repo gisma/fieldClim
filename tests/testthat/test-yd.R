@@ -17,8 +17,8 @@ datetime <- format(datetime, tz = "GMT", usetz = TRUE)
 datetime
 class(datetime)
 
-for `format`, see [base::strptime]
-for time zone `tz`, see for example [https://en.wikipedia.org/wiki/List_of_tz_database_time_zones]
+#for `format`, see [base::strptime]
+#for time zone `tz`, see for example [https://en.wikipedia.org/wiki/List_of_tz_database_time_zones]
 datetime <- c("2018-08-19 13:15:00", "2018-08-19 13:20:00")
 datetime
 class(datetime)

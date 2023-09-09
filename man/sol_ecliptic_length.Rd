@@ -15,7 +15,7 @@ sol_ecliptic_length(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{datetime}{Datetime in \code{POSIXt}.}
+\item{datetime}{Datetime of class \code{POSIXlt}.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }

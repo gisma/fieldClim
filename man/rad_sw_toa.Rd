@@ -15,7 +15,7 @@ rad_sw_toa(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{datetime}{Datetime in \code{POSIXt}.}
+\item{datetime}{Datetime of class \code{POSIXlt}.}
 
 \item{lon}{Longitude in degree.}
 

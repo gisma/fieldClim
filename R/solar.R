@@ -80,7 +80,7 @@ sol_julian_day <- function(...) {
 }
 
 #' @rdname sol_julian_day
-#' @param datetime Datetime in `POSIXt`.
+#' @inheritParams build_weather_station
 #' @export
 sol_julian_day.default <- function(datetime, ...) {
   as.integer(format(datetime, format = "%j"))

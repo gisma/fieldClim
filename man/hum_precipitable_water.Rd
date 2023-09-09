@@ -20,7 +20,7 @@ hum_precipitable_water(...)
     \item{\code{rl}}{Specific gas constant for air in m\eqn{^2}/s\eqn{^2}/K, default 287.05.}
   }}
 
-\item{datetime}{Datetime in \code{POSIXt}.}
+\item{datetime}{Datetime of class \code{POSIXlt}.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }

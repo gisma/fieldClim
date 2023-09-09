@@ -35,7 +35,7 @@ rad_sw_in(...)
     \item{\code{exposition}}{Exposition in degree.}
   }}
 
-\item{datetime}{Datetime in \code{POSIXt}.}
+\item{datetime}{Datetime of class \code{POSIXlt}.}
 
 \item{lon}{Longitude in degree.}
 

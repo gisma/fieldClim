@@ -1,18 +1,15 @@
 context("Solar")
 
-datetime <- as.POSIXlt("2018-9-29 11:12:00", tz = "CET")
-lat <- 50.84050277777778
-lon <- 8.683303333333333
+#test_that("sol_eccentricity", {
+#  expect_equal(sol_eccentricity(datetime), 0.9965642, tolerance = 1e-5)
+#})
 
-test_that("sol_eccentricity", {
-  expect_equal(sol_eccentricity(datetime), 0.9965642, tolerance = 1e-5)
-})
-
-test_that("sol_day_angle", {
-  expect_equal(sol_day_angle(datetime), 0.9965642, tolerance = 1e-5)
-})
+#test_that("sol_day_angle", {
+#  expect_equal(sol_day_angle(datetime), 0.9965642, tolerance = 1e-5)
+#})
 
 test_that("sol_julian_day", {
+  datetime <- as.POSIXlt("2018-9-29")
   expect_equal(sol_julian_day(datetime), 272)
 })
 

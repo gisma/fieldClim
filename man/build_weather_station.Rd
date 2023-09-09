@@ -6,27 +6,30 @@
 \usage{
 build_weather_station(...)
 }
+\arguments{
+\item{datetime}{Datetime of class \code{POSIXlt}.}
+}
 \description{
 Creates a list of class \code{weather_station} that contains all input arguments.
 }
 \section{Arguments without default value}{
 \tabular{ll}{
    Argument \tab Description \cr
-   datetime \tab Datetime in \code{POSIXt}. \cr
+   datetime \tab Datetime in \code{POSIXlt}. \cr
    lon \tab Longitude in degree. \cr
    lat \tab Latitude in degree. \cr
    elev \tab Elevation above sea level in m. \cr
-   temp \tab Temperature in ^\circ C. \cr
+   temp \tab Temperature in \eqn{^\circ}C. \cr
    slope \tab Slope in degree. \cr
    exposition \tab Exposition in degree. \cr
    surface_type \tab Surface type for which a specific emissivity will be selected. \cr
    valley \tab If the position is in a valley (TRUE) or on a slope (FALSE). \cr
-   surface_temp \tab Surface temperature in ^\circ C. \cr
+   surface_temp \tab Surface temperature in \eqn{^\circ}C. \cr
    rh \tab Relative humidity in \%. \cr
    texture \tab Soil texture. Either sand, peat, or clay. \cr
    moisture \tab Soil moisture in cubic meter/cubic meter. \cr
-   soil_temp1 \tab Soil temperature in °C (upper height). \cr
-   soil_temp2 \tab Soil temperature in °C (lower height). \cr
+   soil_temp1 \tab Soil temperature in \eqn{^\circ}C (upper height). \cr
+   soil_temp2 \tab Soil temperature in \eqn{^\circ}C (lower height). \cr
    soil_depth \tab Depth of the soil temperature measurement in m (upper height). \cr
    soil_depth2 \tab Depth of the soil temperature measurement in m (lower height). \cr
 }

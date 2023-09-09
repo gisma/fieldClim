@@ -19,7 +19,7 @@ trans_aerosol(...)
     \item{\code{}}{}
   }}
 
-\item{datetime}{Datetime in \code{POSIXt}.}
+\item{datetime}{Datetime of class \code{POSIXlt}.}
 
 \item{lon}{Longitude in degree.}
 
