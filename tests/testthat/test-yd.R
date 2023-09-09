@@ -2,18 +2,43 @@
 #datetime <- as.POSIXct(strptime("2018-08-19 13:15:00", format = "%Y-%m-%d %H:%M:%S", tz = "CET"), tz = "CET")
 #datetime <- format(datetime, tz = "GMT", usetz = TRUE)
 
-#datetime <- as.POSIXct("2018-08-19 13:15:00", tz = "CET")
-#datetime <- format(datetime, tz = "GMT", usetz = TRUE)
-#datetime
-#as.POSIXlt(datetime, tz = "GMT")
-#datetime <- as.POSIXlt("2018-08-19 13:15:00", tz = "CET")
-#datetime <- format(datetime, tz = "GMT", usetz = TRUE)
-#datetime
+# correctly transformed
+datetime <- as.POSIXct("2018-08-19 13:15:00", tz = "CET")
+datetime
+class(datetime)
+datetime <- format(datetime, tz = "GMT", usetz = TRUE)
+datetime
 
-#https://stackoverflow.com/questions/28996355/differences-between-subsetting-posixlt-and-posixct-in-r
-#    POSIXlt is a 'list type' with components you can access as you do
-#    POSIXct is a 'compact type' that is essentially just a number
+# does not work, because format just print, but does not convert
+datetime <- as.POSIXlt("2018-08-19 13:15:00", tz = "CET")
+datetime
+class(datetime)
+datetime <- format(datetime, tz = "GMT", usetz = TRUE)
+datetime
+class(datetime)
 
+for `format`, see [base::strptime]
+for time zone `tz`, see for example [https://en.wikipedia.org/wiki/List_of_tz_database_time_zones]
+datetime <- c("2018-08-19 13:15:00", "2018-08-19 13:20:00")
+datetime
+class(datetime)
+datetime <- as.POSIXct(datetime, format = "%Y-%m-%d %H:%M:%S", tz = "Africa/Addis_Ababa")
+datetime
+class(datetime)
+datetime <- as.POSIXlt(datetime, format = "%Y-%m-%d %H:%M:%S", tz = "UTC")
+datetime
+class(datetime)
+
+datetime <- c("2018-08-19 13:15:00", "2018-08-19 13:20:00")
+datetime <- as.POSIXlt(datetime, format = "%Y-%m-%d %H:%M:%S", tz = "Africa/Addis_Ababa")
+datetime <- as.POSIXct(datetime)
+datetime <- as.POSIXlt(datetime, tz = "UTC")
+datetime
+
+datetime <- c("2018-08-19 13:00:00", "2018-08-19 10:00:00")
+datetime <- as.POSIXlt(datetime, format = "%Y-%m-%d %H:%M:%S", tz = "Africa/Addis_Ababa")
+lon <- 0
+sol_medium_suntime(datetime, lon)
 
 datetime <- as.POSIXlt("2018-02-19 13:15:00", tz = "GMT")
 lon = 8.683300

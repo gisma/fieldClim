@@ -286,6 +286,8 @@ sol_medium_suntime <- function(...) {
 #' @export
 #' @references p243
 sol_medium_suntime.default <- function(datetime, lon, ...) {
+  datetime <- as.POSIXct(datetime)
+  datetime <- as.POSIXlt(datetime, tz = "UTC")
   utc <- datetime$hour + datetime$min / 60 + datetime$sec / 3600
   
   utc + lon / 15
