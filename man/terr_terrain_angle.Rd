@@ -34,5 +34,5 @@ Degree.
 Terrain angle
 }
 \references{
-Bendix 2004, p. 52eq3.7
+Bendix 2004, p. 52 eq. 3.7.
 }

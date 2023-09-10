@@ -15,7 +15,7 @@ soil_heat_flux <- function(...) {
 #' @rdname soil_heat_flux
 #' @inheritParams build_weather_station
 #' @export
-#' @references Bendix 2004, p. 71eq4.2.
+#' @references Bendix 2004, p. 71 eq. 4.2.
 soil_heat_flux.default <- function(texture, moisture,
     soil_temp1, soil_temp2, soil_depth1, soil_depth2, ...) {
   thermal_cond <- soil_thermal_cond(texture, moisture)
@@ -33,7 +33,8 @@ soil_heat_flux.weather_station <- function(weather_station, ...) {
     assign(i, weather_station[[i]])
   }
   
-  soil_heat_flux(texture, moisture, soil_temp1, soil_temp2, soil_depth1, soil_depth2)
+  soil_heat_flux(texture, moisture,
+    soil_temp1, soil_temp2, soil_depth1, soil_depth2)
 }
 
 #' Soil thermal conductivity

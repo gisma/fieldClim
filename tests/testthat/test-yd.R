@@ -1,14 +1,14 @@
-datetime <- as.POSIXlt("2018-02-19 13:15:00", tz = "GMT")
+datetime <- as.POSIXlt("2018-02-19 13:15:00", tz = "CET")
 lon = 8.683300
 lat = 50.840503
 elev = 270
 temp = 20
+rh = 50
 slope = 30
 exposition = 20
-surface_type = "field"
 valley = FALSE
+surface_type = "field"
 surface_temp = 20
-rh = 50
 texture = "sand"
 moisture = 0.2
 soil_temp1 = 20
@@ -17,56 +17,49 @@ soil_depth1 = 1
 soil_depth2 = 0
 
 # structure
+#*1 means there are other optional arguments
+#*1.0 means there are other optional arguments originated from this function
+
 ## soil
 soil_heat_flux(texture, moisture, soil_temp1, soil_temp2, soil_depth1, soil_depth2)
   soil_thermal_cond(texture, moisture)
 
 ## rad
-#*1 means there are other optional arguments
-rad_bal(datetime, lon, lat, elev, temp,
-    surface_type, slope, exposition, valley,
-    rh, surface_temp)*1
-  rad_sw_bal(datetime, lon, lat, elev, temp,
-    surface_type, slope, exposition, valley)*1
-    rad_sw_in(datetime, lon, lat, elev, temp,
-    surface_type, slope, exposition, valley)*1
-      rad_sw_toa(datetime, lon, lat)*1
-        sol_eccentricity(datetime)
-          sol_day_angle(datetime)
-            sol_julian_day(datetime)
-        sol_elevation(datetime, lon, lat)
-          sol_declination(datetime)
-            sol_ecliptic_length(datetime)
-              sol_medium_anomaly(datetime)
-          sol_hour_angle(datetime, lon)
-            sol_medium_suntime(datetime, lon)
-            sol_time_formula(datetime, lon)
-      trans_gas(datetime, lon, lat, elev, temp)
-        trans_air_mass_abs(datetime, lon, lat, elev, temp)
-          trans_air_mass_rel(datetime, lon, lat)
-          pres_p(elev, temp)*1
-      trans_ozone(datetime, lon, lat)*1
-      trans_rayleigh(datetime, lon, lat, elev, temp)
-      trans_vapor(datetime, lon, lat, elev, temp)
-        hum_precipitable_water(datetime, lat, elev, temp)
-      trans_aerosol(datetime, lon, lat, elev, temp)*1
-      terr_terrain_angle(datetime, lon, lat, slope, exposition)
-        sol_azimuth(datetime, lon, lat)
-      terr_sky_view(slope, valley)
-    rad_diffuse_in(datetime, lon, lat, elev, temp,
-    surface_type, slope, valley)*1
-    rad_sw_out(datetime, lon, lat, elev, temp,
-    slope, exposition, valley, surface_type)*1
-    rad_diffuse_out(datetime, lon, lat, elev, temp,
-    surface_type, slope, valley)*1
-  rad_lw_bal(temp, rh, surface_temp, surface_type)*1
-    rad_lw_in(temp, rh)*1
+rad_bal(datetime, lon, lat, elev, temp, rh, slope, exposition, valley, surface_type, surface_temp)*1
+  rad_sw_bal(datetime, lon, lat, elev, temp, slope, exposition, valley, surface_type)*1
+    rad_sw_out(datetime, lon, lat, elev, temp, slope, exposition, surface_type)*1
+      rad_sw_in(datetime, lon, lat, elev, temp, slope, exposition)*1
+        rad_sw_toa(datetime, lon, lat)*1.0
+          sol_eccentricity(datetime)
+            sol_day_angle(datetime)
+              sol_julian_day(datetime)
+          sol_elevation(datetime, lon, lat)
+            sol_declination(datetime)
+              sol_ecliptic_length(datetime)
+                sol_medium_anomaly(datetime)
+            sol_hour_angle(datetime, lon)
+              sol_medium_suntime(datetime, lon)
+              sol_time_formula(datetime, lon)
+        trans_gas(datetime, lon, lat, elev, temp)*1
+          trans_air_mass_abs(datetime, lon, lat, elev, temp)*1
+            trans_air_mass_rel(datetime, lon, lat)
+            pres_p(elev, temp)*1
+        trans_ozone(datetime, lon, lat)*1.0
+        trans_rayleigh(datetime, lon, lat, elev, temp)*1
+        trans_vapor(datetime, lon, lat, elev, temp)*1
+          hum_precipitable_water(datetime, lat, elev, temp)*1
+        trans_aerosol(datetime, lon, lat, elev, temp)*1.0
+        terr_terrain_angle(datetime, lon, lat, slope, exposition)
+          sol_azimuth(datetime, lon, lat)
+    rad_diffuse_out(datetime, lon, lat, elev, temp, slope, exposition, valley, surface_type)*1
+      rad_diffuse_in(datetime, lon, lat, elev, temp, slope, exposition, valley)*1
+        terr_sky_view(slope, valley)
+  rad_lw_bal(temp, rh, slope, valley, surface_type, surface_temp)*1
+    rad_lw_in(temp, rh, slope, valley)*1.0
       rad_emissivity_air(temp, rh)*1
         pres_vapor_p(temp, rh)*1
-          pres_sat_vapor_p(temp)*1
-    rad_lw_out(surface_temp, surface_type)*1
-
-
+          pres_sat_vapor_p(temp)*1.0
+    rad_lw_out(surface_type, surface_temp)*1.0
 
 path <- file.path("inst", "extdata", "caldern_weather_station.csv")
 input <- read.csv(path)
@@ -130,28 +123,6 @@ rad_bal(weather_station)
         pres_vapor_p(weather_station)
           pres_sat_vapor_p(weather_station)
     rad_lw_out(weather_station)
-
-Caldern_Wald <- build_weather_station(
-    lat = 50.8411,
-    lon = 8.68477,
-    elev = 263,
-    surface_type = "Laubwald",
-    obs_height = 2,
-    z1 = 2,
-    z2 = 10,
-    datetime = strptime(ws$datetime, format = "%Y-%m-%d %H:%M:%S", tz = "Atlantic/Reykjavik"),
-    t1 = ws$Ta_2m,
-    t2 = ws$Ta_10m,
-    v1 = ws$Windspeed_2m,
-    v2 = ws$Windspeed_10m,
-    hum1 = ws$Huma_2m,
-    hum2 = ws$Huma_10m,
-    sw_in = ws$rad_sw_in,
-    sw_out = ws$rad_sw_out,
-    lw_in = ws$rad_lw_in,
-    lw_out = ws$rad_lw_out,
-    soil_flux = ws$heatflux_soil
-)
 
 a <- c()
 t <- format(seq(as.POSIXlt("2020-01-01 00:00:00"), as.POSIXlt("2020-01-01 23:00:00"), 60*60))

@@ -197,7 +197,7 @@ hum_precipitable_water.weather_station <- function(weather_station, ...) {
     assign(i, weather_station[[i]])
   }
   
-  hum_precipitable_water(datetime, lat, elev, temp)
+  hum_precipitable_water(datetime, lat, elev, temp, ...)
 }
 
 #' Moisture gradient

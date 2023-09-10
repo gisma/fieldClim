@@ -21,7 +21,7 @@ rad_sw_toa(...)
 
 \item{lat}{Latitude in degree.}
 
-\item{sol_const}{Solar constant in W/m\eqn{^2}. Default = 1368.}
+\item{sol_const}{Solar radiation constant in \eqn{W \cdot m^{-2}}. Default = 1368.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }
@@ -29,8 +29,8 @@ rad_sw_toa(...)
 W/m\eqn{^2}.
 }
 \description{
-Shortwave radiation at top of atmosphere
+Shortwave radiation without influence of the atmosphere.
 }
 \references{
-Bendix 2004, p. 244
+Bendix 2004, p. 244.
 }

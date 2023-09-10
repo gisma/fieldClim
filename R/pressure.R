@@ -88,7 +88,7 @@ pres_sat_vapor_p <- function(...) {
 #' @param b Constant b is 235 (defalut) over water, 240.7 over undercooled water, and 265.5 over ice.
 #' @export
 #' @references Bendix 2004, p. 261.
-pres_sat_vapor_p.default <- function(temp, a = 7.5, b = 235, ...) {
+pres_sat_vapor_p.default <- function(temp, ..., a = 7.5, b = 235) {
   6.1078 * 10^((a * temp) / (b + temp))
 }
 

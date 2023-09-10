@@ -14,9 +14,10 @@ rad_emissivity_air(...)
 }
 \arguments{
 \item{...}{
-  Arguments passed on to \code{\link[=pres_vapor_p.default]{pres_vapor_p.default}}
+  Arguments passed on to \code{\link[=pres_sat_vapor_p.default]{pres_sat_vapor_p.default}}
   \describe{
-    \item{\code{}}{}
+    \item{\code{a}}{Constant a is 7.5 (default) over water, 7.6 over undercooled water, and 9.5 over ice.}
+    \item{\code{b}}{Constant b is 235 (defalut) over water, 240.7 over undercooled water, and 265.5 over ice.}
   }}
 
 \item{temp}{Temperature in \eqn{^\circ}C.}
@@ -26,10 +27,10 @@ rad_emissivity_air(...)
 \item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-Uniteless from 0 to 1.
+Ratio from 0 to 1, unitless.
 }
 \description{
-Calculation of the emissivity of the atmosphere.
+How much does the air emit longwave radiation compared to a black body?
 }
 \references{
 Bendix 2004, p. 66 eq. 3.22.

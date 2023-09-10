@@ -4,20 +4,22 @@
 \alias{rad_lw_out}
 \alias{rad_lw_out.default}
 \alias{rad_lw_out.weather_station}
-\title{Longwave radiation of the surface}
+\title{Longwave outgoing radiation}
 \usage{
 rad_lw_out(...)
 
-\method{rad_lw_out}{default}(surface_temp, surface_type, ..., sigma = sigma_default)
+\method{rad_lw_out}{default}(surface_type, surface_temp, ..., sigma = sigma_default)
 
 \method{rad_lw_out}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
 
+\item{surface_type}{Surface type for which a specific emissivity will be selected.}
+
 \item{surface_temp}{Surface temperature in \eqn{^\circ}C.}
 
-\item{surface_type}{Surface type for which a specific emissivity will be selected.}
+\item{sigma}{Stefan-Boltzmann constant in W/m\eqn{^2}/K\eqn{^4}, default `r sigma_default'.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }
@@ -25,11 +27,7 @@ rad_lw_out(...)
 W/m\eqn{^2}.
 }
 \description{
-Calculates emissions of a surface.
-}
-\details{
-If a weather_station object is given, the lower air temperature will be used
-instead of the surface temperature.
+Longwave radiation of the surface.
 }
 \references{
 Bendix 2004, p. 66 eq. 3.20.

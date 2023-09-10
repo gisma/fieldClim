@@ -8,7 +8,7 @@
 \usage{
 rad_lw_bal(...)
 
-\method{rad_lw_bal}{default}(temp, rh, slope, valley, surface_temp, surface_type, ...)
+\method{rad_lw_bal}{default}(temp, rh, slope, valley, surface_type, surface_temp, ...)
 
 \method{rad_lw_bal}{weather_station}(weather_station, ...)
 }
@@ -27,9 +27,9 @@ rad_lw_bal(...)
 
 \item{valley}{If the position is in a valley (TRUE) or on a slope (FALSE).}
 
-\item{surface_temp}{Surface temperature in \eqn{^\circ}C.}
-
 \item{surface_type}{Surface type for which a specific emissivity will be selected.}
+
+\item{surface_temp}{Surface temperature in \eqn{^\circ}C.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }
@@ -37,8 +37,8 @@ rad_lw_bal(...)
 W/m\eqn{^2}.
 }
 \description{
-Long wave radiation balance
+Sum of longwave incoming and outgoing radiation.
 }
 \references{
-Bendix 2004, p. 68eq3.25
+Bendix 2004, p. 68. eq. 3.25.
 }

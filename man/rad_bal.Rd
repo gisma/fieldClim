@@ -14,11 +14,11 @@ rad_bal(...)
   lat,
   elev,
   temp,
-  surface_type,
+  rh,
   slope,
   exposition,
   valley,
-  rh,
+  surface_type,
   surface_temp,
   ...
 )
@@ -38,7 +38,7 @@ rad_bal(...)
 
 \item{temp}{Temperature in \eqn{^\circ}C.}
 
-\item{surface_type}{Surface type for which a specific emissivity will be selected.}
+\item{rh}{Relative humidity in \%.}
 
 \item{slope}{Slope in degree.}
 
@@ -46,7 +46,7 @@ rad_bal(...)
 
 \item{valley}{If the position is in a valley (TRUE) or on a slope (FALSE).}
 
-\item{rh}{Relative humidity in \%.}
+\item{surface_type}{Surface type for which a specific emissivity will be selected.}
 
 \item{surface_temp}{Surface temperature in \eqn{^\circ}C.}
 
@@ -56,7 +56,7 @@ rad_bal(...)
 W/m\eqn{^2}.
 }
 \description{
-Calculate total radiation balance.
+Sum of shortwave and longwave radiation balance.
 }
 \references{
 Bendix 2004, p. 45 eq. 3.1.

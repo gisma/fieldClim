@@ -13,7 +13,12 @@ trans_gas(...)
 \method{trans_gas}{weather_station}(weather_station, ...)
 }
 \arguments{
-\item{...}{Additional arguments.}
+\item{...}{
+  Arguments passed on to \code{\link[=pres_p.default]{pres_p.default}}
+  \describe{
+    \item{\code{g}}{Gravitational acceleration in \eqn{m \cdot s^{-2}}, default 9.81.}
+    \item{\code{rl}}{Specific gas constant for air in \eqn{m^2 \cdot s^{-2} \cdot K^{-1}}, default 287.05.}
+  }}
 
 \item{datetime}{Datetime of class \code{POSIXlt}. See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}}.}
 

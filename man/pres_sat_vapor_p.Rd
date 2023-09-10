@@ -8,7 +8,7 @@
 \usage{
 pres_sat_vapor_p(...)
 
-\method{pres_sat_vapor_p}{default}(temp, a = 7.5, b = 235, ...)
+\method{pres_sat_vapor_p}{default}(temp, ..., a = 7.5, b = 235)
 
 \method{pres_sat_vapor_p}{weather_station}(weather_station, ...)
 }

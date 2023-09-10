@@ -8,19 +8,7 @@
 \usage{
 rad_sw_in(...)
 
-\method{rad_sw_in}{default}(
-  datetime,
-  lon,
-  lat,
-  elev,
-  temp,
-  surface_type,
-  slope,
-  exposition,
-  valley,
-  ...,
-  sol_const = sol_const_default
-)
+\method{rad_sw_in}{default}(datetime, lon, lat, elev, temp, slope, exposition, ...)
 
 \method{rad_sw_in}{weather_station}(weather_station, ...)
 }
@@ -42,15 +30,9 @@ rad_sw_in(...)
 
 \item{temp}{Temperature in \eqn{^\circ}C.}
 
-\item{surface_type}{Surface type for which a specific emissivity will be selected.}
-
 \item{slope}{Slope in degree.}
 
 \item{exposition}{Exposition in degree.}
-
-\item{valley}{If the position is in a valley (TRUE) or on a slope (FALSE).}
-
-\item{sol_const}{Solar constant in W/m\eqn{^2}. Default = 1368.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }
@@ -58,7 +40,7 @@ rad_sw_in(...)
 W/m\eqn{^2}.
 }
 \description{
-Provide \code{slope} and \code{exposition} to perform topographic correction.
+Direct shortwave incoming radiation.
 }
 \references{
 Bendix 2004, p. 46 eq. 3.3, p. 52 eq. 3.8.

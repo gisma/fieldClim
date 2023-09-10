@@ -14,10 +14,10 @@ rad_sw_bal(...)
   lat,
   elev,
   temp,
-  surface_type,
   slope,
   exposition,
   valley,
+  surface_type,
   ...
 )
 
@@ -36,13 +36,13 @@ rad_sw_bal(...)
 
 \item{temp}{Temperature in \eqn{^\circ}C.}
 
-\item{surface_type}{Surface type for which a specific emissivity will be selected.}
-
 \item{slope}{Slope in degree.}
 
 \item{exposition}{Exposition in degree.}
 
 \item{valley}{If the position is in a valley (TRUE) or on a slope (FALSE).}
+
+\item{surface_type}{Surface type for which a specific emissivity will be selected.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }
@@ -50,8 +50,9 @@ rad_sw_bal(...)
 W/m\eqn{^2}.
 }
 \description{
-Shortwave radiation balance
+Sum of shortwave incoming and outgoing as well as
+diffused incoming and outgoing radiation.
 }
 \references{
-Bendix 2004, p. 45 eq. 3.1, p63 eq. 3.18
+Bendix 2004, p. 45 eq. 3.1.
 }

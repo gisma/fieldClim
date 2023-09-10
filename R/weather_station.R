@@ -32,10 +32,10 @@
 #' @param soil_temp2 Soil temperature in °C at lower height.
 #' @param soil_depth Depth of the soil temperature measurement at upper height in m.
 #' @param soil_depth2 Depth of the soil temperature measurement at upper height in m.
-#' @param sol_const Solar constant in W/m\eqn{^2}. Default = `r sol_const_default`.
+#' @inheritDotParams rad_sw_toa.default sol_const
+#' @inheritDotParams pres_p.default p0 g rl
 #' @inheritDotParams trans_ozone.default ozone_column
 #' @inheritDotParams trans_aerosol.default vis
-#' @inheritDotParams pres_p.default p0 g rl
 #' @inheritDotParams pres_sat_vapor_p.default a b
 #' @inheritDotParams rad_lw_in.default sigma
 #'

@@ -8,18 +8,7 @@
 \usage{
 rad_diffuse_in(...)
 
-\method{rad_diffuse_in}{default}(
-  datetime,
-  lon,
-  lat,
-  elev,
-  temp,
-  surface_type,
-  slope,
-  exposition,
-  valley,
-  ...
-)
+\method{rad_diffuse_in}{default}(datetime, lon, lat, elev, temp, slope, exposition, valley, ...)
 
 \method{rad_diffuse_in}{weather_station}(weather_station, ...)
 }
@@ -27,7 +16,7 @@ rad_diffuse_in(...)
 \item{...}{
   Arguments passed on to \code{\link[=rad_sw_toa.default]{rad_sw_toa.default}}, \code{\link[=trans_ozone.default]{trans_ozone.default}}
   \describe{
-    \item{\code{sol_const}}{Solar constant in W/m\eqn{^2}. Default = 1368.}
+    \item{\code{sol_const}}{Solar radiation constant in \eqn{W \cdot m^{-2}}. Default = 1368.}
     \item{\code{ozone_column}}{Atmospheric ozone as column in cm, default 0.35.}
   }}
 
@@ -41,8 +30,6 @@ rad_diffuse_in(...)
 
 \item{temp}{Temperature in \eqn{^\circ}C.}
 
-\item{surface_type}{Surface type for which a specific emissivity will be selected.}
-
 \item{slope}{Slope in degree.}
 
 \item{exposition}{Exposition in degree.}
@@ -55,7 +42,7 @@ rad_diffuse_in(...)
 W/m\eqn{^2}.
 }
 \description{
-Incoming diffused radiation
+Diffused shortwave incoming radiation.
 }
 \references{
 Bendix 2004, p. 58 eq. 3.14, p. 55 eq. 3.9.

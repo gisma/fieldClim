@@ -46,5 +46,5 @@ depths and thermal conductivity of the soil.
 Negative values signify flux towards the atmosphere, positive values signify flux into the soil.
 }
 \references{
-Bendix 2004, p. 71eq4.2.
+Bendix 2004, p. 71 eq. 4.2.
 }

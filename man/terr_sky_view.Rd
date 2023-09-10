@@ -22,15 +22,18 @@ terr_sky_view(...)
 \item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
-Unitless.
+Ratio from 0 to 1, unitless.
 }
 \description{
-Calculates the sky view factor of a position only based on slope angle and
-position in valley or on a slope.
+How much sky can be seen from the point?
 }
 \details{
-Terrain view factor can be calculated by 1-terr_sky_view.
+Terrain view factor can be calculated by \code{1 - terr_sky_view()}, which means:
+"How much sky can \strong{not} be seen from the point?" or
+"How much terrain can be seen from the point?"
 }
 \references{
-Bendix 2004, p. 57eq3.12, p57eq3.13
+Bendix 2004, p. 63 eq. 3.15.
+
+Bendix 2004, p. 57 eq. 3.12, p. 57 eq. 3.13.
 }

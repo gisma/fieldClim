@@ -4,7 +4,7 @@
 \alias{rad_lw_in}
 \alias{rad_lw_in.default}
 \alias{rad_lw_in.weather_station}
-\title{Longwave radiation of the atmosphere}
+\title{Longwave incoming radiation}
 \usage{
 rad_lw_in(...)
 
@@ -31,11 +31,8 @@ rad_lw_in(...)
 W/m\eqn{^2}.
 }
 \description{
-Calculation of the longwave radiation of the atmosphere.
-}
-\details{
-The second part of the equation related to the surrounding terrain is not included.
+Longwave radiation of the atmosphere.
 }
 \references{
-Bendix 2004, p. 68 eq. 3.24.
+Bendix 2004, p. 68 eq. 3.24. The second part of the equation related to the surrounding terrain is not included.
 }
