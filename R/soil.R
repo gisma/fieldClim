@@ -110,7 +110,7 @@ soil_thermal_cond.weather_station <- function(weather_station, ...) {
 #' @rdname soil_heat_cap
 #' @param ... Additional arguments.
 #' @returns Numeric vector with volumetric heat capacity in  MJ/ (m\eqn{^3} * K).
-#' @noRd
+#' @export
 soil_heat_cap <- function(...) {
   UseMethod("soil_heat_cap")
 }
@@ -120,7 +120,6 @@ soil_heat_cap <- function(...) {
 #' @param texture Soil texture. Either "sand", "peat" or "clay".
 #' @importFrom stats approx
 #' @export
-#' @noRd
 #' @references Bendix 2004, p. 254.
 soil_heat_cap.default <- function(moisture, texture = "sand", ...) {
   # convert moisture from [cubic m/cubic m] to [Vol-%]
@@ -148,11 +147,10 @@ soil_heat_cap.default <- function(moisture, texture = "sand", ...) {
 #' @rdname soil_heat_cap
 #' @inheritParams build_weather_station
 #' @export
-#' @noRd
 soil_heat_cap.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "moisture", "texture")
-  moisture <- weather_station$measurements$moisture
-  texture <- weather_station$location_properties$texture
+  moisture <- weather_station$moisture
+  texture <- weather_station$texture
   return(soil_heat_cap(moisture, texture))
 }
 
@@ -163,7 +161,7 @@ soil_heat_cap.weather_station <- function(weather_station, ...) {
 #' @rdname soil_attenuation
 #' @param ... Additional arguments.
 #' @returns Soil attenuation length in m.
-#' @noRd
+#' @export
 soil_attenuation <- function(...) {
   UseMethod("soil_attenuation")
 }
@@ -172,7 +170,6 @@ soil_attenuation <- function(...) {
 #' @param moisture Soil moisture in Cubic meter/cubic meter
 #' @param texture Soil texture. Either "sand", "peat" or "clay".
 #' @export
-#' @noRd
 #' @references Bendix 2004, p. 253.
 soil_attenuation.default <- function(moisture, texture = "sand", ...) {
   thermal_cond <- soil_thermal_cond(moisture, texture)
@@ -184,10 +181,9 @@ soil_attenuation.default <- function(moisture, texture = "sand", ...) {
 #' @rdname soil_attenuation
 #' @inheritParams build_weather_station
 #' @export
-#' @noRd
 soil_attenuation.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "moisture", "texture")
-  moisture <- weather_station$measurements$moisture
-  texture <- weather_station$location_properties$texture
+  moisture <- weather_station$moisture
+  texture <- weather_station$texture
   return(soil_attenuation(moisture, texture))
 }

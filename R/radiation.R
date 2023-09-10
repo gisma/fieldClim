@@ -147,7 +147,7 @@ rad_sw_toa <- function(...) {
 
 #' @rdname rad_sw_toa
 #' @inheritParams build_weather_station
-#' @param sol_const Solar radiation constant in \eqn{W \cdot m^{-2}}. Default = `r sol_const_default`.
+#' @param sol_const Solar radiation constant in \eqn{W \cdot m^{-2}}, default = `r sol_const_default`.
 #' @export
 #' @references Bendix 2004, p. 244.
 rad_sw_toa.default <- function(datetime, lon, lat, ..., sol_const = sol_const_default) {
@@ -348,7 +348,7 @@ rad_lw_in <- function(...) {
 
 #' @rdname rad_lw_in
 #' @inheritParams build_weather_station
-#' @param sigma Stefan-Boltzmann constant in \eqn{W \cdot m{^-2} \cdot K{^-4}},
+#' @param sigma Stefan-Boltzmann constant in \eqn{W \cdot m^{-2} \cdot K^{-4}},
 #'   default `r sigma_default`.
 #' @export
 #' @references Bendix 2004, p. 68 eq. 3.24. The second part of the equation

@@ -41,8 +41,9 @@ Make sure to provide the correct timezone information!}
 \item{exposition}{Exposition in degree.}
 
 \item{surface_type}{Surface type.
-Allowed values are: field, acre, lawn, street, agriculture, settlement, coniferous forest, deciduous forest, mixed forest, city, water, shrub.
-Object \code{surface_properties} is a table of surface properties.}
+Allowed values are: field, acre, lawn, street, agriculture, settlement, coniferous forest, deciduous forest, mixed forest, city, water, shrub,
+but for functions related to priestley_taylor,
+allowed values are: field, bare soil, coniferous forest, water, wetland, spruce forest.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }

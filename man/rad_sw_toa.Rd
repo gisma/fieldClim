@@ -22,7 +22,7 @@ Make sure to provide the correct timezone information!}
 
 \item{lat}{Latitude in degree.}
 
-\item{sol_const}{Solar radiation constant in \eqn{W \cdot m^{-2}}. Default = 1368.}
+\item{sol_const}{Solar radiation constant in \eqn{W \cdot m^{-2}}, default = 1368.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }

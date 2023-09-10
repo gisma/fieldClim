@@ -96,6 +96,7 @@ priestley_taylor_coefficient <- data.frame(
 #'
 #' @inheritParams build_weather_station
 #' @returns Absolutely nothing
+#' @noRd
 check_availability <- function(weather_station, ...) {
   unlisted <- names(weather_station)
   parameters <- as.character(unlist(list(...)))
@@ -182,6 +183,7 @@ check_availability <- function(weather_station, ...) {
 #' # create a reduced data.frame with detailed units
 #' unit <- as.data.frame(station_turbulent, reduced = T, unit = T)
 #' }
+#' @noRd
 as.data.frame.weather_station <- function(x, ...,
                                           reduced = F, unit = F) {
   out <- as.data.frame(x$measurements)
@@ -247,6 +249,7 @@ as.data.frame.weather_station <- function(x, ...,
 #'
 #' @param angle Angle in radian.
 #' @returns Degree.
+#' @noRd
 rad2deg <- function(angle) {
   angle * 180 / pi
 }
@@ -255,6 +258,7 @@ rad2deg <- function(angle) {
 #'
 #' @param angle Angle in degree.
 #' @returns Radian.
+#' @noRd
 deg2rad <- function(angle) {
   angle * pi / 180
 }
@@ -263,6 +267,7 @@ deg2rad <- function(angle) {
 #'
 #' @param temp Temperature in degree Celcius.
 #' @returns Kelvin
+#' @noRd
 c2k <- function(temp) {
   temp + c2k_default
 }
@@ -271,6 +276,7 @@ c2k <- function(temp) {
 #'
 #' @param temp Temperature in Kelvin.
 #' @returns Degree Celcius.
+#' @noRd
 k2c <- function(temp) {
   temp - c2k_default
 }

@@ -10,7 +10,7 @@ build_weather_station(...)
 \item{...}{
   Arguments passed on to \code{\link[=rad_sw_toa.default]{rad_sw_toa.default}}, \code{\link[=pres_p.default]{pres_p.default}}, \code{\link[=trans_ozone.default]{trans_ozone.default}}, \code{\link[=trans_aerosol.default]{trans_aerosol.default}}, \code{\link[=pres_sat_vapor_p.default]{pres_sat_vapor_p.default}}, \code{\link[=rad_lw_in.default]{rad_lw_in.default}}
   \describe{
-    \item{\code{sol_const}}{Solar radiation constant in \eqn{W \cdot m^{-2}}. Default = 1368.}
+    \item{\code{sol_const}}{Solar radiation constant in \eqn{W \cdot m^{-2}}, default = 1368.}
     \item{\code{p0}}{Standard pressure in hPa, default 1013.25.}
     \item{\code{g}}{Gravitational acceleration in \eqn{m \cdot s^{-2}}, default 9.81.}
     \item{\code{rl}}{Specific gas constant for air in \eqn{m^2 \cdot s^{-2} \cdot K^{-1}}, default 287.05.}
@@ -18,7 +18,7 @@ build_weather_station(...)
     \item{\code{vis}}{Visibility in km, default 30.}
     \item{\code{a}}{Constant a is 7.5 (default) over water, 7.6 over undercooled water, and 9.5 over ice.}
     \item{\code{b}}{Constant b is 235 (defalut) over water, 240.7 over undercooled water, and 265.5 over ice.}
-    \item{\code{sigma}}{Stefan-Boltzmann constant in \eqn{W \cdot m{^-2} \cdot K{^-4}},
+    \item{\code{sigma}}{Stefan-Boltzmann constant in \eqn{W \cdot m^{-2} \cdot K^{-4}},
 default 5.6704 × 10\if{html}{\out{<sup>}}-8\if{html}{\out{</sup>}}.}
   }}
 
@@ -48,8 +48,9 @@ Make sure to provide the correct timezone information!}
 \item{exposition}{Exposition in degree.}
 
 \item{surface_type}{Surface type.
-Allowed values are: field, acre, lawn, street, agriculture, settlement, coniferous forest, deciduous forest, mixed forest, city, water, shrub.
-Object \code{surface_properties} is a table of surface properties.}
+Allowed values are: field, acre, lawn, street, agriculture, settlement, coniferous forest, deciduous forest, mixed forest, city, water, shrub,
+but for functions related to priestley_taylor,
+allowed values are: field, bare soil, coniferous forest, water, wetland, spruce forest.}
 
 \item{obs_height}{Height of obstacle in m.}
 
