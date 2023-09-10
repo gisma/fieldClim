@@ -26,7 +26,8 @@ rad_diffuse_out(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{datetime}{Datetime of class \code{POSIXlt}. See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}}.}
+\item{datetime}{Datetime of class \code{POSIXlt}. See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}}.
+Make sure to provide the correct timezone information!}
 
 \item{lon}{Longitude in degree.}
 

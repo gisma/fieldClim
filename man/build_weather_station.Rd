@@ -24,7 +24,8 @@ default 5.6704 × 10\if{html}{\out{<sup>}}-8\if{html}{\out{</sup>}}.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 
-\item{datetime}{Datetime of class \code{POSIXlt}. See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}}.}
+\item{datetime}{Datetime of class \code{POSIXlt}. See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}}.
+Make sure to provide the correct timezone information!}
 
 \item{lon}{Longitude in degree.}
 

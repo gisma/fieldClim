@@ -20,7 +20,8 @@ trans_air_mass_abs(...)
     \item{\code{rl}}{Specific gas constant for air in \eqn{m^2 \cdot s^{-2} \cdot K^{-1}}, default 287.05.}
   }}
 
-\item{datetime}{Datetime of class \code{POSIXlt}. See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}}.}
+\item{datetime}{Datetime of class \code{POSIXlt}. See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}}.
+Make sure to provide the correct timezone information!}
 
 \item{lon}{Longitude in degree.}
 

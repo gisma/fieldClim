@@ -20,7 +20,8 @@ rad_diffuse_in(...)
     \item{\code{ozone_column}}{Atmospheric ozone as column in cm, default 0.35.}
   }}
 
-\item{datetime}{Datetime of class \code{POSIXlt}. See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}}.}
+\item{datetime}{Datetime of class \code{POSIXlt}. See \code{\link[base:as.POSIXlt]{base::as.POSIXlt()}}.
+Make sure to provide the correct timezone information!}
 
 \item{lon}{Longitude in degree.}
 
