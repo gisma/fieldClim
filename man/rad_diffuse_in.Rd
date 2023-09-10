@@ -28,13 +28,13 @@ rad_diffuse_in(...)
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{temp}{Temperature in \eqn{^\circ}C.}
+\item{temp}{Air temperature in degree Celcius.}
 
 \item{slope}{Slope in degree.}
 
 \item{exposition}{Exposition in degree.}
 
-\item{valley}{If the position is in a valley (TRUE) or on a slope (FALSE).}
+\item{valley}{Is the position in a valley (\code{TRUE}) or on a slope (\code{FALSE})?}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }

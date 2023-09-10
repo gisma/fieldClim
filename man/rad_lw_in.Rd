@@ -15,15 +15,16 @@ rad_lw_in(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{temp}{Temperature in \eqn{^\circ}C.}
+\item{temp}{Air temperature in degree Celcius.}
 
 \item{rh}{Relative humidity in \%.}
 
 \item{slope}{Slope in degree.}
 
-\item{valley}{If the position is in a valley (TRUE) or on a slope (FALSE).}
+\item{valley}{Is the position in a valley (\code{TRUE}) or on a slope (\code{FALSE})?}
 
-\item{sigma}{Stefan-Boltzmann constant in W/m\eqn{^2}/K\eqn{^4}, default `r sigma_default'.}
+\item{sigma}{Stefan-Boltzmann constant in \eqn{W \cdot m{^-2} \cdot K{^-4}},
+default 5.6704 × 10\if{html}{\out{<sup>}}-8\if{html}{\out{</sup>}}.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }
@@ -34,5 +35,6 @@ W/m\eqn{^2}.
 Longwave radiation of the atmosphere.
 }
 \references{
-Bendix 2004, p. 68 eq. 3.24. The second part of the equation related to the surrounding terrain is not included.
+Bendix 2004, p. 68 eq. 3.24. The second part of the equation
+related to the surrounding terrain is not included.
 }

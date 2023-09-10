@@ -18,7 +18,8 @@ build_weather_station(...)
     \item{\code{vis}}{Visibility in km, default 30.}
     \item{\code{a}}{Constant a is 7.5 (default) over water, 7.6 over undercooled water, and 9.5 over ice.}
     \item{\code{b}}{Constant b is 235 (defalut) over water, 240.7 over undercooled water, and 265.5 over ice.}
-    \item{\code{sigma}}{Stefan-Boltzmann constant in W/m\eqn{^2}/K\eqn{^4}, default `r sigma_default'.}
+    \item{\code{sigma}}{Stefan-Boltzmann constant in \eqn{W \cdot m{^-2} \cdot K{^-4}},
+default 5.6704 × 10\if{html}{\out{<sup>}}-8\if{html}{\out{</sup>}}.}
   }}
 
 \item{weather_station}{Object of class \code{weather_station}.}
@@ -31,11 +32,11 @@ build_weather_station(...)
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{temp}{Temperature in \eqn{^\circ}C.}
+\item{temp}{Air temperature in degree Celcius.}
 
-\item{t1}{Air temperature at lower height in °C.}
+\item{t1}{Air temperature at lower height in degree Celcius.}
 
-\item{t2}{Air temperature at upper height in °C.}
+\item{t2}{Air temperature at upper height in degree Celcius.}
 
 \item{v1}{Windspeed at lower height (e.g. height of anemometer) in m/s.}
 
@@ -45,13 +46,15 @@ build_weather_station(...)
 
 \item{exposition}{Exposition in degree.}
 
-\item{surface_type}{Surface type for which a specific emissivity will be selected.}
+\item{surface_type}{Surface type.
+Allowed values are: field, acre, lawn, street, agriculture, settlement, coniferous forest, deciduous forest, mixed forest, city, water, shrub.
+Object \code{surface_properties} is a table of surface properties.}
 
 \item{obs_height}{Height of obstacle in m.}
 
-\item{valley}{If the position is in a valley (TRUE) or on a slope (FALSE).}
+\item{valley}{Is the position in a valley (\code{TRUE}) or on a slope (\code{FALSE})?}
 
-\item{surface_temp}{Surface temperature in \eqn{^\circ}C.}
+\item{surface_temp}{Surface temperature in degree Celcius.}
 
 \item{rh}{Relative humidity in \%.}
 
@@ -61,23 +64,24 @@ build_weather_station(...)
 
 \item{rad_bal}{Radiation balance in W/m\eqn{^2}.}
 
-\item{texture}{Soil texture. Either \code{sand}, \code{peat} or \code{clay}.}
+\item{texture}{Soil texture. Either "sand", "clay", or "peat".}
 
 \item{moisture}{Soil moisture in cubic meter/cubic meter.}
 
 \item{soil_flux}{Soil flux in W/m\eqn{^2}.}
 
-\item{soil_temp1}{Soil temperature in °C at upper height.}
+\item{soil_temp1}{Soil temperature in degree Celcius of measurement 1.}
 
-\item{soil_temp2}{Soil temperature in °C at lower height.}
+\item{soil_temp2}{Soil temperature in degree Celcius of measurement 2.}
 
-\item{soil_depth}{Depth of the soil temperature measurement at upper height in m.}
+\item{soil_depth1}{Depth of the soil temperature measurement 1 in m.}
 
-\item{soil_depth2}{Depth of the soil temperature measurement at upper height in m.}
+\item{soil_depth2}{Depth of the soil temperature measurement 2 in m.}
 }
 \description{
 Creates a list of class \code{weather_station} that contains all input arguments.
 }
 \details{
-Provided input arguments will only be used if they are listed in the section "Arguments".
+Provided input arguments will only be used if they are listed in the section
+"Arguments". No warning message is generated for unused arguments.
 }

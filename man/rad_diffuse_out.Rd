@@ -34,15 +34,17 @@ rad_diffuse_out(...)
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{temp}{Temperature in \eqn{^\circ}C.}
+\item{temp}{Air temperature in degree Celcius.}
 
 \item{slope}{Slope in degree.}
 
 \item{exposition}{Exposition in degree.}
 
-\item{valley}{If the position is in a valley (TRUE) or on a slope (FALSE).}
+\item{valley}{Is the position in a valley (\code{TRUE}) or on a slope (\code{FALSE})?}
 
-\item{surface_type}{Surface type for which a specific emissivity will be selected.}
+\item{surface_type}{Surface type.
+Allowed values are: field, acre, lawn, street, agriculture, settlement, coniferous forest, deciduous forest, mixed forest, city, water, shrub.
+Object \code{surface_properties} is a table of surface properties.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }

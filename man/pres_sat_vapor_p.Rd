@@ -15,7 +15,7 @@ pres_sat_vapor_p(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{temp}{Temperature in \eqn{^\circ}C.}
+\item{temp}{Air temperature in degree Celcius.}
 
 \item{a}{Constant a is 7.5 (default) over water, 7.6 over undercooled water, and 9.5 over ice.}
 

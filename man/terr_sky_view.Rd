@@ -17,7 +17,7 @@ terr_sky_view(...)
 
 \item{slope}{Slope in degree.}
 
-\item{valley}{If the position is in a valley (TRUE) or on a slope (FALSE).}
+\item{valley}{Is the position in a valley (\code{TRUE}) or on a slope (\code{FALSE})?}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }

@@ -17,7 +17,7 @@ pres_p(...)
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{temp}{Temperature in \eqn{^\circ}C.}
+\item{temp}{Air temperature in degree Celcius.}
 
 \item{p0}{Standard pressure in hPa, default 1013.25.}
 

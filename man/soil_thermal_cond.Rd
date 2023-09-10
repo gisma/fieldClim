@@ -15,7 +15,7 @@ soil_thermal_cond(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{texture}{Soil texture. Either \code{sand}, \code{peat} or \code{clay}.}
+\item{texture}{Soil texture. Either "sand", "clay", or "peat".}
 
 \item{moisture}{Soil moisture in cubic meter/cubic meter.}
 

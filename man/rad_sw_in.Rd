@@ -28,7 +28,7 @@ rad_sw_in(...)
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{temp}{Temperature in \eqn{^\circ}C.}
+\item{temp}{Air temperature in degree Celcius.}
 
 \item{slope}{Slope in degree.}
 

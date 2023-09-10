@@ -346,9 +346,11 @@ rad_lw_in <- function(...) {
 
 #' @rdname rad_lw_in
 #' @inheritParams build_weather_station
-#' @param sigma Stefan-Boltzmann constant in W/m\eqn{^2}/K\eqn{^4}, default `r sigma_default'.
+#' @param sigma Stefan-Boltzmann constant in \eqn{W \cdot m{^-2} \cdot K{^-4}},
+#'   default `r sigma_default`.
 #' @export
-#' @references Bendix 2004, p. 68 eq. 3.24. The second part of the equation related to the surrounding terrain is not included.
+#' @references Bendix 2004, p. 68 eq. 3.24. The second part of the equation
+#'   related to the surrounding terrain is not included.
 rad_lw_in.default <- function(temp, rh, slope, valley, ..., sigma = sigma_default) {
   emissivity_air <- rad_emissivity_air(temp, rh, ...)
   sky_view <- terr_sky_view(slope, valley)

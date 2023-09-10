@@ -28,7 +28,7 @@ trans_air_mass_abs(...)
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{temp}{Temperature in \eqn{^\circ}C.}
+\item{temp}{Air temperature in degree Celcius.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }

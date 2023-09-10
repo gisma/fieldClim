@@ -28,7 +28,7 @@ trans_aerosol(...)
 
 \item{elev}{Elevation above sea level in m.}
 
-\item{temp}{Temperature in \eqn{^\circ}C.}
+\item{temp}{Air temperature in degree Celcius.}
 
 \item{vis}{Visibility in km, default 30.}
 

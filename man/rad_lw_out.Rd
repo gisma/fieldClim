@@ -15,11 +15,14 @@ rad_lw_out(...)
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{surface_type}{Surface type for which a specific emissivity will be selected.}
+\item{surface_type}{Surface type.
+Allowed values are: field, acre, lawn, street, agriculture, settlement, coniferous forest, deciduous forest, mixed forest, city, water, shrub.
+Object \code{surface_properties} is a table of surface properties.}
 
-\item{surface_temp}{Surface temperature in \eqn{^\circ}C.}
+\item{surface_temp}{Surface temperature in degree Celcius.}
 
-\item{sigma}{Stefan-Boltzmann constant in W/m\eqn{^2}/K\eqn{^4}, default `r sigma_default'.}
+\item{sigma}{Stefan-Boltzmann constant in \eqn{W \cdot m{^-2} \cdot K{^-4}},
+default 5.6704 × 10\if{html}{\out{<sup>}}-8\if{html}{\out{</sup>}}.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }

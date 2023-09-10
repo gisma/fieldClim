@@ -16,20 +16,23 @@ rad_lw_bal(...)
 \item{...}{
   Arguments passed on to \code{\link[=rad_lw_in.default]{rad_lw_in.default}}
   \describe{
-    \item{\code{sigma}}{Stefan-Boltzmann constant in W/m\eqn{^2}/K\eqn{^4}, default `r sigma_default'.}
+    \item{\code{sigma}}{Stefan-Boltzmann constant in \eqn{W \cdot m{^-2} \cdot K{^-4}},
+default 5.6704 × 10\if{html}{\out{<sup>}}-8\if{html}{\out{</sup>}}.}
   }}
 
-\item{temp}{Temperature in \eqn{^\circ}C.}
+\item{temp}{Air temperature in degree Celcius.}
 
 \item{rh}{Relative humidity in \%.}
 
 \item{slope}{Slope in degree.}
 
-\item{valley}{If the position is in a valley (TRUE) or on a slope (FALSE).}
+\item{valley}{Is the position in a valley (\code{TRUE}) or on a slope (\code{FALSE})?}
 
-\item{surface_type}{Surface type for which a specific emissivity will be selected.}
+\item{surface_type}{Surface type.
+Allowed values are: field, acre, lawn, street, agriculture, settlement, coniferous forest, deciduous forest, mixed forest, city, water, shrub.
+Object \code{surface_properties} is a table of surface properties.}
 
-\item{surface_temp}{Surface temperature in \eqn{^\circ}C.}
+\item{surface_temp}{Surface temperature in degree Celcius.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }

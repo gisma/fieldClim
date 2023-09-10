@@ -6,7 +6,7 @@
 #' Negative values signify flux towards the atmosphere, positive values signify flux into the soil.
 #'
 #' @inheritParams build_weather_station
-#' @returns eqn{W \cdot m^-2}.
+#' @returns \eqn{W \cdot m^-2}.
 #' @export
 soil_heat_flux <- function(...) {
   UseMethod("soil_heat_flux")

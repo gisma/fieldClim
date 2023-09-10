@@ -20,7 +20,7 @@ rad_emissivity_air(...)
     \item{\code{b}}{Constant b is 235 (defalut) over water, 240.7 over undercooled water, and 265.5 over ice.}
   }}
 
-\item{temp}{Temperature in \eqn{^\circ}C.}
+\item{temp}{Air temperature in degree Celcius.}
 
 \item{rh}{Relative humidity in \%.}
 
