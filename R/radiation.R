@@ -114,10 +114,11 @@ rad_sw_in.default <- function(datetime, lon, lat, elev, temp,
   terrain_angle <- deg2rad(terrain_angle)
   
   out <- sw_toa * 0.9751 * trans_total / sin(elevation) * cos(terrain_angle)
-  # out < 0 from terrain_angle > 90, direct shortwave radiation blocked? out is set to 0
-  ifelse(out < 0, 0, out)
-  # NaN from trans_total NaN from all elements of trans_total NaN from elevation < 0, which means at night, out is set to 0
-  ifelse(elevation < 0, 0, out)
+  # out < 0 from terrain_angle > 90, direct shortwave radiation blocked?
+  # out is set to 0.
+  # NaN from trans_total NaN from all elements of trans_total NaN
+  # from elevation < 0, which means at night, out is set to 0.
+  ifelse((out < 0) | (elevation < 0), 0, out)
 }
 
 #' @rdname rad_sw_in
