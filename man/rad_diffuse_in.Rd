@@ -27,7 +27,7 @@ rad_diffuse_in(...)
 \item{...}{
   Arguments passed on to \code{\link[=rad_sw_toa.default]{rad_sw_toa.default}}, \code{\link[=trans_ozone.default]{trans_ozone.default}}
   \describe{
-    \item{\code{sol_const}}{Solar constant in W/m\eqn{^2}, default 1368.}
+    \item{\code{sol_const}}{Solar constant in W/m\eqn{^2}. Default = 1368.}
     \item{\code{ozone_column}}{Atmospheric ozone as column in cm, default 0.35.}
   }}
 

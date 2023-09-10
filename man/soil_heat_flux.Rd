@@ -27,7 +27,11 @@ soil_heat_flux(...)
 
 \item{moisture}{Soil moisture in cubic meter/cubic meter.}
 
-\item{soil_temp1}{soil_temp2 Soil temperature in °C.}
+\item{soil_temp1}{Soil temperature in °C at upper height.}
+
+\item{soil_temp2}{Soil temperature in °C at lower height.}
+
+\item{soil_depth2}{Depth of the soil temperature measurement at upper height in m.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }

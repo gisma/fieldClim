@@ -50,7 +50,7 @@ rad_sw_in(...)
 
 \item{valley}{If the position is in a valley (TRUE) or on a slope (FALSE).}
 
-\item{sol_const}{Solar constant in W/m\eqn{^2}, default 1368.}
+\item{sol_const}{Solar constant in W/m\eqn{^2}. Default = 1368.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }

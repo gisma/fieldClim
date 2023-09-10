@@ -1,5 +1,4 @@
-#' Constants
-#'
+# Constants
 p0_default <- 1013.25
 g_default <- 9.81
 rl_default <- 287.05
@@ -9,8 +8,7 @@ ozone_column_default <- 0.35
 vis_default <- 30
 sol_const_default <- 1368
 
-#' Surface properties
-#'
+# Surface properties
 surface_properties <- data.frame(
   surface_type = c(
     "field",
@@ -70,8 +68,7 @@ surface_properties <- data.frame(
   )
 )
 
-#' Priestley-Taylor coefficient
-#'
+# Priestley-Taylor coefficient
 priestley_taylor_coefficient <- data.frame(
   surface_type = c(
     "field",

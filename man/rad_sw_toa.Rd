@@ -21,7 +21,7 @@ rad_sw_toa(...)
 
 \item{lat}{Latitude in degree.}
 
-\item{sol_const}{Solar constant in W/m\eqn{^2}, default 1368.}
+\item{sol_const}{Solar constant in W/m\eqn{^2}. Default = 1368.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 }

@@ -8,14 +8,14 @@
 \usage{
 sensible_priestley_taylor(...)
 
-\method{sensible_priestley_taylor}{default}(t, rad_bal, soil_flux, surface_type, ...)
+\method{sensible_priestley_taylor}{default}(temp, rad_bal, soil_flux, surface_type, ...)
 
 \method{sensible_priestley_taylor}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{t}{Air temperature in °C.}
+\item{temp}{Air temperature in °C.}
 
 \item{rad_bal}{Radiation balance in W/m\eqn{^2}.}
 

@@ -8,7 +8,7 @@
 \usage{
 latent_penman(...)
 
-\method{latent_penman}{default}(datetime, v, t, hum, z = 2, rad_bal, elev, lat, lon, ...)
+\method{latent_penman}{default}(datetime, v, temp, rh, z = 2, rad_bal, elev, lat, lon, ...)
 
 \method{latent_penman}{weather_station}(weather_station, ...)
 }
@@ -20,9 +20,9 @@ See \link[base:as.POSIXlt]{base::as.POSIXlt} and \link[base:strptime]{base::strp
 
 \item{v}{Wind velocity in m/s.}
 
-\item{t}{Temperature in °C}
+\item{temp}{Air temperature in °C}
 
-\item{hum}{Relative humidity in \%.}
+\item{rh}{Relative humidity in \%.}
 
 \item{z}{Height of measurement for t, v in m.}
 
