@@ -11,31 +11,26 @@ hum_specific <- function(...) {
 }
 
 #' @rdname hum_specific
-#' @param hum Relative humidity in %.
-#' @param t Temperature in °C.
+#' @param rh Relative humidity in %.
+#' @param temp Temperature in °C.
 #' @param elev Elevation above sea level in m.
 #' @export
 #' @references Bendix 2004, p. 262.
-hum_specific.default <- function(hum, t, elev, ...) {
-  p_vapor <- pres_vapor_p(hum, t)
-  p <- pres_p(elev, t, ...)
+hum_specific.default <- function(rh, temp, elev, ...) {
+  p_vapor <- pres_vapor_p(temp, rh)
+  p <- pres_p(elev, temp, ...)
   0.622 * (p_vapor / p)
 }
 
 #' @rdname hum_specific
 #' @export
 #' @inheritParams build_weather_station
-#' @param height Height of measurement. "lower" or "upper".
-hum_specific.weather_station <- function(weather_station, height, ...) {
-  check_availability(weather_station, "t1", "t2", "hum1", "hum2", "elevation")
-  if (!height %in% c("upper", "lower")) {
-    stop("'height' must be either 'lower' or 'upper'.")
-  }
-  height_num <- which(height == c("lower", "upper"))
-  hum <- weather_station$measurements[[paste0("hum", height_num)]]
-  t <- weather_station$measurements[[paste0("t", height_num)]]
-  elev <- weather_station$location_properties$elevation
-  return(hum_specific(hum, t, elev))
+hum_specific.weather_station <- function(weather_station, ...) {
+  check_availability(weather_station, "temp", "rh", "elev")
+  rh <- weather_station$rh
+  temp <- weather_station$temp
+  elev <- weather_station$elev
+  return(hum_specific(rh, temp, elev))
 }
 
 
@@ -52,29 +47,24 @@ hum_absolute <- function(...) {
 }
 
 #' @rdname hum_absolute
-#' @param hum Relative humidity in %.
-#' @param t Air temperature in °C.
+#' @param rh Relative humidity in %.
+#' @param temp Temperature in °C.
 #' @export
 #' @references Bendix 2004, p. 262.
-hum_absolute.default <- function(hum, t, ...) {
-  p_vapor <- pres_vapor_p(hum, t)
-  t <- c2k(t)
-  (0.21668 * p_vapor) / t
+hum_absolute.default <- function(rh, temp, ...) {
+  p_vapor <- pres_vapor_p(temp, rh)
+  temp <- c2k(temp) # to Kelvin
+  (0.21668 * p_vapor) / temp
 }
 
 #' @rdname hum_absolute
 #' @export
 #' @inheritParams build_weather_station
-#' @param height Height of measurement. "lower" or "upper".
-hum_absolute.weather_station <- function(weather_station, height, ...) {
-  check_availability(weather_station, "hum1", "hum2", "t1", "t2")
-  if (!height %in% c("upper", "lower")) {
-    stop("'height' must be either 'lower' or 'upper'.")
-  }
-  height_num <- which(height == c("lower", "upper"))
-  hum <- weather_station$measurements[[paste0("hum", height_num)]]
-  t <- weather_station$measurements[[paste0("t", height_num)]]
-  return(hum_absolute(hum, t))
+hum_absolute.weather_station <- function(weather_station, ...) {
+  check_availability(weather_station, "temp", "rh")
+  rh <- weather_station$rh
+  temp <- weather_station$temp
+  return(hum_absolute(rh, temp))
 }
 
 #' Enthalpy of vaporization
@@ -91,24 +81,19 @@ hum_evap_heat <- function(...) {
 
 #' @rdname hum_evap_heat
 #' @export
-#' @param t Air temperature in °C.
+#' @param temp Air temperature in °C.
 #' @references Bendix 2004, p. 261.
-hum_evap_heat.default <- function(t, ...) {
-  (2.5008 - 0.002372 * t) * 10^6
+hum_evap_heat.default <- function(temp, ...) {
+  (2.5008 - 0.002372 * temp) * 10^6
 }
 
 #' @rdname hum_evap_heat
 #' @export
 #' @inheritParams build_weather_station
-#' @param height Height of measurement. "lower" or "upper".
-hum_evap_heat.weather_station <- function(weather_station, height = "lower", ...) {
-  check_availability(weather_station, "t1", "t2")
-  if (!height %in% c("upper", "lower")) {
-    stop("'height' must be either 'lower' or 'upper'.")
-  }
-  height_num <- which(height == c("lower", "upper"))
-  t <- weather_station$measurements[[paste0("t", height_num)]]
-  return(hum_evap_heat(t))
+hum_evap_heat.weather_station <- function(weather_station, ...) {
+  check_availability(weather_station, "temp")
+  temp <- weather_station$temp
+  return(hum_evap_heat(temp))
 }
 
 
@@ -138,10 +123,10 @@ hum_precipitable_water.default <- function(datetime, lat, elev, temp, ...) {
     pwst = c(4.1167, 2.9243, 0.8539, 2.0852, 0.4176),
     row.names = c("tropic", "temperate_summer", "temperate_winter", "subarctic_summer", "subarctic_winter")
   )
-  
+
   temp_standard <- c()
   pw_standard <- c()
-  
+
   for (i in seq_along(datetime)) {
     if (abs(lat) <= 30) { # tropic
       temp_standard <- df["tropic", "t0"]
@@ -180,10 +165,10 @@ hum_precipitable_water.default <- function(datetime, lat, elev, temp, ...) {
       }
     }
   }
-  
+
   p <- pres_p(elev, temp, ...)
   p0 <- p0_default # will be cancled in pres_p
-  
+
   pw_standard * (p / p0) * (temp_standard / temp)^0.5
 }
 
@@ -196,7 +181,7 @@ hum_precipitable_water.weather_station <- function(weather_station, ...) {
   for(i in a) {
     assign(i, weather_station[[i]])
   }
-  
+
   hum_precipitable_water(datetime, lat, elev, temp, ...)
 }
 
@@ -232,13 +217,13 @@ hum_moisture_gradient.default <- function(hum1, hum2, t1, t2, z1 = 2, z2 = 10, e
 #' @inheritParams build_weather_station
 #' @export
 hum_moisture_gradient.weather_station <- function(weather_station, ...) {
-  check_availability(weather_station, "z1", "z2", "t1", "t2", "hum1", "hum2", "elevation")
-  hum1 <- weather_station$measurements$hum1
-  hum2 <- weather_station$measurements$hum2
-  t1 <- weather_station$measurements$t1
-  t2 <- weather_station$measurements$t2
-  z1 <- weather_station$properties$z1
-  z2 <- weather_station$properties$z2
-  elev <- weather_station$location_properties$elevation
+  check_availability(weather_station, "z1", "z2", "t1", "t2", "hum1", "hum2", "elev")
+  hum1 <- weather_station$hum1
+  hum2 <- weather_station$hum2
+  t1 <- weather_station$t1
+  t2 <- weather_station$t2
+  z1 <- weather_station$z1
+  z2 <- weather_station$z2
+  elev <- weather_station$elev
   return(hum_moisture_gradient(hum1, hum2, t1, t2, z1, z2, elev))
 }

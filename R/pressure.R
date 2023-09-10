@@ -36,7 +36,7 @@ pres_p.weather_station <- function(weather_station, ...) {
   for(i in a) {
     assign(i, weather_station[[i]])
   }
-  
+
   pres_p(elev, temp, ...)
 }
 
@@ -69,7 +69,7 @@ pres_vapor_p.weather_station <- function(weather_station, ...) {
   for(i in a) {
     assign(i, weather_station[[i]])
   }
-  
+
   pres_vapor_p(temp, rh, ...)
 }
 
@@ -101,7 +101,7 @@ pres_sat_vapor_p.weather_station <- function(weather_station, ...) {
   for(i in a) {
     assign(i, weather_station[[i]])
   }
-  
+
   pres_sat_vapor_p(temp, ...)
 }
 
@@ -121,7 +121,7 @@ pres_air_density <- function(...) {
 #' @rdname pres_air_density
 #' @inheritParams build_weather_station
 #' @param height "lower" or "upper"
-#' @export
+#' @noRd
 pres_air_density.weather_station <- function(weather_station, height = "lower", ...) {
   if (height == "lower") {
     check_availability(weather_station, "t1", "p1")
