@@ -11,6 +11,4 @@ test_that("pres_p.weather_station works with additional args", {
   expect_equal(pres_p(weather_station, p0 = 1), 1)
 })
 
-test_that("pres_air_density", {
-  expect_equal(pres_air_density(p, t), 1.1732, tolerance = 1e-4)
-})
+

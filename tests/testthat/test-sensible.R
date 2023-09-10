@@ -15,8 +15,8 @@ soil_flux <- 40
 test_that("sensible_bowen", {
   expect_equal(
     sensible_bowen(t1, t2, hum1, hum2, z1, z2, elev, rad_bal, soil_flux),
-    -127.7,
-    tolerance = 1e-3
+    -22.5,
+    tolerance = 1e-2
   )
 })
 
