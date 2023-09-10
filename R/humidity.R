@@ -170,7 +170,7 @@ hum_precipitable_water.default <- function(datetime, lat, elev, temp, ...) {
         temp_standard[i] <- df["subarctic_winter", "t0"]
         pw_standard[i] <- df["subarctic_winter", "pwst"]
       }
-    } else if (lat > 0) { # subarctic, southern hemisphere
+    } else if (lat < 0) { # subarctic, southern hemisphere
       if ((datetime[i]$mon + 1) %in% seq(4, 9)) {
         temp_standard[i] <- df["subarctic_winter", "t0"]
         pw_standard[i] <- df["subarctic_winter", "pwst"]
