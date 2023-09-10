@@ -17,6 +17,8 @@ Authors:
   \item Jonas Viehweger \email{jonas.viehweger@rwth-aachen.de}
   \item Jörg Bendix \email{bendix@geo.uni-marburg.de}
   \item Hanna Wenzel \email{wenzel@students.uni-marburg.de}
+  \item Kai Richter \email{richter5@students.uni-marburg.de}
+  \item You-De Chen \email{you-de.chen@students.uni-marburg.de}
 }
 
 }

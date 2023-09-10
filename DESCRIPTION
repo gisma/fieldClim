@@ -1,6 +1,6 @@
 Package: fieldClim
 Title: Calculates Fluxes for Weather Stations
-Version: 1.0.0
+Version: 1.1.0
 Authors@R: 
     c(
     person("David", "Langenohl",
@@ -17,7 +17,13 @@ Authors@R:
            email = "Mitze@students.uni-marburg.de"),
     person("Hanna", "Wenzel",
            role = c("aut"),
-           email = "wenzel@students.uni-marburg.de")
+           email = "wenzel@students.uni-marburg.de"),
+    person("Kai", "Richter",
+           role = c("aut"),
+           email = "richter5@students.uni-marburg.de"),
+    person("You-De", "Chen",
+           role = c("aut"),
+           email = "you-de.chen@students.uni-marburg.de")
     )
 Description: Calculates different micrometeorological parameters for weather stations. For example estimation of
              radiation balance, calculation of soil heat flux from soil temperature measurements, calculation of turbulent fluxes
