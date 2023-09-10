@@ -7,7 +7,9 @@
 check_availability(weather_station, ...)
 }
 \arguments{
-\item{...}{Strings of properties to check.}
+\item{weather_station}{Object of class \code{weather_station}.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 Absolutely nothing

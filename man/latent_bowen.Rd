@@ -43,6 +43,8 @@ latent_bowen(...)
 \item{rad_bal}{Radiation balance in W/m\eqn{^2}.}
 
 \item{soil_flux}{Soil flux in W/m\eqn{^2}.}
+
+\item{weather_station}{Object of class \code{weather_station}.}
 }
 \value{
 Latent heat flux in W/m\eqn{^2}.

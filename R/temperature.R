@@ -25,7 +25,7 @@ temp_pot_temp.default <- function(t, elev, ...) {
 }
 
 #' @rdname temp_pot_temp
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @param height Height of measurement, either "upper" or "lower".
 #' @export
 temp_pot_temp.weather_station <- function(weather_station, height = "lower", ...) {

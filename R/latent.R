@@ -129,7 +129,7 @@ latent_penman.default <- function(datetime,
 }
 
 #' @rdname latent_penman
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @export
 latent_penman.weather_station <- function(weather_station, ...) {
   check_availability(
@@ -228,7 +228,7 @@ latent_monin.default <- function(hum1, hum2, t1, t2, v1, v2, z1 = 2, z2 = 10, el
 }
 
 #' @rdname latent_monin
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @export
 latent_monin.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "z1", "z2", "t1", "t2", "hum1", "hum2", "v1", "v2", "elev")
@@ -308,7 +308,7 @@ latent_bowen.default <- function(t1, t2, hum1, hum2, z1 = 2, z2 = 10, elev,
 }
 
 #' @rdname latent_bowen
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @export
 latent_bowen.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "z1", "z2", "t1", "t2", "hum1", "hum2", "elev", "rad_bal", "soil_flux")

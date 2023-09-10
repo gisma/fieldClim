@@ -94,8 +94,7 @@ priestley_taylor_coefficient <- data.frame(
 #' Checks availability of passed properties in the weather station object.
 #' If property is NULL, aborts with error.
 #'
-#' @inheritParams sol_julian_day
-#' @param ... Strings of properties to check.
+#' @inheritParams build_weather_station
 #' @returns Absolutely nothing
 check_availability <- function(weather_station, ...) {
   unlisted <- names(weather_station)

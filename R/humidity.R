@@ -24,7 +24,7 @@ hum_specific.default <- function(hum, t, elev, ...) {
 
 #' @rdname hum_specific
 #' @export
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @param height Height of measurement. "lower" or "upper".
 hum_specific.weather_station <- function(weather_station, height, ...) {
   check_availability(weather_station, "t1", "t2", "hum1", "hum2", "elevation")
@@ -64,7 +64,7 @@ hum_absolute.default <- function(hum, t, ...) {
 
 #' @rdname hum_absolute
 #' @export
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @param height Height of measurement. "lower" or "upper".
 hum_absolute.weather_station <- function(weather_station, height, ...) {
   check_availability(weather_station, "hum1", "hum2", "t1", "t2")
@@ -99,7 +99,7 @@ hum_evap_heat.default <- function(t, ...) {
 
 #' @rdname hum_evap_heat
 #' @export
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @param height Height of measurement. "lower" or "upper".
 hum_evap_heat.weather_station <- function(weather_station, height = "lower", ...) {
   check_availability(weather_station, "t1", "t2")
@@ -229,7 +229,7 @@ hum_moisture_gradient.default <- function(hum1, hum2, t1, t2, z1 = 2, z2 = 10, e
 }
 
 #' @rdname hum_moisture_gradient
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @export
 hum_moisture_gradient.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "z1", "z2", "t1", "t2", "hum1", "hum2", "elevation")

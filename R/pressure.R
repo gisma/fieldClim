@@ -119,10 +119,9 @@ pres_air_density <- function(...) {
 }
 
 #' @rdname pres_air_density
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @param height "lower" or "upper"
 #' @export
-#'
 pres_air_density.weather_station <- function(weather_station, height = "lower", ...) {
   if (height == "lower") {
     check_availability(weather_station, "t1", "p1")

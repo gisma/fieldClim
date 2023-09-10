@@ -146,7 +146,7 @@ soil_heat_cap.default <- function(moisture, texture = "sand", ...) {
 
 
 #' @rdname soil_heat_cap
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @export
 #' @noRd
 soil_heat_cap.weather_station <- function(weather_station, ...) {
@@ -182,7 +182,7 @@ soil_attenuation.default <- function(moisture, texture = "sand", ...) {
 }
 
 #' @rdname soil_attenuation
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @export
 #' @noRd
 soil_attenuation.weather_station <- function(weather_station, ...) {

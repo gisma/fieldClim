@@ -43,7 +43,7 @@ sensible_priestley_taylor.default <- function(temp, rad_bal, soil_flux, surface_
 }
 
 #' @rdname sensible_priestley_taylor
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @export
 sensible_priestley_taylor.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "temp", "rad_bal", "soil_flux", "surface_type")
@@ -132,7 +132,7 @@ sensible_monin.default <- function(t1, t2, z1 = 2, z2 = 10, v1, v2, elev, surfac
 }
 
 #' @rdname sensible_monin
-#' @inheritParams sol_julian_day
+#' @inheritParams build_weather_station
 #' @export
 sensible_monin.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "t1", "t2", "z1", "z2", "v1", "v2", "elev")
