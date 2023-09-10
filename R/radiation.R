@@ -114,8 +114,10 @@ rad_sw_in.default <- function(datetime, lon, lat, elev, temp,
   terrain_angle <- deg2rad(terrain_angle)
   
   out <- sw_toa * 0.9751 * trans_total / sin(elevation) * cos(terrain_angle)
-  # if out < 0, which means no direct shortwave radiation, out is set to 0
+  # out < 0 from terrain_angle > 90, direct shortwave radiation blocked? out is set to 0
   ifelse(out < 0, 0, out)
+  # NaN from trans_total NaN from all elements of trans_total NaN from elevation < 0, which means at night, out is set to 0
+  ifelse(elevation < 0, 0, out)
 }
 
 #' @rdname rad_sw_in
@@ -155,7 +157,7 @@ rad_sw_toa.default <- function(datetime, lon, lat, ..., sol_const = sol_const_de
   
   out <- sol_const * eccentricity * sin(elevation)
   # negative value comes from elevation < 0, which means night, and out is therefore set to 0
-  ifelse(out < 0, 0, out)
+  ifelse(elevation < 0, 0, out)
 }
 
 #' @rdname rad_sw_toa
@@ -206,8 +208,8 @@ rad_diffuse_in.default <- function(datetime, lon, lat, elev, temp,
   
   out <- 0.5 * ((1 - (1 - vapor) - (1 - ozone)) * sw_toa - sw_in) *
     sky_view * (1 + cos(terrain_angle)^2 * sin(solar_angle)^3)
-  # if sw_toa is 0, which means night, out is set to 0
-  ifelse(sw_toa == 0, 0, out)
+  # NaN from vapor and ozone from elevation < 0, which means at night.
+  ifelse(elevation < 0, 0, out)
 }
 
 #' @rdname rad_diffuse_in
@@ -330,7 +332,7 @@ rad_lw_bal.weather_station <- function(weather_station, ...) {
     assign(i, weather_station[[i]])
   }
   
-  rad_lw_bal(temp, rh, slope, valley, surface_temp, surface_type, ...)
+  rad_lw_bal(temp, rh, slope, valley, surface_type, surface_temp, ...)
 }
 
 #' Longwave incoming radiation

@@ -8,6 +8,7 @@
 #' @param ... Additional arguments.
 #' @param weather_station Object of class `weather_station`.
 #' @param datetime Datetime of class `POSIXlt`. See [base::as.POSIXlt()].
+#'    Make sure to provide the correct timezone information!
 #' @param lon Longitude in degree.
 #' @param lat Latitude in degree.
 #' @param elev Elevation above sea level in m.
