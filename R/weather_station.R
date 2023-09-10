@@ -20,8 +20,8 @@
 #' @param slope Slope in degree.
 #' @param exposition Exposition in degree.
 #' @param surface_type Surface type.
-#'   Allowed values are: `r surface_properties$surface_type`,
-#'   but for functions related to priestley_taylor,
+#'   Allowed values are: `r surface_properties$surface_type`.
+#'   EXCEPTION: for functions related to Priestley-Taylor methods,
 #'   allowed values are: `r priestley_taylor_coefficient$surface_type`.
 #' @param obs_height Height of obstacle in m.
 #' @param valley Is the position in a valley (`TRUE`) or on a slope (`FALSE`)?

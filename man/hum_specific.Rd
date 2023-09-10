@@ -8,22 +8,20 @@
 \usage{
 hum_specific(...)
 
-\method{hum_specific}{default}(hum, t, elev, ...)
+\method{hum_specific}{default}(rh, temp, elev, ...)
 
-\method{hum_specific}{weather_station}(weather_station, height, ...)
+\method{hum_specific}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{hum}{Relative humidity in \%.}
+\item{rh}{Relative humidity in \%.}
 
-\item{t}{Temperature in °C.}
+\item{temp}{Temperature in °C.}
 
 \item{elev}{Elevation above sea level in m.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
-
-\item{height}{Height of measurement. "lower" or "upper".}
 }
 \value{
 Specific humidity in kg/kg.

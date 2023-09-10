@@ -8,20 +8,18 @@
 \usage{
 hum_absolute(...)
 
-\method{hum_absolute}{default}(hum, t, ...)
+\method{hum_absolute}{default}(rh, temp, ...)
 
-\method{hum_absolute}{weather_station}(weather_station, height, ...)
+\method{hum_absolute}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{hum}{Relative humidity in \%.}
+\item{rh}{Relative humidity in \%.}
 
-\item{t}{Air temperature in °C.}
+\item{temp}{Temperature in °C.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
-
-\item{height}{Height of measurement. "lower" or "upper".}
 }
 \value{
 Absolute humidity in kg/m\eqn{^3}.

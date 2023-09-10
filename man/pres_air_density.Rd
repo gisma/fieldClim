@@ -8,20 +8,18 @@
 \usage{
 pres_air_density(...)
 
-\method{pres_air_density}{weather_station}(weather_station, height = "lower", ...)
+\method{pres_air_density}{weather_station}(weather_station, ...)
 
-\method{pres_air_density}{default}(p, t, ...)
+\method{pres_air_density}{default}(elev, temp, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
 
-\item{height}{"lower" or "upper"}
+\item{elev}{Elevation above sea level in m.}
 
-\item{p}{Pressure in hPa.}
-
-\item{t}{Temperature in °C.}
+\item{temp}{Air temperature in degree Celcius.}
 }
 \value{
 Air density in kg/m\eqn{^3}.

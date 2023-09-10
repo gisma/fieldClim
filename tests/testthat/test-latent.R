@@ -24,7 +24,7 @@ test_that("latent_bowen", {
       elev <- elev,
       rad_bal = rad_bal,
       soil_flux = soil_flux),
-    -417,
+    -312,
     tolerance = 1e-2
   )
 })
@@ -33,7 +33,7 @@ test_that("latent_bowen", {
 test_that("latent_monin", {
   expect_equal(
     latent_monin(hum1, hum2, t1, t2, v1, v2, z1, z2, elev, surface_type = "field"),
-    90.6,
+    43.8,
     tolerance = 1e-3
   )
 })

@@ -16,8 +16,8 @@ rad_lw_out(...)
 \item{...}{Additional arguments.}
 
 \item{surface_type}{Surface type.
-Allowed values are: field, acre, lawn, street, agriculture, settlement, coniferous forest, deciduous forest, mixed forest, city, water, shrub,
-but for functions related to priestley_taylor,
+Allowed values are: field, acre, lawn, street, agriculture, settlement, coniferous forest, deciduous forest, mixed forest, city, water, shrub.
+EXCEPTION: for functions related to Priestley-Taylor methods,
 allowed values are: field, bare soil, coniferous forest, water, wetland, spruce forest.}
 
 \item{surface_temp}{Surface temperature in degree Celcius.}

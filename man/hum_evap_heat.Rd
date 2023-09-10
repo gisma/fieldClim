@@ -8,18 +8,16 @@
 \usage{
 hum_evap_heat(...)
 
-\method{hum_evap_heat}{default}(t, ...)
+\method{hum_evap_heat}{default}(temp, ...)
 
-\method{hum_evap_heat}{weather_station}(weather_station, height = "lower", ...)
+\method{hum_evap_heat}{weather_station}(weather_station, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
 
-\item{t}{Air temperature in °C.}
+\item{temp}{Air temperature in °C.}
 
 \item{weather_station}{Object of class \code{weather_station}.}
-
-\item{height}{Height of measurement. "lower" or "upper".}
 }
 \value{
 Enthalpy of vaporization in J/kg.

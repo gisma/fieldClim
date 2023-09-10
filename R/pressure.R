@@ -120,27 +120,19 @@ pres_air_density <- function(...) {
 
 #' @rdname pres_air_density
 #' @inheritParams build_weather_station
-#' @param height "lower" or "upper"
-#' @noRd
-pres_air_density.weather_station <- function(weather_station, height = "lower", ...) {
-  if (height == "lower") {
-    check_availability(weather_station, "t1", "p1")
-    t <- weather_station$measurements$t1 # to Kelvin
-    p <- weather_station$measurements$p1
-  } else if (height == "upper") {
-    check_availability(weather_station, "t2", "p2")
-    t <- weather_station$measurements$t2 # to Kelvin
-    p <- weather_station$measurements$p2
-  }
-  check_availability(t, p)
-  return(pres_air_density(p, t))
+#' @export
+pres_air_density.weather_station <- function(weather_station, ...) {
+  check_availability(weather_station, "elev", "temp")
+  elev <- weather_station$elev
+  temp <- weather_station$temp
+  return(pres_air_density(elev, temp))
 }
 
 #' @rdname pres_air_density
-#' @param p Pressure in hPa.
-#' @param t Temperature in °C.
+#' @inheritParams build_weather_station
 #' @export
 #'
-pres_air_density.default <- function(p, t, ...) {
-  (p * 100) / (287.05 * (t + 273.15))
+pres_air_density.default <- function(elev, temp, ...) {
+  p <- pres_p(elev, temp)
+  (p * 100) / (287.05 * (temp + 273.15))
 }

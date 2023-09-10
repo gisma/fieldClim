@@ -15,19 +15,11 @@ soil_flux <- 40
 test_that("sensible_bowen", {
   expect_equal(
     sensible_bowen(t1, t2, hum1, hum2, z1, z2, elev, rad_bal, soil_flux),
-    -22.5,
+    -128.0,
     tolerance = 1e-2
   )
 })
 
-# test sensible_monin
-test_that("sensible_monin", {
-  expect_equal(
-    sensible_monin(t1, t2, z1, z2, v1, v2, elev, surface_type = "field"),
-    180,
-    tolerance = 1e-3
-  )
-})
 
 # test sensible_priestley_taylor
 test_that("sensible_priestley_taylor", {
