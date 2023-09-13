@@ -48,7 +48,7 @@ latent_priestley_taylor.default <- function(temp, rad_bal, soil_flux, surface_ty
 #' @export
 latent_priestley_taylor.weather_station <- function(weather_station, ...) {
   check_availability(weather_station, "temp", "rad_bal", "soil_flux", "surface_type")
-  t1 <- weather_station$temp
+  temp <- weather_station$temp
   rad_bal <- weather_station$rad_bal
   soil_flux <- weather_station$soil_flux
   surface_type <- weather_station$surface_type
@@ -140,7 +140,7 @@ latent_penman.weather_station <- function(weather_station, ...) {
   datetime <- weather_station$datetime
   v <- weather_station$v1
   temp <- weather_station$temp
-  hum <- weather_station$hum1
+  rh <- weather_station$hum1
   z <- weather_station$z1
   rad_bal <- weather_station$rad_bal
   elev <- weather_station$elevation
