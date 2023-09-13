@@ -143,9 +143,9 @@ latent_penman.weather_station <- function(weather_station, ...) {
   rh <- weather_station$hum1
   z <- weather_station$z1
   rad_bal <- weather_station$rad_bal
-  elev <- weather_station$elevation
-  lat <- weather_station$latitude
-  lon <- weather_station$longitude
+  elev <- weather_station$elev
+  lat <- weather_station$lat
+  lon <- weather_station$lon
   return(latent_penman(
     datetime, v, temp, rh, z, rad_bal,
     elev, lat, lon
