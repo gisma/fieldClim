@@ -218,10 +218,10 @@ latent_monin.default <- function(hum1, hum2, t1, t2, v1, v2, z1 = 2, z2 = 10, el
   out <- (-1) * air_density * lv * ((k * ustar) / busi) * schmidt * moist_gradient
 
   # values of sensible bowen will be checked whether they exceed the valid data range.
-  if (max(out) > 600) {
+  if ((max(out) > 600) == TRUE) {
     warning("There are values above 600 W/m^2!")
   }
-  if (min(out) < -600) {
+  if ((min(out) < -600) == TRUE) {
     warning("There are values below -600 W/m^2!")
   }
   out
