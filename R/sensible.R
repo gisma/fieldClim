@@ -33,10 +33,10 @@ sensible_priestley_taylor.default <- function(temp, rad_bal, soil_flux, surface_
   out <- ((1 - alpha_pt) * sc + gam) * (-1 * rad_bal - soil_flux) / (sc + gam)
 
   # values of sensible bowen will be checked whether they exceed the valid data range.
-  if (max(out) > 600) {
+  if (any((!is.na(out)) > 600)) {
     warning("There are values above 600 W/m^2!")
   }
-  if (min(out) < -600) {
+  if (any((!is.na(out)) < -600)) {
     warning("There are values below -600 W/m^2!")
   }
   out
@@ -122,10 +122,10 @@ sensible_monin.default <- function(t1, t2, z1 = 2, z2 = 10, v1, v2, elev, surfac
   out <- (-1) * air_density * cp * (k * ustar * z2 / busi) * t_gradient
 
   # values of sensible bowen will be checked whether they exceed the valid data range.
-  if (max(out) > 600) {
+  if (any((!is.na(out)) > 600)) {
     warning("There are values above 600 W/m^2!")
   }
-  if (min(out) < -600) {
+  if (any((!is.na(out)) < -600)) {
     warning("There are values below -600 W/m^2!")
   }
   out
@@ -197,10 +197,10 @@ sensible_bowen.default <- function(t1, t2, hum1, hum2, z1 = 2, z2 = 10, elev, ra
   out <- (-rad_bal - soil_flux) * bowen_ratio / (1 + bowen_ratio)
 
   # values of sensible bowen will be checked whether they exceed the valid data range.
-  if (max(out) > 600) {
+  if (any((!is.na(out)) > 600)) {
     warning("There are values above 600 W/m^2!")
   }
-  if (min(out) < -600) {
+  if (any((!is.na(out)) < -600)) {
     warning("There are values below -600 W/m^2!")
   }
   out
