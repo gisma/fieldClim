@@ -116,7 +116,7 @@ latent_penman.default <- function(datetime,
     elev = elev
   )
 
-  lv <- hum_evap_heat(t) # specific evaporation heat
+  lv <- hum_evap_heat(temp) # specific evaporation heat
   out <- lv * (water::hourlyET(WeatherStation, hours = ut, DOY = doy) / 3600) * (-1)
   # values of sensible bowen will be checked whether they exceed the valid data range.
   if (any((!is.na(out)) > 600)) {
