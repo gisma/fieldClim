@@ -18,7 +18,7 @@ rad_bal.default <- function(datetime, lon, lat, elev, temp, rh,
   sw_bal <- rad_sw_bal(datetime, lon, lat, elev, temp,
     slope, exposition, valley, surface_type, ...)
   lw_bal <- rad_lw_bal(temp, rh, slope, valley, surface_type, surface_temp, ...)
-  
+
   sw_bal + lw_bal
 }
 
@@ -31,7 +31,7 @@ rad_bal.weather_station <- function(weather_station, ...) {
   for(i in a) {
     assign(i, weather_station[[i]])
   }
-  
+
   rad_bal(datetime, lon, lat, elev, temp, rh,
     slope, exposition, valley, surface_type, surface_temp, ...)
 }
@@ -61,7 +61,7 @@ rad_sw_bal.default <- function(datetime, lon, lat, elev, temp,
     slope, exposition, valley, ...)
   diffuse_out <- rad_diffuse_out(datetime, lon, lat, elev, temp,
     slope, exposition, valley, surface_type, ...)
-  
+
   sw_in - sw_out + diffuse_in - diffuse_out
 }
 
@@ -74,7 +74,7 @@ rad_sw_bal.weather_station <- function(weather_station, ...) {
   for(i in a) {
     assign(i, weather_station[[i]])
   }
-  
+
   rad_sw_bal(datetime, lon, lat, elev, temp,
     slope, exposition, valley, surface_type, ...)
 }
@@ -99,7 +99,7 @@ rad_sw_in <- function(...) {
 rad_sw_in.default <- function(datetime, lon, lat, elev, temp,
     slope, exposition, ...) {
   sw_toa <- rad_sw_toa(datetime, lon, lat, ...)
-  
+
   gas <- trans_gas(datetime, lon, lat, elev, temp, ...)
   ozone <- trans_ozone(datetime, lon, lat, ...)
   rayleigh <- trans_rayleigh(datetime, lon, lat, elev, temp, ...)
@@ -109,10 +109,10 @@ rad_sw_in.default <- function(datetime, lon, lat, elev, temp,
 
   elevation <- sol_elevation(datetime, lon, lat)
   terrain_angle <- terr_terrain_angle(datetime, lon, lat, slope, exposition)
-  
+
   elevation <- deg2rad(elevation)
   terrain_angle <- deg2rad(terrain_angle)
-  
+
   out <- sw_toa * 0.9751 * trans_total / sin(elevation) * cos(terrain_angle)
   # out < 0 from terrain_angle > 90, direct shortwave radiation blocked?
   # out is set to 0.
@@ -130,7 +130,7 @@ rad_sw_in.weather_station <- function(weather_station, ...) {
   for(i in a) {
     assign(i, weather_station[[i]])
   }
-  
+
   rad_sw_in(datetime, lon, lat, elev, temp,
     slope, exposition, ...)
 }
@@ -155,7 +155,7 @@ rad_sw_toa.default <- function(datetime, lon, lat, ..., sol_const = sol_const_de
   eccentricity <- sol_eccentricity(datetime)
   elevation <- sol_elevation(datetime, lon, lat)
   elevation <- deg2rad(elevation)
-  
+
   out <- sol_const * eccentricity * sin(elevation)
   # negative value comes from elevation < 0, which means night, and out is therefore set to 0
   ifelse(elevation < 0, 0, out)
@@ -170,7 +170,7 @@ rad_sw_toa.weather_station <- function(weather_station, ...) {
   for(i in a) {
     assign(i, weather_station[[i]])
   }
-  
+
   rad_sw_toa(datetime, lon, lat, ...)
 }
 
@@ -198,15 +198,15 @@ rad_diffuse_in.default <- function(datetime, lon, lat, elev, temp,
   sw_toa <- rad_sw_toa(datetime, lon, lat, ...)
   sw_in <- rad_sw_in(datetime, lon, lat, elev, temp,
     slope, exposition, ...)
-  
+
   sky_view <- terr_sky_view(slope, valley)
   terrain_angle <- terr_terrain_angle(datetime, lon, lat, slope, exposition)
   elevation <- sol_elevation(datetime, lon, lat)
   solar_angle <- 90 - elevation
-  
+
   terrain_angle <- deg2rad(terrain_angle)
   solar_angle <- deg2rad(solar_angle)
-  
+
   out <- 0.5 * ((1 - (1 - vapor) - (1 - ozone)) * sw_toa - sw_in) *
     sky_view * (1 + cos(terrain_angle)^2 * sin(solar_angle)^3)
   # NaN from vapor and ozone from elevation < 0, which means at night.
@@ -222,7 +222,7 @@ rad_diffuse_in.weather_station <- function(weather_station, ...) {
   for(i in a) {
     assign(i, weather_station[[i]])
   }
-  
+
   rad_diffuse_in(datetime, lon, lat, elev, temp,
     slope, exposition, valley, ...)
 }
@@ -245,7 +245,7 @@ rad_sw_out.default <- function(datetime, lon, lat, elev, temp,
     slope, exposition, surface_type, ...) {
   sw_in <- rad_sw_in(datetime, lon, lat, elev, temp, slope, exposition, ...)
   albedo <- surface_properties[which(surface_properties$surface_type == surface_type), ]$albedo
-  
+
   sw_in * albedo
 }
 
@@ -258,7 +258,7 @@ rad_sw_out.weather_station <- function(weather_station, ...) {
   for(i in a) {
     assign(i, weather_station[[i]])
   }
-  
+
   rad_sw_out(datetime, lon, lat, elev, temp,
     slope, exposition, surface_type, ...)
 }
@@ -282,7 +282,7 @@ rad_diffuse_out.default <- function(datetime, lon, lat, elev, temp,
   diffuse_in <- rad_diffuse_in(datetime, lon, lat, elev, temp,
     slope, exposition, valley, ...)
   albedo <- surface_properties[which(surface_properties$surface_type == surface_type), ]$albedo
-  
+
   diffuse_in * albedo
 }
 
@@ -291,11 +291,11 @@ rad_diffuse_out.default <- function(datetime, lon, lat, elev, temp,
 #' @export
 rad_diffuse_out.weather_station <- function(weather_station, ...) {
   a <- methods::formalArgs(rad_diffuse_out.default)
-  a <- a[1:(length(a)-2)]
+  a <- a[1:(length(a)-1)]
   for(i in a) {
     assign(i, weather_station[[i]])
   }
-  
+
   rad_diffuse_out(datetime, lon, lat, elev, temp,
     slope, exposition, valley, surface_type, ...)
 }
@@ -319,7 +319,7 @@ rad_lw_bal <- function(...) {
 rad_lw_bal.default <- function(temp, rh, slope, valley, surface_type, surface_temp, ...) {
   lw_in <- rad_lw_in(temp, rh, slope, valley, ...)
   lw_out <- rad_lw_out(surface_type, surface_temp, ...)
-  
+
   lw_in - lw_out
 }
 
@@ -332,7 +332,7 @@ rad_lw_bal.weather_station <- function(weather_station, ...) {
   for(i in a) {
     assign(i, weather_station[[i]])
   }
-  
+
   rad_lw_bal(temp, rh, slope, valley, surface_type, surface_temp, ...)
 }
 
@@ -358,7 +358,7 @@ rad_lw_in.default <- function(temp, rh, slope, valley, ..., sigma = sigma_defaul
   emissivity_air <- rad_emissivity_air(temp, rh, ...)
   sky_view <- terr_sky_view(slope, valley)
   temp <- c2k(temp)
-  
+
   emissivity_air * sigma * temp^4 * sky_view
 }
 
@@ -371,7 +371,7 @@ rad_lw_in.weather_station <- function(weather_station, ...) {
   for(i in a) {
     assign(i, weather_station[[i]])
   }
-  
+
   rad_lw_in(temp, rh, slope, valley, ...)
 }
 
@@ -394,7 +394,7 @@ rad_emissivity_air <- function(...) {
 rad_emissivity_air.default <- function(temp, rh, ...) {
   vapor_p <- pres_vapor_p(temp, rh, ...)
   temp <- c2k(temp)
-  
+
   (1.24 * vapor_p / temp)^(1 / 7)
 }
 
@@ -407,7 +407,7 @@ rad_emissivity_air.weather_station <- function(weather_station, ...) {
   for(i in a) {
     assign(i, weather_station[[i]])
   }
-  
+
   rad_emissivity_air(temp, rh, ...)
 }
 
@@ -432,7 +432,7 @@ rad_lw_out.default <- function(surface_type, surface_temp, ...,
     sigma = sigma_default) {
   emissivity <- surface_properties[which(surface_properties$ surface_type == surface_type), ]$emissivity
   surface_temp <- c2k(surface_temp)
-  
+
   emissivity * sigma * surface_temp^4
 }
 
@@ -445,6 +445,6 @@ rad_lw_out.weather_station <- function(weather_station, ...) {
   for(i in a) {
     assign(i, weather_station[[i]])
   }
-  
+
   rad_lw_out(surface_type, surface_temp, ...)
 }
