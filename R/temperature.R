@@ -30,13 +30,13 @@ temp_pot_temp.default <- function(t, elev, ...) {
 #' @export
 temp_pot_temp.weather_station <- function(weather_station, height = "lower", ...) {
   if (height == "lower") {
-    check_availability(weather_station, "t1", "elevation")
-    t <- weather_station$measurements$t1
-    elev <- weather_station$location_properties$elevation
+    check_availability(weather_station, "t1", "elev")
+    t <- weather_station$t1
+    elev <- weather_station$elev
   } else if (height == "upper") {
-    check_availability(weather_station, "t2", "elevation")
-    t <- weather_station$measurements$t2
-    elev <- weather_station$location_properties$elevation
+    check_availability(weather_station, "t2", "elev")
+    t <- weather_station$t2
+    elev <- weather_station$elev
   }
   return(temp_pot_temp(t, elev))
 }
