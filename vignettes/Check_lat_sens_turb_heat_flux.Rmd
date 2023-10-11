@@ -1,0 +1,243 @@
+---
+title: "Check functions for calculating latent, sensible, and turbulent heat fluxes"
+subtitle: "Geländeklimatologie SoSe 2023, Philipps-Universität Marburg"
+author: "Kai Richter"
+date: "`r format(Sys.time(), tz = 'UTC', usetz = TRUE)`"
+output:
+    html_document:
+        toc: TRUE
+        toc_float: TRUE
+---
+
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r}
+# load library
+library(fieldClim)
+```
+
+# check .default methods
+```{r}
+datetime <- as.POSIXlt("2018-02-19 13:15:00", tz = "CET")
+lon = 8.683300
+lat = 50.840503
+elev = 270
+temp = 20
+t1 = 20
+t2 = 21
+rh = 50
+hum1 = 50
+hum2 = 55
+v1 = 1
+v2 = 2
+z1 = 2
+z2 = 10
+slope = 30
+exposition = 20
+valley = FALSE
+surface_type = "field"
+surface_temp = 20
+texture = "sand"
+moisture = 0.2
+rad_bal = 0
+soil_temp1 = 20
+soil_temp2 = 30
+soil_depth1 = 1
+soil_depth2 = 0
+soil_flux = 2
+
+
+latent_priestley_taylor(temp, rad_bal, soil_flux, surface_type)
+latent_penman(datetime, v1, temp, rh, z = 2, rad_bal, elev, lat, lon)
+latent_monin(hum1, hum2, t1, t2, v1, v2, z1, z2, elev, surface_type)
+latent_bowen(t1, t2, hum1, hum2, z1, z2, elev, rad_bal, soil_flux)
+sensible_priestley_taylor(temp, rad_bal, soil_flux, surface_type)
+sensible_monin(t1, t2, z1, z2, v1, v2, elev, surface_type)
+sensible_bowen(t1, t2, hum1, hum2, z1, z2, elev, rad_bal, soil_flux)
+  hum_absolute(rh, temp)
+  hum_evap_heat(temp)
+  hum_moisture_gradient(hum1, hum2, t1, t2, z1, z2, elev)
+  pres_air_density(elev, temp)
+  temp_pot_temp(temp, elev)
+  turb_flux_monin(z1, z2, v1, v2, t1, t2, elev, surface_type)
+  turb_ustar(v1, z1, surface_type)
+    turb_roughness_length(surface_type)
+    turb_flux_ex_quotient_temp(t1, t2, z1, z2, v1, v2, elev, surface_type)
+    turb_flux_imp_exchange(t1, t2, v1, v2, z1, z2, elev, surface_type)
+      turb_flux_ex_quotient_imp(t1, t2, z1, z2, v1, v2, elev, surface_type)
+    turb_flux_grad_rich_no(t1, t2, z1, z2, v1, v2, elev)
+``` 
+
+# prepare 1 day of data
+```{r, eval = FALSE}
+# source: https://vhrz669.hrz.uni-marburg.de/lcrs/data_pre.do?citid=302
+# Last Update Date: 2023-05-03
+path <- "D:/MSc_Phys_Geo/fieldClim/data_caldern/302_caldernklimawiese/302_caldernklimawiese_KlimaturmCaldernWiese.csv"
+input <- read.csv(path)
+input <- input[input$datetime >= "2022-01-02 00:00:00", ]
+input <- input[input$datetime <= "2022-01-02 23:55:00", ]
+path <- "D:/MSc_Phys_Geo/fieldClim/data_caldern/2022-01-02_caldernklimawiese.csv"
+write.csv(input, path)
+```
+
+# check .weather_station method with 3 day values and 3 night values
+```{r, warning = FALSE}
+# read data
+path <- "D:/MSc_Phys_Geo/fieldClim/data_caldern/2022-01-02_caldernklimawiese.csv"
+input <- read.csv(path)
+
+# change datetime from class `character` to class `POSIXlt`
+input$datetime <- as.POSIXlt(input$datetime, format = "%Y-%m-%d %H:%M:%S", tz = "Atlantic/Reykjavik")
+
+# 3 day values and 3 night values
+input <- input[c(1:3, 133:135), ]
+
+weather_station <- build_weather_station(
+  datetime = input$datetime,
+  lon = 8.6832,
+  lat = 50.8405,
+  elev = 261,
+  t1 = input$Ta_2m,
+  t2 = input$Ta_10m,
+  temp = input$Ta_2m,
+  v1 = input$Windspeed_2m,
+  v2 = input$Windspeed_10m,
+  z1 = 2,
+  z2 = 10,
+  slope = 0,
+  exposition = 0,
+  valley = FALSE,
+  surface_type = "field",
+  surface_temp = input$Ta_2m,
+  hum1 = input$Huma_2m,
+  hum2 = input$Huma_10m,
+  rh = input$Huma_2m,
+  texture = "peat",
+  moisture = input$water_vol_soil,
+  rad_bal = input$rad_net,
+  soil_temp1 = input$Ts,
+  soil_temp2 = input$Ta_2m,
+  soil_depth1 = 0.25,
+  soil_depth2 = 0,
+  soil_flux = input$heatflux_soil
+)
+
+# show structure
+str(weather_station)
+
+# calculate
+latent_priestley_taylor(weather_station)
+latent_penman(weather_station)
+latent_monin(weather_station)
+latent_bowen(weather_station)
+sensible_priestley_taylor(weather_station)
+sensible_monin(weather_station)
+sensible_bowen(weather_station)
+  hum_absolute(weather_station)
+  hum_evap_heat(weather_station)
+  hum_moisture_gradient(weather_station)
+  pres_air_density(weather_station)
+  temp_pot_temp(weather_station)
+  turb_flux_monin(weather_station)
+  turb_ustar(weather_station)
+    turb_roughness_length(weather_station)
+    turb_flux_ex_quotient_temp(weather_station)
+    turb_flux_imp_exchange(weather_station)
+      turb_flux_ex_quotient_imp(weather_station)
+    turb_flux_grad_rich_no(weather_station)
+```
+
+# check .weather_station method with data for 1 day
+```{r, warning = FALSE}
+# read data
+path <- "D:/MSc_Phys_Geo/fieldClim/data_caldern/2022-01-02_caldernklimawiese.csv"
+input <- read.csv(path)
+
+# show structure
+str(input)
+
+# change datetime from class `character` to class `POSIXlt`
+input$datetime <- as.POSIXlt(input$datetime, format = "%Y-%m-%d %H:%M:%S", tz = "Atlantic/Reykjavik")
+
+# build_weather_station
+weather_station <- build_weather_station(
+  datetime = input$datetime,
+  lon = 8.6832,
+  lat = 50.8405,
+  elev = 261,
+  t1 = input$Ta_2m,
+  t2 = input$Ta_10m,
+  temp = input$Ta_2m,
+  v1 = input$Windspeed_2m,
+  v2 = input$Windspeed_10m,
+  z1 = 2,
+  z2 = 10,
+  slope = 0,
+  exposition = 0,
+  valley = FALSE,
+  surface_type = "field",
+  surface_temp = input$Ta_2m,
+  hum1 = input$Huma_2m,
+  hum2 = input$Huma_10m,
+  rh = input$Huma_2m,
+  texture = "peat",
+  moisture = input$water_vol_soil,
+  rad_bal = input$rad_net,
+  soil_temp1 = input$Ts,
+  soil_temp2 = input$Ta_2m,
+  soil_depth1 = 0.25,
+  soil_depth2 = 0,
+  soil_flux = input$heatflux_soil
+)
+
+# show structure
+str(weather_station)
+
+turb_flux_calc <- turb_flux_calc(weather_station)
+str(turb_flux_calc)
+
+  plot(latent_priestley_taylor(weather_station), 
+       type = "l",
+       xlab = "Time index",
+       ylab = "W/m^2",
+       main = "Latent heat flux: Priestley-Taylor method")
+  plot(latent_penman(weather_station), 
+       type = "l",
+       xlab = "Time index",
+       ylab = "W/m^2",
+       main = "Latent heat flux: Penman-Monteith method")
+  plot(latent_monin(weather_station), 
+       type = "l",
+       xlab = "Time index",
+       ylab = "W/m^2",
+       main = "Latent heat flux: Monin-Obukhov length method")
+  plot(latent_bowen(weather_station), 
+       type = "l",
+       xlab = "Time index",
+       ylab = "W/m^2",
+       main = "Latent heat flux: Bowen method")
+  plot(sensible_priestley_taylor(weather_station), 
+       type = "l",
+       xlab = "Time index",
+       ylab = "W/m^2",
+       main = "Sensible heat flux: Priestley-Taylor method")
+  plot(sensible_monin(weather_station), 
+       type = "l",
+       xlab = "Time index",
+       ylab = "W/m^2",
+       main = "Sensible heat flux: Monin-Obukhov length method")
+  plot(sensible_bowen(weather_station), 
+       type = "l",
+       xlab = "Time index",
+       ylab = "W/m^2",
+       main = "Sensible heat flux: Bowen method")
+```
+
+
+
