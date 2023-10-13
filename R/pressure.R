@@ -55,6 +55,7 @@ pres_vapor_p <- function(...) {
 #' @inheritParams build_weather_station
 #' @inheritDotParams pres_sat_vapor_p.default a b
 #' @export
+#' @references Bendix 2004, p. 262
 pres_vapor_p.default <- function(temp, rh, ...) {
   sat_vapor_p <- pres_sat_vapor_p(temp, ...)
   (rh / 100) * sat_vapor_p
