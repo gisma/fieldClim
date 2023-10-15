@@ -33,7 +33,7 @@ latent_priestley_taylor.default <- function(temp, rad_bal, soil_flux, surface_ty
 
   out <- alpha_pt * sc * (-rad_bal - soil_flux) / (sc + gam)
 
-  # values of sensible bowen will be checked whether they exceed the valid data range.
+  # values will be checked whether they exceed the valid data range.
   if (any((!is.na(out)) > 600)) {
     warning("There are values above 600 W/m^2!")
   }
@@ -118,7 +118,7 @@ latent_penman.default <- function(datetime,
 
   lv <- hum_evap_heat(temp) # specific evaporation heat
   out <- lv * (water::hourlyET(WeatherStation, hours = ut, DOY = doy) / 3600) * (-1)
-  # values of sensible bowen will be checked whether they exceed the valid data range.
+  # values will be checked whether they exceed the valid data range.
   if (any((!is.na(out)) > 600)) {
     warning("There are values above 600 W/m^2!")
   }
@@ -217,7 +217,7 @@ latent_monin.default <- function(hum1, hum2, t1, t2, v1, v2, z1 = 2, z2 = 10, el
   }
   out <- (-1) * air_density * lv * ((k * ustar) / busi) * schmidt * moist_gradient
 
-  # values of sensible bowen will be checked whether they exceed the valid data range.
+  # values will be checked whether they exceed the valid data range.
   if (any((!is.na(out)) > 600)) {
     warning("There are values above 600 W/m^2!")
   }
