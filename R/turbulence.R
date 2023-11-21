@@ -103,11 +103,11 @@ turb_ustar <- function(...) {
 }
 
 #' @rdname turb_ustar
-#' @param v1 Windspeed in height of anemometer in m/s.
-#' @param z1 Height of anemometer in m.
+#' @param v Windspeed in height of anemometer in m/s.
+#' @param z Height of anemometer in m.
 #' @inheritParams turb_roughness_length
 #' @export
-turb_ustar.default <- function(v1, z1, surface_type = NULL, obs_height = NULL, ...) {
+turb_ustar.default <- function(v, z, surface_type = NULL, obs_height = NULL, ...) {
   if (!is.null(obs_height)) {
     z0 <- turb_roughness_length(obs_height=obs_height)
   } else if (!is.null(surface_type)) {
@@ -115,7 +115,7 @@ turb_ustar.default <- function(v1, z1, surface_type = NULL, obs_height = NULL, .
   } else {
     print("The input is not valid. Either obs_height or surface_type has to be defined.")
   }
-  ustar <- (v1 * 0.4) / log(z1 / z0)
+  ustar <- (v * 0.4) / log(z / z0)
   if (any(is.infinite(ustar))) {
     print("One or more ustar values are infinite. They are set to NA.")
     ustar[is.infinite(ustar)] <- NA
@@ -127,9 +127,9 @@ turb_ustar.default <- function(v1, z1, surface_type = NULL, obs_height = NULL, .
 #' @inheritParams build_weather_station
 #' @export
 turb_ustar.weather_station <- function(weather_station, obs_height = NULL, ...) {
-  check_availability(weather_station, "v1", "z1")
-  v <- weather_station$v1
-  z <- weather_station$z1
+  check_availability(weather_station, "v2", "z2")
+  v <- weather_station$v2
+  z <- weather_station$z2
   obs_height <- weather_station$obs_height
   if (!is.null(obs_height)) {
     return(turb_ustar(v, z, obs_height = obs_height))

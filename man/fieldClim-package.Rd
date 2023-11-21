@@ -6,7 +6,7 @@
 \alias{fieldClim-package}
 \title{fieldClim: Calculates Fluxes for Weather Stations}
 \description{
-Calculates different micrometeorological parameters for weather stations. For example estimation of radiation balance, calculation of soil heat flux from soil temperature measurements, calculation of turbulent fluxes (Bowen Ratio, Penman, Priestley-Taylor) and much more.
+`fieldClim` is designed as a handy tool for calculations of various weather and micromicrometeorological parameters based on the measurements of a weather station. It includes functions adressing the estimation of radiation properties, the calculations of latent, sensible, and turbulent heat fluxes, the calculation of soil heat fluxes as well as the estimation of thermal and mechanical boundary layers.
 }
 \author{
 \strong{Maintainer}: Fabian Mitze \email{Mitze@students.uni-marburg.de}

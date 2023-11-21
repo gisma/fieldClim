@@ -32,3 +32,6 @@ hPa.
 \description{
 Calculates vapor pressure from relative humidity and saturation vapor pressure.
 }
+\references{
+Bendix 2004, p. 262
+}

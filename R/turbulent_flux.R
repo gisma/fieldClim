@@ -38,9 +38,9 @@ turb_flux_monin.default <- function(z1 = 2, z2 = 10, v1, v2, t1, t2, elev, surfa
 
   # calculate ustar
   if (!is.null(obs_height)) {
-    ustar <- turb_ustar(v=v1, z=z1, obs_height=obs_height)
+    ustar <- turb_ustar(v=v2, z=z2, obs_height=obs_height)
   } else if (!is.null(surface_type)) {
-    ustar <- turb_ustar(v=v1, z=z1, surface_type=surface_type)
+    ustar <- turb_ustar(v=v2, z=z2, surface_type=surface_type)
   } else {
     print("The input is not valid. Either obs_height or surface_type has to be defined.")
   }
@@ -206,9 +206,9 @@ turb_flux_ex_quotient_temp.default <- function(t1, t2, z1=2, z2=10, v1, v2, elev
 
   # calculate ustar
   if (!is.null(obs_height)) {
-    ustar <- turb_ustar(v=v1, z=z1, obs_height=obs_height)
+    ustar <- turb_ustar(v=v2, z=z2, obs_height=obs_height)
   } else if (!is.null(surface_type)) {
-    ustar <- turb_ustar(v=v1, z=z1, surface_type=surface_type)
+    ustar <- turb_ustar(v=v2, z=z2, surface_type=surface_type)
   } else {
     print("The input is not valid. Either obs_height or surface_type has to be defined.")
   }
@@ -290,9 +290,9 @@ turb_flux_ex_quotient_imp.default <- function(t1, t2, z1=2, z2=10, v1, v2, elev,
 
   # calculate ustar
   if (!is.null(obs_height)) {
-    ustar <- turb_ustar(v=v1, z=z1, obs_height=obs_height)
+    ustar <- turb_ustar(v=v2, z=z2, obs_height=obs_height)
   } else if (!is.null(surface_type)) {
-    ustar <- turb_ustar(v=v1, z=z1, surface_type=surface_type)
+    ustar <- turb_ustar(v=v2, z=z2, surface_type=surface_type)
   } else {
     print("The input is not valid. Either obs_height or surface_type has to be defined.")
   }
