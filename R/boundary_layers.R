@@ -46,9 +46,9 @@ bound_thermal_avg <- function(v, z, temp_change_dist, t_pot_upwind, t_pot, lapse
                               surface_type = NULL, obs_height = NULL) {
   # Calculate ustar
   if (!is.null(obs_height)) {
-    ustar <- turb_ustar(v1=v, z1=z, obs_height=obs_height)
+    ustar <- turb_ustar(v=v, z=z, obs_height=obs_height)
   } else if (!is.null(surface_type)) {
-    ustar <- turb_ustar(v1=v, z1=z, surface_type=surface_type)
+    ustar <- turb_ustar(v=v, z=z, surface_type=surface_type)
   } else {
     print("The input is not valid. Either obs_height or surface_type has to be defined.")
   }
